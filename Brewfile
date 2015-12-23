@@ -8,39 +8,34 @@ tap 'homebrew/bundle'
 # CLI stuff
 brew 'ack'
 brew 'ag'
+brew 'binutils'
 brew 'coreutils'
-brew 'go'
-brew 'n'
-brew 'readline'
-brew 'postgresql'
-brew 'unrar'
-brew 'coreutils'
-brew 'wget'
-brew 'ruby-build'
-brew 'tig'
-brew 'mc'
-brew 'the_silver_searcher'
+brew 'cv'
+brew 'dfc'
+brew 'dialog'
+brew 'fasd'
 brew 'fzf'
+brew 'gawk'
+brew 'go'
 brew 'hh'
 brew 'htop'
 brew 'httpie'
-brew 'tree'
-brew 'pv'
-brew 'ncdu'
-brew 'ack'
-brew 'pv'
-brew 'dialog'
-brew 'dfc'
 brew 'jq'
-brew 'watch'
-brew 'fasd'
-brew 'cv'
+brew 'mc'
+brew 'n'
+brew 'ncdu'
 brew 'nmap'
+brew 'postgresql'
+brew 'pv'
+brew 'readline'
+brew 'ruby-build'
+brew 'the_silver_searcher'
+brew 'tig'
+brew 'tree'
+brew 'unrar'
 brew 'vcsh'
-brew 'binutils'
-brew 'screen'
 brew 'watch'
-brew 'gawk'
+brew 'wget'
 
 # brew 'homebrew/x11/diffutils'
 # brew 'ed --default-names'
@@ -53,41 +48,38 @@ brew 'gawk'
 # brew 'grep --with-default-names'
 # brew 'wdiff --with-gettext'
 
-
 # GUI stuff
-cask 'atom'
-cask 'firefox'
-cask 'google-chrome'
-cask 'mapbox-studio'
-cask 'seashore'
-cask 'slack'
-cask 'steam'
-cask 'smartgit'
-cask 'transmission'
-
-
-cask 'sublime-text'                # Editor
-cask 'atom'                        # Editor
-cask 'google-chrome'               # Browser
-cask 'spectacle'                   # Window utility
-cask 'iterm2'                      # Terminal
-cask 'onyx'                        # OSX config tool
-cask 'cronnix'                     # Chron manager
-cask 'menumeters'                  # System utility (shows progressbars)
-cask 'vlc'                         # Media player
-cask 'disk-inventory-x'            # System utility (scans folders)
-cask 'diskwave'                    # System utility (scans folders)
-cask 'transmission'                # Bittorrent client
-cask 'monolingual'                 # System utility (deletes unused language files)
-cask 'seashore'                    # Graphics software (gimp lite)
-cask 'appcleaner'                  # System utility (deletes files correct)
-cask 'xquartz'                     # System utility
-cask 'fluid'                       # System utility (creates software from urls)
-cask 'launchcontrol'               # System utility (disable/enable daemons)
-cask 'cdock'                       # System utility (enhances dock)
-cask 'the-unarchiver'
-cask 'sourcetree'
-cask 'sequel-pro'
-cask 'wireshark'
-cask 'sdformatter'
+cask 'appcleaner'
 cask 'applepi-baker'
+cask 'atom'
+cask 'atom'
+cask 'cdock'
+cask 'cronnix'
+cask 'disk-inventory-x'
+cask 'diskwave'
+cask 'firefox'
+cask 'fluid'
+cask 'google-chrome'
+cask 'google-chrome'
+cask 'iterm2'
+cask 'launchcontrol'
+cask 'mapbox-studio'
+cask 'menumeters'
+cask 'monolingual'
+cask 'onyx'
+cask 'sdformatter'
+cask 'seashore'
+cask 'seashore'
+cask 'sequel-pro'
+cask 'slack'
+cask 'smartgit'
+cask 'sourcetree'
+cask 'spectacle'
+cask 'steam'
+cask 'sublime-text'
+cask 'the-unarchiver'
+cask 'transmission'
+cask 'transmission'
+cask 'vlc'
+cask 'wireshark'
+cask 'xquartz'
