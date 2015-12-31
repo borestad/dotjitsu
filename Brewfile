@@ -115,7 +115,6 @@ cask 'vagrant'
 cask 'virtualbox'
 cask 'virtualbox-extension-pack'
 cask 'vlc'
-cask 'vlc'
 cask 'vmware-fusion'
 cask 'vox'
 cask 'vox-preferences-pane'
@@ -132,7 +131,15 @@ cask 'font-source-code-pro'
 
 
 # ================================
+# GAMES (afterwork :)
+# ================================
+tap 'homebrew/games'
+cask 'teeworlds'
+cask 'hedgewars'
+
+
+# ================================
 # SCIENCE
 # ================================
 tap 'homebrew/science'
-brew 'opencv'
+# brew 'opencv'
