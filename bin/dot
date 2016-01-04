@@ -1,0 +1,19 @@
+#!/bin/bash
+
+export ZSH=$HOME/.dotjitsu
+
+cd "$(dirname $0)"/..
+
+# $DOTFILES/osx/set-defaults.sh
+
+echo "=== Updating ==="
+
+sudo -v
+
+brew update
+brew bundle
+brew doctor
+
+# Make sure zsh is available as a shell
+#command -v zsh | sudo tee -a /etc/shells
+rake install
