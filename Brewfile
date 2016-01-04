@@ -21,7 +21,6 @@ brew 'gawk'
 brew 'git'
 brew 'git-annex'
 brew 'go'
-brew 'gpatch'
 brew 'graphicsmagick'
 brew 'hh'
 brew 'htop'
@@ -43,6 +42,7 @@ brew 'redis'
 brew 'rlwrap'
 brew 'ruby-build'
 brew 'tig'
+brew 'thefuck'
 brew 'tree'
 brew 'unrar'
 brew 'vcsh'
@@ -59,7 +59,6 @@ brew 'zsh'
 # ================================
 brew 'binutils'
 brew 'coreutils'
-brew 'diffutils'
 brew 'findutils', args: ['with-default-names']
 brew 'gnu-indent', args: ['with-default-names']
 brew 'gnu-sed', args: ['with-default-names']
@@ -77,6 +76,8 @@ brew 'wdiff', args: ['with-gettext']
 tap 'homebrew/dupes'
 brew 'make'
 brew 'nano'
+brew 'gpatch'
+brew 'diffutils'
 
 
 # ================================
@@ -87,17 +88,25 @@ cask 'alfred'
 cask 'appcleaner'
 cask 'applepi-baker'
 cask 'atom'
+cask 'caffeine'
 cask 'cdock'
+cask 'cheatsheet'
+cask 'controlplane'
 cask 'cronnix'
 cask 'disk-inventory-x'
 cask 'diskwave'
+cask 'dropbox'
 cask 'firefox'
 cask 'fluid'
 cask 'google-chrome'
 cask 'iterm2'
+cask 'imageoptim'
 cask 'keycastr'
 cask 'launchcontrol'
+cask 'licecap'
+cask 'loading'
 cask 'macdown'
+cask 'madruby'
 cask 'monolingual'
 cask 'onyx'
 cask 'sdformatter'
@@ -108,6 +117,11 @@ cask 'sourcetree'
 cask 'spectacle'
 cask 'spotify'
 cask 'steam'
+cask 'silverlight'
+cask 'skitch'
+cask 'skype'
+cask 'teamviewer'
+cask 'pixlr'
 cask 'sublime-text'
 cask 'the-unarchiver'
 cask 'transmission'
@@ -119,7 +133,9 @@ cask 'vmware-fusion'
 cask 'vox'
 cask 'vox-preferences-pane'
 cask 'wireshark'
+cask 'ubersicht'
 cask 'xquartz'
+cask 'xtrafinder'
 
 
 # ================================
@@ -135,8 +151,17 @@ cask 'font-source-code-pro'
 # ================================
 tap 'homebrew/games'
 cask 'teeworlds'
-cask 'hedgewars'
+# cask 'hedgewars'
 
+
+# ================================
+# EXTRAX
+# ================================
+tap 'thoughtbot/formulae'
+brew 'gitsh'
+
+tap 'yudai/gotty'
+brew 'gotty'
 
 # ================================
 # SCIENCE
