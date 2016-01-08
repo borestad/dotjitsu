@@ -4,6 +4,16 @@ tap 'caskroom/versions'
 tap 'homebrew/bundle'
 
 # ================================
+# DEPS / PROGRAMMING LANGUAGES
+# ================================
+brew 'git'
+brew 'go'
+brew 'python'
+brew 'rbenv'
+brew 'ruby-build'
+brew 'n'
+
+# ================================
 # CLI stuff
 # ================================
 brew 'ack'
@@ -11,6 +21,7 @@ brew 'ag'
 brew 'axel'
 brew 'bash'
 brew 'bash-completion'
+brew 'cloc'
 brew 'colordiff'
 brew 'cv'
 brew 'dfc'
@@ -18,29 +29,29 @@ brew 'dialog'
 brew 'fasd'
 brew 'fzf'
 brew 'gawk'
-brew 'git'
 brew 'git-annex'
-brew 'go'
+brew 'goaccess'
 brew 'graphicsmagick'
+brew 'grc'
 brew 'hh'
 brew 'htop'
 brew 'httpie'
+brew 'hub'
 brew 'imagemagick'
 brew 'jpegoptim'
 brew 'jq'
 brew 'mc'
 brew 'mongodb'
 brew 'mtr'
-brew 'n'
 brew 'ncdu'
 brew 'nmap'
 brew 'postgresql'
 brew 'pv'
-brew 'rbenv'
 brew 'readline'
 brew 'redis'
 brew 'rlwrap'
-brew 'ruby-build'
+brew 'sshrc'
+brew 'stow'
 brew 'thefuck'
 brew 'tig'
 brew 'tree'
@@ -52,7 +63,6 @@ brew 'wget'
 brew 'whatmask'
 brew 'youtube-dl'
 brew 'zsh'
-
 
 # ================================
 # GNU TOOLS
@@ -74,16 +84,18 @@ brew 'wdiff', args: ['with-gettext']
 # DUPES
 # ================================
 tap 'homebrew/dupes'
+
+brew 'diffutils'
+brew 'gpatch'
 brew 'make'
 brew 'nano'
-brew 'gpatch'
-brew 'diffutils'
 
 
 # ================================
 # CASKS
 # ================================
 tap 'caskroom/cask'
+
 cask 'alfred'
 cask 'appcleaner'
 cask 'applepi-baker'
@@ -99,6 +111,7 @@ cask 'dropbox'
 cask 'firefox'
 cask 'fluid'
 cask 'google-chrome'
+cask 'hammerspoon'
 cask 'hipchat'
 cask 'imageoptim'
 cask 'iterm2'
@@ -114,6 +127,7 @@ cask 'pixlr'
 cask 'sdformatter'
 cask 'sequel-pro'
 cask 'silverlight'
+cask 'sizeup'
 cask 'skitch'
 cask 'skype'
 cask 'slack'
@@ -137,12 +151,14 @@ cask 'vox-preferences-pane'
 cask 'wireshark'
 cask 'xquartz'
 cask 'xtrafinder'
+cask 'yujitach-menumeters'
 
 
 # ================================
 # FONTS
 # ================================
 tap 'caskroom/fonts'
+
 cask 'font-inconsolata'
 cask 'font-source-code-pro'
 
@@ -152,7 +168,7 @@ cask 'font-source-code-pro'
 # ================================
 tap 'homebrew/games'
 cask 'teeworlds'
-# cask 'hedgewars'
+#cask 'hedgewars'
 
 
 # ================================
@@ -168,4 +184,4 @@ brew 'gotty'
 # SCIENCE
 # ================================
 tap 'homebrew/science'
-# brew 'opencv'
+#brew 'opencv'

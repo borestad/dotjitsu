@@ -1,0 +1,52 @@
+# It's important that .gitignore is absent from this list, so
+# that the .gitignore in this repo gets installed by stow as
+# ~/.gitignore.
+
+# However, .git must be in this list:
+\.git
+/bin/git-deps
+
+.*,v
+RCS
+CVS
+Brewfile
+Gemfile
+Pipfile
+Rakefile
+package.json
+.*~
+\.\#.*
+._*
+\#.*\#
+.*\.orig
+.*\.old
+.*\.rej
+.*\.bak
+.*\.log
+.*\.o
+.*\.elc
+.*\.pyc
+.*\.class
+.*\.flc
+.*\.zwc
+.*\.md
+.*\.lock
+,,.*
+Thumbs.db
+DS_Store
+node_modules
+bin
+zsh
+lib
+tags
+TAGS
+\+\+build
+_build
+\.zshhistory
+\.bash_history
+.*\.rpmsave
+.*\.cfgsave\.
+config\.log
+.*\.log
+README.*
+COPYING

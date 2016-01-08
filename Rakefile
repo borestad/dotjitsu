@@ -16,6 +16,9 @@ ERROR             = '✖ ERROR   '.red.bold
 EXISTS            = '✓ EXISTS  '.bold.pink
 QUESTION          = '★ INPUT   '.yellow.bold
 
+is_osx   = RUBY_PLATFORM.downcase.include?('darwin')
+is_linux = RUBY_PLATFORM.downcase.include?('linux')
+
 class Installer
 
   def symlink
@@ -42,30 +45,6 @@ class Installer
     FileUtils.ln_s(from, to)
   end
 
-  def install_oh_my_zsh
-    is_available = File.exist?(File.expand_path "~/.oh-my-zsh" )
-
-    if is_available
-      puts "#{EXISTS} 'oh-my-zsh' already installed"
-    else is_available
-      print "#{QUESTION} Install oh-my-zsh? [y/n/q] "
-        case $stdin.gets.chomp
-        when 'y'
-          puts "#{OK} installing oh-my-zsh"
-          system %Q{git clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"}
-        when 'q'
-          exit
-        else
-          puts "skipping oh-my-zsh, you will need to change ~/.zshrc"
-        end
-    end
-  end
-
-
-  def install_homebrew
-    system %Q{ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"}
-  end
-
 end
 
 puts ''
@@ -78,12 +57,11 @@ end
 
 task :bootstrap do
   Installer.new.install_homebrew
-  Installer.new.install_oh_my_zsh
 end
 
 desc 'Install'
 task :install do
-  Installer.new.install
+  system %Q{./bin/dot}
 end
 
 # Always return new line

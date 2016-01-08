@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Glances + deps
+pip install --upgrade glances
+pip install --upgrade bottle py-cpuinfo pysnmp zeroconf netifaces statsd pystache matplotlib pika
+
+# Colors
+pip install --upgrade pygments

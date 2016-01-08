@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+# Kill log files slowing down the shell
+sudo rm -rfv /private/var/log/asl/*.asl

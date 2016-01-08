@@ -1,0 +1,1 @@
+# sshrc works just like ssh, but it also sources the ~/.sshrc on your local computer after logging in remotely.
