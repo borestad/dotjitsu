@@ -1,0 +1,77 @@
+# Disable sertificate check for wget.
+alias wget='wget --no-check-certificate'
+
+# OSX ONLY
+# =========================================================
+if [[ "$OSTYPE" == darwin* ]]; then
+# Short-cuts for copy-paste.
+alias c='pbcopy'
+alias p='pbpaste'
+alias rm='trash -v'
+
+# Case-insensitive pgrep that outputs full path.
+alias pgrep='pgrep -fli'
+
+# Lock current session and proceed to the login screen.
+alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+
+# Sniff network info.
+alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
+alias sniff1="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+
+# Show current Finder directory.
+function finder {
+  osascript 2>/dev/null <<EOF
+    tell application "Finder"
+      return POSIX path of (target of window 1 as alias)
+    end tell
+EOF
+}
+
+# Opens file in EDITOR.
+function edit() {
+  local dir=$1
+  [[ -z "$dir" ]] && dir='.'
+  $EDITOR $dir
+}
+alias e=edit
+
+fi
+# =========================================================
+
+alias serve='http-server'
+alias server='http-server'
+alias git=hub
+
+if (( $+commands[http] )); then
+  alias GET='http GET'
+  # alias HEAD='http -I'
+  # alias POST='http POST'
+  # alias PUT='http PUT'
+  # alias PATCH='http PATCH'
+  # alias DELETE='http DELETE'
+  # alias OPTIONS='http OPTIONS'
+fi
+
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+
+function filesize() { wc -c < $1 }
+
+# Open curr dir in preview.app.
+function preview() {
+  local item=$1
+  [[ -z "$item" ]] && item='.'
+  open $1 -a 'Preview'
+}
+
+# Monitor IO in real-time (open files etc).
+function openfiles() {
+  sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
+}
+
+# Load 8 cores at once.
+function maxcpu() {
+  dn=/dev/null
+  yes > $dn & yes > $dn & yes > $dn & yes > $dn &
+  yes > $dn & yes > $dn & yes > $dn & yes > $dn &
+}
