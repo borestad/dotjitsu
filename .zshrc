@@ -1,11 +1,17 @@
-DOTJITSU=$HOME/.dotjitsu
-DOTJUTSU_FRAMEWORK="oh-my-zsh"
-
 if [[ `uname` == 'Linux' ]] then export LINUX=1; else export LINUX=; fi
 if [[ `uname` == 'Darwin' ]] then export OSX=1; else export OSX=; fi
 
+export HISTFILE=~/.zsh_history
+export EDITOR='atom'
+export VISUAL='atom'
+export PAGER='less'
+
+
 # Select framework
-source "${DOTJITSU}/zsh/$DOTJUTSU_FRAMEWORK/zshrc"
+source "${DOTJITSU}/lib/zsh/$DOTJUTSU_FRAMEWORK/zshrc"
+
+# Read aliases
+source "${DOTJITSU}/.aliases"
 
 # Access private configuration
 if [[ -a ~/.private/zshrc ]]
@@ -13,45 +19,9 @@ then
   source ~/.private/zshrc
 fi
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
 eval "$(rbenv init --no-rehash -)"
 (rbenv rehash &) 2> /dev/null
 
-
-# Customize to your needs...
-
-# Prezto seems to override grc with some annoying alias
-#unalias grc
-#unalias gcp
-#unalias gls
-
-#source "${ZDOTDIR:-$HOME}/.dotfiles/packages/zsh/osx.zsh"
-
-#test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
-
-# source "${HOME}/.zgen/zgen.zsh"
-
-# if ! zgen saved; then
-#   # load oh my zsh
-#   zgen oh-my-zsh
-#   zgen save
-#  fi
-
-# source $DOTJITSU/antigen.zsh
-#
-# # Use oh-my-zsh as a base
-# antigen use oh-my-zsh
-#
-# antigen bundle git
-# antigen bundle heroku
-# antigen bundle pip
-# antigen bundle command-not-found
-#
-# antigen bundle zsh-users/zsh-syntax-highlighting
-# antigen bundle kennethreitz/autoenv
-# antigen bundle Tarrasch/zsh-autoenv
-# antigen bundle zsh-users/zsh-history-substring-search
-#
-# # Antigen: we're done!
-# antigen apply
+# GRC colorizes nifty unix tools all over the place
+source "`brew --prefix`/etc/grc.bashrc"
+bindkey -s "\C-r" "\eqhh\n"     # bind hh to Ctrl-r (for Vi mode check doc)

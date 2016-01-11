@@ -1,4 +1,6 @@
 #!/usr/bin/env zsh
 
+cd "$(dirname $0)"/..
+
 # Kill log files slowing down the shell
 sudo rm -rfv /private/var/log/asl/*.asl

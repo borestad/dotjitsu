@@ -15,7 +15,7 @@ if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 
 echo ''; hr -
 echo "[SYMLINKING]\n"
-stow -Rv .
+./bin/dot-symlink
 
 #DOTFILES/osx/set-defaults.sh
 
