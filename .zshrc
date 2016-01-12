@@ -8,7 +8,7 @@ export PAGER='less'
 
 
 # Select framework
-source "${DOTJITSU}/lib/zsh/$DOTJUTSU_FRAMEWORK/zshrc"
+source "${DOTJITSU}/packages/$DOTJUTSU_FRAMEWORK/zshrc"
 
 # Read aliases
 source "${DOTJITSU}/.aliases"

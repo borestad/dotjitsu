@@ -65,7 +65,7 @@ npm install -g npm-cache
 
 NODE_ENV=production npm-cache install -g livescript coffee-script jshint jslint \
   david public-ip vantage jscs yo vtop tmpin bcat jsinspect \
-	browser-run pen.md esformatter rtail http-server
+	browser-run pen.md esformatter rtail http-server webpack webpack-dev-server
 
 echo ''; hr -
 echo "[Updating Python PIP's]\n"
