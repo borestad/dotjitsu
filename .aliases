@@ -28,6 +28,10 @@ function finder {
 EOF
 }
 
+function brew.info {
+  grep desc $(brew --prefix)/Library/Formula/*.rb | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
+}
+
 # Opens file in EDITOR.
 function edit() {
   local dir=$1
