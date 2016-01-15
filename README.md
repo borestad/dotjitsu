@@ -1,6 +1,6 @@
 # dotjitsu
 
-My personal dotfiles.
+My personal dotfiles, batteries included. Managed by [Stow](http://www.gnu.org/software/stow/)
 
 ## Installation
 ```sh
