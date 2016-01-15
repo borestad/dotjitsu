@@ -2,6 +2,12 @@
 
 My personal dotfiles.
 
+## Installation
+```sh
+./bin/dot
+```
+
+
 Inspired by a ton of other awesome dotfile repos.
 - https://github.com/holman/dotfiles
 - https://github.com/mathiasbynens/dotfiles
