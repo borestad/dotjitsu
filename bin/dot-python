@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env zsh
+
+cd "$(dirname $0)"/..
+
+echo ''; hr -
+echo "[Updating Python PIP's]\n"
 
 # Glances + deps
 pip install --upgrade glances

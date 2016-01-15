@@ -7,7 +7,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
 # Short-cuts for copy-paste.
 alias c='pbcopy'
 alias p='pbpaste'
-alias rm='trash -v'
+#alias rm='trash -v'
 
 # Case-insensitive pgrep that outputs full path.
 alias pgrep='pgrep -fli'
@@ -72,7 +72,6 @@ function preview() {
 function openfiles() {
   sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
 }
-
 # Load 8 cores at once.
 function maxcpu() {
   dn=/dev/null

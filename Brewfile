@@ -8,23 +8,30 @@ tap 'homebrew/bundle'
 # ================================
 brew 'git'
 brew 'go'
+brew 'haskell-stack'
+brew 'haskell-stack ghc cabal-install'
+brew 'n'
 brew 'python'
 brew 'rbenv'
 brew 'ruby-build'
-brew 'n'
 
 # ================================
 # CLI stuff
 # ================================
 brew 'ack'
 brew 'ag'
+brew 'ansible'
 brew 'aria2'
 brew 'axel'
-brew 'bash'
+brew 'azukiapp/azk/azk'
 brew 'bash-completion'
+brew 'bash'
+brew 'ccleaner'
+brew 'charles'
 brew 'cloc'
 brew 'colordiff'
 brew 'cv'
+brew 'dash'
 brew 'dfc'
 brew 'dialog'
 brew 'fasd'
@@ -61,6 +68,7 @@ brew 'unrar'
 brew 'vcsh'
 brew 'vnstat'
 brew 'watch'
+brew 'watchman'
 brew 'wget'
 brew 'whatmask'
 brew 'youtube-dl'
@@ -75,6 +83,7 @@ brew 'mysql'
 brew 'postgresql'
 brew 'redis'
 brew 'riak'
+brew 'sqlite'
 
 
 # ================================
@@ -105,7 +114,7 @@ brew 'nano'
 
 
 # ================================
-# CASKS
+# FORMULAS FOR DEVS
 # ================================
 tap 'caskroom/cask'
 
@@ -120,12 +129,11 @@ cask 'controlplane'
 cask 'cronnix'
 cask 'disk-inventory-x'
 cask 'diskwave'
+cask 'dockertoolbox'
 cask 'dropbox'
-cask 'docker'
-cask 'docker-compose'
-cask 'docker-machine'
 cask 'firefox'
 cask 'fluid'
+cask 'github-desktop'k
 cask 'google-chrome'
 cask 'google-earth'
 cask 'hammerspoon'
@@ -151,7 +159,6 @@ cask 'slack'
 cask 'smartgit'
 cask 'sourcetree'
 cask 'spectacle'
-cask 'spotify'
 cask 'steam'
 cask 'sublime-text'
 cask 'teamviewer'
@@ -159,12 +166,12 @@ cask 'the-unarchiver'
 cask 'transmission'
 cask 'ubersicht'
 cask 'vagrant'
-cask 'virtualbox'
 cask 'virtualbox-extension-pack'
+cask 'virtualbox'
 cask 'vlc'
 cask 'vmware-fusion'
-cask 'vox'
 cask 'vox-preferences-pane'
+cask 'vox'
 cask 'wireshark'
 cask 'xquartz'
 cask 'xtrafinder'
@@ -181,15 +188,18 @@ cask 'font-source-code-pro'
 
 
 # ================================
-# GAMES (afterwork :)
+# ENTERTAINMENT & AFTERWORK :-)
 # ================================
 tap 'homebrew/games'
+cask 'plex-media-player'
+cask 'retroarch'
+cask 'spotify'
 cask 'teeworlds'
 #cask 'hedgewars'
 
 
 # ================================
-# EXTRAX
+# EXTRAS
 # ================================
 tap 'thoughtbot/formulae'
 brew 'gitsh'

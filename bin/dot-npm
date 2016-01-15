@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+cd "$(dirname $0)"/..
+
+echo ''; hr -
+echo "[Updating NODE MODULES]\n"
+npm install -g npm-cache
+
+NODE_ENV=production npm-cache install -g livescript coffee-script jshint jslint \
+  david public-ip vantage jscs yo vtop tmpin bcat jsinspect \
+	browser-run pen.md esformatter rtail http-server webpack webpack-dev-server

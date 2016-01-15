@@ -19,48 +19,10 @@ QUESTION          = '★ INPUT   '.yellow.bold
 is_osx   = RUBY_PLATFORM.downcase.include?('darwin')
 is_linux = RUBY_PLATFORM.downcase.include?('linux')
 
-class Installer
-
-  def symlink
-    dotfiles.each do |src|
-      dest = "~/#{src}"
-
-      from = File.expand_path(src)
-      to = File.expand_path(dest)
-
-      if File.exist?(to)
-        puts "#{EXISTS} #{dest} already exists"
-      else
-        puts "#{OK} Linking #{dest}"
-        link(from, to)
-      end
-    end
-  end
-
-  def dotfiles
-    Dir['.*'] - %w(. .. .git .DS_Store)
-  end
-
-  def link(from, to)
-    FileUtils.ln_s(from, to)
-  end
-
-end
-
 puts ''
 
 desc 'Bootstrap'
-
-task :symlink do
-  Installer.new.symlink
-end
-
 task :bootstrap do
-  Installer.new.install_homebrew
-end
-
-desc 'Install'
-task :install do
   system %Q{./bin/dot}
 end
 

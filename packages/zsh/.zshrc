@@ -8,10 +8,10 @@ export PAGER='less'
 
 
 # Select framework
-source "${DOTJITSU}/packages/$DOTJUTSU_FRAMEWORK/zshrc"
+source "${DOTJITSU}/packages/$DOTJUTSU_FRAMEWORK/.$DOTJUTSU_FRAMEWORK"
 
 # Read aliases
-source "${DOTJITSU}/.aliases"
+source "$HOME/.aliases"
 
 # Access private configuration
 if [[ -a ~/.private/zshrc ]]

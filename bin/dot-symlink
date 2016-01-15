@@ -1,4 +1,6 @@
 #!/usr/bin/env zsh
 
-cd "$(dirname $0)"/..
-stow -Rv .
+cd "$(dirname $0)"/../packages
+
+BASEFILES=(ack curl editorconfig git grc nano ruby shell ssh wget zsh)
+stow -Rv -t $HOME $BASEFILES
