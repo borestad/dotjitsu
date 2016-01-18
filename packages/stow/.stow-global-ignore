@@ -6,6 +6,7 @@
 \.git
 /bin/git-deps
 
+\_.*
 _build
 ,,.*
 ._*
