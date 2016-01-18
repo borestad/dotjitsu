@@ -1,7 +1,12 @@
 cask_args appdir: '/Applications'
 
+tap 'caskroom/cask'
+tap 'caskroom/fonts'
 tap 'caskroom/versions'
 tap 'homebrew/bundle'
+tap 'homebrew/dupes'
+tap 'homebrew/games'
+tap 'homebrew/science'
 
 # ================================
 # DEPS / PROGRAMMING LANGUAGES
@@ -105,8 +110,6 @@ brew 'wdiff', args: ['with-gettext']
 # ================================
 # DUPES
 # ================================
-tap 'homebrew/dupes'
-
 brew 'diffutils'
 brew 'gpatch'
 brew 'make'
@@ -116,8 +119,6 @@ brew 'nano'
 # ================================
 # FORMULAS FOR DEVS
 # ================================
-tap 'caskroom/cask'
-
 cask 'alfred'
 cask 'appcleaner'
 cask 'applepi-baker'
@@ -181,8 +182,6 @@ cask 'yujitach-menumeters'
 # ================================
 # FONTS
 # ================================
-tap 'caskroom/fonts'
-
 cask 'font-inconsolata'
 cask 'font-source-code-pro'
 
@@ -190,12 +189,13 @@ cask 'font-source-code-pro'
 # ================================
 # ENTERTAINMENT & AFTERWORK :-)
 # ================================
-tap 'homebrew/games'
 cask 'plex-media-player'
 cask 'retroarch'
+cask 'openemu'
 cask 'spotify'
 cask 'teeworlds'
-#cask 'hedgewars'
+cask 'wineskin-winery'
+cask ' '
 
 
 # ================================
@@ -210,5 +210,4 @@ brew 'gotty'
 # ================================
 # SCIENCE
 # ================================
-tap 'homebrew/science'
 #brew 'opencv'
