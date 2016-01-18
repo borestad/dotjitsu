@@ -6,6 +6,26 @@ echo ''; hr -
 echo "[Updating NODE MODULES]\n"
 npm install -g npm-cache
 
-NODE_ENV=production npm-cache install -g livescript coffee-script jshint jslint \
-  david public-ip vantage jscs yo vtop tmpin bcat jsinspect \
-	browser-run pen.md esformatter rtail http-server webpack webpack-dev-server
+npm-cache install -g \
+	browser-run \
+  bcat \
+  bower \
+  coffee-script \
+  david \
+  esformatter \
+  http-server \
+  jscs \
+  jshint \
+  jsinspect \
+  jslint \
+  livescript \
+  pen.md \
+  public-ip \
+  rtail \
+  shipit-cli \
+  tmpin \
+  vantage \
+  vtop \
+  webpack \
+  yo \
+  webpack-dev-server
