@@ -1,0 +1,39 @@
+#!/usr/bin/env zsh
+
+cd "$(dirname $0)"/..
+
+HOSTNAME=$(hostname)
+
+git config credential.helper "cache --timeout=604800"
+git config push.default simple
+
+timestamp=`date +'%Y-%m-%d %H:%M'`
+
+# git --no-pager diff
+
+echo ""
+echo "Sync with Bitbucket: 'Changed $timestamp'"
+echo ""
+
+hr = && echo "git: stashing..."
+git stash
+
+hr = && echo "git: pulling..."
+git pull --rebase
+
+
+hr = && echo "git: popping..."
+git stash pop
+
+hr = && echo "git: adding..."
+git add --all
+
+# tig status
+
+hr = && echo "git: committing..."
+git commit -m "Update $timestamp | [$HOSTNAME]"
+
+hr = && echo "git: pushing && cleaning"
+git push --progress #&& git clean -dXf
+
+echo ""

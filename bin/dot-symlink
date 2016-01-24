@@ -2,6 +2,9 @@
 
 cd "$(dirname $0)"/../packages
 
+echo ''; hr - '#' -
+echo "[SYMLINKING]\n"
+
 # Make sure that .stow-global-ignore is set
 stow -R -t $HOME stow
 

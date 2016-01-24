@@ -1,36 +1,27 @@
-# Disable sertificate check for wget.
-alias wget='wget --no-check-certificate'
-
-# OSX ONLY
+# Globals & system overrids
 # =========================================================
-if [[ "$OSTYPE" == darwin* ]]; then
-# Short-cuts for copy-paste.
+
+alias -- -="cd -"
+alias cp='gcp -v'
+alias git='hub'
+alias mkdir='gmkdir -pv'
+alias mv='gmv -v'
+alias rm='grm -v'
+alias serve='http-server'
+alias server='http-server'
+alias wget='wget --no-check-certificate'
+alias pgrep='pgrep -fli'
 alias c='pbcopy'
 alias p='pbpaste'
-#alias rm='trash -v'
+alias dl="cd $HOME/Downloads"
+alias dt="cd $HOME/Desktop"
+alias h="history | fzf --reverse"
+alias path='echo -e ${PATH//:/\\n}'
+alias ct='pygmentize -O style=monokai -f console256 -g'
+alias nx='PATH=$(npm bin):$PATH'
 
-# Case-insensitive pgrep that outputs full path.
-alias pgrep='pgrep -fli'
-
-# Lock current session and proceed to the login screen.
-alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
-
-# Sniff network info.
-alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
-alias sniff1="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
-
-# Show current Finder directory.
-function finder {
-  osascript 2>/dev/null <<EOF
-    tell application "Finder"
-      return POSIX path of (target of window 1 as alias)
-    end tell
-EOF
-}
-
-function brew.info {
-  grep desc $(brew --prefix)/Library/Formula/*.rb | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
-}
+# Create directory and immediately move into that dir
+function mk() { mkdir -p $1; cd $1 }
 
 # Opens file in EDITOR.
 function edit() {
@@ -38,14 +29,36 @@ function edit() {
   [[ -z "$dir" ]] && dir='.'
   $EDITOR $dir
 }
-alias e=edit
+
+alias e='edit'
+
+# Reload .zshrc
+function zr () {
+  source $HOME/.zshrc
+}
+
+alias f2='echo apa'
+
+# OSX ONLY
+# =========================================================
+if [[ "$OSTYPE" == darwin* ]]; then
+# Short-cuts for copy-paste.
+
+
+#alias rm='trash -v'
+
+# Case-insensitive pgrep that outputs full path.
+
+
+function brew.info {
+  grep desc $(brew --prefix)/Library/Formula/*.rb | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
+}
+
 
 fi
-# =========================================================
 
-alias serve='http-server'
-alias server='http-server'
-alias git=hub
+
+
 
 if (( $+commands[http] )); then
   alias GET='http GET'
@@ -57,24 +70,138 @@ if (( $+commands[http] )); then
   # alias OPTIONS='http OPTIONS'
 fi
 
-alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
-function filesize() { wc -c < $1 }
+# =========================================================
+# Cli Tricks
+# =========================================================
+
+alias history.stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+
+
+# =========================================================
+# OSX tricks
+# =========================================================
 
 # Open curr dir in preview.app.
-function preview() {
+function osx.open.preview {
   local item=$1
   [[ -z "$item" ]] && item='.'
   open $1 -a 'Preview'
 }
 
-# Monitor IO in real-time (open files etc).
-function openfiles() {
-  sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
+# Show current Finder directory.
+function osx.finder.currentdir {
+  osascript 2>/dev/null <<EOF
+    tell application "Finder"
+      return POSIX path of (target of window 1 as alias)
+    end tell
+EOF
 }
+
+# Copy CSS to Mou for Markdown visual feedback
+function mou {
+  cp $1 $HOME/Library/Application\ Support/Mou/CSS/
+}
+
+# Lock current session and proceed to the login screen.
+alias osx.lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+
+
+# =========================================================
+# SSH
+# =========================================================
+alias ssh.pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+alias ssh.keygen='ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa; ssh.pubkey'
+
+
+# =========================================================
+# GIT
+# =========================================================
+# Checkout git branches
+function git.co() {
+  local branches branch
+  branches=$(git branch -a) &&
+  branch=$(echo "$branches" | fzf +s +m -x --reverse) &&
+  git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
+}
+
+
+# =========================================================
+# CD
+# =========================================================
+# cd to the default working directory set by current_working_project
+function chdir.default {
+  export wdir=`cat $HOME/.tmp/current_project_path`
+  echo "Change current working project to $wdir"
+  cd $wdir
+}
+
+function chdir.set {
+  cwd=pwd > $HOME/.tmp/current_project_path
+  echo "Set current working project to `$cwd`"
+}
+
+function chdir.rm() {
+  echo "Remove current working project: `cat $HOME/.tmp/current_project_path`"
+  '~' >> $HOME/.tmp/current_project_path
+}
+
+# =========================================================
+# System stuff
+# =========================================================
+
 # Load 8 cores at once.
-function maxcpu() {
+function system.maxcpu() {
   dn=/dev/null
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
 }
+
+function ps.kill() { sudo kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
+
+# =========================================================
+# Lists (with fzf magic)
+# =========================================================
+
+# List of available VM's - with fbr magic
+function l.vm() {
+  vm=$(VBoxManage list vms | fzf +s +m -e --reverse) &&
+  uuid=$(echo "$vm" | ack --cc '{([a-z0-9\-]+)}' --output '$1') &&
+  VBoxManage startvm $uuid
+}
+
+
+# =========================================================
+# File related stuff
+# =========================================================
+function file.size() { wc -c < $1 }
+
+# Monitor IO in real-time (open files etc).
+function files.open() {
+  sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
+}
+# Files used, anywhere on the filesystem
+alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
+# Files being opened (OSX Only)
+alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
+# Files in use in the Users directory
+alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
+
+# =========================================================
+# Network stuff
+# =========================================================
+
+# Sniff network info.
+alias ip.public='dig +short myip.opendns.com @resolver1.opendns.com'
+alias ip='network.ip; ip.public'
+alias net.connections='lsof -l -i +L -R -V'
+alias net.established='lsof -l -i +L -R -V | grep ESTABLISHED'
+alias net.ip="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'"
+alias net.available_ip="ping -t 1 255.255.255.255 > /dev/null; arp -a"
+alias net.publicip='curl -s http://checkip.dyndns.org/ | sed "s/[a-zA-Z<>/ :]//g"'
+alias net.sockets_numerical='netstat -tulpn'
+alias net.sockets_services='netstat -tulp'
+alias net.sniff0="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
+alias net.sniff1="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias net.sniff4="sudo ngrep -d 'en4' -t '^(GET|POST) ' 'tcp and port 80'"
+alias net.flushdns='dscacheutil -flushcache'

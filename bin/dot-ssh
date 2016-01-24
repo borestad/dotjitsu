@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+echo ''; hr - '#' -
+echo "[SETUP SSH KEYS]\n"
+
+if [ ! -f $HOME/.ssh/id_rsa ]; then
+  ssh-keygen -t rsa -N "" -f $HOME/.ssh/id_rsa;
+fi
+
+
+if [ ! -f $HOME/.ssh/authorized_keys ]; then
+	touch $HOME/.ssh/authorized_keys; chmod 644 $HOME/.ssh/authorized_keys
+fi

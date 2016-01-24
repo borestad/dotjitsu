@@ -4,6 +4,7 @@ cd "$(dirname $0)"/..
 
 echo ''; hr -
 echo "[Updating Python PIP's]\n"
+pip install --upgrade pip
 
 # Glances + deps
 pip install --upgrade glances

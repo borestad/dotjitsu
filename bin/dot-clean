@@ -2,5 +2,10 @@
 
 cd "$(dirname $0)"/..
 
+echo ''; hr - '#' -
+echo "[CLEANING]\n"
+
 # Kill log files slowing down the shell
 sudo rm -rfv /private/var/log/asl/*.asl
+
+rm -rfv ./**/.DS_Store

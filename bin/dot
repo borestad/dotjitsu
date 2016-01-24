@@ -12,40 +12,17 @@ fi
 if [ ! type "hr" &> /dev/null ]; then; brew install hr; fi
 if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 
-echo ''; hr -
-echo "[SYMLINKING]\n"
 ./bin/dot-symlink
 
 #DOTFILES/osx/set-defaults.sh
 
-if [ ! -f $HOME/.ssh/id_rsa ]; then
-  echo ''; hr -
-	echo "[SETUP SSH KEYS]\n"
-  ssh-keygen -t rsa -N "" -C "johan@borestad.com" -f $HOME/.ssh/id_rsa;
-fi
-
-echo ''; hr -
-echo "[CLEANING]\n"
-rm ./**/.DS_Store
-
-echo ''; hr -
-echo "[Updating ZSH]\n"
-
-echo '- Antigen'
-git -C $HOME/.zsh/antigen pull || git clone https://github.com/zsh-users/antigen.git $HOME/.zsh/antigen
-
-echo '- oh-my-zsh'
-git -C $HOME/.zsh/oh-my-zsh pull || git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.zsh/oh-my-zsh
-echo '- Zgen'
-git -C $HOME/.zsh/zgen pull || git clone https://github.com/tarjoilija/zgen.git $HOME/.zsh/zgen
-echo '- Prezto'
-git -C $HOME/.zsh/prezto pull || git clone https://github.com/sorin-ionescu/prezto.git $HOME/.zsh/prezto
-
-
-echo ''; hr -
+echo ''; hr - '#' -
 echo "[Upgrade BREW FORMULAS]\n"
 brew -v upgrade
 
+./bin/dot-ssh
+./bin/dot-clean
+./bin/dot-zsh-frameworks
 ./bin/dot-node
 ./bin/dot-npm
 ./bin/dot-python

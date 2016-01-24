@@ -1,0 +1,25 @@
+npm i -g \
+	browser-run \
+  bcat \
+  bower \
+  coffee-script \
+  david \
+  electron-prebuilt \
+  esformatter \
+  http-server \
+  jscs \
+  jshint \
+  jsinspect \
+  jslint \
+  livescript \
+	npm-cache \
+  pen.md \
+  public-ip \
+  rtail \
+  shipit-cli \
+  tmpin \
+  vantage \
+  vtop \
+  webpack \
+  yo \
+  webpack-dev-server
