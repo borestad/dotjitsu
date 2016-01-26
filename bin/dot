@@ -27,6 +27,7 @@ brew -v upgrade
 ./bin/dot-npm
 ./bin/dot-python
 ./bin/dot-ruby
+./bin/dot-apm
 
 # Make sure zsh is available as a shell
 #command -v zsh | sudo tee -a /etc/shells
