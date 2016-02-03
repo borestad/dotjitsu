@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+ln -sfv /usr/local/opt/syncthing/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.syncthing.plist
