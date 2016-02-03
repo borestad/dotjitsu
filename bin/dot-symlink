@@ -8,5 +8,5 @@ echo "[SYMLINKING]\n"
 # Make sure that .stow-global-ignore is set
 stow -R -t $HOME stow
 
-BASEFILES=(ack curl editorconfig git grc nano ruby shell ssh wget zsh)
+BASEFILES=(ack curl editorconfig git grc nano ruby shell ssh wget zsh prezto)
 stow -Rv -t $HOME $BASEFILES

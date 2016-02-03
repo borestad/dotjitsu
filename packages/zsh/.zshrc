@@ -1,3 +1,7 @@
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
 files=(
   # options
   # path
@@ -16,8 +20,11 @@ files=(
   # bindkeys
   # terminal
   # autopair
-  z
+  htop
+  fasd
+  # z
 )
+
 
 for file in $files; do
   source "${DOTJITSU}/packages/${file}/${file}.zsh"
@@ -32,27 +39,36 @@ export EDITOR='atom'
 export VISUAL='atom'
 export PAGER='less'
 
-# Select framework
-source "${DOTJITSU}/packages/$DOTJUTSU_FRAMEWORK/.$DOTJUTSU_FRAMEWORK"
 
 # Read aliases
 source "$HOME/.aliases"
 
 # Access private configuration
-if [[ -a ~/.private/zshrc ]]
+if [[ -a ~/.private/.zshrc ]]
 then
-  source ~/.private/zshrc
+  source ~/.private/.zshrc
 fi
 
-eval "$(rbenv init --no-rehash -)"
-(rbenv rehash &) 2> /dev/null
+# Prezto seems to override grc with some annoying alias
+unalias grc
+unalias gcp
+unalias gls
+
+
+# eval "$(rbenv init --no-rehash -)"
+# (rbenv rehash &) 2> /dev/null
 
 # GRC colorizes nifty unix tools all over the place
 source "`brew --prefix`/etc/grc.bashrc"
-bindkey -s "\C-r" "\eqhh\n"     # bind hh to Ctrl-r (for Vi mode check doc)
+
+# bind hh to Ctrl-r (for Vi mode check doc)
+bindkey -s "\C-r" "\eqhh\n"
+
+# Autojump
+#[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # Go to default directory
 # chdir.default
 
 # Enable syntax highlighting
-source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+#source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
