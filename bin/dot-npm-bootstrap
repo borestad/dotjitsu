@@ -3,6 +3,7 @@ npm i -g \
   bcat \
   bower \
   coffee-script \
+  casperjs \
   david \
   electron-prebuilt \
   esformatter \
@@ -10,9 +11,14 @@ npm i -g \
   jscs \
   jshint \
   jsinspect \
+  js2coffee \
+  jscodeshift \
   jslint \
   livescript \
-	npm-cache \
+  npm-cache \
+  npm \
+  pen.md \
+  phantomjs-prebuilt \
   pen.md \
   public-ip \
   rtail \
