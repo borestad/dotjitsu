@@ -13,21 +13,20 @@ if [ ! type "hr" &> /dev/null ]; then; brew install hr; fi
 if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 
 ./bin/dot-symlink
-
-#DOTFILES/osx/set-defaults.sh
-
-echo ''; hr - '#' -
-echo "[Upgrade BREW FORMULAS]\n"
-brew -v upgrade
-
-./bin/dot-ssh
-./bin/dot-clean
 ./bin/dot-zsh-frameworks
+
+./bin/dot-clean
+./bin/dot-apm
+./bin/dot-brew
+./bin/dot-gem
 ./bin/dot-node
 ./bin/dot-npm
+./bin/dot-osx
+./bin/dot-osx-services
 ./bin/dot-python
 ./bin/dot-ruby
-./bin/dot-apm
+./bin/dot-ssh
+
 
 # Make sure zsh is available as a shell
 #command -v zsh | sudo tee -a /etc/shells

@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+cd "$(dirname $0)"/..
+
+echo ''; hr - '#' -
+echo "[BREW FORMULAS]\n"
+
+brew -v update
+brew -v bundle
+brew -v upgrade

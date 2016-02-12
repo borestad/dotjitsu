@@ -54,6 +54,7 @@ unalias grc
 unalias gcp
 unalias gls
 
+# fpath=(/usr/local/share/zsh-completions $fpath)
 
 # eval "$(rbenv init --no-rehash -)"
 # (rbenv rehash &) 2> /dev/null
@@ -66,6 +67,15 @@ bindkey -s "\C-r" "\eqhh\n"
 
 # Autojump
 #[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# Lunchy
+LUNCHY_DIR=$(dirname `gem which lunchy`)/../extras
+if [ -f $LUNCHY_DIR/lunchy-completion.zsh ]; then
+  . $LUNCHY_DIR/lunchy-completion.zsh
+fi
+
+# Fuck
+eval $(thefuck --alias)
 
 # Go to default directory
 # chdir.default

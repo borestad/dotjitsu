@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+npm i -g sails-generate-backend-gulp \
+  sails-generate-gulpfile \
+  sails-generate-new-gulp-webpack \
+  sails-generate-frontend-gulp \
+  sails-generate-new-gulp
+
+tee $HOME/.sailsrc <<EOF
+{
+    "generators": {
+        "modules": {
+            "new": "sails-generate-new-gulp-webpack",
+            "frontend": "sails-generate-frontend-gulp",
+            "backend": "sails-generate-backend-gulp",
+            "gulpfile": "sails-generate-gulpfile"
+        }
+    }
+}
+EOF
+
+sails new $@ --viewEngine jade --template jade

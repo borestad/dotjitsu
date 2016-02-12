@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+gem install bropages
+gem install lunchy

@@ -1237,7 +1237,7 @@
 	<key>HideMenuBarInFullscreen</key>
 	<true/>
 	<key>HideScrollbar</key>
-	<true/>
+	<false/>
 	<key>HideTab</key>
 	<true/>
 	<key>HighlightTabLabels</key>
@@ -1311,13 +1311,13 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>970 769 620 392 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>2560 0 1080 1920 2560 0 1080 1897 </string>
+	<string>4 6 1058 865 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>720 9 729 862 0 0 1440 877 </string>
+	<string>0 7 1058 862 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>0 509 665 501 0 0 2560 1417 </string>
+	<string>0 167 1058 710 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>-1437 185 1434 866 -1440 180 1440 877 </string>
+	<string>3 8 1434 865 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
 	<string>-1437 449 650 501 -1440 180 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
@@ -2155,7 +2155,7 @@
 	<key>ShowPaneTitles</key>
 	<true/>
 	<key>SmartPlacement</key>
-	<true/>
+	<false/>
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.40000000596046448</real>
 	<key>SwitchTabModifier</key>
@@ -2177,7 +2177,7 @@
 	<key>UseCompactLabel</key>
 	<true/>
 	<key>UseLionStyleFullscreen</key>
-	<false/>
+	<true/>
 	<key>WindowNumber</key>
 	<true/>
 	<key>WindowStyle</key>

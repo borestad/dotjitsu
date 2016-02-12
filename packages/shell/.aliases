@@ -20,6 +20,9 @@ alias path='echo -e ${PATH//:/\\n}'
 alias ct='pygmentize -O style=monokai -f console256 -g'
 alias nx='PATH=$(npm bin):$PATH'
 
+
+# Boilerplate shortcuts
+# =========================================================
 # Create directory and immediately move into that dir
 function mk() { mkdir -p $1; cd $1 }
 

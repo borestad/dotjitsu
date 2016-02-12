@@ -1,6 +1,0 @@
-#!/usr/bin/env zsh
-
-echo ''; hr -
-echo "[Updating BREW]\n"
-brew -v update
-brew -v bundle
