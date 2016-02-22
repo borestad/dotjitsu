@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+echo ''; hr - '#' -
+echo "[Updating Bitbar Plugins]\n"
+
+mkdir -p $DOTJITSU/support
+
+git -C $DOTJITSU/support/bitbar pull || git clone --recursive https://github.com/matryer/bitbar-plugins.git $DOTJITSU/support/bitbar
+cd $DOTJITSU/support/bitbar && git submodule update --init --recursive
+
+
+pip install requests
+ln -sfv $DOTJITSU/support/bitbar/Dev/CircleCI/circleci-check.5m.py $DOTJITSU/packages/bitbar/
+
+ln -sfv $DOTJITSU/support/bitbar/Dev/Docker/docker-status.1m.sh $DOTJITSU/packages/bitbar/

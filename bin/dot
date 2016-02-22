@@ -16,7 +16,6 @@ if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 ./bin/dot-zsh-frameworks
 
 ./bin/dot-clean
-./bin/dot-apm
 ./bin/dot-brew
 ./bin/dot-gem
 ./bin/dot-node

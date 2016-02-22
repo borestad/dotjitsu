@@ -28,4 +28,5 @@ npm i -g \
   vtop \
   webpack \
   yo \
-  webpack-dev-server
+  webpack-dev-server \
+	webpack-bundle-size-analyzer
