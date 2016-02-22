@@ -1,5 +1,6 @@
 atom-jade
-atom-typescript
+browser-plus
+emmet
 formatter-coffeescript
 jade-beautify
 language-jade
@@ -11,14 +12,14 @@ linter-coffeescript
 linter-jade
 linter-js-standard
 linter-lsc
-linter-tidy
 minimap
-preview
-preview-plus
+minimap-pigments
+navigate
+pigments
 react
 snippets-jade
 sort-lines
 source-preview-jade
 standard-formatter
+stylus
 terminal-plus
-travis-ci-status
