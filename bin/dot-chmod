@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+chmod -v +x $HOME/.dotjitsu/bin/*
+chmod -v +x $HOME/.private/bin/*

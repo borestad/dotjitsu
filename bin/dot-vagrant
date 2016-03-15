@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+LICENSE=$HOME/.private/licenses/vagrant/license.lic
+[[ -f $LICENSE ]] || vagrant plugin license vagrant-vmware-fusion $HOME/.private/licenses/vagrant/license.lic
+
+vagrant plugin install vagrant-ip-show
+vagrant plugin install vagrant-host-path
