@@ -5,6 +5,7 @@ npm i -g \
   coffee-script \
   casperjs \
   david \
+  debug \
   electron-prebuilt \
   esformatter \
   http-server \
@@ -15,6 +16,7 @@ npm i -g \
   jscodeshift \
   jslint \
   livescript \
+  node-debugger \
   npm-cache \
   npm \
   pen.md \
