@@ -1,0 +1,11 @@
+atom-node-debugger
+atom-typescript
+highlight-selected
+linter-tidy
+markdown-format
+preview
+preview-plus
+symbols-view
+tab-smart-sort
+terminal-plus
+travis-ci-status
