@@ -12,3 +12,7 @@ pip install --upgrade bottle py-cpuinfo pysnmp zeroconf netifaces statsd pystach
 
 # Colors
 pip install --upgrade pygments
+
+# Sen
+pip install --upgrade urwid
+pip install --upgrade sen
