@@ -122,7 +122,29 @@ function mou {
 }
 
 # Lock current session and proceed to the login screen.
-alias osx.lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+
+# extract:  Extract most know archives with one command
+function extract {
+    if [ -f $1 ] ; then
+      case $1 in
+        *.tar.bz2)   tar xjf $1     ;;
+        *.tar.gz)    tar xzf $1     ;;
+        *.bz2)       bunzip2 $1     ;;
+        *.rar)       unrar e $1     ;;
+        *.gz)        gunzip $1      ;;
+        *.tar)       tar xf $1      ;;
+        *.tbz2)      tar xjf $1     ;;
+        *.tgz)       tar xzf $1     ;;
+        *.zip)       unzip $1       ;;
+        *.Z)         uncompress $1  ;;
+        *.7z)        7z x $1        ;;
+        *)     echo "'$1' cannot be extracted via extract()" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
 
 
 # =========================================================
@@ -211,15 +233,15 @@ alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v
 
 # Sniff network info.
 alias ip.public='dig +short myip.opendns.com @resolver1.opendns.com'
-alias ip='net.ip; ip.public'
+alias ip.internal="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'"
+alias ip='ip.internal; ip.public'
 alias net.connections='lsof -l -i +L -R -V'
 alias net.established='lsof -l -i +L -R -V | grep ESTABLISHED'
-alias net.ip="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'"
 alias net.available_ip="ping -t 1 255.255.255.255 > /dev/null; arp -a"
-alias net.publicip='curl -s http://checkip.dyndns.org/ | sed "s/[a-zA-Z<>/ :]//g"'
 alias net.sockets_numerical='netstat -tulpn'
 alias net.sockets_services='netstat -tulp'
 alias net.sniff0="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff1="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff4="sudo ngrep -d 'en4' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.flushdns='dscacheutil -flushcache'
+alias flushdns='net.flushdns'
