@@ -11,3 +11,5 @@ sudo rm -rfv /private/var/log/asl/*.asl
 rm -rfv ./**/.DS_Store
 
 chmod -R +x ~/.dotjitsu/bin/*
+
+brew cleanup
