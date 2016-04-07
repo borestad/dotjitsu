@@ -22,6 +22,7 @@ brew 'python'
 brew 'python3'
 brew 'rbenv'
 brew 'ruby-build'
+brew 'xhyve', args: ['--HEAD']
 
 # ================================
 # CLI stuff
@@ -84,6 +85,7 @@ brew 'vcsh'
 brew 'vnstat'
 brew 'watch'
 brew 'watchman'
+brew 'webhook'
 brew 'wget'
 brew 'whatmask'
 brew 'youtube-dl'
