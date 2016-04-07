@@ -152,7 +152,7 @@ function extract {
 # =========================================================
 alias ssh.pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 alias ssh.keygen='ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa; ssh.pubkey'
-
+alias pubkey="ssh.pubkey"
 
 # =========================================================
 # GIT
@@ -233,7 +233,7 @@ alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v
 
 # Sniff network info.
 alias ip.public='dig +short myip.opendns.com @resolver1.opendns.com'
-alias ip.internal="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'"
+alias ip.internal="echo ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'"
 alias ip='ip.internal; ip.public'
 alias net.connections='lsof -l -i +L -R -V'
 alias net.established='lsof -l -i +L -R -V | grep ESTABLISHED'
