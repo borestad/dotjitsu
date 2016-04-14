@@ -15,3 +15,7 @@ git -C $HOME/.zsh/zgen pull || git clone https://github.com/tarjoilija/zgen.git 
 echo '  - Prezto'
 git -C $HOME/.zprezto pull || git clone --recursive https://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
 cd $HOME/.zprezto && git submodule update --init --recursive
+
+# Docker autocompletion
+curl -fLo ~/.zprezto/modules/completion/external/src/_docker \
+  https://raw.github.com/felixr/docker-zsh-completion/master/_docker
