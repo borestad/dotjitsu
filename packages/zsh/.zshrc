@@ -20,6 +20,7 @@ files=(
   # bindkeys
   # terminal
   # autopair
+  docker
   htop
   fasd
   # z
