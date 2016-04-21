@@ -3,7 +3,7 @@ npm i -g \
   bcat \
   bower \
   coffee-script \
-  casperjs \
+  casperjs-prebuilt \
   david \
   debug \
   electron-prebuilt \
