@@ -8,3 +8,4 @@ echo "[BREW FORMULAS]\n"
 brew -v update
 brew -v bundle
 brew -v upgrade
+brew cleanup -s

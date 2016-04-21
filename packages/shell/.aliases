@@ -36,6 +36,7 @@ alias sl='ls'            # I often screw this up.
 
 alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal tee | tee fs_usage.log'
 alias spotlight.rebuild='sudo mdutil -E /'
+alias speedtest="speedtest-cli"
 
 
 # Boilerplate shortcuts
