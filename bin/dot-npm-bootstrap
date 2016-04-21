@@ -1,35 +1,55 @@
-npm i -g \
-  browser-run \
-  bcat \
-  bower \
-  coffee-script \
-  casperjs-prebuilt \
-  david \
-  debug \
-  electron-prebuilt \
-  esformatter \
-  http-server \
-  jscs \
-  jshint \
-  jsinspect \
-  js2coffee \
-  jscodeshift \
-  jslint \
-  livescript \
-  node-debugger \
-  npm-cache \
-  npm-check \
-  npm \
-  pen.md \
-  phantomjs-prebuilt \
-  pen.md \
-  public-ip \
-  rtail \
-  shipit-cli \
-  tmpin \
-  vantage \
-  vtop \
-  webpack \
-  yo \
-  webpack-dev-server \
-	webpack-bundle-size-analyzer
+#!/usr/bin/env zsh
+npm set progress=true
+
+packages=(
+  browser-run
+  bcat
+  bower
+  coffee-script
+  casperjs
+  david
+  debug
+  electron-prebuilt
+  esformatter
+  http-server
+  jscs
+  jshint
+  jsinspect
+  js2coffee
+  jscodeshift
+  jslint
+  livescript
+  node-debugger
+  npm-cache
+  npm-check
+  # npm
+  pen.md
+  phantomjs-prebuilt
+  pen.md
+  public-ip
+  rtail
+  shipit-cli
+  tmpin
+  vantage
+  vtop
+  webpack
+  yo
+  webpack-dev-server
+  webpack-bundle-size-analyzer
+
+)
+
+npm set progress=true
+for pkg in $packages; do  
+  hr -
+  echo "Uninstalling ${pkg}"
+  npm un -g "${pkg}"
+done
+
+npm set progress=false
+for pkg in $packages; do  
+  hr -
+  echo "Installing ${pkg}"
+  time NODE_ENV=production npm i -g "${pkg}"
+done
+npm set progress=true

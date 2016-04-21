@@ -34,6 +34,8 @@ alias lc='lt -c'         # Lists sorted by date, most recent last, shows change 
 alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
 alias sl='ls'            # I often screw this up.
 
+alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal tee | tee fs_usage.log'
+alias spotlight.rebuild='sudo mdutil -E /'
 
 
 # Boilerplate shortcuts
@@ -123,29 +125,6 @@ function mou {
 
 # Lock current session and proceed to the login screen.
 alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
-
-# extract:  Extract most know archives with one command
-function extract {
-    if [ -f $1 ] ; then
-      case $1 in
-        *.tar.bz2)   tar xjf $1     ;;
-        *.tar.gz)    tar xzf $1     ;;
-        *.bz2)       bunzip2 $1     ;;
-        *.rar)       unrar e $1     ;;
-        *.gz)        gunzip $1      ;;
-        *.tar)       tar xf $1      ;;
-        *.tbz2)      tar xjf $1     ;;
-        *.tgz)       tar xzf $1     ;;
-        *.zip)       unzip $1       ;;
-        *.Z)         uncompress $1  ;;
-        *.7z)        7z x $1        ;;
-        *)     echo "'$1' cannot be extracted via extract()" ;;
-         esac
-     else
-         echo "'$1' is not a valid file"
-     fi
-}
-
 
 # =========================================================
 # SSH
@@ -245,3 +224,68 @@ alias net.sniff1="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff4="sudo ngrep -d 'en4' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.flushdns='dscacheutil -flushcache'
 alias flushdns='net.flushdns'
+
+# =========================================================
+# Compression
+# =========================================================
+
+function xtar {
+  tar cf - $1 | pv -s $(du -sk $1 | awk '{print $1*1024}') | pigz --fast > $2.tar.gz  
+}
+
+function xtract {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+ else
+    if [ -f $1 ] ; then
+        # NAME=${1%.*}
+        # mkdir $NAME && cd $NAME
+        case $1 in
+          *.tar.bz2)   tar xvjf ../$1    ;;
+          *.tar.gz)    tar xvzf ../$1    ;;
+          *.tar.xz)    tar xvJf ../$1    ;;
+          *.lzma)      unlzma ../$1      ;;
+          *.bz2)       bunzip2 ../$1     ;;
+          *.rar)       unrar x -ad ../$1 ;;
+          *.gz)        gunzip ../$1      ;;
+          *.tar)       tar xvf ../$1     ;;
+          *.tbz2)      tar xvjf ../$1    ;;
+          *.tgz)       tar xvzf ../$1    ;;
+          *.zip)       unzip ../$1       ;;
+          *.Z)         uncompress ../$1  ;;
+          *.7z)        7z x ../$1        ;;
+          *.xz)        unxz ../$1        ;;
+          *.exe)       cabextract ../$1  ;;
+          *)           echo "extract: '$1' - cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "$1 - file does not exist"
+    fi
+fi
+}
+
+
+# =========================================================
+# Useful file size aliases
+# =========================================================
+
+# 1500 -> 1.500
+function to_kb {
+  echo $(bc <<< "scale=3; $1/1000")
+}
+
+# 10000 -> 10,000
+function format_number {
+  printf "%'.3f\n" $1
+}
+
+# ./some_file.txt -> 11496328
+function size_in_bytes {
+  stat -f %z "$1"
+}
+
+# ./some_file.txt -> 11,496.328 KB
+function echo_size {
+  echo $(format_number $(to_kb $(size_in_bytes "$1")))" KB"
+}
