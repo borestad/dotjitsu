@@ -230,8 +230,19 @@ alias flushdns='net.flushdns'
 # Compression
 # =========================================================
 
-function xtar {
-  tar cf - $1 | pv -s $(du -sk $1 | awk '{print $1*1024}') | pigz --fast > $2.tar.gz  
+function x1 {
+  local input=$1; local output=${2:-bar}.tar.gz
+  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pigz -c -6 > $output
+}
+
+function x2 {
+  local input=$1; local output=${2:-bar}.tar.lz
+  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | plzip -c -5 > $output
+}
+
+function x3 {
+  local input=$1; local output=${2:-bar}.tar.bz2
+  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pbzip2 -c -9 > $output
 }
 
 function xtract {
@@ -271,6 +282,11 @@ fi
 # Useful file size aliases
 # =========================================================
 
+function randfile {
+  local size=$1
+  time openssl rand $size | head -c $size > $size.bin
+}
+
 # 1500 -> 1.500
 function to_kb {
   echo $(bc <<< "scale=3; $1/1000")
@@ -288,5 +304,5 @@ function size_in_bytes {
 
 # ./some_file.txt -> 11,496.328 KB
 function echo_size {
-  echo $(format_number $(to_kb $(size_in_bytes "$1")))" KB"
+  echo $(format_number $(to_kb $(size_in_bytes "$1")))"kB"
 }
