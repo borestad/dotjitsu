@@ -16,6 +16,15 @@ echo '  - Prezto'
 git -C $HOME/.zprezto pull || git clone --recursive https://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
 cd $HOME/.zprezto && git submodule update --init --recursive
 
+echo '  - Git friendly'
+rm -rf $DOTJITSU/packages/git-friendly && \
+git clone git://github.com/jamiew/git-friendly.git $DOTJITSU/packages/git-friendly && \
+rm -rf $DOTJITSU/packages/git-friendly/.git
+
+git -C $HOME/.zprezto pull || git clone --recursive https://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
+cd $HOME/.zprezto && git submodule update --init --recursive
+
+
 # Docker autocompletion
 curl -fLo ~/.zprezto/modules/completion/external/src/_docker \
   https://raw.github.com/felixr/docker-zsh-completion/master/_docker

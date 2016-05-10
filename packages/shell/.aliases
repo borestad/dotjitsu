@@ -11,14 +11,15 @@ alias serve='http-server'
 alias server='http-server'
 alias wget='wget --no-check-certificate'
 alias pgrep='pgrep -fli'
-alias c='pbcopy'
-alias p='pbpaste'
+alias pc='pbcopy'
+alias pp='pbpaste'
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias h="history | fzf --reverse"
 alias path='echo -e ${PATH//:/\\n}'
 alias ct='pygmentize -O style=monokai -f console256 -g'
 alias nx='PATH=$(npm bin):$PATH'
+alias dj='cd $HOME/.dotjitsu && atom .'
 
 alias ls='gls --color --group-directories-first'
 alias l='ls -lah'        # Lists in one column, hidden files.
@@ -231,17 +232,17 @@ alias flushdns='net.flushdns'
 # =========================================================
 
 function x1 {
-  local input=$1; local output=${2:-bar}.tar.gz
-  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pigz -c -6 > $output
+  local input=$1; local output=${2:-$1}.tar.gz
+  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pigz -c -9 > $output
 }
 
 function x2 {
-  local input=$1; local output=${2:-bar}.tar.lz
-  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | plzip -c -5 > $output
+  local input=$1; local output=${2:-$1}.tar.lz
+  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | plzip -c -9 > $output
 }
 
 function x3 {
-  local input=$1; local output=${2:-bar}.tar.bz2
+  local input=$1; local output=${2:-$1}.tar.bz2
   tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pbzip2 -c -9 > $output
 }
 

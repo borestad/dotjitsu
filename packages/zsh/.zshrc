@@ -51,9 +51,9 @@ then
 fi
 
 # Prezto seems to override grc with some annoying alias
-unalias grc
-unalias gcp
-unalias gls
+unalias grc 2> /dev/null
+unalias gcp 2> /dev/null
+unalias gls 2> /dev/null
 
 # fpath=(/usr/local/share/zsh-completions $fpath)
 
