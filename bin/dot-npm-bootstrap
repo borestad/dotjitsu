@@ -2,30 +2,30 @@
 npm set progress=true
 
 packages=(
-  browser-run
   bcat
   bower
-  coffee-script
+  browser-run
   casperjs
+  coffee-script
   david
   debug
   electron-prebuilt
   esformatter
+  gatsby
   http-server
+  js2coffee
+  jscodeshift
   jscs
   jshint
   jsinspect
-  js2coffee
-  jscodeshift
   jslint
   livescript
   node-debugger
   npm-cache
   npm-check
-  # npm
+  pen.md
   pen.md
   phantomjs-prebuilt
-  pen.md
   public-ip
   rtail
   shipit-cli
@@ -33,20 +33,18 @@ packages=(
   vantage
   vtop
   webpack
-  yo
-  webpack-dev-server
   webpack-bundle-size-analyzer
-
+  webpack-dev-server
+  yo
 )
 
-npm set progress=true
+npm set progress=false
 for pkg in $packages; do  
   hr -
   echo "Uninstalling ${pkg}"
   npm un -g "${pkg}"
 done
 
-npm set progress=false
 for pkg in $packages; do  
   hr -
   echo "Installing ${pkg}"
