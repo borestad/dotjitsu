@@ -2,6 +2,7 @@
 # =========================================================
 
 alias -- -="cd -"
+alias brew -="brew -v"
 alias cp='gcp -v'
 alias git='hub'
 alias mkdir='gmkdir -pv'
