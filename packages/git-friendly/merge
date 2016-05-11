@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Usage: merge [branchname]
+#
+# Tries to merge local branch "branchname" into the current branch
+# It will stop you if you are behind & need to pull 1st
+#
+
+remote="origin"
+branch=$1
+current_branch=$(git branch 2>/dev/null|grep -e ^* | tr -d \*)
+
+if [ -z $branch ]; then
+  echo "Usage: $0 [branchname]"
+  exit 1
+fi
+
+# If there is a remote version of this branch, rebase onto current_branch first
+# If there's a remote (public) branch, we do not want to be rewriting histories
+tracking=$(git branch -vv | egrep "^\*" | awk '{ print $4 '})
+echo "tracking=$tracking"
+if [[ ! "$tracking" =~ "$remote" ]]; then
+  echo "* Local-only branch, rebasing $branch onto $current_branch first..."
+  git checkout $branch
+  git rebase $current_branch || exit 1
+else
+  echo "* This branch exists remotely, not rebasing"
+fi
+
+echo "* Merge $branch into $current_branch"
+git checkout $current_branch
+git merge $branch || exit 1
+
+echo "* Done"
+exit 0
