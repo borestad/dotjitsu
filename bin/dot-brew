@@ -8,4 +8,9 @@ echo "[BREW FORMULAS]\n"
 brew -v update
 brew -v bundle
 brew -v upgrade
+
+# Fix for broken 'brew cask'
+for c in `brew cask list`; do ! brew cask info $c | grep -qF "Not installed" || brew cask install $c; done
+
 brew cleanup -s
+brew cask cleanup
