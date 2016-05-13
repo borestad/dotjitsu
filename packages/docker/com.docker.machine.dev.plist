@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Disabled</key>
-	<true/>
+	<false/>
 	<key>EnvironmentVariables</key>
 	<dict>
 		<key>PATH</key>

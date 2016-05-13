@@ -7,4 +7,6 @@ if [[ $(pgrep docker-machine-driver-xhyve) ]]; then
 else
   echo "docker-machine dev is not running"
   echo "try running: docker-machine start dev"
+  docker-machine start dev
+  eval $(docker-machine env dev)
 fi
