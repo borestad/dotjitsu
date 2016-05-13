@@ -23,7 +23,7 @@ if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 ./bin/dot-brew
 ./bin/dot-gem
 ./bin/dot-node
-./bin/dot-npm
+#./bin/dot-npm
 ./bin/dot-manual
 ./bin/dot-osx
 ./bin/dot-osx-services
