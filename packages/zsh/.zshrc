@@ -97,4 +97,4 @@ chpwd_functions=( auto-ls $chpwd_functions )
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source ~/.fzf

@@ -12,6 +12,7 @@ BASEFILES=(
 	ack
 	curl
 	editorconfig
+	fzf
 	git
 	htop
 	nano
