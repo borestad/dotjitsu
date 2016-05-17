@@ -14,6 +14,7 @@ packages=(
   gatsby
   http-server
   js2coffee
+  diff-so-fancy
   jscodeshift
   jscs
   jshint
@@ -39,15 +40,17 @@ packages=(
 )
 
 npm set progress=false
-for pkg in $packages; do  
-  hr -
-  echo "Uninstalling ${pkg}"
-  npm un -g "${pkg}"
-done
+
+# for pkg in $packages; do  
+#   hr -
+#   echo "Uninstalling ${pkg}"
+#   npm un -g "${pkg}"
+# done
 
 for pkg in $packages; do  
   hr -
   echo "Installing ${pkg}"
-  time NODE_ENV=production npm i -g "${pkg}"
+  NODE_ENV=production npm i -g "${pkg}@latest"
 done
+
 npm set progress=true
