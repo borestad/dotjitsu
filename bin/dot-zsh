@@ -4,16 +4,16 @@ echo ''; hr - '#' -
 echo "[Updating ZSH Frameworks]\n"
 
 echo '  - Antigen'
-git -C $HOME/.zsh/antigen pull || git clone https://github.com/zsh-users/antigen.git $HOME/.zsh/antigen
+git -C $HOME/.zsh/antigen pull || git clone git://github.com/zsh-users/antigen.git $HOME/.zsh/antigen
 
 echo '  - oh-my-zsh'
-git -C $HOME/.zsh/oh-my-zsh pull || git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.zsh/oh-my-zsh
+git -C $HOME/.zsh/oh-my-zsh pull || git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.zsh/oh-my-zsh
 
 echo '  - Zgen'
-git -C $HOME/.zsh/zgen pull || git clone https://github.com/tarjoilija/zgen.git $HOME/.zsh/zgen
+git -C $HOME/.zsh/zgen pull || git clone git://github.com/tarjoilija/zgen.git $HOME/.zsh/zgen
 
 echo '  - Prezto'
-git -C $HOME/.zprezto pull || git clone --recursive https://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
+git -C $HOME/.zprezto pull || git clone --recursive git://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
 cd $HOME/.zprezto && git submodule update --init --recursive
 
 echo '  - Git friendly'
@@ -21,5 +21,9 @@ rm -rf $DOTJITSU/packages/git-friendly && \
 git clone git://github.com/jamiew/git-friendly.git $DOTJITSU/packages/git-friendly && \
 rm -rf $DOTJITSU/packages/git-friendly/.git
 
-git -C $HOME/.zprezto pull || git clone --recursive https://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
+git -C $HOME/.zprezto pull || git clone --recursive git://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
 cd $HOME/.zprezto && git submodule update --init --recursive
+
+echo '  - Powerline fonts'
+git -C /tmp/pl-fonts pull || git clone --recursive git://github.com/powerline/fonts.git /tmp/pl-fonts && \
+/tmp/pl-fonts/install.sh
