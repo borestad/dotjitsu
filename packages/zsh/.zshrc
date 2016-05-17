@@ -2,6 +2,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-universal)
+
 files=(
   # options
   # path
@@ -64,7 +66,7 @@ unalias gls 2> /dev/null
 source "`brew --prefix`/etc/grc.bashrc"
 
 # bind hh to Ctrl-r (for Vi mode check doc)
-bindkey -s "\C-r" "\eqhh\n"
+# bindkey -s "\C-r" "\eqhh\n"
 
 # Autojump
 #[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
@@ -78,8 +80,21 @@ fi
 # Fuck
 eval $(thefuck --alias)
 
+# Automatically list directory contents on `cd`.
+auto-ls () {
+  emulate -L zsh;
+  # explicit sexy ls'ing as aliases arent honored in here.
+  hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || ls
+}
+
+chpwd_functions=( auto-ls $chpwd_functions )
+
 # Go to default directory
 # chdir.default
 
 # Enable syntax highlighting
 #source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

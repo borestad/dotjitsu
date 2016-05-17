@@ -115,6 +115,7 @@ brew 'youtube-dl'
 brew 'zopfli'
 brew 'zsh'
 brew 'zsh-syntax-highlighting'
+brew 'zsh-autosuggestions'
 
 # ================================
 # Databases
