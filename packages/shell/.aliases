@@ -36,6 +36,13 @@ alias lc='lt -c'         # Lists sorted by date, most recent last, shows change 
 alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
 alias sl='ls'            # I often screw this up.
 
+# Gnu utils (to enforce presedence)
+alias xargs='/usr/local/opt/findutils/libexec/gnubin/xargs'
+alias find='/usr/local/opt/findutils/libexec/gnubin/find'
+alias locate='/usr/local/opt/findutils/libexec/gnubin/locate'
+alias updatedb='/usr/local/opt/findutils/libexec/gnubin/updatedb'
+
+# Others
 alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal tee | tee fs_usage.log'
 alias spotlight.rebuild='sudo mdutil -E /'
 alias speedtest="speedtest-cli"
