@@ -22,6 +22,7 @@ files=(
   # bindkeys
   # terminal
   # autopair
+  iterm2
   docker
   htop
   fasd
