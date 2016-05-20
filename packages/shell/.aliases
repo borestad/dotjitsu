@@ -72,22 +72,13 @@ alias f2='echo apa'
 # OSX ONLY
 # =========================================================
 if [[ "$OSTYPE" == darwin* ]]; then
-# Short-cuts for copy-paste.
-
-
-#alias rm='trash -v'
-
-# Case-insensitive pgrep that outputs full path.
-
-
-function brew.info {
-  grep desc $(brew --prefix)/Library/Formula/*.rb | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
-}
-
-
+  # Short-cuts for copy-paste.
+  #alias rm='trash -v'
+  # Case-insensitive pgrep that outputs full path.
+  function brew.info {
+    grep desc $(brew --prefix)/Library/Formula/*.rb | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
+  }
 fi
-
-
 
 
 if (( $+commands[http] )); then
@@ -142,6 +133,11 @@ alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resourc
 alias ssh.pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 alias ssh.keygen='ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa; ssh.pubkey'
 alias pubkey="ssh.pubkey"
+
+function sshkey {
+  ssh $1 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub  # '?sa' is a glob, not a typo!
+  echo "sshkey done."
+}
 
 # =========================================================
 # GIT

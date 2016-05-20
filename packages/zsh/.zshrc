@@ -4,37 +4,6 @@ fi
 
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-universal)
 
-files=(
-  # options
-  # path
-  # terminfo
-  # completion
-  # colors
-  # vim
-  # prompt
-  # plugins
-  # locale
-  # exports
-  # aliases
-  # functions
-  # fzf
-  # history
-  # bindkeys
-  # terminal
-  # autopair
-  iterm2
-  docker
-  htop
-  fasd
-  # z
-)
-
-
-for file in $files; do
-  source "${DOTJITSU}/packages/${file}/${file}.zsh"
-done
-
-
 if [[ `uname` == 'Linux' ]] then export LINUX=1; else export LINUX=; fi
 if [[ `uname` == 'Darwin' ]] then export OSX=1; else export OSX=; fi
 
@@ -59,6 +28,7 @@ unalias gcp 2> /dev/null
 unalias gls 2> /dev/null
 
 # fpath=(/usr/local/share/zsh-completions $fpath)
+# fpath=(~/.zsh/completion $fpath)
 
 # eval "$(rbenv init --no-rehash -)"
 # (rbenv rehash &) 2> /dev/null
@@ -97,5 +67,37 @@ chpwd_functions=( auto-ls $chpwd_functions )
 #source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 source ~/.fzf
+
+files=(
+  # options
+  # path
+  # terminfo
+  # completion
+  # colors
+  # vim
+  # prompt
+  # plugins
+  # locale
+  # exports
+  # aliases
+  # functions
+  # fzf
+  # history
+  # bindkeys
+  # terminal
+  # autopair
+  ghq
+  iterm2
+  htop
+  fasd
+  docker
+  # z
+)
+
+
+for file in $files; do
+  source "${DOTJITSU}/packages/${file}/${file}.zsh"
+done
+
+autoload -Uz compinit && compinit -i
