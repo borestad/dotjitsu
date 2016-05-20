@@ -5,6 +5,7 @@ cd "$(dirname $0)"/..
 echo ''; hr -
 echo "[Updating Python PIP's]\n"
 pip install --upgrade pip
+pip3 install --upgrade pip
 
 # Glances + deps
 sudo -H pip install --upgrade glances
@@ -14,5 +15,5 @@ sudo -H pip install --upgrade bottle py-cpuinfo pysnmp zeroconf netifaces statsd
 sudo -H pip install --upgrade pygments
 
 # Sen
-sudo -H pip install --upgrade urwid
-sudo -H pip install --upgrade sen
+pip3 install --upgrade urwid
+pip3 install --upgrade sen
