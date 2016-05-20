@@ -51,9 +51,6 @@ alias d:rund="docker run -d -P"
 # Run interactive container, e.g., $dki base /bin/bash
 alias d:runi="docker run -i -t -P"
 
-# Execute interactive container, e.g., $dex base /bin/bash
-alias d:ex="docker exec -i -t"
-
 # Stop all containers
 d:stopall() { docker stop $(docker ps -a -q); }
 
@@ -72,21 +69,41 @@ d:build() { docker build -t=$1 .; }
 # Show all alias related docker
 d:alias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
 
+alias -g DA='$(d:all)'
+alias -g DC='$(dl:c)'
+alias -g DI='$(dl:i)'
+alias -g DL='$(d:latest)'
+
+# Shortcut aliases
+alias d:all='docker ps -qa'
+alias d:cc='d:rm-all ; d:rm-none-image'
+alias d:ex="docker exec -it"
+alias d:last='d:latest'
 alias d:latest='docker ps -ql'
-alias d:a='docker ps -qa'
-alias d:i="docker images | grep -v 'REPOSITORY' | fzf | awk '{print \$1}'"
-alias d:c="docker ps -a | grep -v 'CONTAINER ID' | fzf | awk '{print \$1}'"
-alias d:b='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
-alias d:run='docker run --rm -it $(d:i) /bin/bash'
-alias d:rm='docker rm $(dc)'
-alias d:start='docker start $(d:c)'
-alias d:restart='docker restart $(d:c)'
-alias d:stop='docker stop $(d:c)'
-alias d:attach='docker attach $(d:c)'
-alias d:rm-all='docker rm -f $(d:a)'
-alias d:rmi='docker rmi $(d:i)'
-alias d:stop-all='docker stop $(d:a)'
-alias d:start-all='docker start $(d:a)'
+alias d:list='d:all'
+alias d:rm-all='docker rm -f DA'
 alias d:rm-none-image='docker rmi $(docker images -f dangling=true -q)'
-#alias dcc='d:stop-all ; d:rm-all ; d:rm-none-image'
-alias dcc='d:rm-all ; d:rm-none-image'
+alias d:start-all='docker start DA'
+alias d:stop-all='docker stop DA'
+
+# Interactive docker aliases
+alias dl:i="docker images | grep -v 'REPOSITORY' | fzf | awk '{print \$1}'"
+alias dl:c="docker ps | grep -v 'CONTAINER ID' | fzf | awk '{print \$1}'"
+
+alias di:attach='docker attach DC'
+alias di:containers-all="docker ps -a | grep -v 'CONTAINER ID' | fzf | awk '{print \$1}'"
+alias di:ex="docker exec -it DC /bin/bash"
+alias di:inspect='docker inspect DI | jq'
+alias di:restart='docker restart DC'
+alias di:run='docker run --rm -it DI /bin/bash'
+
+# Stop & remove container
+di:rm() { container=$(dl:c) && docker stop $container && docker rm $container }
+alias di:rmi='docker rmi DI'
+alias di:start='docker start DC'
+alias di:stop='docker stop DC'
+
+# alias d:b='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
+
+# Execute interactive container, e.g., $dex base /bin/bash
+alias d:cc='d:stop-all ; d:rm-all ; d:rm-none-image'
