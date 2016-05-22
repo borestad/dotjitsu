@@ -86,6 +86,11 @@ alias d:rm-none-image='docker rmi $(docker images -f dangling=true -q)'
 alias d:start-all='docker start DA'
 alias d:stop-all='docker stop DA'
 
+d:kill-all() {
+  docker rm $(docker ps -a -q)
+  docker rmi $(docker images -q)
+}
+
 # Interactive docker aliases
 alias dl:i="docker images | grep -v 'REPOSITORY' | fzf | awk '{print \$1}'"
 alias dl:c="docker ps | grep -v 'CONTAINER ID' | fzf | awk '{print \$1}'"
