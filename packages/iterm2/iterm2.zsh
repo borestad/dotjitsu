@@ -14,6 +14,8 @@ tab-color() {
 }
 tab-reset() {
     echo -ne "\033]6;1;bg;*;default\a"
+    # Clear the traps (ctrl-c etc stops working otherwise)
+    trap - INT EXIT    
 }
 
 # Change the color of the tab when using SSH
@@ -25,8 +27,6 @@ color-ssh() {
             tab_pure_red
         else
             tab_lime_green
-            # Clear the traps (ctrl-c etc stops working otherwise)
-            trap - INT EXIT
         fi
     fi
     ssh $*
