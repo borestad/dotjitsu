@@ -25,6 +25,8 @@ color-ssh() {
             tab_pure_red
         else
             tab_lime_green
+            # Clear the traps (ctrl-c etc stops working otherwise)
+            trap - INT EXIT
         fi
     fi
     ssh $*
