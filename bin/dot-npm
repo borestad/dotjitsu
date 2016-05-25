@@ -6,5 +6,6 @@ echo ''; hr -
 echo "[Updating NODE MODULES]\n"
 
 # Updates global npm packages
+npm update npm -g
 npm-check -g
 david u -g

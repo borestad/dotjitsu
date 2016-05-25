@@ -19,7 +19,6 @@ BASEFILES=(
 	prezto
 	ruby
 	shell
-	ssh
 	wget
 	zsh
 )
