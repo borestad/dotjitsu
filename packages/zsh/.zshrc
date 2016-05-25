@@ -4,15 +4,6 @@ fi
 
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-universal)
 
-if [[ `uname` == 'Linux' ]] then export LINUX=1; else export LINUX=; fi
-if [[ `uname` == 'Darwin' ]] then export OSX=1; else export OSX=; fi
-
-export HISTFILE=~/.zsh_history
-export EDITOR='atom'
-export VISUAL='atom'
-export PAGER='less'
-
-
 # Read aliases
 source "$HOME/.aliases"
 
