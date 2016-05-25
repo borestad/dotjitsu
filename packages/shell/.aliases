@@ -18,9 +18,12 @@ alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias h="history | fzf --reverse"
 alias path='echo -e ${PATH//:/\\n}'
-alias ct='pygmentize -O style=monokai -f console256 -g'
+alias ctt='pygmentize -O style=monokai -f console256 -g'
+      ct () { ctt "$@" | cat -n | sed 's/^[ 0-9]*[0-9]/\o033[34m&\o033[0m/' | less -R }
 alias nx='PATH=$(npm bin):$PATH'
-alias dj='cd $HOME/.dotjitsu && atom .'
+alias dj='cd $HOME/.dotjitsu && subl .'
+alias crontab='VISUAL=nano EDITOR=nano crontab'
+
 
 alias ls='gls --color --group-directories-first'
 alias l='ls -lah'        # Lists in one column, hidden files.
@@ -51,10 +54,10 @@ alias speedtest="speedtest-cli"
 # Boilerplate shortcuts
 # =========================================================
 # Create directory and immediately move into that dir
-function mk() { mkdir -p $1; cd $1 }
+mk () { mkdir -p $1; cd $1 }
 
 # Opens file in EDITOR.
-function edit() {
+edit () {
   local dir=$1
   [[ -z "$dir" ]] && dir='.'
   $EDITOR $dir
@@ -63,7 +66,7 @@ function edit() {
 alias e='edit'
 
 # Reload .zshrc
-function zr () {
+zr () {
   source $HOME/.zshrc
 }
 
@@ -75,7 +78,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   # Short-cuts for copy-paste.
   #alias rm='trash -v'
   # Case-insensitive pgrep that outputs full path.
-  function brew.info {
+  brew.info () {
     grep desc $(brew --prefix)/Library/Formula/*.rb | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
   }
 fi
@@ -98,20 +101,25 @@ fi
 
 alias history.stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
+die () {
+    [[ -n "$1" ]] && echo "$1"
+    [[ -n "$2" ]] && exit $2 || exit 1
+}
+
 
 # =========================================================
 # OSX tricks
 # =========================================================
 
 # Open curr dir in preview.app.
-function osx.open.preview {
+osx.open.preview () {
   local item=$1
   [[ -z "$item" ]] && item='.'
   open $1 -a 'Preview'
 }
 
 # Show current Finder directory.
-function osx.finder.currentdir {
+osx.finder.currentdir () {
   osascript 2>/dev/null <<EOF
     tell application "Finder"
       return POSIX path of (target of window 1 as alias)
@@ -120,7 +128,7 @@ EOF
 }
 
 # Copy CSS to Mou for Markdown visual feedback
-function mou {
+mou () {
   cp $1 $HOME/Library/Application\ Support/Mou/CSS/
 }
 
@@ -134,7 +142,7 @@ alias ssh.pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied t
 alias ssh.keygen='ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa; ssh.pubkey'
 alias pubkey="ssh.pubkey"
 
-function sshkey {
+ssh.addkey () {
   ssh $1 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub  # '?sa' is a glob, not a typo!
   echo "sshkey done."
 }
@@ -143,7 +151,7 @@ function sshkey {
 # GIT
 # =========================================================
 # Checkout git branches
-function git.co() {
+git.co () {
   local branches branch
   branches=$(git branch -a) &&
   branch=$(echo "$branches" | fzf +s +m -x --reverse) &&
@@ -155,18 +163,18 @@ function git.co() {
 # CD
 # =========================================================
 # cd to the default working directory set by current_working_project
-function chdir.default {
+chdir.default () {
   export wdir=`cat $HOME/.tmp/current_project_path`
   echo "Change current working project to $wdir"
   cd $wdir
 }
 
-function chdir.set {
+chdir.set () {
   cwd=pwd > $HOME/.tmp/current_project_path
   echo "Set current working project to `$cwd`"
 }
 
-function chdir.rm() {
+chdir.rm () {
   echo "Remove current working project: `cat $HOME/.tmp/current_project_path`"
   '~' >> $HOME/.tmp/current_project_path
 }
@@ -176,20 +184,20 @@ function chdir.rm() {
 # =========================================================
 
 # Load 8 cores at once.
-function system.maxcpu() {
+function system.maxcpu () {
   dn=/dev/null
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
 }
 
-function ps.kill() { sudo kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
+ps.kill () { sudo kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
 
 # =========================================================
 # Lists (with fzf magic)
 # =========================================================
 
 # List of available VM's - with fbr magic
-function vm() {
+vm () {
   vm=$(VBoxManage list vms | fzf +s +m -e --reverse) &&
   uuid=$(echo "$vm" | ack --cc '{([a-z0-9\-]+)}' --output '$1') &&
   VBoxManage startvm $uuid
@@ -199,10 +207,10 @@ function vm() {
 # =========================================================
 # File related stuff
 # =========================================================
-function file.size() { wc -c < $1 }
+file.size () { wc -c < $1 }
 
 # Monitor IO in real-time (open files etc).
-function files.open() {
+files.open () {
   sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
 }
 # Files used, anywhere on the filesystem
@@ -235,22 +243,22 @@ alias flushdns='net.flushdns'
 # Compression
 # =========================================================
 
-function x1 {
+x1 () {
   local input=$1; local output=${2:-$1}.tar.gz
   tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pigz -c -9 > $output
 }
 
-function x2 {
+x2 () {
   local input=$1; local output=${2:-$1}.tar.lz
   tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | plzip -c -9 > $output
 }
 
-function x3 {
+x3 () {
   local input=$1; local output=${2:-$1}.tar.bz2
   tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pbzip2 -c -9 > $output
 }
 
-function xtract {
+xtract () {
  if [ -z "$1" ]; then
     # display usage if no parameters given
     echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
@@ -287,27 +295,27 @@ fi
 # Useful file size aliases
 # =========================================================
 
-function randfile {
+randfile () {
   local size=$1
   time openssl rand $size | head -c $size > $size.bin
 }
 
 # 1500 -> 1.500
-function to_kb {
+to_kb () {
   echo $(bc <<< "scale=3; $1/1000")
 }
 
 # 10000 -> 10,000
-function format_number {
+format_number () {
   printf "%'.3f\n" $1
 }
 
 # ./some_file.txt -> 11496328
-function size_in_bytes {
+size_in_bytes () {
   stat -f %z "$1"
 }
 
 # ./some_file.txt -> 11,496.328 KB
-function echo_size {
+echo_size () {
   echo $(format_number $(to_kb $(size_in_bytes "$1")))"kB"
 }
