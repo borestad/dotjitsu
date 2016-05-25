@@ -121,6 +121,13 @@ brew 'zsh-syntax-highlighting'
 brew 'zsh-autosuggestions'
 
 # ================================
+# Browsers
+# ================================
+brew 'w3m' 
+brew 'elinks'
+brew 'lynx'
+
+# ================================
 # Databases
 # ================================
 brew 'couchdb'
@@ -215,7 +222,7 @@ cask 'slack'
 cask 'smartgit'
 cask 'sourcetree'
 cask 'spectacle'
-cask 'sublime-text'
+cask 'sublime-text3'
 cask 'teamviewer'
 cask 'the-unarchiver'
 cask 'transmission'
@@ -232,6 +239,7 @@ cask 'xquartz'
 cask 'xbench'
 cask 'xtrafinder'
 cask 'yujitach-menumeters'
+cask 'viscosity'
 cask 'webhook'
 
 
