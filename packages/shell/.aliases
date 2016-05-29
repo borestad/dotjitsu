@@ -1,34 +1,40 @@
+#!/usr/bin/env bash
+
 # Globals & system overrids
 # =========================================================
 
-alias -- -="cd -"
+
 alias brew -="brew -v"
 alias cp='gcp -v'
+alias ctt='pygmentize -O style=monokai -f console256 -g'
+ct () { ctt "$@" | cat -n | sed 's/^[ 0-9]*[0-9]/\o033[34m&\o033[0m/' | less -R }
 alias git='hub'
+alias h="history | fzf --reverse"
 alias mkdir='gmkdir -pv'
 alias mv='gmv -v'
+alias path='echo -e ${PATH//:/\\n}'
+alias pgrep='pgrep -fli'
 alias rm='grm -v'
 alias serve='http-server'
-alias server='http-server'
 alias wget='wget --no-check-certificate'
-alias pgrep='pgrep -fli'
-alias pc='pbcopy'
-alias pp='pbpaste'
-alias dl="cd $HOME/Downloads"
-alias dt="cd $HOME/Desktop"
-alias h="history | fzf --reverse"
-alias path='echo -e ${PATH//:/\\n}'
-alias ctt='pygmentize -O style=monokai -f console256 -g'
-      ct () { ctt "$@" | cat -n | sed 's/^[ 0-9]*[0-9]/\o033[34m&\o033[0m/' | less -R }
 alias nx='PATH=$(npm bin):$PATH'
-alias dj='cd $HOME/.dotjitsu && subl .'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
 
+# GOTO aliases
+alias -- -="cd -"
+alias dl="cd $HOME/Downloads"
+alias dt="cd $HOME/Desktop"
+alias c="cd $HOME/code"
+alias dj='cd $HOME/.dotjitsu && subl .'
+
+append() {
+  grep -q -F $1 $2 || echo $1 >> $2
+}
 
 alias ls='gls --color --group-directories-first'
 alias l='ls -lah'        # Lists in one column, hidden files.
 alias l='ls -a'          # Lists in multi column, hidden files.
-alias ll='ls -lh'        # Lists human readable sizes.
+alias ll='ls -lah'       # Lists human readable sizes.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
 alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
@@ -70,8 +76,6 @@ zr () {
   source $HOME/.zshrc
 }
 
-alias f2='echo apa'
-
 # OSX ONLY
 # =========================================================
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -112,14 +116,14 @@ die () {
 # =========================================================
 
 # Open curr dir in preview.app.
-osx.open.preview () {
+open.preview () {
   local item=$1
   [[ -z "$item" ]] && item='.'
   open $1 -a 'Preview'
 }
 
 # Show current Finder directory.
-osx.finder.currentdir () {
+finder.currentdir () {
   osascript 2>/dev/null <<EOF
     tell application "Finder"
       return POSIX path of (target of window 1 as alias)
@@ -157,7 +161,7 @@ git.co () {
   branch=$(echo "$branches" | fzf +s +m -x --reverse) &&
   git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
 }
-
+alias co='git.co'
 
 # =========================================================
 # CD
@@ -219,6 +223,12 @@ alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep
 alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
 # Files in use in the Users directory
 alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
+
+ddd() {
+  local cmd="dd if='"$1"' | pv | sudo dd of=/dev/rdisk"$2" bs=1m"
+  echo $cmd
+  sudo sh -c "$cmd"
+}
 
 # =========================================================
 # Network stuff

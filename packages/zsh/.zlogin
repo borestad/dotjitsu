@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 #
 # Executes commands at login post-zshrc.
 #

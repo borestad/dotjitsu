@@ -20,6 +20,7 @@ BASEFILES=(
 	ruby
 	shell
 	wget
+	tmux
 	zsh
 )
 stow -Rv -t $HOME $BASEFILES

@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 source "${ZDOTDIR:-$HOME}/.env"
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
