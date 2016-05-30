@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 #
 # Sets Prezto options.
 #
@@ -35,7 +37,8 @@ zstyle ':prezto:load' pmodule \
   'ruby' \
   'history' \
   'syntax-highlighting' \
-  'prompt'
+  'prompt' \
+  'git'
 
 #
 # Editor
