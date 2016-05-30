@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
+# =========================================================
 # Globals & system overrids
 # =========================================================
-
-
 alias brew -="brew -v"
 alias cp='gcp -v'
 alias ctt='pygmentize -O style=monokai -f console256 -g'
@@ -19,8 +18,11 @@ alias serve='http-server'
 alias wget='wget --no-check-certificate'
 alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
+alias npm='npm -s'
 
+# =========================================================
 # GOTO aliases
+# =========================================================
 alias -- -="cd -"
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
@@ -45,20 +47,26 @@ alias lc='lt -c'         # Lists sorted by date, most recent last, shows change 
 alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
 alias sl='ls'            # I often screw this up.
 
+# =========================================================
 # Gnu utils (to enforce presedence)
+# =========================================================
 alias xargs='/usr/local/opt/findutils/libexec/gnubin/xargs'
 alias find='/usr/local/opt/findutils/libexec/gnubin/find'
 alias locate='/usr/local/opt/findutils/libexec/gnubin/locate'
 alias updatedb='/usr/local/opt/findutils/libexec/gnubin/updatedb'
 
+# =========================================================
 # Others
+# =========================================================
 alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal tee | tee fs_usage.log'
 alias spotlight.rebuild='sudo mdutil -E /'
 alias speedtest="speedtest-cli"
 
 
+# =========================================================
 # Boilerplate shortcuts
 # =========================================================
+
 # Create directory and immediately move into that dir
 mk () { mkdir -p $1; cd $1 }
 
@@ -99,10 +107,10 @@ if (( $+commands[http] )); then
 fi
 
 
+
 # =========================================================
 # Cli Tricks
 # =========================================================
-
 alias history.stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
 die () {
@@ -131,6 +139,7 @@ finder.currentdir () {
 EOF
 }
 
+
 # Copy CSS to Mou for Markdown visual feedback
 mou () {
   cp $1 $HOME/Library/Application\ Support/Mou/CSS/
@@ -150,6 +159,7 @@ ssh.addkey () {
   ssh $1 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub  # '?sa' is a glob, not a typo!
   echo "sshkey done."
 }
+
 
 # =========================================================
 # GIT
@@ -194,7 +204,7 @@ function system.maxcpu () {
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
 }
 
-ps.kill () { sudo kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
+ps.kill () { kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
 
 # =========================================================
 # Lists (with fzf magic)
