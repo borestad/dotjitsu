@@ -242,6 +242,7 @@ cask 'xbench'
 cask 'xtrafinder'
 cask 'yujitach-menumeters'
 cask 'viscosity'
+cask 'visual-studio-code'
 cask 'unetbootin'
 cask 'webhook'
 
@@ -257,6 +258,7 @@ cask 'font-source-code-pro'
 # ENTERTAINMENT & AFTERWORK :-)
 # ================================
 cask 'dolphin'
+cask 'kodi'
 cask 'openemu'
 cask 'plex-media-player'
 cask 'retroarch'
