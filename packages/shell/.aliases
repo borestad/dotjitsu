@@ -7,7 +7,6 @@ alias brew -="brew -v"
 alias cp='gcp -v'
 alias ctt='pygmentize -O style=monokai -f console256 -g'
 ct () { ctt "$@" | cat -n | sed 's/^[ 0-9]*[0-9]/\o033[34m&\o033[0m/' | less -R }
-alias git='hub'
 alias h="history | fzf --reverse"
 alias mkdir='gmkdir -pv'
 alias mv='gmv -v'
@@ -19,6 +18,21 @@ alias wget='wget --no-check-certificate'
 alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
 alias npm='npm -s'
+
+function git {
+   local tmp=$(mktemp -t git)
+   local repo_name
+
+   if [ "$1" = clone ] ; then
+     command hub "$@" --progress 2>&1 | tee $tmp
+     repo_name=$(awk -F\' '/Cloning into/ {print $2}' $tmp)
+     rm $tmp &> /dev/null
+     cd "$repo_name"
+     echo "" && hub log --oneline --graph --date=short -n 1 && echo ""
+   else
+     command hub "$@"
+   fi
+}
 
 # =========================================================
 # GOTO aliases
@@ -198,7 +212,7 @@ chdir.rm () {
 # =========================================================
 
 # Load 8 cores at once.
-function system.maxcpu () {
+system.maxcpu () {
   dn=/dev/null
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
   yes > $dn & yes > $dn & yes > $dn & yes > $dn &
