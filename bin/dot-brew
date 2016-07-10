@@ -6,12 +6,5 @@ echo ''; hr - '#' -
 echo "[BREW FORMULAS]\n"
 
 brew -v update
-brew -v bundle
+brew -v bundle --file=$DOTJITSU/Brewfile
 brew -v upgrade
-
-
-# Fix for broken 'brew cask'
-for c in `brew cask list`; do ! brew cask info $c | grep -qF "Not installed" || brew cask install $c; done
-
-brew -v cleanup
-brew cask cleanup

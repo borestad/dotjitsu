@@ -1,0 +1,30 @@
+cask_args appdir: '/Applications'
+
+tap 'caskroom/cask'
+tap 'caskroom/fonts'
+tap 'caskroom/versions'
+
+# ================================
+# FORMULAS FOR DEVS
+# ================================
+cask 'alfred'
+cask 'atom'
+cask 'ccleaner'
+cask 'google-chrome'
+cask 'google-earth'
+cask 'firefox'
+#cask 'docker'
+#cask 'docker-compose'
+cask 'hipchat'
+cask 'iterm2'
+cask 'virtualbox'
+cask 'virtualbox-extension-pack'
+cask 'vmware-fusion'
+cask 'sublime-text'
+cask 'vagrant'
+cask 'spotify'
+cask 'steam'
+cask 'dropbox'
+cask 'github-desktop'
+cask 'launchcontrol'
+cask 'sizeup'
