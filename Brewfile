@@ -73,6 +73,7 @@ brew 'mc'
 brew 'netpbm'
 brew 'nload'
 brew 'nethogs'
+brew 'mas'
 brew 'mtr'
 brew 'ncdu'
 brew 'ngrep'
@@ -121,7 +122,7 @@ brew 'zsh-autosuggestions'
 # ================================
 # Browsers
 # ================================
-brew 'w3m' 
+brew 'w3m'
 brew 'elinks'
 brew 'lynx'
 

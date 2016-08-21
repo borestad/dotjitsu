@@ -12,4 +12,5 @@ rm -rfv ./**/.DS_Store
 
 chmod -R +x ~/.dotjitsu/bin/*
 
-brew cleanup -sn
+brew cleanup -s
+brew prune
