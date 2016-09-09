@@ -6,6 +6,7 @@
 alias brew -="brew -v"
 alias cp='gcp -v'
 alias ctt='pygmentize -O style=monokai -f console256 -g'
+alias ctt2='pygmentize -O style=monokai -g'
 ct () { ctt "$@" | cat -n | sed 's/^[ 0-9]*[0-9]/\o033[34m&\o033[0m/' | less -R }
 alias h="history | fzf --reverse"
 alias mkdir='gmkdir -pv'
@@ -18,6 +19,7 @@ alias wget='wget --no-check-certificate'
 alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
 alias npm='npm -s'
+wh () { which -a "$@" | ctt2 }
 
 function git {
    local tmp=$(mktemp -t git)
@@ -277,17 +279,17 @@ alias flushdns='net.flushdns'
 # Compression
 # =========================================================
 
-x1 () {
+z1 () {
   local input=$1; local output=${2:-$1}.tar.gz
   tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pigz -c -9 > $output
 }
 
-x2 () {
+z2 () {
   local input=$1; local output=${2:-$1}.tar.lz
   tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | plzip -c -9 > $output
 }
 
-x3 () {
+z3 () {
   local input=$1; local output=${2:-$1}.tar.bz2
   tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pbzip2 -c -9 > $output
 }

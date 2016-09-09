@@ -14,3 +14,11 @@ chmod -R +x ~/.dotjitsu/bin/*
 
 brew cleanup -s
 brew prune
+
+
+# brew uninstall --force brew-cask;
+# brew untap phinze/cask;
+# brew untap caskroom/cask;
+# brew update;
+# brew cleanup;
+# brew cask cleanup

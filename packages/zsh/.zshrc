@@ -10,11 +10,8 @@ eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-universal)
 source "$HOME/.aliases"
 
 # Access private configuration
-if [[ -a ~/.private/.zshrc ]]
-then
-  source ~/.private/.zshrc
-fi
-
+[[ -a ~/.private/.zshrc ]] && source ~/.private/.zshrc
+  
 # Prezto seems to override grc with some annoying alias
 unalias grc 2> /dev/null
 unalias gcp 2> /dev/null
@@ -60,6 +57,9 @@ chpwd_functions=( auto-ls $chpwd_functions )
 #source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOME/.zsh/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
+
+
 source ~/.fzf
 
 files=(

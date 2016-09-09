@@ -112,3 +112,5 @@ alias di:stop='docker stop DC'
 
 # Execute interactive container, e.g., $dex base /bin/bash
 alias d:cc='d:stop-all ; d:rm-all ; d:rm-none-image'
+
+alias d.api='sudo socat -d TCP-LISTEN:2376,range=127.0.0.1/32,reuseaddr,fork UNIX:/var/run/docker.sock'

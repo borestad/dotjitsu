@@ -7,11 +7,15 @@
 [user]
         name = Johan Borestad
         email = johan@borestad.com
+		#useConfigOnly = true
 [credential]
         helper = osxkeychain
 
 [color]
   ui = true
+
+[init]
+  templatedir = ~/.dotjitsu/packages/git/templates
 
 [pager]
   # insanely beautiful diffs ==> npm install -g diff-so-fancy

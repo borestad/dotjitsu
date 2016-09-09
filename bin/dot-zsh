@@ -27,3 +27,7 @@ cd $HOME/.zprezto && git submodule update --init --recursive
 echo '  - Powerline fonts'
 git -C /tmp/pl-fonts pull || git clone --recursive git://github.com/powerline/fonts.git /tmp/pl-fonts && \
 /tmp/pl-fonts/install.sh
+
+
+echo ' - Better npm'
+git -C $HOME/.zsh/zsh-better-npm-completion pull || git clone https://github.com/lukechilds/zsh-better-npm-completion.git $HOME/.zsh/zsh-better-npm-completion
