@@ -59,8 +59,11 @@ chpwd_functions=( auto-ls $chpwd_functions )
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.zsh/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
 
-
 source ~/.fzf
+
+# Automatically load .envrc files
+# https://github.com/direnv/direnv
+eval "$(direnv hook zsh)"
 
 files=(
   # options
@@ -80,6 +83,7 @@ files=(
   # bindkeys
   # terminal
   # autopair
+  aka
   ghq
   iterm2
   htop
