@@ -32,7 +32,7 @@ brew 'ag'
 brew 'ansible'
 brew 'aria2'
 brew 'axel'
-brew 'azukiapp/azk/azk'
+#brew 'azukiapp/azk/azk'
 brew 'aws-cfn-tools'
 brew 'awscli'
 brew 'bash'
@@ -48,6 +48,7 @@ brew 'dash'
 brew 'dfc'
 brew 'dialog'
 brew 'dlite'
+brew 'direnv'
 brew 'fasd'
 brew 'fakeroot'
 brew 'ffmpeg'
@@ -72,6 +73,8 @@ brew 'jpegoptim'
 brew 'jq'
 brew 'lnav'
 brew 'mc'
+brew 'gpg'
+brew 'git-crypt'
 brew 'netpbm'
 brew 'nload'
 brew 'nethogs'
@@ -129,7 +132,7 @@ brew 'elinks'
 brew 'lynx'
 
 # ================================
-# Databases
+# Databases & tools
 # ================================
 brew 'couchdb'
 brew 'mongodb'
@@ -138,6 +141,10 @@ brew 'postgresql'
 brew 'redis'
 brew 'riak'
 brew 'sqlite'
+
+tap 'theory/sqitch'
+brew 'sqitch' 
+brew 'sqitch_pg'
 
 
 # ================================
