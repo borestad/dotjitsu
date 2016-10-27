@@ -18,8 +18,23 @@ alias serve='http-server'
 alias wget='wget --no-check-certificate'
 alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
-alias npm='npm -s'
+alias npm_='/usr/local/bin/npm'
+alias _npm='/usr/local/bin/npm'
 wh () { which -a "$@" | ctt2 }
+
+# function npm {
+#   shift; 
+#   case "$1" in
+
+#     i|install)
+#       yarn add "$@"
+#       ;;
+    
+#     *)
+#     _npm "$@"
+#     ;;
+#   esac
+# }
 
 function git {
    local tmp=$(mktemp -t git)
@@ -35,6 +50,9 @@ function git {
      command hub "$@"
    fi
 }
+
+
+
 
 # =========================================================
 # GOTO aliases
@@ -66,10 +84,10 @@ alias sl='ls'            # I often screw this up.
 # =========================================================
 # Gnu utils (to enforce presedence)
 # =========================================================
-alias xargs='/usr/local/opt/findutils/libexec/gnubin/xargs'
-alias find='/usr/local/opt/findutils/libexec/gnubin/find'
-alias locate='/usr/local/opt/findutils/libexec/gnubin/locate'
-alias updatedb='/usr/local/opt/findutils/libexec/gnubin/updatedb'
+alias xargs='/usr/local/opt/findutils/bin/xargs'
+alias find='/usr/local/opt/findutils/bin/find'
+alias locate='/usr/local/opt/findutils/bin/locate'
+alias updatedb='/usr/local/opt/findutils/bin/updatedb'
 
 # =========================================================
 # Others
