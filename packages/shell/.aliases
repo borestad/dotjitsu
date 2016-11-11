@@ -8,6 +8,7 @@ alias cp='gcp -v'
 alias ctt='pygmentize -O style=monokai -f console256 -g'
 alias ctt2='pygmentize -O style=monokai -g'
 ct () { ctt "$@" | cat -n | sed 's/^[ 0-9]*[0-9]/\o033[34m&\o033[0m/' | less -R }
+cs () { cat "$@" | jase scripts | pygmentize -l json }
 alias h="history | fzf --reverse"
 alias mkdir='gmkdir -pv'
 alias mv='gmv -v'

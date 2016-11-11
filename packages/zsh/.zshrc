@@ -48,7 +48,13 @@ auto-ls () {
   hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || ls
 }
 
-chpwd_functions=( auto-ls $chpwd_functions )
+auto-pkg-scripts () {
+  emulate -L zsh;
+  [ -f "package.json" ] && cs package.json
+}
+
+chpwd_functions=( auto-ls auto-pkg-scripts $chpwd_functions )
+
 
 # Go to default directory
 # chdir.default
