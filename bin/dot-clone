@@ -3,6 +3,8 @@
 echo ''; hr - '#' -
 echo "[Updating ZSH Frameworks]\n"
 
+mkdir -p $HOME/.repos
+
 echo '  - Antigen'
 git -C $HOME/.repos/antigen pull || git clone git://github.com/zsh-users/antigen.git $HOME/.repos/antigen
 
@@ -17,9 +19,11 @@ git -C $HOME/.zprezto pull || git clone --recursive git://github.com/sorin-iones
 cd $HOME/.zprezto && git submodule update --init --recursive
 
 echo '  - Git friendly'
-rm -rf $DOTJITSU/packages/git-friendly && \
-git clone git://github.com/jamiew/git-friendly.git $DOTJITSU/packages/git-friendly && \
-rm -rf $DOTJITSU/packages/git-friendly/.git
+git -C $HOME/.repos/git-friendly pull || git clone --recursive git://github.com/jamiew/git-friendly.git $HOME/.repos/git-friendly
+
+#rm -rf $DOTJITSU/packages/git-friendly && \
+#git clone git://github.com/jamiew/git-friendly.git $DOTJITSU/packages/git-friendly && \
+#rm -rf $DOTJITSU/packages/git-friendly/.git
 
 git -C $HOME/.zprezto pull || git clone --recursive git://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
 cd $HOME/.zprezto && git submodule update --init --recursive
