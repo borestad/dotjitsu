@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-ZSH=$HOME/.zsh/oh-my-zsh
+ZSH=$HOME/.repos/oh-my-zsh
 ZSH_THEME="robbyrussell"
 
 source $ZSH/oh-my-zsh.sh

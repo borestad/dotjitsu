@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Finds out the current working directory of the TTY whose name is passed as the first command
+# line argument.
+#
+# Based on http://superuser.com/questions/220679/how-to-get-tty-shell-working-directory
+ 
+TTY=$1
+PID=`ps -f | grep $TTY | head -n 1 | awk '{ print $2; }'`
+lsof -a -d cwd -F n -p $PID | egrep -v 'p[0-9]+' | awk '{ sub(/^n/, ""); print; }'

@@ -62,7 +62,7 @@ alias -- -="cd -"
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"
-alias dj='cd $HOME/.dotjitsu && subl .'
+alias dj='subl $HOME/.dotjitsu'
 
 append() {
   grep -q -F $1 $2 || echo $1 >> $2

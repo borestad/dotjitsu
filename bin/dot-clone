@@ -4,13 +4,13 @@ echo ''; hr - '#' -
 echo "[Updating ZSH Frameworks]\n"
 
 echo '  - Antigen'
-git -C $HOME/.zsh/antigen pull || git clone git://github.com/zsh-users/antigen.git $HOME/.zsh/antigen
+git -C $HOME/.repos/antigen pull || git clone git://github.com/zsh-users/antigen.git $HOME/.repos/antigen
 
 echo '  - oh-my-zsh'
-git -C $HOME/.zsh/oh-my-zsh pull || git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.zsh/oh-my-zsh
+git -C $HOME/.repos/oh-my-zsh pull || git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.repos/oh-my-zsh
 
 echo '  - Zgen'
-git -C $HOME/.zsh/zgen pull || git clone git://github.com/tarjoilija/zgen.git $HOME/.zsh/zgen
+git -C $HOME/.repos/zgen pull || git clone git://github.com/tarjoilija/zgen.git $HOME/.repos/zgen
 
 echo '  - Prezto'
 git -C $HOME/.zprezto pull || git clone --recursive git://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
@@ -28,6 +28,8 @@ echo '  - Powerline fonts'
 git -C /tmp/pl-fonts pull || git clone --recursive git://github.com/powerline/fonts.git /tmp/pl-fonts && \
 /tmp/pl-fonts/install.sh
 
-
 echo ' - Better npm'
-git -C $HOME/.zsh/zsh-better-npm-completion pull || git clone https://github.com/lukechilds/zsh-better-npm-completion.git $HOME/.zsh/zsh-better-npm-completion
+git -C $HOME/.repos/zsh-better-npm-completion pull || git clone https://github.com/lukechilds/zsh-better-npm-completion.git $HOME/.repos/zsh-better-npm-completion
+
+echo ' - Git subrepo'
+git -C $HOME/.repos/git-subrepo pull || git clone https://github.com/ingydotnet/git-subrepo $HOME/.repos/git-subrepo

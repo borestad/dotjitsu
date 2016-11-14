@@ -48,13 +48,6 @@ auto-ls () {
   hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || ls
 }
 
-auto-pkg-scripts () {
-  emulate -L zsh;
-  [ -f "package.json" ] && cs package.json
-}
-
-chpwd_functions=( auto-ls auto-pkg-scripts $chpwd_functions )
-
 
 # Go to default directory
 # chdir.default
@@ -63,7 +56,17 @@ chpwd_functions=( auto-ls auto-pkg-scripts $chpwd_functions )
 #source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOME/.zsh/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
+source $HOME/.repos/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
+GIT_SUBREPO_ROOT="$HOME/.repos/git-subrepo"
+source $HOME/.repos/git-subrepo/.rc
+
+auto-pkg-scripts () {
+  emulate -L zsh;
+  [ -f "package.json" ] && cs package.json
+}
+
+chpwd_functions=( auto-ls auto-pkg-scripts $chpwd_functions )
+
 
 source ~/.fzf
 
