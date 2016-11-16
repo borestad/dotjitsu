@@ -26,3 +26,4 @@ BASEFILES=(
 stow -Rv -t $HOME $BASEFILES
 
 dotp-symlink
+mkdir -p ~/.config/youtube-dl && ln -sfv $DOTJITSU/packages/youtube-dl/config ~/.config/youtube-dl

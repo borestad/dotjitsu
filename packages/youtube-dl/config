@@ -1,0 +1,3 @@
+-o "[%(upload_date)s][%(id)s] %(title)s (by %(uploader)s).%(ext)s"
+--external-downloader aria2c
+--external-downloader-args "-c -j 8 -x 8 -s 8 -k 1M"

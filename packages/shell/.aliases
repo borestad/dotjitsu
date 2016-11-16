@@ -37,7 +37,7 @@ wh () { which -a "$@" | ctt2 }
 #   esac
 # }
 
-function git {
+function clone {
    local tmp=$(mktemp -t git)
    local repo_name
 
