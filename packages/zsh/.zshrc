@@ -4,7 +4,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-universal)
+eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 
 # Read aliases
 source "$HOME/.aliases"
@@ -106,4 +106,8 @@ for file in $files; do
   source "${DOTJITSU}/packages/${file}/${file}.zsh"
 done
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+  
 autoload -Uz compinit && compinit -i
