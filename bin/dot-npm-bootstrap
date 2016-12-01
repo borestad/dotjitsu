@@ -26,7 +26,6 @@ packages=(
   npm-cache
   npm-check
   pen.md
-  pen.md
   phantomjs-prebuilt
   public-ip
   rtail
@@ -38,6 +37,7 @@ packages=(
   webpack-bundle-size-analyzer
   webpack-dev-server
   yo
+  yarn
 )
 
 npm set progress=false

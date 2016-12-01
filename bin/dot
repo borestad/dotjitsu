@@ -9,11 +9,6 @@ if [ ! type "brew" &> /dev/null ]; then
 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-brew update
-brew prune
-brew cleanup -sn
-brew doctor
-
 if [ ! type "hr" &> /dev/null ]; then; brew install hr; fi
 if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 

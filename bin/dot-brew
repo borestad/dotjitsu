@@ -7,4 +7,4 @@ echo "[BREW FORMULAS]\n"
 
 brew -v update
 brew -v bundle --file=$DOTJITSU/Brewfile
-brew -v upgrade
+brew -v upgrade --file=$DOTJITSU/Brewfile

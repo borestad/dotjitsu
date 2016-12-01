@@ -9,12 +9,3 @@ curl -fLo ~/.zprezto/modules/completion/external/src/_docker \
 # Docker compose autocompletion
 curl -fLo ~/.zprezto/modules/completion/external/src/_docker-compose \
   https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/zsh/_docker-compose
-
-
-echo '- OpenXenManager'
-
-pip install configobj
-brew install pygtk
-git -C $HOME/.local/openxenmanager pull || git clone --recursive https://github.com/OpenXenManager/openxenmanager.git $HOME/.local/openxenmanager
-$HOME/.local/openxenmanager && git submodule update --init --recursive
-cd /Applications && ln -sf	 $HOME/.local/openxenmanager/openxenmanager OpenXenManager.app

@@ -246,6 +246,8 @@ EXEC 01;31  # Unix
 .scss 32
 .less 32
 .js 32
+.jsx 32
+.json 01;33
 .coffee 32
 .man 32
 .0 32
@@ -262,10 +264,14 @@ EXEC 01;31  # Unix
 .n 32
 .p 32
 .pod 32
+.ts 32
+.tsx 32
 .tex 32
 .go 32
 .sql 32
 .csv 32
+.yml 01;33
+.vue 32
 
 ### Multimedia formats
 

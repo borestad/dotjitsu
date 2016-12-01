@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+cd "$(dirname $0)"/..
+
+echo "Updating Brew\n"
+
+brew update
+brew outdated
