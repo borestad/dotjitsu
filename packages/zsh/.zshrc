@@ -24,7 +24,7 @@ unalias gls 2> /dev/null
 # (rbenv rehash &) 2> /dev/null
 
 # GRC colorizes nifty unix tools all over the place
-source "`brew --prefix`/etc/grc.bashrc"
+source "/usr/local/etc/grc.bashrc"
 
 # bind hh to Ctrl-r (for Vi mode check doc)
 # bindkey -s "\C-r" "\eqhh\n"
@@ -34,12 +34,12 @@ source "`brew --prefix`/etc/grc.bashrc"
 
 # Lunchy
 LUNCHY_DIR=$(dirname `gem which lunchy`)/../extras
-if [ -f $LUNCHY_DIR/lunchy-completion.zsh ]; then
-  . $LUNCHY_DIR/lunchy-completion.zsh
-fi
+. $LUNCHY_DIR/lunchy-completion.zsh
+
 
 # Fuck
-eval $(thefuck --alias)
+# eval $(thefuck --alias)
+alias fuck='TF_CMD=$(TF_ALIAS=fuck PYTHONIOENCODING=utf-8 TF_SHELL_ALIASES=$(alias) thefuck $(fc -ln -1 | tail -n 1)) && eval $TF_CMD && print -s $TF_CMD'
 
 # Automatically list directory contents on `cd`.
 auto-ls () {
@@ -57,8 +57,8 @@ auto-ls () {
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.repos/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
-GIT_SUBREPO_ROOT="$HOME/.repos/git-subrepo"
-source $HOME/.repos/git-subrepo/.rc
+# GIT_SUBREPO_ROOT="$HOME/.repos/git-subrepo"
+# source $HOME/.repos/git-subrepo/.rc
 
 auto-pkg-scripts () {
   emulate -L zsh;
@@ -102,12 +102,13 @@ files=(
 )
 
 
-for file in $files; do
-  source "${DOTJITSU}/packages/${file}/${file}.zsh"
-done
+source "${DOTJITSU}/packages/ghq/ghq.zsh"
+source "${DOTJITSU}/packages/iterm2/iterm2.zsh"
+source "${DOTJITSU}/packages/fasd/fasd.zsh"
+source "${DOTJITSU}/packages/docker/docker.zsh"
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
+# if [ -f $(brew --prefix)/etc/bash_completion ]; then
+#   . $(brew --prefix)/etc/bash_completion
+# fi
   
 autoload -Uz compinit && compinit -i
