@@ -1,57 +1,52 @@
 #!/usr/bin/env zsh
 npm set progress=true
 
-packages=(
-  bcat
-  bower
-  browser-run
-  casperjs
-  coffee-script
-  david
-  debug
-  electron-prebuilt
-  esformatter
-  gatsby
-  http-server
-  js2coffee
-  diff-so-fancy
-  jscodeshift
-  jscs
-  jshint
-  jsinspect
-  jslint
-  livescript
-  node-debugger
-  n_
-  npm-cache
-  npm-check
-  pen.md
-  phantomjs-prebuilt
-  public-ip
-  rtail
-  shipit-cli
-  tmpin
-  vantage
-  vtop
-  webpack
-  webpack-bundle-size-analyzer
-  webpack-dev-server
-  yo
-  yarn
-)
+npm i -g yarn
 
-npm set progress=false
+yarn global add \
+  bcat@latest \
+  casperjs@latest \
+  david@latest \
+  debug@latest \
+  esformatter@latest \
+  http-server@latest \
+  diff-so-fancy@latest \
+  jscodeshift@latest \
+  jscs@latest \
+  jshint@latest \
+  jsinspect@latest \
+  jslint@latest \
+  livescript@latest \
+  node-debugger@latest \
+  n_@latest \
+  npm-cache@latest \
+  npm-check@latest \
+  pen.md@latest \
+  phantomjs-prebuilt@latest \
+  public-ip@latest \
+  rtail@latest \
+  shipit-cli@latest \
+  tmpin@latest \
+  vantage@latest \
+  vtop@latest \
+  webpack@latest \
+  webpack-bundle-size-analyzer@latest \
+  webpack-dev-server@latest \
+  yo@latest
+
+
+# npm set progress=false
+
+# # for pkg in $packages; do  
+# #   hr -
+# #   echo "Uninstalling ${pkg}"
+# #   npm un -g "${pkg}"
+# # done
 
 # for pkg in $packages; do  
 #   hr -
-#   echo "Uninstalling ${pkg}"
-#   npm un -g "${pkg}"
+#   echo "Installing ${pkg}"
+#   yarn global add "${pkg}@latest"
 # done
 
-for pkg in $packages; do  
-  hr -
-  echo "Installing ${pkg}"
-  NODE_ENV=production npm i -g "${pkg}@latest"
-done
-
-npm set progress=true
+# npm set progress=true

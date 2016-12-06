@@ -20,21 +20,11 @@ unalias gls 2> /dev/null
 # fpath=(/usr/local/share/zsh-completions $fpath)
 # fpath=(~/.zsh/completion $fpath)
 
-# eval "$(rbenv init --no-rehash -)"
-# (rbenv rehash &) 2> /dev/null
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
 
 # GRC colorizes nifty unix tools all over the place
 source "/usr/local/etc/grc.bashrc"
-
-# bind hh to Ctrl-r (for Vi mode check doc)
-# bindkey -s "\C-r" "\eqhh\n"
-
-# Autojump
-#[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
-# Lunchy
-LUNCHY_DIR=$(dirname `gem which lunchy`)/../extras
-. $LUNCHY_DIR/lunchy-completion.zsh
 
 
 # Fuck
@@ -49,16 +39,17 @@ auto-ls () {
 }
 
 
-# Go to default directory
-# chdir.default
+# Set correct ruby version
+chruby ruby-2.3.3
+
+# Disable ZSH annoying auto correct
+unsetopt correct
 
 # Enable syntax highlighting
-#source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.repos/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
-# GIT_SUBREPO_ROOT="$HOME/.repos/git-subrepo"
-# source $HOME/.repos/git-subrepo/.rc
 
 auto-pkg-scripts () {
   emulate -L zsh;
@@ -93,15 +84,17 @@ files=(
   # terminal
   # autopair
   aka
+  cdpath
   ghq
   iterm2
   htop
-  fasd
+  #fasd
   docker
   # z
 )
 
 
+. "${DOTJITSU}/packages/cdpath/cdpath.zsh"
 source "${DOTJITSU}/packages/ghq/ghq.zsh"
 source "${DOTJITSU}/packages/iterm2/iterm2.zsh"
 source "${DOTJITSU}/packages/fasd/fasd.zsh"
@@ -112,3 +105,5 @@ source "${DOTJITSU}/packages/docker/docker.zsh"
 # fi
   
 autoload -Uz compinit && compinit -i
+
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

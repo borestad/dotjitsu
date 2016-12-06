@@ -2,13 +2,15 @@
 
 cd "$(dirname $0)"/..
 
-echo ''; hr -
-echo "[Installing RUBY with rbenv]\n"
-echo '- 2.3.0'
+ruby-install ruby 2.3.3
 
-time MAKE_OPTS="-j 8" rbenv install 2.3.0 --verbose -s
-rbenv rehash
-rbenv global 2.3.0
-eval "$(rbenv init -)"
-gem install bundler
-bundle install --system
+# echo ''; hr -
+# echo "[Installing RUBY with rbenv]\n"
+# echo '- 2.3.0'
+
+# time MAKE_OPTS="-j 8" rbenv install 2.3.0 --verbose -s
+# rbenv rehash
+# rbenv global 2.3.0
+# eval "$(rbenv init -)"
+# 
+# bundle install --system

@@ -12,7 +12,6 @@ fi
 if [ ! type "hr" &> /dev/null ]; then; brew install hr; fi
 if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 
-./bin/dot-symlink
 ./bin/dot-clone
 
 ./bin/dot-brew
@@ -25,9 +24,11 @@ if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 ./bin/dot-python
 ./bin/dot-ruby
 ./bin/dot-ssh
-./bin/dot-clean
+./bin/dot-symlink
+#./bin/dot-clean
 
 brew link git-annex
 brew link git-lfs
+
 # Make sure zsh is available as a shell
 #command -v zsh | sudo tee -a /etc/shells

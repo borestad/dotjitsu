@@ -16,11 +16,12 @@ brew 'git-lfs'
 brew 'go'
 # brew 'haskell-stack'
 # brew 'haskell-stack ghc cabal-install'
-brew 'n'
+# brew 'n'
 brew 'python'
 brew 'python3'
-brew 'rbenv'
+brew 'chruby'
 brew 'ruby-build'
+brew 'ruby-install'
 brew 'xhyve', args: ['--HEAD']
 
 # ================================
