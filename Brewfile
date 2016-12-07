@@ -6,6 +6,7 @@ tap 'homebrew/games'
 tap 'homebrew/versions'
 tap 'homebrew/science'
 tap 'homebrew/completions'
+tap 'homebrew/services'
 
 # ================================
 # DEPS / PROGRAMMING LANGUAGES
