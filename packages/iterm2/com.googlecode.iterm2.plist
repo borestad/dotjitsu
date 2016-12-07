@@ -1421,9 +1421,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>535 110 839 560 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>346 246 1018 447 0 0 1440 878 </string>
+	<string>528 309 796 473 0 0 1440 878 </string>
+	<key>NSWindow Frame UKCrashReporter</key>
+	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 4 1440 873 0 0 1440 878 </string>
+	<string>0 403 650 474 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>4 804 1433 69 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1565,12 +1567,16 @@
 			</dict>
 			<key>Ansi 8 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.43921568989753723</real>
+				<real>0.99952054023742676</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.38823530077934265</real>
+				<real>0.87786728143692017</real>
 				<key>Red Component</key>
-				<real>0.36078432202339172</real>
+				<real>0.812477707862854</real>
 			</dict>
 			<key>Ansi 9 Color</key>
 			<dict>
@@ -2148,6 +2154,8 @@
 			<true/>
 			<key>Use Canonical Parser</key>
 			<false/>
+			<key>Use Cursor Guide</key>
+			<true/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Vertical Spacing</key>
@@ -2314,12 +2322,16 @@
 			</dict>
 			<key>Ansi 8 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.15170273184776306</real>
+				<real>0.40512150526046753</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.11783610284328461</real>
+				<real>0.39973211288452148</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<real>0.34460392594337463</real>
 			</dict>
 			<key>Ansi 9 Color</key>
 			<dict>
@@ -2407,13 +2419,13 @@
 				<key>Alpha Component</key>
 				<real>0.25</real>
 				<key>Blue Component</key>
-				<real>1</real>
+				<real>0.0</real>
 				<key>Color Space</key>
 				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.91000000000000003</real>
+				<real>0.0</real>
 				<key>Red Component</key>
-				<real>0.65000000000000002</real>
+				<real>0.0</real>
 			</dict>
 			<key>Cursor Text Color</key>
 			<dict>
@@ -2425,7 +2437,7 @@
 				<real>0.0</real>
 			</dict>
 			<key>Cursor Type</key>
-			<integer>2</integer>
+			<integer>0</integer>
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
@@ -2445,13 +2457,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.52787935733795166</real>
+				<real>0.72309476137161255</real>
 				<key>Color Space</key>
 				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.52048557996749878</real>
+				<real>0.71276813745498657</real>
 				<key>Red Component</key>
-				<real>0.44986331462860107</real>
+				<real>0.61420917510986328</real>
 			</dict>
 			<key>Guid</key>
 			<string>89A7486A-2F6E-41A2-9114-14C20D8EFA4F</string>
@@ -2944,6 +2956,8 @@
 			<true/>
 			<key>Use Canonical Parser</key>
 			<false/>
+			<key>Use Cursor Guide</key>
+			<false/>
 			<key>Use HFS Plus Mapping</key>
 			<false/>
 			<key>Use Italic Font</key>
@@ -3036,7 +3050,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-12-05T17:16:41Z</date>
+	<date>2016-12-06T17:16:43Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -3070,6 +3084,8 @@
 	</array>
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
+	<key>UKCrashReporterLastCrashReportDate</key>
+	<real>1481042432</real>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>UseBorder</key>
