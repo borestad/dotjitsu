@@ -1,0 +1,29 @@
+{
+	"bootstrapped": true,
+	"folder_exclude_patterns":
+	[
+		".svn",
+		".git",
+		".hg",
+		"CVS",
+		"node_modules"
+	],
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"BlackBird-ColorScheme",
+		"Git",
+		"Inspired GitHub Color Scheme",
+		"Material Theme",
+		"Package Control",
+		"Seti_UI",
+		"Theme - Flatland",
+		"Theme - Sodarized",
+		"Themes Menu Switcher",
+		"TypeScript",
+		"TypescriptCompletion",
+		"zz File Icons"
+	]
+}

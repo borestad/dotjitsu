@@ -1,12 +1,6 @@
 #!/usr/bin/env zsh
  
- vagrant box add --provider vmware_desktop boxcutter/ubuntu1404-desktop
- vagrant box add --provider vmware_desktop boxcutter/ubuntu1404-docker
- vagrant box add --provider vmware_desktop boxcutter/ubuntu1604
- vagrant box add --provider vmware_desktop boxcutter/debian82
- vagrant box add --provider vmware_desktop bento/centos-7.1
- vagrant box add --provider vmware_desktop bento/fedora-23
- vagrant box add --provider vmware_desktop casualjim/archie-base
- vagrant box add ubuntu/ubuntu-core-devel-amd64
- 
- 
+vagrant box add --provider vmware_desktop boxcutter/ubuntu1604
+vagrant box add --provider vmware_desktop boxcutter/debian8
+#vagrant box add ubuntu/ubuntu-core-devel-amd64
+

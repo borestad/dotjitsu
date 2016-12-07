@@ -26,4 +26,15 @@ BASEFILES=(
 stow -Rv -t $HOME $BASEFILES
 
 dotp-symlink
-mkdir -p ~/.config/youtube-dl && ln -sfv $DOTJITSU/packages/youtube-dl/config ~/.config/youtube-dl
+
+
+
+# Youtube-dl
+mkdir -p ~/.config/youtube-dl && \
+	ln -sfv $DOTJITSU/packages/youtube-dl/config ~/.config/youtube-dl
+
+
+# Sublime Text
+mkdir -p ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
+rm -rf ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
+ln -sfv $DOTJITSU/packages/sublime-text/User ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
