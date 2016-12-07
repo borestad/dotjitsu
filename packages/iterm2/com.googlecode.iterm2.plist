@@ -1421,15 +1421,15 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>535 110 839 560 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>528 309 796 473 0 0 1440 878 </string>
+	<string>528 401 918 381 0 0 1440 878 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 403 650 474 0 0 1440 878 </string>
+	<string>1440 1531 650 474 1440 111 1080 1898 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>4 804 1433 69 0 0 1440 878 </string>
+	<string>1440 979 1028 1019 1440 111 1080 1898 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>197 48 665 552 0 0 1440 878 </string>
+	<string>0 4 1440 873 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -2810,19 +2810,27 @@
 			<true/>
 			<key>Selected Text Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
 				<real>0.56363654136657715</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.56485837697982788</real>
+				<real>0.56485843658447266</real>
 				<key>Red Component</key>
 				<real>0.50599193572998047</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.19370138645172119</real>
+				<real>0.0</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.15575926005840302</real>
+				<real>0.0</real>
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
@@ -3107,8 +3115,8 @@
 	<key>iTerm Version</key>
 	<string>3.0.12</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
-	<integer>1</integer>
+	<integer>2</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
-	<false/>
+	<true/>
 </dict>
 </plist>
