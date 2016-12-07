@@ -11,7 +11,7 @@ source "$HOME/.aliases"
 
 # Access private configuration
 [[ -a ~/.private/.zshrc ]] && source ~/.private/.zshrc
-  
+
 # Prezto seems to override grc with some annoying alias
 unalias grc 2> /dev/null
 unalias gcp 2> /dev/null
@@ -84,7 +84,6 @@ files=(
   # terminal
   # autopair
   aka
-  cdpath
   ghq
   iterm2
   htop
@@ -93,8 +92,6 @@ files=(
   # z
 )
 
-
-. "${DOTJITSU}/packages/cdpath/cdpath.zsh"
 source "${DOTJITSU}/packages/ghq/ghq.zsh"
 source "${DOTJITSU}/packages/iterm2/iterm2.zsh"
 source "${DOTJITSU}/packages/fasd/fasd.zsh"
@@ -103,7 +100,7 @@ source "${DOTJITSU}/packages/docker/docker.zsh"
 # if [ -f $(brew --prefix)/etc/bash_completion ]; then
 #   . $(brew --prefix)/etc/bash_completion
 # fi
-  
+
 autoload -Uz compinit && compinit -i
 
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
