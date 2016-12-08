@@ -5,8 +5,12 @@ cd "$(dirname $0)"/../packages
 echo ''; hr - '#' -
 echo "[SYMLINKING]\n"
 
-# Make sure that .stow-global-ignore is set
-stow -R -t $HOME stow
+
+ln -sfv $DOTJITSU/packages/stow/.stow-global-ignore ~
+ln -sfv $DOTJITSU/packages/iterm2/.iterm2_shell_integration.zsh ~
+
+
+#stow -R -t $HOME stow
 
 BASEFILES=(
 	ack

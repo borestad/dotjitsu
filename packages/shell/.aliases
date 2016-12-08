@@ -24,13 +24,13 @@ alias _npm='/usr/local/bin/npm'
 wh () { which -a "$@" | ctt2 }
 
 # function npm {
-#   shift; 
+#   shift;
 #   case "$1" in
 
 #     i|install)
 #       yarn add "$@"
 #       ;;
-    
+
 #     *)
 #     _npm "$@"
 #     ;;
@@ -38,18 +38,11 @@ wh () { which -a "$@" | ctt2 }
 # }
 
 function clone {
-   local tmp=$(mktemp -t git)
-   local repo_name
-
-   if [ "$1" = clone ] ; then
-     command hub "$@" --progress 2>&1 | tee $tmp
-     repo_name=$(awk -F\' '/Cloning into/ {print $2}' $tmp)
-     rm $tmp &> /dev/null
-     cd "$repo_name"
-     echo "" && hub log --oneline --graph --date=short -n 1 && echo ""
-   else
-     command hub "$@"
-   fi
+  url=$1;
+  reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
+  git clone $url $reponame;
+  cd $reponame;
+  echo "" && hub log --oneline --graph --date=short -n 5 && echo ""
 }
 
 

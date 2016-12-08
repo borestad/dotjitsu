@@ -1421,11 +1421,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>535 110 839 560 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>528 401 918 381 0 0 1440 878 </string>
+	<string>233 329 918 512 0 0 1440 878 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1440 1531 650 474 1440 111 1080 1898 </string>
+	<string>0 4 1440 874 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1440 979 1028 1019 1440 111 1080 1898 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2064,6 +2064,8 @@
 					<string>([a-zA-Z0-9_]+::)+[a-zA-Z0-9_]+</string>
 				</dict>
 				<dict>
+					<key>actions</key>
+					<array/>
 					<key>notes</key>
 					<string>Paths</string>
 					<key>precision</key>
@@ -2104,6 +2106,8 @@
 					<string>@selector\([^)]+\)</string>
 				</dict>
 				<dict>
+					<key>actions</key>
+					<array/>
 					<key>notes</key>
 					<string>email address</string>
 					<key>precision</key>
@@ -2112,6 +2116,8 @@
 					<string>\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b</string>
 				</dict>
 				<dict>
+					<key>actions</key>
+					<array/>
 					<key>notes</key>
 					<string>HTTP URL</string>
 					<key>precision</key>
@@ -2120,6 +2126,8 @@
 					<string>https?://([a-z0-9A-Z]+(:[a-zA-Z0-9]+)?@)?[a-z0-9A-Z]+(\.[a-z0-9A-Z]+)*((:[0-9]+)?)(/[a-zA-Z0-9;/\.\-_+%~?&amp;@=#\(\)]*)?</string>
 				</dict>
 				<dict>
+					<key>actions</key>
+					<array/>
 					<key>notes</key>
 					<string>SSH URL</string>
 					<key>precision</key>

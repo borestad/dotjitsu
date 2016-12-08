@@ -93,7 +93,7 @@ files=(
 )
 
 source "${DOTJITSU}/packages/ghq/ghq.zsh"
-source "${DOTJITSU}/packages/iterm2/iterm2.zsh"
+source "${DOTJITSU}/packages/iterm2/_iterm2.zsh"
 source "${DOTJITSU}/packages/fasd/fasd.zsh"
 source "${DOTJITSU}/packages/docker/docker.zsh"
 
@@ -104,3 +104,5 @@ source "${DOTJITSU}/packages/docker/docker.zsh"
 autoload -Uz compinit && compinit -i
 
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

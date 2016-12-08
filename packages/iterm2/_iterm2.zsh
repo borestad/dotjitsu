@@ -5,7 +5,7 @@
 # iTerm2 window/tab color commands
 #   Requires iTerm2 >= Build 1.0.0.20110804
 #   http://code.google.com/p/iterm2/wiki/ProprietaryEscapeCodes
-source $DOTJITSU/packages/iterm2/iterm2_helpers.sh
+source $DOTJITSU/packages/iterm2/_iterm2_helpers.sh
 
 tab-color() {
     echo -ne "\033]6;1;bg;red;brightness;$1\a"
@@ -15,7 +15,7 @@ tab-color() {
 tab-reset() {
     echo -ne "\033]6;1;bg;*;default\a"
     # Clear the traps (ctrl-c etc stops working otherwise)
-    trap - INT EXIT    
+    trap - INT EXIT
 }
 
 # Change the color of the tab when using SSH

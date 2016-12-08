@@ -6,6 +6,8 @@
 \.git
 /bin/git-deps
 
+configs
+templates
 \_.*
 _build
 ,,.*
@@ -40,6 +42,7 @@ config\.log
 COPYING
 CVS
 DS_Store
+\.DS_Store
 Gemfile
 lib
 node_modules
