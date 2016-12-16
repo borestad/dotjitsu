@@ -50,6 +50,7 @@ unsetopt correct
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.repos/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
+source $HOME/.repos/git-subrepo/.rc
 
 auto-pkg-scripts () {
   emulate -L zsh;

@@ -1,4 +1,7 @@
 #!/usr/bin/ruby
+require 'irbtools'
+# require 'irbtools/more'
+
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'rubygems'

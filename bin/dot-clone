@@ -5,20 +5,20 @@ echo "[Updating ZSH Frameworks]\n"
 
 mkdir -p $HOME/.repos
 
-echo '  - Antigen'
+echo '  - Antigen' && hr - '#' -
 git -C $HOME/.repos/antigen pull || git clone git://github.com/zsh-users/antigen.git $HOME/.repos/antigen
 
-echo '  - oh-my-zsh'
+echo '  - oh-my-zsh' && hr - '#' -
 git -C $HOME/.repos/oh-my-zsh pull || git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.repos/oh-my-zsh
 
-echo '  - Zgen'
+echo '  - Zgen' && hr - '#' -
 git -C $HOME/.repos/zgen pull || git clone git://github.com/tarjoilija/zgen.git $HOME/.repos/zgen
 
-echo '  - Prezto'
+echo '  - Prezto' && hr - '#' -
 git -C $HOME/.zprezto pull || git clone --recursive git://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
 cd $HOME/.zprezto && git submodule update --init --recursive
 
-echo '  - Git friendly'
+echo '  - Git friendly' && hr - '#' -
 git -C $HOME/.repos/git-friendly pull || git clone --recursive git://github.com/jamiew/git-friendly.git $HOME/.repos/git-friendly
 
 #rm -rf $DOTJITSU/packages/git-friendly && \
@@ -28,12 +28,12 @@ git -C $HOME/.repos/git-friendly pull || git clone --recursive git://github.com/
 git -C $HOME/.zprezto pull || git clone --recursive git://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
 cd $HOME/.zprezto && git submodule update --init --recursive
 
-echo '  - Powerline fonts'
+echo '  - Powerline fonts' && hr - '#' -
 git -C /tmp/pl-fonts pull || git clone --recursive git://github.com/powerline/fonts.git /tmp/pl-fonts && \
 /tmp/pl-fonts/install.sh
 
-echo ' - Better npm'
+echo ' - Better npm' && hr - '#' -
 git -C $HOME/.repos/zsh-better-npm-completion pull || git clone https://github.com/lukechilds/zsh-better-npm-completion.git $HOME/.repos/zsh-better-npm-completion
 
-echo ' - Git subrepo'
+echo ' - Git subrepo' && hr - '#' -
 git -C $HOME/.repos/git-subrepo pull || git clone https://github.com/ingydotnet/git-subrepo $HOME/.repos/git-subrepo
