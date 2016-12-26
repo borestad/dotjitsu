@@ -137,15 +137,18 @@ brew 'lynx'
 # Databases & tools
 # ================================
 brew 'couchdb'
+brew 'mariadb'
 brew 'mongodb'
 brew 'mysql'
+brew 'neo4j'
 brew 'postgresql'
 brew 'redis'
+brew 'rethinkdb'
 brew 'riak'
 brew 'sqlite'
 
 tap 'theory/sqitch'
-brew 'sqitch' 
+brew 'sqitch'
 brew 'sqitch_pg'
 
 
