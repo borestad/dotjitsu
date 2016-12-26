@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-source "${ZDOTDIR:-$HOME}/.env"
+# Moved to .zshrc
+# source "${ZDOTDIR:-$HOME}/.env"
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then

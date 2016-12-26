@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+source "${ZDOTDIR:-$HOME}/.env"
+
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
@@ -25,7 +27,6 @@ source /usr/local/share/chruby/auto.sh
 
 # GRC colorizes nifty unix tools all over the place
 source "/usr/local/etc/grc.bashrc"
-
 
 # Fuck
 # eval $(thefuck --alias)
