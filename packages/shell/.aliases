@@ -21,6 +21,7 @@ alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
 alias npm_='/usr/local/bin/npm'
 alias _npm='/usr/local/bin/npm'
+alias yarn='/usr/local/bin/yarn'
 wh () { which -a "$@" | ctt2 }
 
 # function npm {
@@ -118,7 +119,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   #alias rm='trash -v'
   # Case-insensitive pgrep that outputs full path.
   brew.info () {
-    grep desc $(brew --prefix)/Library/Formula/*.rb | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
+    grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
   }
 fi
 
