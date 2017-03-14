@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
-npm set progress=true
 
-npm i -g yarn
 
 yarn global add \
   bcat@latest \
@@ -37,13 +35,13 @@ yarn global add \
 
 # npm set progress=false
 
-# # for pkg in $packages; do  
+# # for pkg in $packages; do
 # #   hr -
 # #   echo "Uninstalling ${pkg}"
 # #   npm un -g "${pkg}"
 # # done
 
-# for pkg in $packages; do  
+# for pkg in $packages; do
 #   hr -
 #   echo "Installing ${pkg}"
 #   yarn global add "${pkg}@latest"
