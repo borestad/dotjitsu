@@ -13,6 +13,7 @@
 	],
 	"installed_packages":
 	[
+		"A File Icon",
 		"BlackBird-ColorScheme",
 		"Git",
 		"Inspired GitHub Color Scheme",
@@ -23,7 +24,6 @@
 		"Theme - Sodarized",
 		"Themes Menu Switcher",
 		"TypeScript",
-		"TypescriptCompletion",
-		"zz File Icons"
+		"TypescriptCompletion"
 	]
 }
