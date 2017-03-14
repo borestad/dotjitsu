@@ -104,7 +104,3 @@ source "${DOTJITSU}/packages/docker/docker.zsh"
 # fi
 
 autoload -Uz compinit && compinit -i
-
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

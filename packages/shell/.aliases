@@ -3,7 +3,6 @@
 # =========================================================
 # Globals & system overrids
 # =========================================================
-alias brew -="brew -v"
 alias cp='gcp -v'
 alias ctt='pygmentize -O style=monokai -f console256 -g'
 alias ctt2='pygmentize -O style=monokai -g'
@@ -15,28 +14,14 @@ alias mv='gmv -v'
 alias path='echo -e ${PATH//:/\\n}'
 alias pgrep='pgrep -fli'
 alias rm='grm -v'
+alias rmf='grm -rfv'
 alias serve='http-server'
 alias wget='wget --no-check-certificate'
 alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
 alias npm_='/usr/local/bin/npm'
-alias _npm='/usr/local/bin/npm'
-alias yarn='/usr/local/bin/yarn'
+alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 wh () { which -a "$@" | ctt2 }
-
-# function npm {
-#   shift;
-#   case "$1" in
-
-#     i|install)
-#       yarn add "$@"
-#       ;;
-
-#     *)
-#     _npm "$@"
-#     ;;
-#   esac
-# }
 
 function clone {
   url=$1;
@@ -45,8 +30,6 @@ function clone {
   cd $reponame;
   echo "" && hub log --oneline --graph --date=short -n 5 && echo ""
 }
-
-
 
 
 # =========================================================
@@ -293,7 +276,9 @@ alias flushdns='net.flushdns'
 
 z1 () {
   local input=$1; local output=${2:-$1}.tar.gz
-  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pigz -c -9 > $output
+  echo "Compressiong $input into $output"
+  #tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pigz -c -9 > $output
+  tar cf - $input | pigz -c -9 > $output
 }
 
 z2 () {

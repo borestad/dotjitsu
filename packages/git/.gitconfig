@@ -9,7 +9,7 @@
         email = johan@borestad.com
 		#useConfigOnly = true
 [credential]
-        helper = osxkeychain
+        #helper = osxkeychain
 
 [color]
   ui = true
@@ -23,7 +23,7 @@
   show = diff-so-fancy | less --tabs=4 -RFX
 
 [interactive]
-  diffFilter = "diff-so-fancy"
+  diffFilter = diff-so-fancy
 
 [color "branch"]
   current = yellow reverse
@@ -99,23 +99,24 @@
 
   # reset
   unstage = reset HEAD              # remove files from index (tracking)
+  undo = reset HEAD~                # Undo last commit
   uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
   filelog = log -u                  # show changes to a file
   mt = mergetool                    # fire up the merge tool
 
   # stash
-  ss = stash                        # stash changes
-  sl = stash list                   # list stashes
-  sa = stash apply                  # apply stash (restore changes)
-  sd = stash drop                   # drop stashes (destory changes)
+  ss = stash # stash changes
+  sl = stash list # list stashes
+  sa = stash apply # apply stash (restore changes)
+  sd = stash drop # drop stashes (destory changes)
 
   # status
-  s = status                        # status
-  st = status                       # status
-  stat = status                     # status
+  s = status # status
+  st = status # status
+  stat = status # status
 
   # tag
-  t = tag -n                        # show tags with <n> lines of each tag message
+  t = tag -n # show tags with <n> lines of each tag message
 
   # svn helpers
   svnr = svn rebase
@@ -146,22 +147,27 @@
   # Remember my merges
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
   enabled = true
-  
+
 [include]
   path = .gitconfig.user
 
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 
 [mergetool "sourcetree"]
 	cmd = /Users/johan/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 	required = true
 
 [gc]
   autoDetach = false
+[commit]
+  gpgSign = false
+[pull]
+  rebase = true
