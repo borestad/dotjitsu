@@ -19,6 +19,6 @@
 		"*.log"
 	],
 	"overlay_scroll_bars": "enabled",
-	"theme": "Material-Theme.sublime-theme",
+	"theme": "Material-Theme-Darker.sublime-theme",
 	"trim_trailing_white_space_on_save": true
 }
