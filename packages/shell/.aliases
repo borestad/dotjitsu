@@ -180,7 +180,7 @@ git.co () {
   local branches branch
   branches=$(git branch -a) &&
   branch=$(echo "$branches" | fzf +s +m -x --reverse) &&
-  git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
+  ~/.repos/git-friendly/branch $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
 }
 alias co='git.co'
 

@@ -1,1 +1,9 @@
+set blame-view	= date:default author:full file-name:auto id:yes,color
+
+
+set show-changes		= yes
+
+set tab-size			= 2
+set mouse = no
+
 bind generic <Ctrl-F> !?git checkout %(commit) %(file)

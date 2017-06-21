@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+ulimit -n 8192
+
 source "${ZDOTDIR:-$HOME}/.env"
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -22,8 +24,8 @@ unalias gls 2> /dev/null
 # fpath=(/usr/local/share/zsh-completions $fpath)
 # fpath=(~/.zsh/completion $fpath)
 
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
+#source /usr/local/share/chruby/chruby.sh
+#source /usr/local/share/chruby/auto.sh
 
 # GRC colorizes nifty unix tools all over the place
 source "/usr/local/etc/grc.bashrc"
@@ -41,7 +43,7 @@ auto-ls () {
 
 
 # Set correct ruby version
-chruby ruby-2.3.3
+#chruby ruby-2.3.3
 
 # Disable ZSH annoying auto correct
 unsetopt correct
@@ -50,7 +52,6 @@ unsetopt correct
 # source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOME/.repos/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
 source $HOME/.repos/git-subrepo/.rc
 
 auto-pkg-scripts () {
@@ -87,7 +88,7 @@ files=(
   # autopair
   aka
   ghq
-  iterm2
+  #iterm2
   htop
   #fasd
   docker
@@ -95,7 +96,7 @@ files=(
 )
 
 source "${DOTJITSU}/packages/ghq/ghq.zsh"
-source "${DOTJITSU}/packages/iterm2/_iterm2.zsh"
+#source "${DOTJITSU}/packages/iterm2/_iterm2.zsh"
 source "${DOTJITSU}/packages/fasd/fasd.zsh"
 source "${DOTJITSU}/packages/docker/docker.zsh"
 
@@ -104,3 +105,8 @@ source "${DOTJITSU}/packages/docker/docker.zsh"
 # fi
 
 autoload -Uz compinit && compinit -i
+# tabtab source for yarn package
+# uninstall by removing these lines or running `tabtab uninstall yarn`
+[[ -f /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh ]] && . /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh
+
+source ~/.repos/k/k.sh

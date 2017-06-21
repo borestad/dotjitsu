@@ -19,10 +19,10 @@ if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 ./bin/dot-node
 #./bin/dot-npm
 ./bin/dot-manual
-./bin/dot-osx
+#./bin/dot-osx
 ./bin/dot-osx-services
 ./bin/dot-python
-./bin/dot-ruby
+#./bin/dot-ruby
 ./bin/dot-ssh
 ./bin/dot-symlink
 #./bin/dot-clean

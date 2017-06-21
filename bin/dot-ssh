@@ -4,7 +4,7 @@ echo ''; hr - '#' -
 echo "[SETUP SSH KEYS]\n"
 
 if [ ! -f $HOME/.ssh/id_rsa ]; then
-  ssh-keygen -t rsa -N "" -f $HOME/.ssh/id_rsa;
+  ssh-keygen -t rsa -b 2048 -N "" -f $HOME/.ssh/id_rsa;
 fi
 
 

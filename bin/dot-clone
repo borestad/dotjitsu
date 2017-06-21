@@ -6,30 +6,30 @@ echo "[Updating ZSH Frameworks]\n"
 mkdir -p $HOME/.repos
 
 echo '  - Antigen' && hr - '#' -
-git -C $HOME/.repos/antigen pull || git clone git://github.com/zsh-users/antigen.git $HOME/.repos/antigen
+git -C $HOME/.repos/antigen pull || git clone https://github.com/zsh-users/antigen.git $HOME/.repos/antigen
 
 echo '  - oh-my-zsh' && hr - '#' -
-git -C $HOME/.repos/oh-my-zsh pull || git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.repos/oh-my-zsh
+git -C $HOME/.repos/oh-my-zsh pull || git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.repos/oh-my-zsh
 
 echo '  - Zgen' && hr - '#' -
-git -C $HOME/.repos/zgen pull || git clone git://github.com/tarjoilija/zgen.git $HOME/.repos/zgen
+git -C $HOME/.repos/zgen pull || git clone https://github.com/tarjoilija/zgen.git $HOME/.repos/zgen
 
 echo '  - Prezto' && hr - '#' -
-git -C $HOME/.zprezto pull || git clone --recursive git://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
+git -C $HOME/.zprezto pull || git clone --recursive https://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
 cd $HOME/.zprezto && git submodule update --init --recursive
 
 echo '  - Git friendly' && hr - '#' -
-git -C $HOME/.repos/git-friendly pull || git clone --recursive git://github.com/jamiew/git-friendly.git $HOME/.repos/git-friendly
+git -C $HOME/.repos/git-friendly pull || git clone --recursive https://github.com/jamiew/git-friendly.git $HOME/.repos/git-friendly
 
 #rm -rf $DOTJITSU/packages/git-friendly && \
-#git clone git://github.com/jamiew/git-friendly.git $DOTJITSU/packages/git-friendly && \
+#git clone https://github.com/jamiew/git-friendly.git $DOTJITSU/packages/git-friendly && \
 #rm -rf $DOTJITSU/packages/git-friendly/.git
 
-git -C $HOME/.zprezto pull || git clone --recursive git://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
+git -C $HOME/.zprezto pull || git clone --recursive https://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
 cd $HOME/.zprezto && git submodule update --init --recursive
 
 echo '  - Powerline fonts' && hr - '#' -
-git -C /tmp/pl-fonts pull || git clone --recursive git://github.com/powerline/fonts.git /tmp/pl-fonts && \
+git -C /tmp/pl-fonts pull || git clone --recursive https://github.com/powerline/fonts.git /tmp/pl-fonts && \
 /tmp/pl-fonts/install.sh
 
 echo ' - Better npm' && hr - '#' -
