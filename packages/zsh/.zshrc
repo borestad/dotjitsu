@@ -48,6 +48,12 @@ auto-ls () {
 # Disable ZSH annoying auto correct
 unsetopt correct
 
+# Disable ZSH annoying glob error
+unsetopt nomatch
+
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+
 # Enable syntax highlighting
 # source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 

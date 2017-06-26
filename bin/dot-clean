@@ -5,6 +5,9 @@ cd "$(dirname $0)"/..
 echo ''; hr - '#' -
 echo "[CLEANING]\n"
 
+dfc
+echo
+
 # Kill log files slowing down the shell
 sudo rm -rfv /private/var/log/asl/*.asl
 
@@ -15,6 +18,8 @@ chmod -R +x ~/.dotjitsu/bin/*
 brew cleanup -s
 brew prune
 
+echo
+dfc
 
 # brew uninstall --force brew-cask;
 # brew untap phinze/cask;
