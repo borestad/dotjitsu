@@ -80,6 +80,8 @@ alias speedtest="speedtest-cli"
 
 # Create directory and immediately move into that dir
 mk () { mkdir -p $1; cd $1 }
+mkt () { cd $(mktemp -d) }
+
 
 # Opens file in EDITOR.
 edit () {

@@ -1,22 +1,23 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 cd "$(dirname $0)"/..
 
 echo ''; hr - '#' -
-echo "[CLEANING]\n"
+echo "[CLEANING]"
+echo
 
 dfc
 echo
 
 # Kill log files slowing down the shell
-sudo rm -rfv /private/var/log/asl/*.asl
+find /private/var/log/asl -name '*.asl' | sudo xargs rm -rfv
 
-rm -rfv ./**/.DS_Store
+rm -rfv ~/.v8flags*
 
 chmod -R +x ~/.dotjitsu/bin/*
 
-brew cleanup -s
-brew prune
+brew cleanup -s --verbose
+brew prune --verbose
 
 echo
 dfc
