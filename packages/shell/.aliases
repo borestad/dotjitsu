@@ -21,6 +21,8 @@ alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
 alias npm_='/usr/local/bin/npm'
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
+alias yarn='/usr/local/bin/yarn'
+
 wh () { which -a "$@" | ctt2 }
 
 function clone {

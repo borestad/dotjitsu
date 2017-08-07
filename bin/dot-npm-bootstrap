@@ -9,6 +9,7 @@ yarn global add \
   esformatter@latest \
   http-server@latest \
   diff-so-fancy@latest \
+  dockly@latest \
   jscodeshift@latest \
   jscs@latest \
   jshint@latest \
@@ -20,6 +21,7 @@ yarn global add \
   npm-cache@latest \
   npm-check@latest \
   pen.md@latest \
+  pageres-cli@latest \
   phantomjs-prebuilt@latest \
   public-ip@latest \
   rtail@latest \
