@@ -18,6 +18,7 @@ chmod -R +x ~/.dotjitsu/bin/*
 
 brew cleanup -s --verbose
 brew prune --verbose
+rm -rf $(brew --cache)
 
 echo
 dfc
