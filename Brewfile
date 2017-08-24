@@ -98,13 +98,14 @@ brew 'plzip'						# Data compressor
 brew 'pngcheck'						# Print info and check PNG, JNG, and MNG files
 brew 'pngquant'
 brew 'pv'							# Monitor data's progress through a pipe
-brew 'readline'
+brew 'peco'							# Simplistic interactive filtering tool
+brew 'readline'						# Library for command-line editing
 brew 'rename'						# Perl-powered file rename script with many helpful built-ins
 brew 'rgxg'							# C library and command-line tool to generate (extended) regular expressions
 brew 'rlwrap'						# Readline wrapper: adds readline support to tools that lack it
 brew 'serf'
 brew 'socat'
-brew 'speedtest_cli'
+brew 'speedtest_cli'				# Command-line interface for https://speedtest.net bandwidth tests
 brew 'sqlmap'
 brew 'ssh-copy-id'
 brew 'sshrc'						# Bring your .bashrc, .vimrc, etc. with you when you SSH
@@ -131,6 +132,7 @@ brew 'youtube-dl'
 brew 'zopfli'						# New zlib (gzip, deflate) compatible compressor
 brew 'zsh'
 brew 'zsh-autosuggestions'
+brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 
 # ================================

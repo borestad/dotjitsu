@@ -21,9 +21,6 @@ unalias grc 2> /dev/null
 unalias gcp 2> /dev/null
 unalias gls 2> /dev/null
 
-# fpath=(/usr/local/share/zsh-completions $fpath)
-# fpath=(~/.zsh/completion $fpath)
-
 #source /usr/local/share/chruby/chruby.sh
 #source /usr/local/share/chruby/auto.sh
 
