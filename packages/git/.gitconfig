@@ -176,7 +176,7 @@
 
 [tig]
   line-graphics = no  # Disable graphics characters
-  tab-size = 8    # Number of spaces per tab
+  tab-size = 4    # Number of spaces per tab
   mouse = no
 [http "https://git.demo.netent.io"]
 	sslCAInfo = /Users/johan.borestad/.flynn/ca-certs/production.pem
