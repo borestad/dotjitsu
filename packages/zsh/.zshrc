@@ -39,20 +39,27 @@ auto-ls () {
 }
 
 
-# Set correct ruby version
-#chruby ruby-2.3.3
 
-# Disable ZSH annoying auto correct
-unsetopt correct
-
-# Disable ZSH annoying glob error
-unsetopt nomatch
-
-setopt APPEND_HISTORY
+unsetopt correct          # Disable ZSH annoying auto correct
+unsetopt nomatch          # Disable ZSH annoying glob error
+setopt APPEND_HISTORY     # Adds history
 setopt INC_APPEND_HISTORY
+setopt NO_BG_NICE         # Don't nice background tasks
+setopt NO_HUP
+setopt NO_LIST_BEEP
+setopt LOCAL_OPTIONS      # Allow functions to have local options
+setopt LOCAL_TRAPS        # Allow functions to have local traps
+setopt HIST_VERIFY
+setopt SHARE_HISTORY      # Share history between sessions ???
+setopt EXTENDED_HISTORY   # Add timestamps to history
+setopt PROMPT_SUBST
+setopt CORRECT
+setopt COMPLETE_IN_WORD
+setopt IGNORE_EOF
+setopt HIST_IGNORE_ALL_DUPS  # Don't record dupes in history
+setopt HIST_REDUCE_BLANKS
+setopt complete_aliases
 
-# Enable syntax highlighting
-# source "`brew --prefix`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.repos/git-subrepo/.rc
@@ -102,14 +109,18 @@ source "${DOTJITSU}/packages/ghq/ghq.zsh"
 #source "${DOTJITSU}/packages/iterm2/_iterm2.zsh"
 source "${DOTJITSU}/packages/fasd/fasd.zsh"
 source "${DOTJITSU}/packages/docker/docker.zsh"
+source ~/.repos/k/k.sh
+source ~/.repos/zaw/zaw.zsh
 
 # if [ -f $(brew --prefix)/etc/bash_completion ]; then
 #   . $(brew --prefix)/etc/bash_completion
 # fi
 
-autoload -Uz compinit && compinit -i
+
 # tabtab source for yarn package
 # uninstall by removing these lines or running `tabtab uninstall yarn`
 [[ -f /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh ]] && . /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh
 
-source ~/.repos/k/k.sh
+autoload -Uz compinit && compinit -i
+
+

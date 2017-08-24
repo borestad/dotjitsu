@@ -36,6 +36,7 @@ zstyle ':prezto:load' pmodule \
   'osx' \
   'history' \
   'syntax-highlighting' \
+  'history-substring-search' \
   'prompt' \
   'git'
 
