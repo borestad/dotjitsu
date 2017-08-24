@@ -15,7 +15,8 @@ alias path='echo -e ${PATH//:/\\n}'
 alias pgrep='pgrep -fli'
 alias rm='grm -v'
 alias rmf='grm -rfv'
-alias serve='ws'
+alias serve='ws -d'
+alias ws='ws -d'
 alias wget='wget --no-check-certificate'
 alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
@@ -98,6 +99,10 @@ alias e='edit'
 zr () {
   source $HOME/.zshrc
 }
+
+alias zr='echo "Reloading zsh..."; exec zsh'
+alias reload='exec zsh'
+
 
 # OSX ONLY
 # =========================================================
