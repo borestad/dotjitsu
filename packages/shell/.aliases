@@ -23,6 +23,9 @@ alias crontab='VISUAL=nano EDITOR=nano crontab'
 alias npm_='/usr/local/bin/npm'
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias yarn='/usr/local/bin/yarn'
+alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
+alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
+
 
 wh () { which -a "$@" | ctt2 }
 
@@ -74,15 +77,13 @@ alias updatedb='/usr/local/opt/findutils/bin/updatedb'
 # =========================================================
 alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal tee | tee fs_usage.log'
 alias spotlight.rebuild='sudo mdutil -E /'
-alias speedtest="speedtest-cli"
-
 
 # =========================================================
 # Boilerplate shortcuts
 # =========================================================
 
 # Create directory and immediately move into that dir
-mk () { mkdir -p $1; cd $1 }
+mk ()  { mkdir -p $1; cd $1 }
 mkt () { cd $(mktemp -d) }
 
 

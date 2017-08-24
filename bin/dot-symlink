@@ -42,3 +42,4 @@ mkdir -p ~/.config/youtube-dl && \
 mkdir -p ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
 rm -rf ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
 ln -sfv $DOTJITSU/packages/sublime-text/User ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
+ln -sfv $DOTJITSU/packages/htop ~/.config/
