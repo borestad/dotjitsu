@@ -7,6 +7,8 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+archey
+
 # Execute code that does not affect the current session in the background.
 {
   # Compile the completion dump to increase startup speed.

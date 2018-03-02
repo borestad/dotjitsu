@@ -7,7 +7,8 @@ alias cp='gcp -v'
 alias ctt='pygmentize -O style=monokai -f console256 -g'
 alias ctt2='pygmentize -O style=monokai -g'
 ct () { ctt "$@" | cat -n | sed 's/^[ 0-9]*[0-9]/\o033[34m&\o033[0m/' | less -R }
-cs () { cat "$@" | jase scripts | pygmentize -l json }
+cs () { cat "$@" | jase scripts 2>/dev/null | pygmentize -l json }
+alias ctp="ct package.json"
 alias h="history | fzf --reverse"
 alias mkdir='gmkdir -pv'
 alias mv='gmv -v'
@@ -20,7 +21,8 @@ alias ws='ws -d'
 alias wget='wget --no-check-certificate'
 alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
-alias npm_='/usr/local/bin/npm'
+#alias npm_='/usr/local/bin/npm'
+#alias npm='~/n/bin/npm'
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias yarn='/usr/local/bin/yarn'
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
@@ -38,6 +40,30 @@ function clone {
 }
 
 
+# Compare original and gzipped file size
+function gz() {
+  local origsize=$(wc -c < "$1");
+  local gzipsize=$(gzip -c "$1" | wc -c);
+  local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l);
+  printf "orig: %d bytes\n" "$origsize";
+  printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio";
+}
+
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+function tre() {
+  tree -aC -I '.git|node_modules|bower_components|.tmp|tmp|dist' --dirsfirst "$@" | less -FRNX;
+}
+
+function gthumbnails() {
+  local sec=${1:-1} # Default 1 sec
+  for file in *.mp4; do
+    #ffmpeg -y -i "$file" -f image2 -ss $sec -vframes 1 -an "${file%.mp4}.jpg";
+    ffmpeg -ss 1 -i "$file" -vframes 1 -vcodec png -an -y "${file%.mp4}.png"
+  done
+}
 # =========================================================
 # GOTO aliases
 # =========================================================
@@ -83,8 +109,9 @@ alias spotlight.rebuild='sudo mdutil -E /'
 # =========================================================
 
 # Create directory and immediately move into that dir
-mk ()  { mkdir -p $1; cd $1 }
+mk ()  { mkdir -p "$@" && cd "$_"; }
 mkt () { cd $(mktemp -d) }
+mktc () { cd $(mktemp -d) && pwd && hr - && clone $1 }
 
 
 # Opens file in EDITOR.
@@ -94,15 +121,11 @@ edit () {
   $EDITOR $dir
 }
 
+
 alias e='edit'
-
-# Reload .zshrc
-zr () {
-  source $HOME/.zshrc
-}
-
 alias zr='echo "Reloading zsh..."; exec zsh'
 alias reload='exec zsh'
+alias zr='reload'
 
 
 # OSX ONLY
@@ -192,7 +215,13 @@ git.co () {
   branch=$(echo "$branches" | fzf +s +m -x --reverse) &&
   ~/.repos/git-friendly/branch $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
 }
+
 alias co='git.co'
+
+#alias ghc='cd $(ghq list --full-path | fzf)'
+#alias ghf='find $(git rev-parse --show-cdup) -type f | grep -v "/.git/" | fzf'
+#alias gho='(cd $(ghq list --full-path | fzf) && git browse)'
+
 
 # =========================================================
 # CD
@@ -344,19 +373,13 @@ randfile () {
 }
 
 # 1500 -> 1.500
-to_kb () {
-  echo $(bc <<< "scale=3; $1/1000")
-}
+to_kb () { echo $(bc <<< "scale=3; $1/1000") }
 
 # 10000 -> 10,000
-format_number () {
-  printf "%'.3f\n" $1
-}
+format_number () { printf "%'.3f\n" $1 }
 
 # ./some_file.txt -> 11496328
-size_in_bytes () {
-  stat -f %z "$1"
-}
+size_in_bytes () { stat -f %z "$1" }
 
 # ./some_file.txt -> 11,496.328 KB
 echo_size () {

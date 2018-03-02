@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-ulimit -n 8192
+ulimit -n 20000
 
 source "${ZDOTDIR:-$HOME}/.env"
 
@@ -53,16 +53,16 @@ setopt HIST_VERIFY
 setopt SHARE_HISTORY      # Share history between sessions ???
 setopt EXTENDED_HISTORY   # Add timestamps to history
 setopt PROMPT_SUBST
-setopt CORRECT
+#setopt CORRECT
 setopt COMPLETE_IN_WORD
 setopt IGNORE_EOF
 setopt HIST_IGNORE_ALL_DUPS  # Don't record dupes in history
 setopt HIST_REDUCE_BLANKS
-setopt complete_aliases
 
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.repos/git-subrepo/.rc
+source $HOME/.repos/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
 
 auto-pkg-scripts () {
   emulate -L zsh;
@@ -97,7 +97,6 @@ files=(
   # terminal
   # autopair
   aka
-  ghq
   #iterm2
   htop
   #fasd
@@ -105,12 +104,15 @@ files=(
   # z
 )
 
-source "${DOTJITSU}/packages/ghq/ghq.zsh"
 #source "${DOTJITSU}/packages/iterm2/_iterm2.zsh"
-source "${DOTJITSU}/packages/fasd/fasd.zsh"
+
+# Fasd autocompletion
+eval "$(fasd --init auto)"
+
 source "${DOTJITSU}/packages/docker/docker.zsh"
-source ~/.repos/k/k.sh
-source ~/.repos/zaw/zaw.zsh
+
+#source ~/.repos/k/k.sh
+#source ~/.repos/zaw/zaw.zsh
 
 # if [ -f $(brew --prefix)/etc/bash_completion ]; then
 #   . $(brew --prefix)/etc/bash_completion
@@ -121,6 +123,50 @@ source ~/.repos/zaw/zaw.zsh
 # uninstall by removing these lines or running `tabtab uninstall yarn`
 [[ -f /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh ]] && . /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh
 
-autoload -Uz compinit && compinit -i
+
+# NVM 
+# =================================================================
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
+
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+
+
+
+
+
+# Better history
+# Credits to https://coderwall.com/p/jpj_6q/zsh-better-history-searching-with-arrow-keys
+# autoload -U up-line-or-beginning-search
+# autoload -U down-line-or-beginning-search
+# zle -N up-line-or-beginning-search
+# zle -N down-line-or-beginning-search
+# bindkey "^[[A" up-line-or-beginning-search # Up
+# bindkey "^[[B" down-line-or-beginning-search # Down
+
+
+# autoload -Uz compinit && compinit -i

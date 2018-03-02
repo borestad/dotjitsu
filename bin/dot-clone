@@ -6,39 +6,45 @@
 echo "Updating ZSH Frameworks ...\n"
 
 mkdir -p $HOME/.repos
+cd $HOME/.repos
 
 line 'Antigen'
 git_clone_or_pull \
-	'https://github.com/zsh-users/antigen.git' $HOME/.repos/antigen
-
+  'https://github.com/zsh-users/antigen.git' antigen
 
 line 'oh-my-zsh'
 git_clone_or_pull \
-	'https://github.com/robbyrussell/oh-my-zsh.git' $HOME/.repos/oh-my-zsh
+  'https://github.com/robbyrussell/oh-my-zsh.git' oh-my-zsh
 
 line 'Zgen'
 git_clone_or_pull \
-	'https://github.com/tarjoilija/zgen.git' $HOME/.repos/zgen
-
+  'https://github.com/tarjoilija/zgen.git' zgen
 
 line 'Prezto'
 git_clone_or_pull \
-	'https://github.com/sorin-ionescu/prezto.git' $HOME/.zprezto
+  'https://github.com/sorin-ionescu/prezto.git' zprezto
 
 line 'Git friendly'
 git_clone_or_pull \
-	'https://github.com/jamiew/git-friendly.git' $HOME/.repos/git-friendly
-
-line 'Powerline fonts'
-git_clone_or_pull \
-	'https://github.com/powerline/fonts.git' $HOME/.repos/powerline-fonts
-cd $HOME/.repos/powerline-fonts && ./install.sh
+  'https://github.com/jamiew/git-friendly.git' git-friendly
 
 line 'Better npm'
 git_clone_or_pull \
-	'https://github.com/lukechilds/zsh-better-npm-completion.git' $HOME/.repos/zsh-better-npm-completion
+  'https://github.com/lukechilds/zsh-better-npm-completion.git' zsh-better-npm-completion
 
 line 'Git subrepo'
 git_clone_or_pull \
-	'https://github.com/ingydotnet/git-subrepo.git' $HOME/.repos/git-subrepo
+  'https://github.com/ingydotnet/git-subrepo.git' git-subrepo
 
+line 'Ligaturizer'
+git_clone_or_pull \
+  'https://github.com/rojiani/Ligaturizer.git' ligaturizer
+
+line 'osx-terminal-themes'
+git_clone_or_pull \
+  'https://github.com/lysyi3m/osx-terminal-themes.git' osx-terminal-themes
+
+line 'Powerline fonts'
+git_clone_or_pull \
+  'https://github.com/powerline/fonts.git' powerline-fonts
+cd powerline-fonts && ./install.sh

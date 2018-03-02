@@ -3,36 +3,40 @@
 
 yarn global add \
   bcat@latest \
-  casperjs@latest \
-  david@latest \
-  debug@latest \
-  esformatter@latest \
+  jase@latest \
   http-server@latest \
   diff-so-fancy@latest \
-  dockly@latest \
-  jscodeshift@latest \
-  jscs@latest \
-  jshint@latest \
-  jsinspect@latest \
-  jslint@latest \
-  livescript@latest \
-  node-debugger@latest \
-  n_@latest \
-  npm-cache@latest \
-  npm-check@latest \
-  pen.md@latest \
-  pageres-cli@latest \
-  phantomjs-prebuilt@latest \
-  public-ip@latest \
-  rtail@latest \
-  shipit-cli@latest \
-  tmpin@latest \
-  vantage@latest \
   vtop@latest \
-  webpack@latest \
-  webpack-bundle-size-analyzer@latest \
-  webpack-dev-server@latest \
-  yo@latest
+  flow-bin@latest
+  # public-ip@latest \
+  #casperjs@latest \
+  # david@latest \
+  # debug@latest \
+  # esformatter@latest \
+
+  # dockly@latest \
+  # jscodeshift@latest \
+  # jscs@latest \
+  # jshint@latest \
+  # jsinspect@latest \
+  # jslint@latest \
+  # livescript@latest \
+  # node-debugger@latest \
+  # n_@latest \
+  # npm-cache@latest \
+  # npm-check@latest \
+  # pen.md@latest \
+  # pageres-cli@latest \
+  # phantomjs-prebuilt@latest \
+  
+  # rtail@latest \
+  # shipit-cli@latest \
+  # tmpin@latest \
+  # vantage@latest \
+  # webpack@latest \
+  # webpack-bundle-size-analyzer@latest \
+  # webpack-dev-server@latest \
+  # yo@latest
 
 
 # npm set progress=false

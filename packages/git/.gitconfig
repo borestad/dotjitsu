@@ -5,10 +5,10 @@
 [hub]
         protocol = https
 [user]
-        name = Johan Borestad
-        email = johan@borestad.com
-        signingkey = A2F9E43859571FBEBBDEFD92A457B0441FAD4678
-		#useConfigOnly = true
+  name = Johan Borestad
+  email = johan@borestad.com
+  signingkey = A2F9E43859571FBEBBDEFD92A457B0441FAD4678
+    #useConfigOnly = true
 [credential]
         #helper = osxkeychain
 
@@ -123,6 +123,7 @@
   svnr = svn rebase
   svnd = svn dcommit
   svnl = svn log --oneline --show-commit
+  squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-Initial commit}\");};f"
 
 [format]
   pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
@@ -130,7 +131,7 @@
 [core]
         excludesfile = ~/.gitignore
         editor = nano
-	    ignorecase = false
+      ignorecase = false
 [apply]
         whitespace = nowarn
 [mergetool]
@@ -145,6 +146,7 @@
         #
         # Setting to git 2.0 default to suppress warning message
         default = simple
+
 [rerere]
   # Remember my merges
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
@@ -154,23 +156,25 @@
   path = .gitconfig.user
 
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
 
 [mergetool "sourcetree"]
-	cmd = /Users/johan/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Users/johan/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 
 [gc]
   autoDetach = false
+
 [commit]
   gpgSign = false
+
 [pull]
   rebase = true
 
@@ -178,7 +182,26 @@
   line-graphics = no  # Disable graphics characters
   tab-size = 4    # Number of spaces per tab
   mouse = no
+
 [http "https://git.demo.netent.io"]
-	sslCAInfo = /Users/johan.borestad/.flynn/ca-certs/production.pem
+  sslCAInfo = /Users/johan.borestad/.flynn/ca-certs/production.pem
+
 [credential "https://git.demo.netent.io"]
-	helper = /usr/local/bin/flynn git-credentials
+  helper = /usr/local/bin/flynn git-credentials
+
+[fetch]
+  prune = true
+
+[gui]
+  pruneDuringFetch = true
+
+[gitflow "branch"]
+  develop = develop
+  master = master
+
+[gitflow "prefix"]
+  feature = feature/
+  release = release/
+  hotfix = hotfix/
+  support = support/
+  versiontag = v

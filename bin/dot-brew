@@ -6,5 +6,5 @@ echo ''; hr - '#' -
 echo "[BREW FORMULAS]\n"
 
 brew -v update
-brew -v bundle --file=$DOTJITSU/Brewfile
-brew -v upgrade --file=$DOTJITSU/Brewfile
+brew -v bundle --file=./Brewfile
+brew -v upgrade --file=./Brewfile

@@ -23,6 +23,12 @@ rm -rf $(brew --cache)
 echo
 dfc
 
+#find ~/code -type d -name node_modules | xargs rm -rfv
+#rm -rfv ~/.tmp/*
+
+#npm cache clean --force
+#yarn cache clean
+
 # brew uninstall --force brew-cask;
 # brew untap phinze/cask;
 # brew untap caskroom/cask;
