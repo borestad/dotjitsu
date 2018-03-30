@@ -3,7 +3,7 @@
 # https://github.com/skwp/dotfiles/blob/master/git/gitconfig
 
 [hub]
-        protocol = https
+	protocol = https
 [user]
   name = Johan Borestad
   email = johan@borestad.com
