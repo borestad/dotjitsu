@@ -43,3 +43,8 @@ mkdir -p ~/.config/youtube-dl && \
 #rm -rf ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
 #ln -sfv $DOTJITSU/packages/sublime-text/User ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
 ln -sfv $DOTJITSU/packages/htop ~/.config/
+ln -sfv $DOTJITSU/packages/neofetch ~/.config/
+ln -sfv $DOTJITSU/packages/tmux/.tmux.conf.local ~/
+
+# Disable Last Login message with new tabs (i.e Last login: Wed Apr  4 09:36:35 on ttys013)
+touch ~/.hushlogin

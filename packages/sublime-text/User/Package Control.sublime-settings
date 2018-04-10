@@ -10,20 +10,22 @@
 	],
 	"in_process_packages":
 	[
-		"Material Theme"
 	],
 	"installed_packages":
 	[
 		"A File Icon",
 		"Babel",
 		"BlackBird-ColorScheme",
+		"FileIcons",
 		"Git",
 		"Inspired GitHub Color Scheme",
 		"LiveScript",
 		"Material Theme",
+		"One Dark Color Scheme",
 		"Package Control",
 		"Seti_UI",
 		"Theme - Flatland",
+		"Theme - One Dark",
 		"Theme - Sodarized",
 		"Themes Menu Switcher",
 		"TypeScript",

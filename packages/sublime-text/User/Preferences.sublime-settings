@@ -6,13 +6,13 @@
 	"caret_extra_bottom": 3,
 	"caret_extra_top": 3,
 	"caret_extra_width": 2,
-	"color_scheme": "Packages/Color Scheme - Legacy/Solarized (Dark).tmTheme",
+	"color_scheme": "Packages/One Dark Color Scheme/One Dark.tmTheme",
 	"draw_minimap_border": true,
+	"font_face": "Fira Code",
 	"font_size": 14,
 	"highlight_line": true,
 	"ignored_packages":
 	[
-		"Material Theme",
 		"Vintage"
 	],
 	"index_exclude_patterns":
@@ -20,6 +20,6 @@
 		"*.log"
 	],
 	"overlay_scroll_bars": "enabled",
-	"theme": "Material-Theme-Darker.sublime-theme",
+	"theme": "One Dark.sublime-theme",
 	"trim_trailing_white_space_on_save": true
 }

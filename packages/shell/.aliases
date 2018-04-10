@@ -74,7 +74,7 @@ alias -- -="cd -"
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"
-alias dj='subl $HOME/.dotjitsu'
+alias dj='code $HOME/.dotjitsu'
 
 append() {
   grep -q -F $1 $2 || echo $1 >> $2
@@ -116,7 +116,6 @@ mk ()  { mkdir -p "$@" && cd "$_"; }
 mkt () { cd $(mktemp -d) }
 mktc () { cd $(mktemp -d) && pwd && hr - && clone $1 }
 
-
 # Opens file in EDITOR.
 edit () {
   local dir=$1
@@ -127,21 +126,12 @@ edit () {
 
 alias e='edit'
 alias zr='echo "Reloading zsh..."; exec zsh'
-alias reload='exec zsh'
-alias zr='reload'
+alias reload='zr'
 
 
-# OSX ONLY
-# =========================================================
-if [[ "$OSTYPE" == darwin* ]]; then
-  # Short-cuts for copy-paste.
-  #alias rm='trash -v'
-  # Case-insensitive pgrep that outputs full path.
-  brew.info () {
-    grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
-  }
-fi
-
+brew.info () {
+  grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
+}
 
 if (( $+commands[http] )); then
   alias GET='http GET'
@@ -171,25 +161,19 @@ die () {
 # =========================================================
 
 # Open curr dir in preview.app.
-open.preview () {
+osx.openPreview () {
   local item=$1
   [[ -z "$item" ]] && item='.'
   open $1 -a 'Preview'
 }
 
-# Show current Finder directory.
-finder.currentdir () {
+# Show current Finder directory in terminal
+osx.finderDir () {
   osascript 2>/dev/null <<EOF
     tell application "Finder"
       return POSIX path of (target of window 1 as alias)
     end tell
 EOF
-}
-
-
-# Copy CSS to Mou for Markdown visual feedback
-mou () {
-  cp $1 $HOME/Library/Application\ Support/Mou/CSS/
 }
 
 # Lock current session and proceed to the login screen.
@@ -198,14 +182,17 @@ alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resourc
 # =========================================================
 # SSH
 # =========================================================
-alias ssh.pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
-alias ssh.keygen='ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa; ssh.pubkey'
-alias pubkey="ssh.pubkey"
-
 ssh.addkey () {
+  # ssh $1 "tee -a ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub
   ssh $1 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub  # '?sa' is a glob, not a typo!
   echo "sshkey done."
 }
+
+alias ssh.pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+alias ssh.keygen='ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa; ssh.pubkey'
+alias pubkey="ssh.pubkey"
+alias addkey="ssh.addkey"
+
 
 
 # =========================================================
@@ -262,7 +249,6 @@ ps.kill () { kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
 # =========================================================
 # Lists (with fzf magic)
 # =========================================================
-
 # List of available VM's - with fbr magic
 vm () {
   vm=$(VBoxManage list vms | fzf +s +m -e --reverse) &&
@@ -275,11 +261,8 @@ vm () {
 # File related stuff
 # =========================================================
 file.size () { wc -c < $1 }
-
 # Monitor IO in real-time (open files etc).
-files.open () {
-  sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
-}
+files.open () { sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }' }
 # Files used, anywhere on the filesystem
 alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
 # Files being opened (OSX Only)
@@ -296,10 +279,8 @@ ddd() {
 # =========================================================
 # Network stuff
 # =========================================================
-
-# Sniff network info.
-alias ip.public='dig +short myip.opendns.com @resolver1.opendns.com'
 function ip.internal { ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' }
+alias ip.public='dig +short myip.opendns.com @resolver1.opendns.com'
 alias ip='ip.internal; ip.public'
 alias net.connections='lsof -l -i +L -R -V'
 alias net.established='lsof -l -i +L -R -V | grep ESTABLISHED'
@@ -385,6 +366,73 @@ format_number () { printf "%'.3f\n" $1 }
 size_in_bytes () { stat -f %z "$1" }
 
 # ./some_file.txt -> 11,496.328 KB
-echo_size () {
-  echo $(format_number $(to_kb $(size_in_bytes "$1")))"kB"
+echo_size () { echo $(format_number $(to_kb $(size_in_bytes "$1")))"kB" }
+
+
+# =========================================================
+# FZF
+# =========================================================
+ta_function() { tmux attach -t $1 }
+tk_function() { tmux kill-session -t $1 }
+alias 'tmux-new'='tmux new-session -A -s $(basename $PWD | tr -d .)'
+alias 'tmux-ls'='tmux ls'
+alias 'tmux-attach'=ta_function
+alias 'tmux-at'=ta_function
+alias 'tmux-kill'=tk_function
+
+# =========================================================
+# FZF
+# =========================================================
+
+# Fuzzy match against history, edit selected value
+fhist() {
+  print -z $(([ -n "$ZSH_NAME" ] && fc -l 1 || history) | \
+    tail -2000 | \
+    fzf --tac --reverse --no-sort | \
+    sed 's/ *[0-9]* *//')
+}
+
+#bindkey -s '^r' 'fhist\n'
+
+# Copied from https://github.com/junegunn/dotfiles/blob/master/bashrc
+
+# fd - cd to selected directory
+fd() {
+  DIR=`find ${1:-*} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf-tmux` \
+    && cd "$DIR"
+}
+
+# fkill - kill process
+fkill() {
+  ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
+}
+
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+fe() {
+  local file
+  file=$(fzf-tmux --query="$1" --select-1 --exit-0)
+  [ -n "$file" ] && ${EDITOR:-vim} "$file"
+}
+
+# Modified version where you can press
+#   - CTRL-O to open with `open` command,
+#   - CTRL-E or Enter key to open with the $EDITOR
+fo() {
+  local out file key
+  out=$(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)
+  key=$(head -1 <<< "$out")
+  file=$(head -2 <<< "$out" | tail -1)
+  if [ -n "$file" ]; then
+    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
+  fi
+}
+
+# Switch tmux-sessions
+ft() {
+  local session
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf-tmux --query="$1" --select-1 --exit-0) &&
+  tmux switch-client -t "$session"
 }

@@ -205,3 +205,5 @@
   hotfix = hotfix/
   support = support/
   versiontag = v
+[http]
+	postBuffer = 524288000

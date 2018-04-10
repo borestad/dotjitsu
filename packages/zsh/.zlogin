@@ -1,13 +1,9 @@
-#!/usr/bin/env zsh
-
 #
 # Executes commands at login post-zshrc.
 #
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
-
-archey
 
 # Execute code that does not affect the current session in the background.
 {
@@ -18,10 +14,13 @@ archey
   fi
 } &!
 
-# Print a random, hopefully interesting, adage.
-# if (( $+commands[fortune] )); then
-#   if [[ -t 0 || -t 1 ]]; then
-#     fortune -s
-#     print
-#   fi
-# fi
+# Execute code only if STDERR is bound to a TTY.
+[[ -o INTERACTIVE && -t 2 ]] && {
+
+  # Print a random, hopefully interesting, adage.
+  if (( $+commands[fortune] )); then
+    fortune -s
+    print
+  fi
+
+} >&2

@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 #
 # Executes commands at login pre-zshrc.
 #
@@ -67,4 +65,4 @@ fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
 
-. $HOME/.profile
+[ -f "$HOME/.profile" ] && . $HOME/.profile
