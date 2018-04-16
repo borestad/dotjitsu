@@ -7,10 +7,6 @@ echo "[Updating Python PIP's]\n"
 pip install --upgrade pip
 pip3 install --upgrade pip
 
-# Glances + deps
-sudo -H pip3 install --upgrade glances
-sudo -H pip3 install --upgrade bottle py-cpuinfo pysnmp zeroconf netifaces statsd pystache matplotlib pika
-
 # Colors
 sudo -H pip3 install --upgrade pygments
 

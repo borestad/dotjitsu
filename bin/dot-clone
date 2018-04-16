@@ -44,7 +44,11 @@ line 'osx-terminal-themes'
 git_clone_or_pull \
   'https://github.com/lysyi3m/osx-terminal-themes.git' osx-terminal-themes
 
+line '.tmux'
+git_clone_or_pull 'https://github.com/gpakosz/.tmux.git' .tmux
+
 line 'Powerline fonts'
 git_clone_or_pull \
   'https://github.com/powerline/fonts.git' powerline-fonts
 cd powerline-fonts && ./install.sh
+

@@ -25,6 +25,7 @@ fi
 
 source "${ZDOTDIR:-$HOME}/.env"
 source "$HOME/.aliases"
+source "$DOTJITSU/packages/docker/_docker-aliases"
 source ~/.private/.zshrc
 
 # Colors
@@ -78,8 +79,8 @@ eval "$(fasd --init auto)"
 # NVM
 # =================================================================
 export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # place this after nvm initialization!
 # autoload -U add-zsh-hook

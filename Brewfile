@@ -28,6 +28,7 @@ brew 'xhyve', args: ['--HEAD']      # xhyve, lightweight macOS virtualization so
 # ================================
 # CLI stuff
 # ================================
+brew 'archey'                       # Graphical system information display for macOS
 brew 'ack'                          # Search tool like grep, but optimized for programmers
 brew 'aircrack-ng'                  # Next-generation aircrack with lots of new features
 brew 'ag'                           # A code-searching tool similar to ack, but faster
@@ -78,7 +79,7 @@ brew 'imagemagick'                  # Tools and libraries to manipulate images i
 brew 'jpegoptim'                    # Utility to optimize JPEG files
 brew 'jq'                           # Lightweight and flexible command-line JSON processor
 brew 'knock'                        # Port-knock server
-brew 'nvm'                        # Port-knock server
+brew 'nvm'                        	# Manage multiple Node.js versions
 brew 'libav'                        # Audio and video processing tools
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
 brew 'mas'                          # Mac App Store command-line interface
@@ -87,6 +88,7 @@ brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
 brew 'multitail'                    # Tail multiple files in one terminal simultaneously
 brew 'ncdu'                         # NCurses Disk Usage
 brew 'nethogs'                      # Net top tool grouping bandwidth per process
+brew 'neofetch'                     # Fast, highly customisable system info script
 brew 'netpbm'                       # Image manipulation
 brew 'ngrep'                        # Network grep
 brew 'nload'                        # Realtime console network usage monitor

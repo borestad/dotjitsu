@@ -24,6 +24,7 @@ git_clone_or_pull() {
   local dir_path=$2
 
   if [[ -d "$dir_path" ]]; then
+    git -C $dir_path reset --hard
     git -C $dir_path remote prune origin
     git -C $dir_path pull --recurse-submodules --depth 1 --verbose
   else
