@@ -76,6 +76,8 @@ eval "$(fasd --init auto)"
 [[ -f /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh ]] && . /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh
 
 
+export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
+
 # NVM
 # =================================================================
 export NVM_DIR="$HOME/.nvm"
@@ -83,7 +85,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # place this after nvm initialization!
-# autoload -U add-zsh-hook
+autoload -U add-zsh-hook
 
 load-nvmrc() {
   local node_version="$(nvm version)"
@@ -103,7 +105,7 @@ load-nvmrc() {
   fi
 }
 
-# add-zsh-hook chpwd load-nvmrc
+add-zsh-hook chpwd load-nvmrc
 
 
 
