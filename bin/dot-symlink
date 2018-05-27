@@ -45,6 +45,7 @@ ln -sfv $DOTJITSU/packages/htop ~/.config/
 ln -sfv $DOTJITSU/packages/neofetch ~/.config/neofetch
 ln -sfv -f $HOME/.repos/.tmux/.tmux.conf ~/
 ln -sfv $DOTJITSU/packages/tmux/.tmux.conf.local ~/
+rm ~/.config/retroarch; ln -sfv $HOME/Library/Application\ Support/RetroArch ~/.config/retroarch
 
 # Disable Last Login message with new tabs (i.e Last login: Wed Apr  4 09:36:35 on ttys013)
 touch ~/.hushlogin

@@ -28,6 +28,7 @@ alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias yarn='/usr/local/bin/yarn'
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
+alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch"
 
 
 wh () { which -a "$@" | ctt2 }
@@ -250,11 +251,18 @@ ps.kill () { kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
 # Lists (with fzf magic)
 # =========================================================
 # List of available VM's - with fbr magic
-vm () {
+vm.vbox () {
   vm=$(VBoxManage list vms | fzf +s +m -e --reverse) &&
   uuid=$(echo "$vm" | ack --cc '{([a-z0-9\-]+)}' --output '$1') &&
   VBoxManage startvm $uuid
 }
+vm.fusion () {
+  vm=`vmrun list | fzf +s +m -e --reverse` &&
+  echo $vm
+  #uuid=`echo "$vm" | ack --cc '{([a-z0-9\-]+)}' --output '$1'` &&
+  #VBoxManage startvm $uuid
+}
+
 
 
 # =========================================================
@@ -323,23 +331,24 @@ xtract () {
         # NAME=${1%.*}
         # mkdir $NAME && cd $NAME
         case $1 in
-          *.tar.bz2)   tar xvjf ../$1    ;;
-          *.tar.gz)    tar xvzf ../$1    ;;
-          *.tar.xz)    tar xvJf ../$1    ;;
-          *.lzma)      unlzma ../$1      ;;
-          *.bz2)       bunzip2 ../$1     ;;
-          *.rar)       unrar x -ad ../$1 ;;
-          *.gz)        gunzip ../$1      ;;
-          *.tar)       tar xvf ../$1     ;;
-          *.tbz2)      tar xvjf ../$1    ;;
-          *.tgz)       tar xvzf ../$1    ;;
-          *.zip)       unzip ../$1       ;;
-          *.Z)         uncompress ../$1  ;;
-          *.7z)        7z x ../$1        ;;
-          *.xz)        unxz ../$1        ;;
-          *.exe)       cabextract ../$1  ;;
+          *.tar.bz2)   tar xvjf $1    ;;
+          *.tar.gz)    tar xvzf $1    ;;
+          *.tar.xz)    tar xvJf $1    ;;
+          *.lzma)      unlzma $1      ;;
+          *.bz2)       bunzip2 $1     ;;
+          *.rar)       unrar x -ad $1 ;;
+          *.gz)        gunzip $1      ;;
+          *.tar)       tar xvf $1     ;;
+          *.tbz2)      tar xvjf $1    ;;
+          *.tgz)       tar xvzf $1    ;;
+          *.zip)       unzip $1       ;;
+          *.Z)         uncompress $1  ;;
+          *.7z)        7z x $1        ;;
+          *.xz)        unxz $1        ;;
+          *.exe)       cabextract $1  ;;
           *)           echo "extract: '$1' - cannot be extracted via extract()" ;;
         esac
+        cd $1* && open .
     else
         echo "$1 - file does not exist"
     fi
@@ -374,6 +383,7 @@ echo_size () { echo $(format_number $(to_kb $(size_in_bytes "$1")))"kB" }
 # =========================================================
 ta_function() { tmux attach -t $1 }
 tk_function() { tmux kill-session -t $1 }
+alias t='tmux'
 alias 'tmux-new'='tmux new-session -A -s $(basename $PWD | tr -d .)'
 alias 'tmux-ls'='tmux ls'
 alias 'tmux-attach'=ta_function

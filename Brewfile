@@ -39,6 +39,7 @@ brew 'axel'                         # Light UNIX download accelerator
 # brew 'aws-cfn-tools'              # Client for Amazon CloudFormation web service
 brew 'awscli'                       # Official Amazon AWS command-line interface
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
+brew 'bat'                          # Clone of cat(1) with syntax highlighting and Git integration
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'cloc'                         # Statistics utility to count lines of code
@@ -114,6 +115,8 @@ brew 'sqlmap'
 brew 'ssh-copy-id'
 brew 'sshrc'                        # Bring your .bashrc, .vimrc, etc. with you when you SSH
 brew 'stow'
+#brew 'sen'
+#brew 'ctop'
 brew 'svtplay-dl'
 brew 'syncthing'
 brew 'sysbench'

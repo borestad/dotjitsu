@@ -59,6 +59,20 @@ d.alias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/
 # Bash into running container
 d.bash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
 
+# On demand foreground OS bash shells that delete on shell exit
+# https://github.com/nerdalert/dotfiles/blob/master/bash_profile_docker_aliases
+alias alpinerm='docker run -it --rm alpine /bin/sh'
+alias ubunturm='docker run -it --rm ubuntu'
+alias debianrm='docker run -it --rm debian'
+alias fedorarm='docker run -it --rm fedora'
+alias centosrm='docker run -it --rm centos'
+alias busyrm='docker run -it --rm busybox'
+alias nethostrm='docker run -it --rm --net=host ubuntu'
+
+
+# =========================================================
+# SHORT ALIASES
+# =========================================================
 alias dka='docker attach'
 alias dkb='docker build'
 alias dkd='docker diff'
@@ -219,14 +233,3 @@ alias dkcu='docker-compose up'
 alias dkcU='docker-compose up -d'
 alias dkcv='docker-compose version'
 alias dkcx='docker-compose stop'
-
-
-# On demand foreground OS bash shells that delete on shell exit
-# https://github.com/nerdalert/dotfiles/blob/master/bash_profile_docker_aliases
-alias alpinerm='docker run -it --rm alpine /bin/sh'
-alias ubunturm='docker run -it --rm ubuntu'
-alias debianrm='docker run -it --rm debian'
-alias fedorarm='docker run -it --rm fedora'
-alias centosrm='docker run -it --rm centos'
-alias busyrm='docker run -it --rm busybox'
-alias nethostrm='docker run -it --rm --net=host ubuntu'
