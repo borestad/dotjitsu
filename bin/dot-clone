@@ -10,45 +10,56 @@ cd $HOME/.repos
 
 line 'Antigen'
 git_clone_or_pull \
-  'https://github.com/zsh-users/antigen.git' antigen
+  'https://github.com/zsh-users/antigen.git' \
+  ~/.repos/antigen
 
 line 'oh-my-zsh'
 git_clone_or_pull \
-  'https://github.com/robbyrussell/oh-my-zsh.git' oh-my-zsh
+  'https://github.com/robbyrussell/oh-my-zsh.git' \
+  ~/.repos/oh-my-zsh
 
 line 'Zgen'
 git_clone_or_pull \
-  'https://github.com/tarjoilija/zgen.git' zgen
+  'https://github.com/tarjoilija/zgen.git' \
+  ~/.repos/zgen
 
 line 'Prezto'
 git_clone_or_pull \
-  'https://github.com/sorin-ionescu/prezto.git' zprezto
+  'https://github.com/sorin-ionescu/prezto.git' \
+  ~/.repos/zprezto
 
 line 'Git friendly'
 git_clone_or_pull \
-  'https://github.com/jamiew/git-friendly.git' git-friendly
+  'https://github.com/jamiew/git-friendly.git' \
+  ~/.repos/git-friendly
 
 line 'Better npm'
 git_clone_or_pull \
-  'https://github.com/lukechilds/zsh-better-npm-completion.git' zsh-better-npm-completion
+  'https://github.com/lukechilds/zsh-better-npm-completion.git' \
+  ~/.repos/zsh-better-npm-completion
 
 line 'Git subrepo'
 git_clone_or_pull \
-  'https://github.com/ingydotnet/git-subrepo.git' git-subrepo
+  'https://github.com/ingydotnet/git-subrepo.git' \
+  ~/.repos/git-subrepo
 
 line 'Ligaturizer'
 git_clone_or_pull \
-  'https://github.com/rojiani/Ligaturizer.git' ligaturizer
+  'https://github.com/rojiani/Ligaturizer.git' \
+  ~/.repos/ligaturizer
 
 line 'osx-terminal-themes'
 git_clone_or_pull \
-  'https://github.com/lysyi3m/osx-terminal-themes.git' osx-terminal-themes
+  'https://github.com/lysyi3m/osx-terminal-themes.git' \
+  ~/.repos/osx-terminal-themes
 
 line '.tmux'
-git_clone_or_pull 'https://github.com/gpakosz/.tmux.git' .tmux
+git_clone_or_pull 'https://github.com/gpakosz/.tmux.git' \
+~/.repos/.tmux
 
 line 'Powerline fonts'
 git_clone_or_pull \
-  'https://github.com/powerline/fonts.git' powerline-fonts
-cd powerline-fonts && ./install.sh
+  'https://github.com/powerline/fonts.git' \
+  ~/.repos/powerline-fonts
+cd ~/.repos/powerline-fonts && ./install.sh
 
