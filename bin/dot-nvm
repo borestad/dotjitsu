@@ -2,4 +2,4 @@
 
 echo ''; hr -
 echo "[Updating NODE]\n"
-n stable
+nvm install --lts

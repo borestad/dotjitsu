@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 sudo -v
+sudo xcodebuild -license accept
 
 export ZSH=$HOME/.dotjitsu
 cd "$(dirname $0)"/..
@@ -15,17 +16,18 @@ if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 ./bin/dot-clone
 
 ./bin/dot-brew
-./bin/dot-gem
-./bin/dot-node
-#./bin/dot-npm
+./bin/dot-crontab
+#./bin/dot-gem
+./bin/dot-nvm
+./bin/dot-npm
 ./bin/dot-curl
 #./bin/dot-osx
-./bin/dot-osx-services
+#./bin/dot-osx-services
 ./bin/dot-python
 #./bin/dot-ruby
-./bin/dot-ssh
+#./bin/dot-ssh
 ./bin/dot-symlink
-#./bin/dot-clean
+./bin/dot-clean
 
 #brew link git-annex
 #brew link git-lfs

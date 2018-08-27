@@ -2,7 +2,7 @@
 
 cd "$(dirname $0)"/..
 
-ruby-install ruby 2.3.3
+# ruby-install ruby 2.5
 
 # echo ''; hr -
 # echo "[Installing RUBY with rbenv]\n"
@@ -12,5 +12,5 @@ ruby-install ruby 2.3.3
 # rbenv rehash
 # rbenv global 2.3.0
 # eval "$(rbenv init -)"
-# 
+#
 # bundle install --system

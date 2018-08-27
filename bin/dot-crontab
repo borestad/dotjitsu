@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# https://crontab.guru/
+
+
+
+
+# (minute) (hour) (day of month) (month) (weekday)
+
+
+(crontab -l ; echo "0 * * * * brew update") | sort - | uniq - | crontab -
+
+hr -
+crontab -l

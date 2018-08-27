@@ -28,16 +28,16 @@ brew 'xhyve', args: ['--HEAD']      # xhyve, lightweight macOS virtualization so
 # ================================
 # CLI stuff
 # ================================
-brew 'archey'                       # Graphical system information display for macOS
-brew 'ack'                          # Search tool like grep, but optimized for programmers
-brew 'aircrack-ng'                  # Next-generation aircrack with lots of new features
+#brew 'archey'                       # Graphical system information display for macOS
+#brew 'ack'                          # Search tool like grep, but optimized for programmers
+#brew 'aircrack-ng'                  # Next-generation aircrack with lots of new features
 brew 'ag'                           # A code-searching tool similar to ack, but faster
 # brew 'ansible'                    # Automate deployment, configuration, and upgrading
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'axel'                         # Light UNIX download accelerator
 #brew 'azukiapp/azk/azk'
 # brew 'aws-cfn-tools'              # Client for Amazon CloudFormation web service
-brew 'awscli'                       # Official Amazon AWS command-line interface
+#brew 'awscli'                       # Official Amazon AWS command-line interface
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
 brew 'bat'                          # Clone of cat(1) with syntax highlighting and Git integration
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
@@ -45,45 +45,46 @@ brew 'bmon'                         # Interface bandwidth monitor
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'cmatrix'                      # Console Matrix
 brew 'colordiff'                    # Color-highlighted diff(1) output
-brew 'consul', args: ['--with-web-ui']  # Tool for service discovery, monitoring and configuration
+#brew 'consul', args: ['--with-web-ui']  # Tool for service discovery, monitoring and configuration
 brew 'cv'                           # Progress: Coreutils Progress Viewer
-brew 'dark-mode'                    # Control the macOS dark mode from the command-line
-brew 'dash'                         # POSIX-compliant descendant of NetBSD's ash (the Almquist SHell)
+#brew 'dark-mode'                    # Control the macOS dark mode from the command-line
+#brew 'dash'                         # POSIX-compliant descendant of NetBSD's ash (the Almquist SHell)
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
-brew 'dlite'                        # Provides a way to use docker on macOS without docker-machine
+#brew 'dlite'                        # Provides a way to use docker on macOS without docker-machine
 brew 'entr'                         # Run arbitrary commands when files change
-brew 'fakeroot'                     # Provide a fake root environment
+#brew 'fakeroot'                     # Provide a fake root environment
 brew 'fasd'                         # CLI tool for quick access to files and directories
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
-brew 'figlet'                       # Banner-like program prints strings as ASCII art
+#brew 'figlet'                       # Banner-like program prints strings as ASCII art
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
 brew 'ghq'                          # Remote repository management made easy
-brew 'git-crypt'                    # Enable transparent encryption/decryption of files in a git repo
+#brew 'git-crypt'                    # Enable transparent encryption/decryption of files in a git repo
 brew 'git-extras'                   # Small git utilities
-brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
+#brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'graphicsmagick'               # Image processing tools collection
 brew 'grc'                          # Colorize logfiles and command output
 brew 'hh'                           # Bash and zsh history suggest box
+brew 'hr'
 brew 'htop'                         # Improved top (interactive process viewer)
 brew 'httpie'                       # User-friendly cURL replacement (command-line HTTP client)
 brew 'httpry'                       # Packet sniffer for displaying and logging HTTP traffic
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'hugo'                         # Configurable static site generator
-brew 'hydra'                        # Network logon cracker which supports many services
+#brew 'hydra'                        # Network logon cracker which supports many services
 brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
 brew 'jpegoptim'                    # Utility to optimize JPEG files
 brew 'jq'                           # Lightweight and flexible command-line JSON processor
-brew 'knock'                        # Port-knock server
+#brew 'knock'                        # Port-knock server
 brew 'nvm'                        	# Manage multiple Node.js versions
 brew 'libav'                        # Audio and video processing tools
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
-brew 'mas'                          # Mac App Store command-line interface
+#brew 'mas'                          # Mac App Store command-line interface
 brew 'mc'                           # Terminal-based visual file manager
 brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
 brew 'multitail'                    # Tail multiple files in one terminal simultaneously
@@ -107,18 +108,18 @@ brew 'readline'                     # Library for command-line editing
 brew 'rename'                       # Perl-powered file rename script with many helpful built-ins
 brew 'rgxg'                         # C library and command-line tool to generate (extended) regular expressions
 brew 'rlwrap'                       # Readline wrapper: adds readline support to tools that lack it
-brew 'serf'
+#brew 'serf'
 brew 'shfmt'
 brew 'socat'
 brew 'speedtest_cli'                # Command-line interface for https://speedtest.net bandwidth tests
-brew 'sqlmap'
+#brew 'sqlmap'
 brew 'ssh-copy-id'
 brew 'sshrc'                        # Bring your .bashrc, .vimrc, etc. with you when you SSH
 brew 'stow'
 #brew 'sen'
 #brew 'ctop'
 brew 'svtplay-dl'
-brew 'syncthing'
+#brew 'syncthing'
 brew 'sysbench'
 brew 'tcpflow'
 brew 'thefuck'
@@ -146,9 +147,9 @@ brew 'yarn'
 # ================================
 # Browsers
 # ================================
-brew 'w3m'
-brew 'elinks'
-brew 'lynx'
+#brew 'w3m'
+#brew 'elinks'
+#brew 'lynx'
 
 # ================================
 # Databases & tools

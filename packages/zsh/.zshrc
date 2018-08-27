@@ -5,10 +5,7 @@ ulimit -n 10000
 # ----------------------------------------------------
 # Init Prezto
 # ----------------------------------------------------
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
+source "$HOME/.repos/zprezto/init.zsh"
 
 # ----------------------------------------------------
 # Tmux
@@ -33,7 +30,8 @@ eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 source "/usr/local/etc/grc.bashrc"
 
 # Fuck
-eval $(thefuck --alias)
+# eval $(thefuck --alias)
+eval $(thefuck --alias --enable-experimental-instant-mode)
 
 # Automatically list directory contents on `cd`.
 auto-ls () {
@@ -42,8 +40,8 @@ auto-ls () {
   hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || ls
 }
 
-source $HOME/.repos/git-subrepo/.rc
-source $HOME/.repos/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
+# source $HOME/.repos/git-subrepo/.rc
+# source $HOME/.repos/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
 
 auto-pkg-scripts () {
   emulate -L zsh;
@@ -56,33 +54,20 @@ chpwd_functions=( auto-ls auto-pkg-scripts $chpwd_functions )
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
 
-#source "${DOTJITSU}/packages/iterm2/_iterm2.zsh"
-
 # Fasd autocompletion
 eval "$(fasd --init auto)"
-
-# source "${DOTJITSU}/packages/docker/docker.zsh"
-
-#source ~/.repos/k/k.sh
-#source ~/.repos/zaw/zaw.zsh
 
 # if [ -f $(brew --prefix)/etc/bash_completion ]; then
 #   . $(brew --prefix)/etc/bash_completion
 # fi
 
 
-# tabtab source for yarn package
-# uninstall by removing these lines or running `tabtab uninstall yarn`
-[[ -f /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh ]] && . /Users/johan.borestad/.config/yarn/global/node_modules/yarn-completions/node_modules/tabtab/.completions/yarn.zsh
 
-
-export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
+export JAVA_HOME="$(/usr/libexec/java_home -v 10)"
 
 # NVM
 # =================================================================
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "/usr/local/opt/nvm/nvm.sh"
 
 # place this after nvm initialization!
 autoload -U add-zsh-hook
