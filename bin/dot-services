@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+# https://gist.github.com/pwnsdx/d87b034c4c0210b988040ad2f85a68d3
+sudo launchctl unload -w /System/Library/LaunchDaemons/org.cups.cupsd.plist
+sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.spindump.plist
+sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.tailspind.plist
+
+# Agents to disable
+TODISABLE=('com.apple.AOSPushRelay' \
+'com.apple.AirPlayUIAgent' \
+'com.apple.AirPortBaseStationAgent' \
+#'com.apple.CalendarAgent' \
+'com.apple.CallHistoryPluginHelper' \
+'com.apple.CallHistorySyncHelper' \
+'com.apple.CommCenter-osx' \
+'com.apple.DictationIM' \
+'com.apple.DictationIM' \
+'com.apple.IMLoggingAgent' \
+'com.apple.Maps.mapspushd' \
+'com.apple.Maps.pushdaemon' \
+'com.apple.appleseed.seedusaged' \
+'com.apple.assistant_service' \
+'com.apple.assistantd' \
+'com.apple.cloudd' \
+'com.apple.cloudfamilyrestrictionsd-mac' \
+'com.apple.cloudpaird' \
+'com.apple.cloudphotosd' \
+'com.apple.familycircled' \
+'com.apple.familycontrols.useragent' \
+'com.apple.familynotificationd' \
+'com.apple.gamed' \
+'com.apple.geodMachServiceBridge' \
+'com.apple.iCloudUserNotifications' \
+#'com.apple.icloud.findmydeviced.findmydevice-user-agent' \
+'com.apple.icloud.fmfd' \
+'com.apple.identityservicesd' \
+'com.apple.imagent' \
+'com.apple.parentalcontrols.check' \
+'com.apple.parsecd' \
+'com.apple.passd' \
+'com.apple.personad' \
+'com.apple.photoanalysisd' \
+#'com.apple.screensharing.MessagesAgent' \
+'com.apple.security.cloudkeychainproxy3' \
+'com.apple.security.idskeychainsyncingproxy' \
+'com.apple.security.keychain-circle-notification' \
+'com.apple.security.keychainsyncingoveridsproxy' \
+'com.apple.sharingd' \
+'com.apple.syncdefaultsd' \
+'com.apple.telephonyutilities.callservicesd' \ )
+
+# Daemons to disable
+TODISABLE=('com.apple.AOSNotificationOSX' \
+'com.apple.FileSyncAgent.sshd' \
+'com.apple.ManagedClient' \
+'com.apple.ManagedClient.cloudconfigurationd' \
+'com.apple.ManagedClient.enroll' \
+'com.apple.ManagedClient.startup' \
+'com.apple.SubmitDiagInfo' \
+'com.apple.appleseed.fbahelperd' \
+'com.apple.apsd' \
+'com.apple.awacsd' \
+'com.apple.eapolcfg_auth' \
+'com.apple.familycontrols'
+'com.apple.familycontrols' \
+'com.apple.findmymac' \
+'com.apple.findmymacmessenger' \
+'com.apple.iCloudStats' \
+'com.apple.icloud.findmydeviced' \
+'com.apple.laterscheduler' \
+'com.apple.locationd' \
+'com.apple.mbicloudsetupd' \
+'com.apple.netbiosd' \
+'com.apple.preferences.timezone.admintool' \
+'com.apple.preferences.timezone.auto' \
+'com.apple.remotepairtool' \
+'com.apple.rpmuxd' \
+'com.apple.screensharing' \
+'com.apple.security.FDERecoveryAgent' \)
