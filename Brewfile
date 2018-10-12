@@ -99,7 +99,6 @@ brew 'netpbm'                       # Image manipulation
 brew 'ngrep'                        # Network grep
 brew 'nload'                        # Realtime console network usage monitor
 brew 'nmap'                         # Port scanning utility for large networks
-brew 'nvm'                        	# Manage multiple Node.js versions
 brew 'optipng'                      # PNG file optimizer
 brew 'pbzip2'                       # Parallel bzip2
 brew 'peco'                         # Simplistic interactive filtering tool

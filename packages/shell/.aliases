@@ -22,7 +22,7 @@ alias wget='wget --no-check-certificate'
 alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
 alias git=hub
-alias ncdu="ncdu --color dark"
+alias ncdu="ncdu -x -1"
 #alias npm_='/usr/local/bin/npm'
 #alias npm='~/n/bin/npm'
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'

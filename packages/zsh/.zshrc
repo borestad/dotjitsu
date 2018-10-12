@@ -65,9 +65,13 @@ eval "$(fasd --init auto)"
 
 export JAVA_HOME="$(/usr/libexec/java_home -v 10)"
 
+
 # NVM
 # =================================================================
-. "/usr/local/opt/nvm/nvm.sh"
+# wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh" # This loads nvm
+. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # place this after nvm initialization!
 autoload -U add-zsh-hook
