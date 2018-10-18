@@ -310,13 +310,13 @@ alias flushdns='net.flushdns'
 z1 () {
   local input=$1; local output=${2:-$1}.tar.gz
   echo "Compressiong $input into $output"
-  #tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pigz -c -9 > $output
-  tar cf - $input | pigz -c -9 > $output
+  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pigz -c -9 > $output
+  # tar cf - $input | pigz -c -9 > $output
 }
 
 z2 () {
   local input=$1; local output=${2:-$1}.tar.lz
-  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | plzip -c -9 > $output
+  tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | plzip -c -6 > $output
 }
 
 z3 () {
@@ -447,4 +447,8 @@ ft() {
   session=$(tmux list-sessions -F "#{session_name}" | \
     fzf-tmux --query="$1" --select-1 --exit-0) &&
   tmux switch-client -t "$session"
+}
+
+weather() {
+ curl wttr.in/$1
 }

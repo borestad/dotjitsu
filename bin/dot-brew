@@ -8,3 +8,6 @@ echo "[BREW FORMULAS]\n"
 brew -v update
 brew -v bundle --file=./Brewfile
 brew -v upgrade --file=./Brewfile
+brew unlink git-lfs && brew link git-lfs
+brew prune
+

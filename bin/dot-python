@@ -4,11 +4,12 @@ cd "$(dirname $0)"/..
 
 echo ''; hr -
 echo "[Updating Python PIP's]\n"
-pip install --upgrade pip
-pip3 install --upgrade pip
+
+pip install --upgrade pip setuptools
+pip3 install --upgrade pip setuptools wheel
 
 # Colors
-sudo -H pip3 install --upgrade pygments
+pip3 install --upgrade pygments
 
 # Sen
 pip3 install --upgrade urwid
@@ -16,3 +17,4 @@ pip3 install --upgrade sen
 
 # Utils
 pip3 install --upgrade ffind
+

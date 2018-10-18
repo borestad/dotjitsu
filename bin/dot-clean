@@ -16,8 +16,8 @@ rm -rfv ~/.v8flags*
 
 chmod -R +x ~/.dotjitsu/bin/*
 
-brew cleanup -s --verbose
-brew prune --verbose
+brew cleanup -s
+brew prune
 rm -rf $(brew --cache)
 
 echo
