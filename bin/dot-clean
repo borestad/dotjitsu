@@ -9,6 +9,9 @@ echo
 dfc
 echo
 
+# Disable local snapshot (APFS just hates to reclaim disk space)
+sudo tmutil disable localsnapshot
+
 # Kill log files slowing down the shell
 find /private/var/log/asl -name '*.asl' | sudo xargs rm -rfv
 
