@@ -6,8 +6,8 @@
 alias cp='gcp -v'
 alias ctt='pygmentize -O style=monokai -f console256 -g'
 alias ctt2='pygmentize -O style=monokai -g'
-ct () { ctt "$@" | cat -n | sed 's/^[ 0-9]*[0-9]/\o033[34m&\o033[0m/' | less -R }
-cs () { cat "$@" | jase scripts 2>/dev/null | pygmentize -l json }
+ct () { ctt "$@" | cat -n | less -R }
+cs () { cat "$@" | jase scripts 2>/dev/null | pygmentize -O style=monokai -g -l json }
 alias ctp="ct package.json"
 alias h="history | fzf --reverse"
 alias mkdir='gmkdir -pv'
@@ -31,7 +31,8 @@ alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulato
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch"
 alias killall="killall -v"
-
+alias ag='ag --stats'
+alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 
 wh () { which -a "$@" | ctt2 }
 
@@ -205,7 +206,7 @@ alias addkey="ssh.addkey"
 git.co () {
   local branches branch
   branches=$(git branch -a) &&
-  branch=$(echo "$branches" | fzf +s +m -x --reverse) &&
+  branch=$(echo "$branches" | fzf +m -x -e --reverse) &&
   ~/.repos/git-friendly/branch $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
 }
 

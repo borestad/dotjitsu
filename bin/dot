@@ -13,8 +13,9 @@ fi
 if [ ! type "hr" &> /dev/null ]; then; brew install hr; fi
 if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 
-./bin/dot-clone
+chmod go-w '/usr/local/share'
 
+./bin/dot-clone
 ./bin/dot-brew
 ./bin/dot-crontab
 #./bin/dot-gem

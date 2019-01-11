@@ -21,16 +21,16 @@ fi
 
 
 source "${ZDOTDIR:-$HOME}/.env"
+source "/usr/local/etc/grc.bashrc"
 source "$HOME/.aliases"
 source "$DOTJITSU/packages/docker/_docker-aliases"
 source ~/.private/.zshrc
 
 # Colors
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
-source "/usr/local/etc/grc.bashrc"
+
 
 # Fuck
-# eval $(thefuck --alias)
 eval $(thefuck --alias --enable-experimental-instant-mode)
 
 # Automatically list directory contents on `cd`.
@@ -39,9 +39,6 @@ auto-ls () {
   # explicit sexy ls'ing as aliases arent honored in here.
   hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || ls
 }
-
-# source $HOME/.repos/git-subrepo/.rc
-# source $HOME/.repos/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
 
 auto-pkg-scripts () {
   emulate -L zsh;
@@ -57,13 +54,7 @@ eval "$(direnv hook zsh)"
 # Fasd autocompletion
 eval "$(fasd --init auto)"
 
-# if [ -f $(brew --prefix)/etc/bash_completion ]; then
-#   . $(brew --prefix)/etc/bash_completion
-# fi
-
-
-
-export JAVA_HOME="$(/usr/libexec/java_home -v 10)"
+# export JAVA_HOME="$(/usr/libexec/java_home -v 10)"
 
 
 # NVM
@@ -110,6 +101,6 @@ add-zsh-hook chpwd load-nvmrc
 # bindkey "^[[B" down-line-or-beginning-search # Down
 
 
-# autoload -Uz compinit && compinit -i
-
+#autoload -Uz compinit && compinit -i
+# fpath=(/usr/local/share/zsh-completions $fpath)
 source $DOTJITSU/packages/fzf/.fzf
