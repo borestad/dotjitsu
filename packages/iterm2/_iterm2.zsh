@@ -5,6 +5,7 @@
 # iTerm2 window/tab color commands
 #   Requires iTerm2 >= Build 1.0.0.20110804
 #   http://code.google.com/p/iterm2/wiki/ProprietaryEscapeCodes
+DOTJITSU=$HOME/.dotjitsu
 source $DOTJITSU/packages/iterm2/_iterm2_helpers.sh
 
 tab-color() {

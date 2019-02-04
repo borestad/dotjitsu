@@ -31,7 +31,7 @@ eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 
 
 # Fuck
-eval $(thefuck --alias --enable-experimental-instant-mode)
+#eval $(thefuck --alias --enable-experimental-instant-mode)
 
 # Automatically list directory contents on `cd`.
 auto-ls () {
@@ -65,7 +65,7 @@ export NVM_DIR="$HOME/.nvm"
 . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # place this after nvm initialization!
-autoload -U add-zsh-hook
+#autoload -U add-zsh-hook
 
 load-nvmrc() {
   local node_version="$(nvm version)"
@@ -85,7 +85,7 @@ load-nvmrc() {
   fi
 }
 
-add-zsh-hook chpwd load-nvmrc
+#add-zsh-hook chpwd load-nvmrc
 
 
 
@@ -104,3 +104,5 @@ add-zsh-hook chpwd load-nvmrc
 #autoload -Uz compinit && compinit -i
 # fpath=(/usr/local/share/zsh-completions $fpath)
 source $DOTJITSU/packages/fzf/.fzf
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

@@ -8,20 +8,10 @@ echo "Updating ZSH Frameworks ...\n"
 mkdir -p $HOME/.repos
 cd $HOME/.repos
 
-line 'Antigen'
-git_clone_or_pull \
-  'https://github.com/zsh-users/antigen.git' \
-  ~/.repos/antigen
-
 line 'oh-my-zsh'
 git_clone_or_pull \
   'https://github.com/robbyrussell/oh-my-zsh.git' \
   ~/.repos/oh-my-zsh
-
-line 'Zgen'
-git_clone_or_pull \
-  'https://github.com/tarjoilija/zgen.git' \
-  ~/.repos/zgen
 
 line 'Prezto'
 git_clone_or_pull \

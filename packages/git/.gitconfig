@@ -124,6 +124,7 @@
   svnd = svn dcommit
   svnl = svn log --oneline --show-commit
   squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-Initial commit}\");};f"
+	trash = "!mkdir -p .trash && git ls-files --others --exclude-standard | gxargs gmv -f -t .trash"
 
 [format]
   pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset

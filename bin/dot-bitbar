@@ -3,6 +3,8 @@
 echo ''; hr - '#' -
 echo "[Updating Bitbar Plugins]\n"
 
+DOTJITSU=$HOME/.dotjitsu
+
 mkdir -p $DOTJITSU/support
 
 git -C $DOTJITSU/support/bitbar pull || git clone --recursive https://github.com/matryer/bitbar-plugins.git $DOTJITSU/support/bitbar
