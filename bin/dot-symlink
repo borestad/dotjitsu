@@ -28,9 +28,12 @@ BASEFILES=(
 	wget
 	zsh
 )
+
+rm $HOME/.bash*
+rm $HOME/.git*
 stow -Rv -t $HOME $BASEFILES
 
-dotp-symlink
+$HOME/.private/bin/dotp-symlink
 
 
 
@@ -43,8 +46,12 @@ mkdir -p ~/.config/youtube-dl && \
 #mkdir -p ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
 #rm -rf ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
 #ln -sfv $DOTJITSU/packages/sublime-text/User ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
+rm ~/.config/htop
 ln -sfv $DOTJITSU/packages/htop ~/.config/
-ln -sfv $DOTJITSU/packages/neofetch ~/.config/neofetch
+
+rm ~/.config/neofetch
+ln -sfv $DOTJITSU/packages/neofetch ~/.config/
+
 ln -sfv -f $HOME/.repos/.tmux/.tmux.conf ~/
 ln -sfv $DOTJITSU/packages/tmux/.tmux.conf.local ~/
 

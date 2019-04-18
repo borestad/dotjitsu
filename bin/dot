@@ -16,15 +16,15 @@ if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 chmod go-w '/usr/local/share'
 
 ./bin/dot-clone
-./bin/dot-brew
+#./bin/dot-brew
 ./bin/dot-crontab
 #./bin/dot-gem
 ./bin/dot-nvm
 ./bin/dot-npm
-./bin/dot-curl
+#./bin/dot-curl
 #./bin/dot-osx
 #./bin/dot-osx-services
-./bin/dot-python
+#./bin/dot-python
 #./bin/dot-ruby
 #./bin/dot-ssh
 ./bin/dot-symlink
