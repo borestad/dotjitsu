@@ -34,6 +34,7 @@ alias killall="killall -v"
 alias ag='ag --stats'
 alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 alias sqlite='sqlite3'
+alias code='/usr/local/bin/code -n'
 
 wh () { which -a "$@" | ctt2 }
 
