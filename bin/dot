@@ -19,14 +19,15 @@ chmod go-w '/usr/local/share'
 #./bin/dot-brew
 ./bin/dot-crontab
 #./bin/dot-gem
-./bin/dot-nvm
-./bin/dot-npm
+#./bin/dot-nvm
+./bin/nas
+./bin/dot-npm-bootstrap
 #./bin/dot-curl
 #./bin/dot-osx
 #./bin/dot-osx-services
 #./bin/dot-python
 #./bin/dot-ruby
-#./bin/dot-ssh
+./bin/dot-ssh
 ./bin/dot-symlink
 ./bin/dot-clean
 
@@ -34,4 +35,4 @@ chmod go-w '/usr/local/share'
 #brew link git-lfs
 
 # Make sure zsh is available as a shell
-#command -v zsh | sudo tee -a /etc/shells
+command -v zsh | sudo tee -a /etc/shells

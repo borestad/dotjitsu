@@ -33,6 +33,7 @@ alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch"
 alias killall="killall -v"
 alias ag='ag --stats'
 alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
+alias sqlite='sqlite3'
 
 wh () { which -a "$@" | ctt2 }
 
