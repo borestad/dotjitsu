@@ -9,6 +9,7 @@
 
 
 (crontab -l ; echo "0 * * * * /usr/local/bin/brew update") | sort - | uniq - | crontab -
+(crontab -l ; echo "* * * * * /Users/johan/.dotjitsu/bin/kill-high-cpu") | sort - | uniq - | crontab -
 
 hr -
 crontab -l

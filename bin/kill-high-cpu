@@ -1,0 +1,19 @@
+#!/bin/bash
+
+PROCESSNAME='/bin/ncdu'
+CPU_TRESHOLD=99
+
+IFS=$'\n'
+L=$(ps aux | grep $PROCESSNAME)
+
+for fn in $L; do
+        PID=$(echo $fn | awk '{print $2'})
+        LOAD=$(echo $fn | awk '{print $3'})
+
+        echo $LOAD
+        if [ $(echo "$LOAD > $CPU_TRESHOLD" | bc -l ) -eq 1 ]
+        then
+                kill -9 $PID
+                echo "Killed $PID due to treshold"
+        fi
+done
