@@ -33,11 +33,12 @@ brew 'dialog'                       # Display user-friendly message boxes from s
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'entr'                         # Run arbitrary commands when files change
 brew 'fasd'                         # CLI tool for quick access to files and directories
-#brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
+#brew 'ffmpeg'                      # Play, record, convert, and stream audio and video
+brew 'fd'                           # Simple, fast and user-friendly alternative to find
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
 brew 'ghq'                          # Remote repository management made easy
-brew 'git-crypt'                    # Enable transparent encryption/decryption of files in a git repo
+#brew 'git-crypt'                    # Enable transparent encryption/decryption of files in a git repo
 brew 'git-extras'                   # Small git utilities
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'grc'                          # Colorize logfiles and command output
@@ -61,6 +62,7 @@ brew 'pigz'                         # Parallel gzip
 brew 'plzip'                        # Data compressor
 brew 'pv'                           # Monitor data's progress through a pipe
 brew 'rename'                       # Perl-powered file rename script with many helpful built-ins
+brew 'ripgrep'
 brew 'speedtest_cli'                # Command-line interface for https://speedtest.net bandwidth tests
 brew 'stow'                         # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew 'sysbench'

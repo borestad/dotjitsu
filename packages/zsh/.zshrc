@@ -19,19 +19,16 @@ if which tmux 2>&1 >/dev/null; then
   fi
 fi
 
+# Fasd autocompletion,shortcuts etc ($ z ...)
+eval "$(fasd --init auto)"
 
 source "${ZDOTDIR:-$HOME}/.env"
-source "/usr/local/etc/grc.bashrc"
 source "$HOME/.aliases"
-source "$DOTJITSU/packages/docker/_docker-aliases"
+source "$DOTJITSU/packages/docker/.docker-aliases"
 source ~/.private/.zshrc
 
 # Colors
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
-
-
-# Fuck
-#eval $(thefuck --alias --enable-experimental-instant-mode)
 
 # Automatically list directory contents on `cd`.
 auto-ls () {
@@ -49,10 +46,8 @@ chpwd_functions=( auto-ls auto-pkg-scripts $chpwd_functions )
 
 # Automatically load .envrc files
 # https://github.com/direnv/direnv
-eval "$(direnv hook zsh)"
+#eval "$(direnv hook zsh)"
 
-# Fasd autocompletion
-eval "$(fasd --init auto)"
 
 # export JAVA_HOME="$(/usr/libexec/java_home -v 10)"
 
@@ -62,7 +57,6 @@ eval "$(fasd --init auto)"
 # wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 . "$NVM_DIR/nvm.sh" # This loads nvm
-. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # place this after nvm initialization!
 #autoload -U add-zsh-hook
@@ -88,21 +82,18 @@ load-nvmrc() {
 #add-zsh-hook chpwd load-nvmrc
 
 
+ln -sf `which node` $HOME/bin/node
 
 
+#[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
-# Better history
-# Credits to https://coderwall.com/p/jpj_6q/zsh-better-history-searching-with-arrow-keys
-# autoload -U up-line-or-beginning-search
-# autoload -U down-line-or-beginning-search
-# zle -N up-line-or-beginning-search
-# zle -N down-line-or-beginning-search
-# bindkey "^[[A" up-line-or-beginning-search # Up
-# bindkey "^[[B" down-line-or-beginning-search # Down
+fpath=(/usr/local/share/zsh-completions $fpath)
 
-
-#autoload -Uz compinit && compinit -i
-# fpath=(/usr/local/share/zsh-completions $fpath)
+# (CTRL-R on steroids)
 source $DOTJITSU/packages/fzf/.fzf
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# Colourify common commands (unalias things that breaks)
+source "/usr/local/etc/grc.bashrc"
+unalias docker
+
+autoload -Uz compinit && compinit -i

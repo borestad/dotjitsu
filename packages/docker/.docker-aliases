@@ -3,7 +3,9 @@
 # =========================================================
 # DOCKER
 # =========================================================
+
 alias dk='docker'
+alias d='docker'
 alias dkc='docker-compose'
 
 docker.stop-remove-all() {
@@ -14,7 +16,7 @@ docker.stop-remove-all() {
 }
 
 # Get latest container ID
-alias d.l="docker ps -l -q"
+alias docker.get-latest-container-id="docker ps -l -q"
 
 # Get container process
 alias d.ps="docker ps"
@@ -22,9 +24,11 @@ alias dps='d.ps'
 
 # Get process included stop container
 alias d.pa="docker ps -a"
+alias docker.ps-all-containers=d.pa
 
 # Get images
 alias d.i="docker images"
+alias docker.get-images="d.i"
 
 # Get container IP
 alias d.ip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"

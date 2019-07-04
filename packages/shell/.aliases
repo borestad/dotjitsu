@@ -80,6 +80,7 @@ alias -- -="cd -"
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"
+alias n="cd $HOME/netent"
 alias dj='code $HOME/.dotjitsu'
 
 append() {
@@ -102,11 +103,29 @@ alias sl='ls'            # I often screw this up.
 # =========================================================
 # Gnu utils (to enforce presedence)
 # =========================================================
-alias xargs='/usr/local/opt/findutils/bin/xargs'
-alias find='/usr/local/opt/findutils/bin/find'
-alias locate='/usr/local/opt/findutils/bin/locate'
-alias updatedb='/usr/local/opt/findutils/bin/updatedb'
+alias xargs='/usr/local/bin/gxargs'
+alias find='/usr/local/bin/gfind'
+alias locate='/usr/local/bin/glocate'
+alias updatedb='/usr/local/bin/gupdatedb'
 
+
+
+# =========================================================
+# Find
+# =========================================================
+alias ff='find $( pwd ) -follow -name '
+alias fff='ag -G "\.(js?x|ts?x|json)$" '
+alias fic='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp"  | xargs grep --color  -e '
+alias fih='find $( pwd )  -follow -name "*.h" | xargs grep --color -e '
+alias fis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h"  | xargs grep --color  -e '
+alias fif='find $( pwd ) -follow -type f -not -name "*~" -not -name "*swp" | xargs grep --color -e '
+alias fip='find $( pwd )  -follow  -name "*.ts"  | xargs grep --color  -e '
+alias qff='find $( pwd ) -follow 2>/dev/null -name '
+alias qfic='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" 2>/dev/null | xargs grep --color  -e '
+alias qfih='find $( pwd )  -follow -name "*.h" 2>/dev/null | xargs grep --color -e '
+alias qfis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h" 2>/dev/null | xargs grep --color  -e '
+alias qfif='find $( pwd ) -follow -type f  2>/dev/null| xargs grep --color -e '
+alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --color  -e '
 # =========================================================
 # Others
 # =========================================================
@@ -131,8 +150,9 @@ edit () {
 
 
 alias e='edit'
-alias zr='echo "Reloading zsh..."; exec zsh'
+alias zr='echo "Reloading zsh..."; exec $SHELL -l'
 alias reload='zr'
+alias reloadshell='zr'
 
 
 brew.info () {

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ActiveUpdateCadence</key>
+	<real>60</real>
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
 	<key>AllowClipboardAccess</key>
@@ -1230,6 +1232,8 @@
 	<false/>
 	<key>DisableWindowSizeSnap</key>
 	<true/>
+	<key>DrawOutlineAroundCursor</key>
+	<false/>
 	<key>EnableRendezvous</key>
 	<false/>
 	<key>FocusFollowsMouse</key>
@@ -1386,6 +1390,8 @@
 	<true/>
 	<key>MaxVertically</key>
 	<true/>
+	<key>MinimumWeightDifferenceForBoldFont</key>
+	<integer>4</integer>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/.dotjitsu/packages/iterm2</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
@@ -1427,11 +1433,17 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>1150 581 918 452 0 0 2560 1418 </string>
+	<string>229 388 1018 447 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1280 1418 0 0 2560 1418 </string>
+	<string>0 476 570 401 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>343 57 650 576 0 0 2560 1418 </string>
+	<string>0 0 1440 877 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 2</key>
+	<string>197 47 570 401 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 3</key>
+	<string>0 0 1440 877 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 4</key>
+	<string>0 0 1440 877 0 0 1440 877 </string>
 	<key>NeverWarnAboutShortLivedSessions_89A7486A-2F6E-41A2-9114-14C20D8EFA4F</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_89A7486A-2F6E-41A2-9114-14C20D8EFA4F_selection</key>
@@ -3006,16 +3018,14 @@
 			<string>/Users/johan</string>
 		</dict>
 	</array>
+	<key>NoSyncHaveWarnedAboutIncompatibleSoftware</key>
+	<true/>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
-	<string>2A8B1BDA-4827-401C-A592-5055AAD8ED21</string>
-	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
-	<true/>
-	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
-	<integer>0</integer>
+	<string>13D22F5A-74ED-4D4A-920C-9191C51172BE</string>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
-	<real>556667374.22479904</real>
+	<real>577312007.76532698</real>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
 	<key>OpenArrangementAtStartup</key>
@@ -3080,11 +3090,11 @@
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/final.xml?shard=13</string>
+	<string>https://iterm2.com/appcasts/final.xml?shard=6</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-08-22T22:18:14Z</date>
+	<date>2019-04-20T03:17:13Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -3140,7 +3150,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.2.0</string>
+	<string>3.2.8</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>2</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

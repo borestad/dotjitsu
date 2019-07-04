@@ -13,8 +13,8 @@ tap 'caskroom/versions'
 
 cask 'alfred'
 cask 'atom'
-cask 'ccleaner'
 cask 'balenaetcher'
+cask 'ccleaner'
 cask 'firefox'
 cask 'google-chrome'
 cask 'iterm2'
@@ -25,6 +25,8 @@ cask 'steam'
 cask 'sublime-text'
 cask 'visual-studio-code'
 cask 'vlc'
+cask 'yujitach-menumeters'
+
 
 # ================================
 # FONTS
