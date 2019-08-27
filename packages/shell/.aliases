@@ -36,6 +36,12 @@ alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 alias sqlite='sqlite3'
 alias code='/usr/local/bin/code -n'
 
+# Apps
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+alias chrome-canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
+alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium"
+alias firefox="/Applications/Firefox.app/Contents/MacOS/firefox"
+
 wh () { which -a "$@" | ctt2 }
 
 function clone {

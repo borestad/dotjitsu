@@ -175,16 +175,17 @@
   trustExitCode = true
 
 [filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 
 [gc]
   autoDetach = false
 
 [commit]
   gpgSign = false
+	verbose = true
 
 [pull]
   rebase = true
