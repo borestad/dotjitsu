@@ -1,0 +1,69 @@
+# vnstat
+
+QueryMode 0
+OutputStyle 3
+#DatabaseDir "/home/johan/.config/vnstat"
+
+Interface "enh"
+MaxBandwidth 1000
+BandwidthDetection 0
+BandwidthDetectionInterval 5
+
+DayFormat   "%x"
+MonthFormat "%b '%y"
+TopFormat   "%x"
+
+RXCharacter      "%"
+TXCharacter      ":"
+RXHourCharacter  "r"
+TXHourCharacter  "t"
+
+UnitMode 0
+RateUnit 0
+
+Locale "-"
+MonthRotate 1
+Sampletime 5
+CheckDiskSpace 1
+UseFileLocking 1
+BootVariation 15
+TrafficlessDays 1
+
+# vnstatd
+
+LogFile "/home/johan/.config/vnstat/vnstat.log"
+PidFile "/home/johan/.config/vnstat/vnstat.pid"
+
+DaemonUser ""
+DaemonGroup ""
+
+UpdateInterval 30
+PollInterval 5
+SaveInterval 5
+OfflineSaveInterval 30
+SaveOnStatusChange 1
+UseLogging 1
+CreateDirs 1
+UpdateFileOwner 1
+
+# vnstati
+
+HeaderFormat "%x %H:%M"
+
+HourlyRate 1
+SummaryRate 1
+SummaryLayout 1
+TransparentBg 1
+
+CBackground     "FFFFFF"
+CEdge           "AEAEAE"
+CHeader         "606060"
+CHeaderTitle    "FFFFFF"
+CHeaderDate     "FFFFFF"
+CText           "000000"
+CLine           "B0B0B0"
+CLineL          "-"
+CRx             "92CF00"
+CTx             "606060"
+CRxD            "-"
+CTxD            "-"
