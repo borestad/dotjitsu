@@ -23,8 +23,7 @@ alias nx='PATH=$(npm bin):$PATH'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
 alias git=hub
 #alias ncdu="ncdu -x -1bre"
-#alias npm_='/usr/local/bin/npm'
-#alias npm='~/n/bin/npm'
+alias ncdu="timeout -s SIGINT 3600s /usr/local/bin/ncdu"
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias yarn='/usr/local/bin/yarn'
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
@@ -35,6 +34,15 @@ alias ag='ag --stats'
 alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 alias sqlite='sqlite3'
 alias code='/usr/local/bin/code -n'
+alias vnstat='/usr/local/bin/vnstat -i en0'
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
+# Lock the screen (when going AFK)
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
 # Apps
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
@@ -156,7 +164,7 @@ edit () {
 
 
 alias e='edit'
-alias zr='echo "Reloading zsh..."; exec $SHELL -l'
+alias zr='echo "Reloading zsh..."; reset; exec $SHELL -l;'
 alias reload='zr'
 alias reloadshell='zr'
 
@@ -438,10 +446,10 @@ fhist() {
 # Copied from https://github.com/junegunn/dotfiles/blob/master/bashrc
 
 # fd - cd to selected directory
-fd() {
-  DIR=`find ${1:-*} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf-tmux` \
-    && cd "$DIR"
-}
+# fd() {
+#   DIR=`find ${1:-*} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf-tmux` \
+#     && cd "$DIR"
+# }
 
 # fkill - kill process
 fkill() {

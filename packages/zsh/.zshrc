@@ -83,6 +83,7 @@ load-nvmrc() {
 
 
 ln -sf `which node` $HOME/bin/node
+ln -sf $HOME/bin/node /usr/local/bin/node
 
 
 #[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"

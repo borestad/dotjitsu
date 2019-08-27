@@ -25,7 +25,8 @@ BASEFILES=(
 	prezto
 	ruby
 	shell
-	wget
+	vnstat
+    wget
 	zsh
 )
 
