@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+#!/bin/bash
+# Remove merged git branches locally and on remote(s)
+
+set -e
+
+# Script constants
+BRANCH_WHITELIST="(\*|master|other-special-branches)"
+REMOTES="origin"  # Add more remotes here as space-separated list
+
+echo "Deleting merged branches locally"
+git branch --merged master \
+    | egrep -v "$BRANCH_WHITELIST" \
+    | xargs -r git branch -d
+
+# Delete merged branches from each remote.
+for remote in $REMOTES; do
+    echo "Deleting merged branches from $remote"
+    git fetch "$remote" --prune
+    for branch in $(git branch -r --merged master \
+                        | grep "$remote" \
+                        | egrep -v "$BRANCH_WHITELIST"); do
+        git push "$remote" --delete "${branch#*/}"
+    done
+done
