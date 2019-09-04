@@ -19,13 +19,14 @@ if which tmux 2>&1 >/dev/null; then
   fi
 fi
 
-# Fasd autocompletion,shortcuts etc ($ z ...)
-eval "$(fasd --init auto)"
 
+eval "$(fasd --init auto)"              # Fasd autocompletion,shortcuts etc ($ z ...)
 source "${ZDOTDIR:-$HOME}/.env"
-source "$HOME/.aliases"
 source "$DOTJITSU/packages/docker/.docker-aliases"
 source ~/.private/.zshrc
+source $DOTJITSU/packages/fzf/.fzf      # (CTRL-R on steroids)
+source "/usr/local/etc/grc.bashrc"      # Colourify common commands (unalias things that breaks)
+source "$HOME/.aliases"
 
 # Colors
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
@@ -84,17 +85,7 @@ load-nvmrc() {
 
 ln -sf `which node` $HOME/bin/node
 ln -sf $HOME/bin/node /usr/local/bin/node
-
-
-#[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-# (CTRL-R on steroids)
-source $DOTJITSU/packages/fzf/.fzf
-
-# Colourify common commands (unalias things that breaks)
-source "/usr/local/etc/grc.bashrc"
-unalias docker
 
 autoload -Uz compinit && compinit -i

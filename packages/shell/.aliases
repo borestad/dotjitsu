@@ -35,6 +35,7 @@ alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 alias sqlite='sqlite3'
 alias code='/usr/local/bin/code -n'
 alias vnstat='/usr/local/bin/vnstat -i en0'
+alias cgrep="grep --color=always"
 
 # Intuitive map function
 # For example, to list all directories that contain a certain file:
@@ -241,9 +242,11 @@ alias addkey="ssh.addkey"
 # Checkout git branches
 git.co () {
   local branches branch
-  branches=$(git branch -a) &&
+  local date=$(date '+%Y-%m-%d %H:%M:%S')
+  local branches=$(git branch -a)
+  echo $date
   branch=$(echo "$branches" | fzf +m -x -e --reverse) &&
-  ~/.repos/git-friendly/branch $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
+  ~/.repos/git-friendly/stash && ~/.repos/git-friendly/branch $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::") && pull
 }
 
 alias co='git.co'
