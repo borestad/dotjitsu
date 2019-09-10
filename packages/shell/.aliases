@@ -119,9 +119,9 @@ alias sl='ls'            # I often screw this up.
 # Gnu utils (to enforce presedence)
 # =========================================================
 alias xargs='/usr/local/bin/xargs'
-alias find='/usr/local/bin/gfind'
-alias locate='/usr/local/bin/glocate'
-alias updatedb='/usr/local/bin/gupdatedb'
+alias find='/usr/local/bin/find'
+alias locate='/usr/local/bin/locate'
+alias updatedb='/usr/local/bin/updatedb'
 
 
 

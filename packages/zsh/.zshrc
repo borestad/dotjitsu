@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+# zmodload zsh/zprof
 
 ulimit -n 10000
 
@@ -57,7 +58,18 @@ chpwd_functions=( auto-ls auto-pkg-scripts $chpwd_functions )
 # =================================================================
 # wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
-. "$NVM_DIR/nvm.sh" # This loads nvm
+declare -a NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+NODE_GLOBALS+=("node")
+NODE_GLOBALS+=("nvm")
+
+load_nvm () {
+    export NVM_DIR=~/.nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+}
+
+for cmd in "${NODE_GLOBALS[@]}"; do
+    eval "${cmd}(){ unset -f ${NODE_GLOBALS}; load_nvm; ${cmd} \$@ }"
+done
 
 # place this after nvm initialization!
 #autoload -U add-zsh-hook
@@ -82,10 +94,18 @@ load-nvmrc() {
 
 #add-zsh-hook chpwd load-nvmrc
 
-
-ln -sf `which node` $HOME/bin/node
+NVM_DEFAULT=`cat $HOME/.nvm/alias/default`
+NODE_DEFAULT_PATH="$HOME/.nvm/versions/node/$NVM_DEFAULT/bin/node"
+ln -sf $NODE_DEFAULT_PATH $HOME/bin/node
 ln -sf $HOME/bin/node /usr/local/bin/node
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 
-autoload -Uz compinit && compinit -i
+#autoload -Uz compinit && compinit -i
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
+# zprof
