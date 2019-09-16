@@ -95,9 +95,9 @@ load-nvmrc() {
 #add-zsh-hook chpwd load-nvmrc
 
 NVM_DEFAULT=`cat $HOME/.nvm/alias/default`
-NODE_DEFAULT_PATH="$HOME/.nvm/versions/node/$NVM_DEFAULT/bin/node"
+NODE_DEFAULT_PATH="$HOME/.nvm/versions/node/v$NVM_DEFAULT/bin/node"
 ln -sf $NODE_DEFAULT_PATH $HOME/bin/node
-ln -sf $HOME/bin/node /usr/local/bin/node
+ln -sf $NODE_DEFAULT_PATH /usr/local/bin/node
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 
