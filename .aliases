@@ -95,7 +95,7 @@ alias -- -="cd -"
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"
-alias n="cd $HOME/netent"
+alias ne="cd $HOME/netent"
 alias dj='code $HOME/.dotjitsu'
 
 append() {

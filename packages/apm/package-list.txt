@@ -1,8 +1,0 @@
-atom-typescript
-editorconfig
-file-icons
-language-babel
-language-docker
-linter-jsonlint
-react
-emmet

@@ -23,9 +23,9 @@ fi
 
 eval "$(fasd --init auto)"              # Fasd autocompletion,shortcuts etc ($ z ...)
 source "${ZDOTDIR:-$HOME}/.env"
-source "$DOTJITSU/packages/docker/.docker-aliases"
+source "$DOTJITSU/.docker-aliases"
 source ~/.private/.zshrc
-source $DOTJITSU/packages/fzf/.fzf      # (CTRL-R on steroids)
+source $DOTJITSU/.fzf                   # (CTRL-R on steroids)
 source "/usr/local/etc/grc.bashrc"      # Colourify common commands (unalias things that breaks)
 source "$HOME/.aliases"
 
@@ -57,47 +57,47 @@ chpwd_functions=( auto-ls auto-pkg-scripts $chpwd_functions )
 # NVM
 # =================================================================
 # wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-declare -a NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
-NODE_GLOBALS+=("node")
-NODE_GLOBALS+=("nvm")
+# export NVM_DIR="$HOME/.nvm"
+# declare -a NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+# NODE_GLOBALS+=("node")
+# NODE_GLOBALS+=("nvm")
 
-load_nvm () {
-    export NVM_DIR=~/.nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-}
+# load_nvm () {
+#     export NVM_DIR=~/.nvm
+#     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# }
 
-for cmd in "${NODE_GLOBALS[@]}"; do
-    eval "${cmd}(){ unset -f ${NODE_GLOBALS}; load_nvm; ${cmd} \$@ }"
-done
+# for cmd in "${NODE_GLOBALS[@]}"; do
+#     eval "${cmd}(){ unset -f ${NODE_GLOBALS}; load_nvm; ${cmd} \$@ }"
+# done
 
-# place this after nvm initialization!
-#autoload -U add-zsh-hook
+# # place this after nvm initialization!
+# #autoload -U add-zsh-hook
 
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
+# load-nvmrc() {
+#   local node_version="$(nvm version)"
+#   local nvmrc_path="$(nvm_find_nvmrc)"
 
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+#   if [ -n "$nvmrc_path" ]; then
+#     local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install --lts
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
+#     if [ "$nvmrc_node_version" = "N/A" ]; then
+#       nvm install --lts
+#     elif [ "$nvmrc_node_version" != "$node_version" ]; then
+#       nvm use
+#     fi
+#   elif [ "$node_version" != "$(nvm version default)" ]; then
+#     echo "Reverting to nvm default version"
+#     nvm use default
+#   fi
+# }
 
 #add-zsh-hook chpwd load-nvmrc
 
-NVM_DEFAULT=`cat $HOME/.nvm/alias/default`
-NODE_DEFAULT_PATH="$HOME/.nvm/versions/node/v$NVM_DEFAULT/bin/node"
-ln -sf $NODE_DEFAULT_PATH $HOME/bin/node
-ln -sf $NODE_DEFAULT_PATH /usr/local/bin/node
+# NVM_DEFAULT=`cat $HOME/.nvm/alias/default`
+#NODE_DEFAULT_PATH="$HOME/.nvm/versions/node/v$NVM_DEFAULT/bin/node"
+#ln -sf $NODE_DEFAULT_PATH $HOME/bin/node
+#ln -sf $NODE_DEFAULT_PATH /usr/local/bin/node
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 

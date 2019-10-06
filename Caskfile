@@ -1,8 +1,8 @@
 cask_args appdir: '/Applications'
 
-tap 'caskroom/cask'
-tap 'caskroom/fonts'
-tap 'caskroom/versions'
+#tap 'homebrew/cask'
+tap 'homebrew/cask-fonts'
+tap 'homebrew/cask-versions'
 
 # ================================
 # FORMULAS FOR DEVS
@@ -14,7 +14,6 @@ tap 'caskroom/versions'
 cask 'alfred'
 cask 'atom'
 cask 'balenaetcher'
-cask 'ccleaner'
 cask 'firefox'
 cask 'google-chrome'
 cask 'iterm2'
@@ -25,7 +24,7 @@ cask 'steam'
 cask 'sublime-text'
 cask 'visual-studio-code'
 cask 'vlc'
-cask 'yujitach-menumeters'
+cask 'istat-menus'
 
 
 # ================================

@@ -20,7 +20,7 @@ chmod go-w '/usr/local/share'
 ./bin/dot-crontab
 #./bin/dot-gem
 #./bin/dot-nvm
-./bin/nas
+#./bin/nas
 ./bin/dot-npm-bootstrap
 #./bin/dot-curl
 #./bin/dot-osx

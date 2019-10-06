@@ -1,60 +1,78 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env node
 
-cd "$(dirname $0)"/../packages
+const fs = require('fs')
+const path = require('path')
+const homedir = require('os').homedir();
+const dotjitsu = path.join(__dirname, '..')
 
-echo ''; hr - '#' -
-echo "[SYMLINKING]\n"
+process.chdir(dotjitsu)
 
-
-DOTJITSU=$HOME/.dotjitsu
-ln -sfv $DOTJITSU/packages/stow/.stow-global-ignore ~
-#ln -sfv $DOTJITSU/packages/iterm2/.iterm2_shell_integration.zsh ~
-
-
-#stow -R -t $HOME stow
-
-BASEFILES=(
-	ack
-	bash
-	curl
-	editorconfig
-	fzf
-	git
-	htop
-	nano
-	prezto
-	ruby
-	shell
-	vnstat
-    wget
-	zsh
-)
-
-rm $HOME/.bash*
-rm $HOME/.git*
-stow -Rv -t $HOME $BASEFILES
-
-$HOME/.private/bin/dotp-symlink
+const dotfiles = fs.readdirSync('.')
+  .filter(f => f.startsWith('.') && fs.statSync(f).isFile())
 
 
+for (let file of dotfiles) {
+  const target = path.join(homedir, file)
+  try {
+    fs.unlinkSync(target)
+  } catch (e) { }
+  fs.symlinkSync(path.join(dotjitsu, file), target)
+}
 
-# Youtube-dl
-mkdir -p ~/.config/youtube-dl && \
-	ln -sfv $DOTJITSU/packages/youtube-dl/config ~/.config/youtube-dl
+
+// # echo ''; hr - '#' -
+// # echo "[SYMLINKING]\n"
 
 
-# Sublime Text
-#mkdir -p ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
-#rm -rf ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
-#ln -sfv $DOTJITSU/packages/sublime-text/User ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
-rm ~/.config/htop
-ln -sfv $DOTJITSU/packages/htop ~/.config/
+// # DOTJITSU=$HOME/.dotjitsu
 
-rm ~/.config/neofetch
-ln -sfv $DOTJITSU/packages/neofetch ~/.config/
+// # #ln -sfv $DOTJITSU/packages/iterm2/.iterm2_shell_integration.zsh ~
 
-ln -sfv -f $HOME/.repos/.tmux/.tmux.conf ~/
-ln -sfv $DOTJITSU/packages/tmux/.tmux.conf.local ~/
+// # for c in `ls -la .*`; do ! echo $c; done
 
-# Disable Last Login message with new tabs (i.e Last login: Wed Apr  4 09:36:35 on ttys013)
-touch ~/.hushlogin
+// # # BASEFILES=(
+// # # 	ack
+// # # 	bash
+// # # 	curl
+// # # 	editorconfig
+// # # 	fzf
+// # # 	git
+// # # 	htop
+// # # 	nano
+// # # 	prezto
+// # # 	ruby
+// # # 	shell
+// # # 	vnstat
+// # #     wget
+// # # 	zsh
+// # # )
+
+// # #rm $HOME/.bash*
+// # #rm $HOME/.git*
+
+// # #stow -Rv -t $HOME $BASEFILES
+
+// # #$HOME/.private/bin/dotp-symlink
+
+
+
+// # # Youtube-dl
+// # # mkdir -p ~/.config/youtube-dl && \
+// # # 	ln -sfv $DOTJITSU/packages/youtube-dl/config ~/.config/youtube-dl
+
+
+// # # Sublime Text
+// # #mkdir -p ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
+// # #rm -rf ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
+// # #ln -sfv $DOTJITSU/packages/sublime-text/User ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
+// # #rm ~/.config/htop
+// # #ln -sfv $DOTJITSU/packages/htop ~/.config/
+
+// # #rm ~/.config/neofetch
+// # #ln -sfv $DOTJITSU/packages/neofetch ~/.config/
+
+// # #ln -sfv -f $HOME/.repos/.tmux/.tmux.conf ~/
+// # #ln -sfv $DOTJITSU/packages/tmux/.tmux.conf.local ~/
+
+// # # Disable Last Login message with new tabs (i.e Last login: Wed Apr  4 09:36:35 on ttys013)
+// # touch ~/.hushlogin
