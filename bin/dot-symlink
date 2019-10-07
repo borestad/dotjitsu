@@ -6,6 +6,7 @@ const homedir = require('os').homedir();
 const dotjitsu = path.join(__dirname, '..')
 
 process.chdir(dotjitsu)
+console.log('Symlinking files:\n')
 
 const dotfiles = fs.readdirSync('.')
   .filter(f => f.startsWith('.') && fs.statSync(f).isFile())
@@ -17,6 +18,7 @@ for (let file of dotfiles) {
     fs.unlinkSync(target)
   } catch (e) { }
   fs.symlinkSync(path.join(dotjitsu, file), target)
+  console.log(target)
 }
 
 
