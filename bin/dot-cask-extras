@@ -6,8 +6,8 @@ echo ''; hr - '#' -
 echo "[BREW CASK FORMULAS]\n"
 
 brew -v update
-brew -v bundle --file=$HOME/.dotjitsu/Caskfile.bootstrap
-brew -v upgrade --file=$HOME/.dotjitsu/Caskfile.bootstrap
+brew -v bundle --file=$HOME/.dotjitsu/Caskfile.extras
+brew -v upgrade --file=$HOME/.dotjitsu/Caskfile.extras
 
 # Fix for broken 'brew cask'
 for c in `brew cask list`; do ! brew cask info $c | grep -qF "Not installed" || brew cask install $c; done

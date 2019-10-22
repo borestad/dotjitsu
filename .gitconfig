@@ -4,11 +4,21 @@
 
 [hub]
 	protocol = https
+
 [user]
   name = Johan Borestad
   email = johan@borestad.com
   signingkey = A2F9E43859571FBEBBDEFD92A457B0441FAD4678
     #useConfigOnly = true
+
+
+[includeIf "gitdir:~/netent/"]
+    [user]
+        name = Johan Borestad
+        email = "johan.borestad@netent.com"
+    [core]
+        sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
+
 [credential]
         #helper = osxkeychain
 
