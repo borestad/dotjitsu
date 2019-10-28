@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -m
+LOG_LOCATION="$HOME/logs"
+TERM="xterm-256color"
+
+mkdir -p $LOG_LOCATION
+
+exec > >(tee -i $LOG_LOCATION/brew-update-`date +%F--%H%M%S`.log)
+exec 2>&1
+
+
+echo ""
+
+t () {
+  date "+%F %H:%M:%S"
+}
+
+echo "`t`: START:   brew update"
+/usr/local/bin/brew update
+echo "`t`: STOP:    brew update"
+
+echo ""
+
+echo "`t`: START:   brew upgrade"
+/usr/local/bin/brew upgrade
+echo "`t`: STOP:    brew upgrade"
+
+echo ""
+
+echo "`t`: START:   brew cleanup"
+/usr/local/bin/brew cleanup
+echo "`t`: STOP:    brew cleanup"
+
+echo ""
+
+echo "All done! Enjoy a cold one! 🍺 "
+
+echo ""
+/Users/johan/.dotjitsu/bin/hr -
