@@ -8,7 +8,7 @@
 [user]
   name = Johan Borestad
   email = johan@borestad.com
-  signingkey = A2F9E43859571FBEBBDEFD92A457B0441FAD4678
+  signingkey = 2C7C92079C672564
     #useConfigOnly = true
 
 
@@ -16,6 +16,7 @@
     [user]
         name = Johan Borestad
         email = "johan.borestad@netent.com"
+        signingkey = 24D4AB5D8F96FAB6
     [core]
         sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
 
