@@ -16,7 +16,6 @@
     [user]
         name = Johan Borestad
         email = "johan.borestad@netent.com"
-        signingkey = 24D4AB5D8F96FAB6
     [core]
         sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
 
@@ -195,7 +194,7 @@
   autoDetach = false
 
 [commit]
-  gpgSign = false
+	gpgsign = true
 	verbose = true
 
 [pull]
