@@ -9,7 +9,7 @@
   name = Johan Borestad
   email = johan@borestad.com
   signingkey = 2C7C92079C672564
-  #useConfigOnly = true
+  # useConfigOnly = true
 
 
 [includeIf "gitdir:~/netent/"]
