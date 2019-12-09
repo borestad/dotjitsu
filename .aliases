@@ -36,6 +36,7 @@ alias sqlite='sqlite3'
 alias code='/usr/local/bin/code -n'
 alias vnstat='/usr/local/bin/vnstat -i en0'
 alias cgrep="grep --color=always"
+alias python=/usr/local/bin/python3.7
 
 # Intuitive map function
 # For example, to list all directories that contain a certain file:
