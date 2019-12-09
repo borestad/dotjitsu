@@ -1,10 +1,16 @@
 #!/usr/bin/env zsh
 
+echo 'Enter your computer password:'
 sudo -v
 sudo xcodebuild -license accept
 
 export ZSH=$HOME/.dotjitsu
-cd "$(dirname $0)"/..
+
+cd $HOME/.dotjitsu
+$HOME/.repos/git-friendly/pull
+
+ROOT=$(git rev-parse --show-toplevel)
+cd $ROOT
 
 if [ ! type "brew" &> /dev/null ]; then
 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -41,3 +47,5 @@ ln -sfv /Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-compl
 
 # Make sure zsh is available as a shell
 command -v zsh | sudo tee -a /etc/shells
+
+$HOME/.private/bin/dotp
