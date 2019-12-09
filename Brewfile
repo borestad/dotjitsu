@@ -56,6 +56,7 @@ brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'jpegoptim'                    # Utility to optimize JPEG files
 brew 'jq'                           # Lightweight and flexible command-line JSON processor
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
+brew 'mozjpeg'
 brew 'mas'                          # Mac App Store command-line interface
 brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
 brew 'multitail'                    # Tail multiple files in one terminal simultaneously
@@ -66,6 +67,7 @@ brew 'nload'                        # Realtime console network usage monitor
 brew 'nmap'                         # Port scanning utility for large networks
 brew 'optipng'                      # PNG file optimizer
 brew 'pbzip2'                       # Parallel bzip2
+brew 'ppsspp'                       # PlayStation Portable emulator
 brew 'pidof'                        # Display the PID number for a given process name
 brew 'pigz'                         # Parallel gzip
 brew 'plzip'                        # Data compressor
