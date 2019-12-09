@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+#pngquant --strip -s1 -v -f --ext .png $1
+
+find . -name '*.png' -print0 | xargs -0 -P12 -L1 pngquant --skip-if-larger --strip -s1 -v -f --ext .png

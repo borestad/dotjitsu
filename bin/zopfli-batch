@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+#!/bin/bash
+# License CC-0: https://creativecommons.org/publicdomain/zero/1.0/
+
+# batch zopfli compression, use like (from your working root folder):
+# $ find . -iname '*.png' -type f | ~/your/path/to/batch-zopflipng.sh
+
+# write a recompressed file to the temp dir, move when finished
+fn_recompress() {
+	# use local variable for thread safety
+	local tmpfile=$(mktemp)
+
+	# encode
+	#zopflipng -m -y --lossy_transparent $1 $tmpfile
+	zopflipng -m -y --lossy_transparent $1 $tmpfile
+
+	# move tempfile if there is one and size is greater than zero
+	# it’s the case zopfli was actually able to compress better
+	if [ -s $tmpfile ]; then
+		mv $tmpfile $1
+	else
+		rm $tmpfile
+	fi
+}
+
+# make custom function available in subshell
+export -f fn_recompress
+
+# time tracking
+start_time=$(date +%s)
+
+# run font scans in parallel (8 cores)
+xargs -n1 -P12 -I{} bash -c 'fn_recompress $1' _ {}
+
+# time tracking result
+end_time=$(date +%s)
+echo "execution time was $(expr $end_time - $start_time)s."
