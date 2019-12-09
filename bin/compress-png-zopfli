@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+#!/bin/bash
+# License CC-0: https://creativecommons.org/publicdomain/zero/1.0/
+
+# batch zopfli compression, use like (from your working root folder):
+find . -iname '*.png' -type f | zopfli-batch
