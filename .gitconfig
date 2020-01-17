@@ -17,7 +17,7 @@
         name = Johan Borestad
         email = "johan.borestad@netent.com"
     [core]
-        sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
+        #sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
 
 [credential]
         #helper = osxkeychain
@@ -194,7 +194,7 @@
   autoDetach = false
 
 [commit]
-	gpgsign = true
+	#gpgsign = true
 	verbose = true
 
 [pull]
@@ -243,3 +243,9 @@
 [grep]
 	extendRegexp = true
 	lineNumber = true
+
+[gpg]
+	#program = gpg2
+
+[submodule]
+	recurse = true
