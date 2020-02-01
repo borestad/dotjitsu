@@ -1,20 +1,21 @@
 #!/usr/bin/env zsh
 
-
-yarn global add \
-  bcat@latest \
+yarn global add
+#bcat@latest \
   jase@latest \
   http-server@latest \
-  diff-so-fancy@latest \
-  vtop@latest \
+  diff-so-fancy@latest
+
+#vtop@latest \
   local-web-server
-  # public-ip@latest \
+
+# public-ip@latest \
   #casperjs@latest \
   # david@latest \
   # debug@latest \
   # esformatter@latest \
 
-  # dockly@latest \
+# dockly@latest \
   # jscodeshift@latest \
   # jscs@latest \
   # jshint@latest \
@@ -29,7 +30,7 @@ yarn global add \
   # pageres-cli@latest \
   # phantomjs-prebuilt@latest \
 
-  # rtail@latest \
+# rtail@latest \
   # shipit-cli@latest \
   # tmpin@latest \
   # vantage@latest \
@@ -37,7 +38,6 @@ yarn global add \
   # webpack-bundle-size-analyzer@latest \
   # webpack-dev-server@latest \
   # yo@latest
-
 
 # npm set progress=false
 

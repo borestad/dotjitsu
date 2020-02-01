@@ -21,7 +21,8 @@ if which tmux 2>&1 >/dev/null; then
 fi
 
 
-eval "$(fasd --init auto)"              # Fasd autocompletion,shortcuts etc ($ z ...)
+#eval "$(fasd --init auto)"              # Fasd autocompletion,shortcuts etc ($ z ...)
+eval "$(fasd --init posix-alias zsh-hook)"
 source "${ZDOTDIR:-$HOME}/.env"
 source "$DOTJITSU/.docker-aliases"
 source ~/.private/.zshrc
@@ -36,7 +37,7 @@ eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 auto-ls () {
   emulate -L zsh;
   # explicit sexy ls'ing as aliases arent honored in here.
-  hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || ls
+  hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -AFh --color --group-directories-first || ls -A
 }
 
 auto-pkg-scripts () {

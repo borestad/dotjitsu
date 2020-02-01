@@ -25,7 +25,6 @@ alias git=hub
 #alias ncdu="ncdu -x -1bre"
 alias ncdu="timeout -s SIGINT 3600s /usr/local/bin/ncdu"
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
-alias yarn='/usr/local/bin/yarn'
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch"
@@ -129,12 +128,19 @@ alias updatedb='/usr/local/bin/gupdatedb'
 # =========================================================
 # Find
 # =========================================================
-alias ff='find $( pwd ) -follow -name '
+ff () {
+  IFS=""
+  local result=`fd $1`
+  echo -e $result
+  echo -e $result | wc -l
+}
+
 alias fff='ag -G "\.(js?x|ts?x|json)$" '
 alias fic='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp"  | xargs grep --color  -e '
 alias fih='find $( pwd )  -follow -name "*.h" | xargs grep --color -e '
 alias fis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h"  | xargs grep --color  -e '
-alias fif='find $( pwd ) -follow -type f -not -name "*~" -not -name "*swp" | xargs grep --color -e '
+alias fif='find $( pwd ) -follow -ty
+pe f -not -name "*~" -not -name "*swp" | xargs grep --color -e '
 alias fip='find $( pwd )  -follow  -name "*.ts"  | xargs grep --color  -e '
 alias qff='find $( pwd ) -follow 2>/dev/null -name '
 alias qfic='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" 2>/dev/null | xargs grep --color  -e '
@@ -391,7 +397,7 @@ xtract () {
           *.exe)       cabextract $1  ;;
           *)           echo "extract: '$1' - cannot be extracted via extract()" ;;
         esac
-        cd $1* && open .
+        #cd $1* && open .
     else
         echo "$1 - file does not exist"
     fi
