@@ -2,4 +2,4 @@
 
 #pngquant --strip -s1 -v -f --ext .png $1
 
-find . -name '*.png' -print0 | xargs -0 -P12 -L1 pngquant --skip-if-larger --strip -s1 -v -f --ext .png
+find . -name '*.png' -print0 | xargs -0 -P12 -L1 pngquant --quality 75-90 --skip-if-larger --strip -s1 -v -f --ext .png

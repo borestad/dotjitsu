@@ -10,10 +10,17 @@
 fn_recompress() {
 	# use local variable for thread safety
 	local tmpfile=$(mktemp)
+  local input=$1
+
+  echo "Input file: $input"
 
 	# encode
-	#zopflipng -m -y --lossy_transparent $1 $tmpfile
-	zopflipng -m -y --lossy_transparent $1 $tmpfile
+	# zopflipng -m -y --lossy_transparent $1 $tmpfile
+	# zopflipng -m -y --lossy_transparent --filters=0me $1 $tmpfile
+  zopflipng -y --iterations=500 --filters=01234mepb --lossy_8bit --lossy_transparent $1 $tmpfile
+
+  #Compress really good and trying all filter strategies:
+  # zopflipng --iterations=500 --filters=01234mepb --lossy_8bit --lossy_transparent infile.png outfile.png
 
 	# move tempfile if there is one and size is greater than zero
 	# it’s the case zopfli was actually able to compress better
@@ -30,7 +37,7 @@ export -f fn_recompress
 # time tracking
 start_time=$(date +%s)
 
-# run font scans in parallel (8 cores)
+# run in parallel (12 cores)
 xargs -n1 -P12 -I{} bash -c 'fn_recompress $1' _ {}
 
 # time tracking result

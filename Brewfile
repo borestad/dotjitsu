@@ -19,12 +19,12 @@ brew 'python3'                      # Interpreted, interactive, object-oriented 
 # ================================
 # CLI stuff
 # ================================
-#brew 'ffmpeg'                      # Play, record, convert, and stream audio and video
 #brew 'git-crypt'                    # Enable transparent encryption/decryption of files in a git repo
 brew 'ag'                           # A code-searching tool similar to ack, but faster
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'archey'                       # Graphical system information display for macOS
 brew 'axel'                         # Light UNIX download accelerator
+brew 'unar'                         # Command-line unarchiving tools supporting multiple formats
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
@@ -52,6 +52,7 @@ brew 'httpie'                       # User-friendly cURL replacement (command-li
 brew 'httpry'                       # Packet sniffer for displaying and logging HTTP traffic
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'ifstat'                       # Tool to report network interface bandwidth
+brew 'imageoptim-cli'               # CLI for ImageOptim, ImageAlpha and JPEGmini
 brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'jpegoptim'                    # Utility to optimize JPEG files
 brew 'jq'                           # Lightweight and flexible command-line JSON processor
@@ -78,6 +79,7 @@ brew 'rename'                       # Perl-powered file rename script with many 
 brew 'ripgrep'
 brew 'speedtest_cli'                # Command-line interface for https://speedtest.net bandwidth tests
 brew 'stow'                         # Organize software neatly under a single directory tree (e.g. /usr/local)
+brew 'sshfs'                        # File system client based on SSH File Transfer Protocol
 brew 'svtplay-dl'
 brew 'sysbench'
 brew 'tig'
@@ -93,7 +95,7 @@ brew 'watchman'                     # Watch files and take action when they chan
 brew 'webkit2png'                   # Create screenshots of webpages from the terminal
 brew 'wget'                         # Internet file retriever
 brew 'whatmask'                     # Network settings helper
-brew 'yarn', args: ['ignore-dependencies']
+#brew 'yarn', args: ['ignore-dependencies']
 brew 'youtube-dl'                   # Download YouTube videos from the command-line
 brew 'zopfli'                       # New zlib (gzip, deflate) compatible compressor
 brew 'zsh-autosuggestions'

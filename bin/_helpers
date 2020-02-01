@@ -26,7 +26,7 @@ git_clone_or_pull() {
   if [[ -d "$dir_path" ]]; then
     cd $dir_path
     git rebase --abort
-    git fetch --recurse-submodules --depth 1 --verbose
+    git fetch --recurse-submodules --depth 1 --verbose origin master
     git reset --hard
     git remote prune origin
   else

@@ -3,7 +3,7 @@
 # https://github.com/skwp/dotfiles/blob/master/git/gitconfig
 
 [hub]
-	protocol = https
+  protocol = https
 
 [user]
   name = Johan Borestad
@@ -13,17 +13,17 @@
 
 
 [includeIf "gitdir:~/netent/"]
-    [user]
-        name = Johan Borestad
-        email = "johan.borestad@netent.com"
-    [core]
+  [user]
+    name = Johan Borestad
+    email = "johan.borestad@netent.com"
+  [core]
         #sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
 
 [credential]
         #helper = osxkeychain
 
 [color]
-	ui = true
+  ui = true
 
 [init]
   templatedir = ~/.dotjitsu/packages/git/templates
@@ -42,12 +42,12 @@
   remote = green
 
 [color "diff"]
-	meta = yellow
-	frag = magenta bold
-	old = red bold
-	new = green bold
-	commit = yellow bold
-	whitespace = red reverse
+  meta = yellow
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  commit = yellow bold
+  whitespace = red reverse
 
 [alias]
   # Custom
@@ -87,6 +87,10 @@
   # diff
   d = diff                          # diff unstaged changes
   dc = diff --cached                # diff staged changes
+
+  # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
   last = diff HEAD^                 # diff last committed change
 
   # log
@@ -137,8 +141,8 @@
   svnd = svn dcommit
   svnl = svn log --oneline --show-commit
   squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-Initial commit}\");};f"
-	trash = "!mkdir -p .trash && git ls-files --others --exclude-standard | gxargs gmv -f -t .trash"
-	g = grep --break --heading --line-number
+  trash = "!mkdir -p .trash && git ls-files --others --exclude-standard | gxargs gmv -f -t .trash"
+  g = grep --break --heading --line-number
 
 [format]
   pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
@@ -150,23 +154,23 @@
   pager = diff-so-fancy
 
 [apply]
-        whitespace = nowarn
+  whitespace = nowarn
 
 [mergetool]
-        keepBackup = false
+  keepBackup = false
 
 [difftool]
-        prompt = false
+  prompt = false
 
 [help]
-        autocorrect = 1
+  autocorrect = 1
 
 [push]
-        # See `git help config` (search for push.default)
-        # for more information on different options of the below setting.
-        #
-        # Setting to git 2.0 default to suppress warning message
-        default = simple
+# See `git help config` (search for push.default)
+# for more information on different options of the below setting.
+#
+# Setting to git 2.0 default to suppress warning message
+default = simple
 
 [rerere]
   # Remember my merges
@@ -185,23 +189,23 @@
   trustExitCode = true
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 
 [gc]
   autoDetach = false
 
 [commit]
-	#gpgsign = true
-	verbose = true
+  #gpgsign = true
+  verbose = true
 
 [pull]
   rebase = true
 
 [tig]
-  line-graphics = no  # Disable graphics characters
+  line-graphics = yes  # Disable graphics characters
   tab-size = 4    # Number of spaces per tab
   mouse = no
 
@@ -229,23 +233,23 @@
   versiontag = v
 
 [http]
-	postBuffer = 524288000
+  postBuffer = 524288000
 
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
 
 [diff-so-fancy]
-	first-run = true
+  first-run = true
 
 [grep]
-	extendRegexp = true
-	lineNumber = true
+  extendRegexp = true
+  lineNumber = true
 
 [gpg]
-	#program = gpg2
+  #program = gpg2
 
 [submodule]
-	recurse = true
+  recurse = true
