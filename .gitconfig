@@ -233,7 +233,7 @@ default = simple
   versiontag = v
 
 [http]
-  postBuffer = 524288000
+	postBuffer = 524288000
 
 [color "diff-highlight"]
   oldNormal = red bold

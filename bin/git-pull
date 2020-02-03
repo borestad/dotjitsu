@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Git pull
+
+TARGET=${1:-$PWD}
+GIT_CURL_VERBOSE=0
+
+if [[ -d "$TARGET" ]]; then
+  echo "PATH: $TARGET"
+  cd $TARGET
+  git rebase --abort &> /dev/null
+  git fetch --recurse-submodules --depth 1 --verbose
+  git remote prune origin
+  #git fsck
+else
+  echo "⚠ Path '$TARGET' does not exist"
+fi
+
+
