@@ -2,28 +2,48 @@
 
 cd "$(dirname $0)"/..
 
-echo ''; hr - '#' -
-echo "[CLEANING]"
-echo
+DISKSPACE_BEFORE=$(($(stat -f --format="%a*%S" .)))
 
-dfc
+echo ''; hr -
+echo
+echo "⭐️ CLEANING"
+echo ''
+
+#dfc
 echo
 
 # Disable local snapshot (APFS just hates to reclaim disk space)
+echo "✓ Disable localsnapshot"
 sudo tmutil disable localsnapshot
 
 # Kill log files slowing down the shell
+echo "✓ Removing *.asl"
 find /private/var/log/asl -name '*.asl' | sudo xargs rm -rfv
 
+echo "✓ Cleanup *.v8flags*"
 rm -rfv ~/.v8flags*
 
+echo "✓ Autofix +x flags"
 chmod -R +x ~/.dotjitsu/bin/*
 
-brew cleanup -s
-rm -rf $(brew --cache)
+echo "✓ Brew cleanup"
+brew cleanup -s &> /dev/null
+rm -rf $(brew --cache) &> /dev/null
+
+DISKSPACE_AFTER=$(($(stat -f --format="%a*%S" .)))
+
 
 echo
-dfc
+
+COUNT=`expr $DISKSPACE_BEFORE - $DISKSPACE_AFTER`
+
+echo "Disk space:"
+echo "Before: $DISKSPACE_BEFORE B"
+echo "After:  $DISKSPACE_AFTER B"
+echo "Diff:   $COUNT B"
+
+
+#dfc
 
 #find ~/code -type d -name node_modules | xargs rm -rfv
 #rm -rfv ~/.tmp/*

@@ -95,13 +95,17 @@ brew 'watchman'                     # Watch files and take action when they chan
 brew 'webkit2png'                   # Create screenshots of webpages from the terminal
 brew 'wget'                         # Internet file retriever
 brew 'whatmask'                     # Network settings helper
-#brew 'yarn', args: ['ignore-dependencies']
 brew 'youtube-dl'                   # Download YouTube videos from the command-line
 brew 'zopfli'                       # New zlib (gzip, deflate) compatible compressor
 brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
+
+brew 'psgrep'
+brew 'pgrep'
+brew 'spot'
+brew 'svgo'
 
 # ================================
 # Databases & tools
