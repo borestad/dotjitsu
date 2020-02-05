@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+cd "$(dirname $0)"
+
+# =============================================================================
+# ⚡ CONSTANTS
+# =============================================================================
+ROOT=$(git rev-parse --show-toplevel)
+
+NODE_MODULES=$ROOT/node_modules
+
+LOG_LOCATION="$HOME/logs"

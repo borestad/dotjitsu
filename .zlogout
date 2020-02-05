@@ -6,6 +6,8 @@
 #
 
 # Execute code only if STDERR is bound to a TTY.
+killall ncdu
+
 [[ -o INTERACTIVE && -t 2 ]] && {
 
 # Print the message.

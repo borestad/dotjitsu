@@ -5,7 +5,6 @@
 # =========================================================
 
 alias dk='docker'
-alias d='docker'
 alias dkc='docker-compose'
 
 docker.stop-remove-all() {

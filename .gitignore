@@ -38,6 +38,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+
 jspm_packages/
 
 # Typescript v1 declaration files
@@ -134,6 +135,5 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/osx,vim,node,windows,visualstudiocode
 
-### Gatsby ###
 .cache
 .tmp

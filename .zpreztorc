@@ -37,9 +37,12 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
+  'fasd' \
   'autosuggestions' \
   'history' \
   'syntax-highlighting' \
+  'history-substring-search' \
+  'osx' \
   'git' \
   'prompt'
 
@@ -104,7 +107,7 @@ zstyle ':prezto:module:git:alias' skip 'yes'
 #
 
 # Set the keyword used by `mand` to open man pages in Dash.app
-# zstyle ':prezto:module:osx:man' dash-keyword 'manpages'
+zstyle ':prezto:module:osx:man' dash-keyword 'manpages'
 
 #
 # Pacman
