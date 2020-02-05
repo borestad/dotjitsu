@@ -8,11 +8,8 @@ MAILTO=""
 # (minute) (hour) (day of month) (month) (weekday)
 
 
-#(crontab -l ; echo "0 * * * * /usr/local/bin/timeout -s 2 60 /usr/local/bin/brew update") | sort - | uniq - | crontab -
-#(crontab -l ; echo "* * * * * /bin/bash /usr/local/bin/brew update") | sort - | uniq - | crontab -
-#(crontab -l ; echo "* * * * * /Users/johan/.dotjitsu/bin/kill-high-cpu") | sort - | uniq - | crontab -
+#(crontab -l ; echo "* * * * * /Users/johan/.dotjitsu/bin/kill-hi gh-cpu") | sort - | uniq - | crontab -
 (crontab -l ; echo "0 * * * * /Users/johan/.dotjitsu/bin/brew-update &> /dev/null &") | sort - | uniq - | crontab -
-
 
 hr -
 crontab -l

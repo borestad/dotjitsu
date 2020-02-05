@@ -9,19 +9,18 @@ brew install python3
 brew install python
 brew unlink python && brew link --overwrite python # make sure python links to python2
 
-#pip2 install --upgrade pip setuptools # upgrade to latest pip2
-pip3 install --upgrade pip setuptools # upgrade to latest pip3
+# upgrade to latest pip3
+pip install --upgrade pip
+pip install --upgrade setuptools
+pip install --upgrade wheel
 
-# never use the generic “python” and “pip”.
-# always use “python[2/3]” and “pip[2/3]”.
 
-#pip2 install --upgrade pip setuptools
-pip3 install --upgrade pip setuptools wheel
+# User install
+pip install --upgrade --user tsrc Pygments
 
 # Colors
 #pip3 install --upgrade pygments
 
-sudo easy_install Pygments
 # sudo easy_install Pygments
 
 # Sen

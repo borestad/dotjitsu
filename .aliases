@@ -3,39 +3,49 @@
 # =========================================================
 # Globals & system overrids
 # =========================================================
+#alias ncdu="ncdu -x -1bre"
+alias ag='ag --stats'
+alias cgrep="grep --color=always"
+alias code='/usr/local/bin/code -n'
 alias cp='gcp -v'
+alias crontab='VISUAL=nano EDITOR=nano crontab'
+alias ctp="ct package.json"
 alias ctt='pygmentize -O style=monokai -f console256 -g'
 alias ctt2='pygmentize -O style=monokai -g'
-ct () { ctt "$@" | cat -n | less -R }
-cs () { cat "$@" | jase scripts 2>/dev/null | pygmentize -O style=monokai -g -l json }
-alias ctp="ct package.json"
+alias git=hub
 alias h="history | fzf --reverse"
+alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
+alias killall="killall -v"
 alias mkdir='gmkdir -pv'
+alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 alias mv='gmv -v'
+alias ncdu="timeout -s SIGINT 3600s /usr/local/bin/ncdu"
+alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
 alias pgrep='pgrep -fli'
+alias python=/usr/local/bin/python3.7
+alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch"
 alias rm='grm -v'
 alias rmf='grm -rfv'
 alias serve='ws -f stats'
-alias ws='ws -d'
-alias wget='wget --no-check-certificate'
-alias nx='PATH=$(npm bin):$PATH'
-alias crontab='VISUAL=nano EDITOR=nano crontab'
-alias git=hub
-#alias ncdu="ncdu -x -1bre"
-alias ncdu="timeout -s SIGINT 3600s /usr/local/bin/ncdu"
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
-alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
-alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
-alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch"
-alias killall="killall -v"
-alias ag='ag --stats'
-alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 alias sqlite='sqlite3'
-alias code='/usr/local/bin/code -n'
 alias vnstat='/usr/local/bin/vnstat -i en0'
-alias cgrep="grep --color=always"
-alias python=/usr/local/bin/python3.7
+alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
+alias wget='wget --no-check-certificate'
+alias ws='ws -d'
+cs () { cat "$@" | jase scripts 2>/dev/null | pygmentize -O style=monokai -g -l json }
+ct () { ctt "$@" | cat -n | less -R }
+
+#
+# fasd
+#
+alias a='fasd -a'
+alias s='fasd -si'
+alias sd='fasd -sid'
+alias sf='fasd -sif'
+alias d='fasd -d'
+alias f='fasd -f'
 
 # Intuitive map function
 # For example, to list all directories that contain a certain file:
@@ -45,7 +55,9 @@ alias map="xargs -n1"
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
+#
 # Apps
+#
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 alias chrome-canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
 alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium"
@@ -104,7 +116,7 @@ append() {
 }
 
 alias ls='gls --color --group-directories-first'
-alias l='ls -a'          # Lists in multi column, hidden files.
+alias l='ls -A'          # Lists in multi column, hidden files.
 alias ll='ls -lAh'       # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
@@ -161,7 +173,7 @@ alias spotlight.rebuild='sudo mdutil -E /'
 
 # Create directory and immediately move into that dir
 mk ()  { mkdir -p "$@" && cd "$_"; }
-mkt () { cd $(mktemp -d) }
+mkt () { hr -; cd $(mktemp -d -p $HOME/tmp); pwd; echo; }
 mktc () { cd $(mktemp -d) && pwd && hr - && clone $1 }
 
 # Opens file in EDITOR.
@@ -179,7 +191,7 @@ alias reloadshell='zr'
 
 
 brew.info () {
-  grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
+ #grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
 }
 
 if (( $+commands[http] )); then
@@ -327,6 +339,8 @@ alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep
 alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
 # Files in use in the Users directory
 alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
+
+files.last_modified_directory() { echo `\ls -t | head -n 1` }
 
 ddd() {
   local cmd="dd if='"$1"' | pv | sudo dd of=/dev/rdisk"$2" bs=1m"

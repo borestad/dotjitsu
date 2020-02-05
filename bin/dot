@@ -31,7 +31,7 @@ chmod go-w '/usr/local/share'
 #./bin/dot-curl
 #./bin/dot-osx
 #./bin/dot-osx-services
-#./bin/dot-python
+./bin/dot-python
 #./bin/dot-ruby
 ./bin/dot-ssh
 ./bin/dot-symlink

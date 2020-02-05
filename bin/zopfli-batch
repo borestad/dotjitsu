@@ -37,8 +37,9 @@ export -f fn_recompress
 # time tracking
 start_time=$(date +%s)
 
-# run in parallel (12 cores)
-xargs -n1 -P12 -I{} bash -c 'fn_recompress $1' _ {}
+# run in parallel (x cores)
+CORES=`nproc`
+xargs -n1 -P$CORES -I{} bash -c 'fn_recompress $1' _ {}
 
 # time tracking result
 end_time=$(date +%s)
