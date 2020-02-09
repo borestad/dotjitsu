@@ -1,37 +1,66 @@
 #!/usr/bin/env zsh
-# zmodload zsh/zprof
-
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
 
 ulimit -n 10000
+# zmodload zsh/zprof
 
-# ----------------------------------------------------
-# Init Prezto
-# ----------------------------------------------------
-source "$HOME/.repos/zprezto/init.zsh"
+# ----------------------------------------------------------------------------
+# Zplug
+# ----------------------------------------------------------------------------
+# install zplug if required
+export ZPLUG_HOME=$HOME/.repos/zplug
+! [[ -d $HOME/.repos/zplug ]] && curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
+
+# zmodload zsh/zprof
+
+source $ZPLUG_HOME/init.zsh
+
+#zplug "modules/prompt", from:prezto
+
+
+
+zplug "sorin-ionescu/prezto"
+
+# zplug "junegunn/fzf", \
+#   as:command, \
+#   hook-build:"./install --bin", \
+#   use:"bin/{fzf-tmux,fzf}"
+#zplug 'dracula/zsh', as:theme
+#zplug "wookayin/fzf-fasd"
+
+
+
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+
+source "${ZDOTDIR:-$HOME}/.env"
+# source "$DOTJITSU/.docker-aliases"
+source ~/.private/.zshrc
+source "/usr/local/etc/grc.bashrc"      # Colourify common commands (unalias things that breaks)
+
+
+# Load zplug
+zplug load --verbose
+
 
 # ----------------------------------------------------
 # Tmux
 # ----------------------------------------------------
-if which tmux 2>&1 >/dev/null; then
-  if [ $TERM != "screen-256color" ] && [  $TERM != "screen" ]; then
-    # echo "Loading tmux..."
-    #tmux attach -t hack || tmux new -s hack; exit
-  else
-    neofetch
-  fi
-fi
+# if which tmux 2>&1 >/dev/null; then
+#   if [ $TERM != "screen-256color" ] && [  $TERM != "screen" ]; then
+#     # echo "Loading tmux..."
+#     #tmux attach -t hack || tmux new -s hack; exit
+#   else
+#     neofetch
+#   fi
+# fi
 
-
-#eval "$(fasd --init auto)"              # Fasd autocompletion,shortcuts etc ($ z ...)
-# eval "$(fasd --init posix-alias zsh-hook)"
-source "${ZDOTDIR:-$HOME}/.env"
-source "$DOTJITSU/.docker-aliases"
-source ~/.private/.zshrc
-source $DOTJITSU/.fzf                   # (CTRL-R on steroids)
-source "/usr/local/etc/grc.bashrc"      # Colourify common commands (unalias things that breaks)
-source "$HOME/.aliases"
 
 # Colors
 #eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
@@ -39,17 +68,26 @@ source "$HOME/.aliases"
 # Automatically list directory contents on `cd`.
 auto-cd () {
   emulate -L zsh;
-  # echo "Last modified: `files.last_modified_directory`"
   # explicit sexy ls'ing as aliases arent honored in here.
   hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -AFh --color --group-directories-first || ls -A
-  # local dirs=`find . -maxdepth 1 -mindepth 1 -type d | wc -l`
-  # local files=`find . -maxdepth 1 -mindepth 1 -type f | wc -l`
-  # local total=`find . -maxdepth 1 -mindepth 1| wc -l`
-
-  # echo -e "total $total ($dirs | $files)"
-
   [ -f "package.json" ] && cs package.json
+
+  local dirs=`find . -maxdepth 1 -mindepth 1 -type d | wc -l`
+  local files=`find . -maxdepth 1 -mindepth 1 -type f | wc -l`
+  local total=`find . -maxdepth 1 -mindepth 1| wc -l`
+
+  #echo -e "$total items ($dirs dirs| $files files)"
+  echo -e "\n$dirs directories, $files files (`files.last_modified_directory`)"
+
+
 
 }
 
 chpwd_functions=( auto-cd $chpwd_functions )
+
+
+source "$HOME/.aliases"
+
+# fzf
+source $ZPLUG_HOME/repos/junegunn/fzf/shell/key-bindings.zsh
+source $ZPLUG_HOME/repos/junegunn/fzf/shell/completion.zsh

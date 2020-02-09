@@ -8,6 +8,6 @@ echo "[BREW FORMULAS]\n"
 #brew -v update
 brew -v bundle --file=$HOME/.dotjitsu/Brewfile
 #brew -v upgrade --file=$HOME/.dotjitsu/Brewfile
-brew unlink git-lfs && brew link git-lfs
+#brew unlink git-lfs && brew link git-lfs
 #brew cleanup
 

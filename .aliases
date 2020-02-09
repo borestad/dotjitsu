@@ -4,7 +4,10 @@
 # Globals & system overrids
 # =========================================================
 #alias ncdu="ncdu -x -1bre"
+alias ..="cd .."
+alias ...='cd ../../'
 alias ag='ag --stats'
+alias b='brew'
 alias cgrep="grep --color=always"
 alias code='/usr/local/bin/code -n'
 alias cp='gcp -v'
@@ -19,7 +22,8 @@ alias killall="killall -v"
 alias mkdir='gmkdir -pv'
 alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 alias mv='gmv -v'
-alias ncdu="timeout -s SIGINT 3600s /usr/local/bin/ncdu"
+#alias ncdu="timeout 3600s /usr/local/bin/ncdu"
+alias ncdu2="/usr/local/bin/ncdu"
 alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
 alias pgrep='pgrep -fli'
@@ -40,12 +44,14 @@ ct () { ctt "$@" | cat -n | less -R }
 #
 # fasd
 #
-alias a='fasd -a'
-alias s='fasd -si'
-alias sd='fasd -sid'
-alias sf='fasd -sif'
-alias d='fasd -d'
-alias f='fasd -f'
+alias a='fasd -a'        # any
+alias d='fasd -d'        # directory
+alias f='fasd -f'        # file
+alias s='fasd -si'       # show / search / select
+alias sd='fasd -sid'     # interactive directory selection
+alias sf='fasd -sif'     # interactive file selection
+alias z='fasd_cd -d'     # cd, same functionality as j in autojump
+alias zz='fasd_cd -d -i' # cd with interactive selection
 
 # Intuitive map function
 # For example, to list all directories that contain a certain file:
@@ -185,7 +191,7 @@ edit () {
 
 
 alias e='edit'
-alias zr='echo "Reloading zsh..."; reset; exec $SHELL -l;'
+alias zr='echo "Reloading zsh..."; rm -fv ~/.zcompdump*; reset; exec $SHELL -l;'
 alias reload='zr'
 alias reloadshell='zr'
 

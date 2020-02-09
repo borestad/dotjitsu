@@ -10,6 +10,7 @@ MAILTO=""
 
 #(crontab -l ; echo "* * * * * /Users/johan/.dotjitsu/bin/kill-hi gh-cpu") | sort - | uniq - | crontab -
 (crontab -l ; echo "0 * * * * /Users/johan/.dotjitsu/bin/brew-update &> /dev/null &") | sort - | uniq - | crontab -
+(crontab -l ; echo "* * * * * /Users/johan/.dotjitsu/bin/dot-cron-minute  &> /dev/null &") | sort - | uniq - | crontab -
 
 hr -
 crontab -l
