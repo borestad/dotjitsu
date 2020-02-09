@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -m
-LOG_LOCATION="$HOME/logs"
+LOG_LOCATION="$HOME/logs/brew"
 TERM="xterm-256color"
 
 mkdir -p $LOG_LOCATION
@@ -15,12 +15,14 @@ t () {
   date "+%F %H:%M:%S"
 }
 
+# Update brew itself
 echo "`t`: START:   brew update"
 /usr/local/bin/brew update
 echo "`t`: STOP:    brew update"
 
 echo ""
 
+# Update installed bundles
 echo "`t`: START:   brew upgrade"
 /usr/local/bin/brew upgrade
 echo "`t`: STOP:    brew upgrade"

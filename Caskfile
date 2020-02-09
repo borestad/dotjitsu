@@ -14,6 +14,7 @@ tap 'homebrew/cask-versions'
 cask 'alfred'
 cask 'app-tamer'
 cask 'appcleaner'
+cask 'applepi-baker'
 cask 'atom'
 cask 'balenaetcher'
 cask 'cakebrew'
@@ -21,10 +22,15 @@ cask 'charles'
 cask 'firefox'
 cask 'fork'
 cask 'google-chrome'
+cask 'imageoptim'
+cask 'insomnia'
 cask 'istat-menus'
 cask 'iterm2'
+cask 'kap'
 cask 'launchcontrol'
 cask 'lepton'
+cask 'onyx'
+cask 'openemu-experimental'
 cask 'sizeup'
 cask 'skitch'
 cask 'slack'
@@ -36,13 +42,33 @@ cask 'the-unarchiver'
 cask 'transmission'
 cask 'visual-studio-code'
 cask 'vlc'
-cask 'openemu-experimental'
 
 
 # ================================
 # FONTS
 # ================================
-cask 'font-inconsolata'
-cask 'font-source-code-pro'
 cask 'font-fira-code'
+cask 'font-fira-mono'
 cask 'font-fira-sans'
+cask 'font-inconsolata'
+cask 'font-lato'
+cask 'font-open-sans'
+cask 'font-roboto-condensed'
+cask 'font-roboto'
+cask 'font-source-code-pro-for-powerline'
+cask 'font-source-code-pro'
+cask 'font-source-sans-pro'
+cask 'font-source-serif-pro'
+
+
+
+
+# ================================
+# Mac OS X: Quick Look Plugins
+# ================================
+cask 'suspicious-package'   # An Application for Inspecting macOS Installer Packages
+cask 'qlstephen'            # View plain text files without a file extension
+cask 'qlcolorcode'          # Preview source code files with syntax highlighting
+cask 'quicklook-json'       # Preview JSON files
+cask 'qlimagesize'          # Display image size and resolution
+#cask 'webpquicklook'

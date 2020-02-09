@@ -1,17 +1,28 @@
-#!/usr/bin/env node
+#!/usr/bin/env bash
+set -m
+LOG_LOCATION="$HOME/logs/cron-minute"
+TERM="xterm-256color"
+
+mkdir -p $LOG_LOCATION
+
+exec > >(tee -i $LOG_LOCATION/cron-minute-`date +%F--%H%M%S`.log)
+exec 2>&1
 
 
-const util = require('util')
-const exec = util.promisify(require('child_process').exec)
+echo ""
 
-async function main() {
-  const { stdout, stderr } = await exec('find . -type f | wc -l');
-
-  if (stderr) {
-    console.error(`error: ${stderr}`);
-  }
-
-  console.log(`Number of files ${stdout}`);
+t () {
+  date "+%F %H:%M:%S"
 }
 
-main()
+# echo "`t`: START:   autokill start"
+# FIXME: Gives - tput: No value for $TERM and no -T specified
+# /Users/johan/.dotjitsu/bin/autokill
+# echo "`t`: STOP:    autokill end"
+
+echo ""
+
+echo "All done! Enjoy a cold one! 🍺 "
+
+echo ""
+/Users/johan/.dotjitsu/bin/hr -

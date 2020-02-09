@@ -44,6 +44,7 @@ chmod go-w '/usr/local/share'
 
 #brew link git-annex
 #brew link git-lfs
+brew link--overwrite node@12
 
 # Make sure zsh is available as a shell
 command -v zsh | sudo tee -a /etc/shells
