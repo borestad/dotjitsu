@@ -35,12 +35,14 @@ brew 'dfc'                          # Display graphs and colors of file system s
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'entr'                         # Run arbitrary commands when files change
+brew 'exa'                          # Modern replacement for 'ls
 brew 'faas-cli'                     # CLI tool for quick access to files and directories
 brew 'fasd'                         # CLI tool for quick access to files and directories
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
+brew 'fswatch'                      # Monitor a directory for changes and run a shell command
 brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'grc'                          # Colorize logfiles and command output
@@ -104,6 +106,7 @@ brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
+brew 'unison'                       # File synchronization tool for OSX
 
 brew 'psgrep'
 brew 'pgrep'
@@ -126,6 +129,7 @@ brew 'ghq'                          # Remote repository management made easy
 brew 'git-extras'                   # Small git utilities
 brew 'git-lfs'                      # Git extension for versioning large files
 brew 'github/gh/gh'
+brew 'git-plus'                     # Git utilities: git multi, git relation, git old-branches, git recent
 
 
 

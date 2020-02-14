@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# https://stackoverflow.com/a/46615578
+
+git rev-list --objects --all \
+| git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
+| awk '/^blob/ {print substr($0,6)}' \
+| sort --numeric-sort --key=2 \
+| cut --complement --characters=13-40 \
+| numfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest \
+| bat --paging never
+
+#| nl
+#| fzf --exact --no-sort
+
+#| fzf --preview 'bat --style=numbers --color=always {} | head -500'
+#| bat
+
+
+#| nl
+#| fzf --exact --no-sort
+
+#find . | nl | fzf | awk '{print $1}'
+
+#| bat --paging never

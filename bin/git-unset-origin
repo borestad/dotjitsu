@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+shopt -s xpg_echo
+
+ROOT=$(git rev-parse --show-toplevel)
+NAME=$(basename -s .git `git config --get remote.origin.url`)
+CONFIG=$(git config --get-all remote.origin.fetch)
+
+#echo "root: $ROOT"
+echo $NAME
+echo
+echo "[before]"
+git config --get-all remote.origin.fetch
+
+echo
+echo
+
+echo "[after]"
+
+# Unset
+git config --unset-all remote.origin.fetch
+
+# Set all remotes
+git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+
+
+# Extras
+# git config --add remote.origin.fetch +refs/heads/my_name/*:refs/remotes/origin/my_name/*
+# git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master
+
+# Verify
+git config --get-all remote.origin.fetch

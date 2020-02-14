@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
-# =========================================================
+# ---------------------------------------------------------
 # Globals & system overrids
-# =========================================================
+# ---------------------------------------------------------
 #alias ncdu="ncdu -x -1bre"
 alias ..="cd .."
 alias ...='cd ../../'
 alias ag='ag --stats'
 alias b='brew'
+alias bif='brew info'
 alias cgrep="grep --color=always"
 alias code='/usr/local/bin/code -n'
 alias cp='gcp -v'
@@ -106,9 +107,9 @@ function gthumbnails() {
     ffmpeg -ss 1 -i "$file" -vframes 1 -vcodec png -an -y "${file%.mp4}.png"
   done
 }
-# =========================================================
+# ---------------------------------------------------------
 # GOTO aliases
-# =========================================================
+# ---------------------------------------------------------
 alias -- -="cd -"
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
@@ -121,9 +122,11 @@ append() {
   grep -q -F $1 $2 || echo $1 >> $2
 }
 
+alias exa='exa --group-directories-first'
 alias ls='gls --color --group-directories-first'
 alias l='ls -A'          # Lists in multi column, hidden files.
-alias ll='ls -lAh'       # Lists in one column, hidden files.
+#alias ll='ls -lAh'       # Lists in one column, hidden files.
+alias ll='exa -la'       # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
 alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
@@ -134,9 +137,9 @@ alias lc='lt -c'         # Lists sorted by date, most recent last, shows change 
 alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
 alias sl='ls'            # I often screw this up.
 
-# =========================================================
+# ---------------------------------------------------------
 # Gnu utils (to enforce presedence)
-# =========================================================
+# ---------------------------------------------------------
 alias xargs='/usr/local/bin/gxargs'
 alias find='/usr/local/bin/gfind'
 alias locate='/usr/local/bin/glocate'
@@ -144,9 +147,9 @@ alias updatedb='/usr/local/bin/gupdatedb'
 
 
 
-# =========================================================
+# ---------------------------------------------------------
 # Find
-# =========================================================
+# ---------------------------------------------------------
 ff () {
   IFS=""
   local result=`fd $1`
@@ -167,15 +170,15 @@ alias qfih='find $( pwd )  -follow -name "*.h" 2>/dev/null | xargs grep --color 
 alias qfis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h" 2>/dev/null | xargs grep --color  -e '
 alias qfif='find $( pwd ) -follow -type f  2>/dev/null| xargs grep --color -e '
 alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --color  -e '
-# =========================================================
+# ---------------------------------------------------------
 # Others
-# =========================================================
+# ---------------------------------------------------------
 alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal tee | tee fs_usage.log'
 alias spotlight.rebuild='sudo mdutil -E /'
 
-# =========================================================
+# ---------------------------------------------------------
 # Boilerplate shortcuts
-# =========================================================
+# ---------------------------------------------------------
 
 # Create directory and immediately move into that dir
 mk ()  { mkdir -p "$@" && cd "$_"; }
@@ -212,9 +215,9 @@ fi
 
 
 
-# =========================================================
+# ---------------------------------------------------------
 # Cli Tricks
-# =========================================================
+# ---------------------------------------------------------
 alias history.stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
 die () {
@@ -223,9 +226,9 @@ die () {
 }
 
 
-# =========================================================
+# ---------------------------------------------------------
 # OSX tricks
-# =========================================================
+# ---------------------------------------------------------
 
 # Open curr dir in preview.app.
 osx.openPreview () {
@@ -246,9 +249,9 @@ EOF
 # Lock current session and proceed to the login screen.
 alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 
-# =========================================================
+# ---------------------------------------------------------
 # SSH
-# =========================================================
+# ---------------------------------------------------------
 ssh.addkey () {
   # ssh $1 "tee -a ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub
   ssh $1 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub  # '?sa' is a glob, not a typo!
@@ -262,9 +265,9 @@ alias addkey="ssh.addkey"
 
 
 
-# =========================================================
+# ---------------------------------------------------------
 # GIT
-# =========================================================
+# ---------------------------------------------------------
 # Checkout git branches
 git.co () {
   local branches branch
@@ -282,9 +285,9 @@ alias co='git.co'
 #alias gho='(cd $(ghq list --full-path | fzf) && git browse)'
 
 
-# =========================================================
+# ---------------------------------------------------------
 # CD
-# =========================================================
+# ---------------------------------------------------------
 # cd to the default working directory set by current_working_project
 chdir.default () {
   export wdir=`cat $HOME/.tmp/current_project_path`
@@ -302,9 +305,9 @@ chdir.rm () {
   '~' >> $HOME/.tmp/current_project_path
 }
 
-# =========================================================
+# ---------------------------------------------------------
 # System stuff
-# =========================================================
+# ---------------------------------------------------------
 
 # Load 8 cores at once.
 system.maxcpu () {
@@ -315,15 +318,16 @@ system.maxcpu () {
 
 ps.kill () { kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
 
-# =========================================================
+# ---------------------------------------------------------
 # Lists (with fzf magic)
-# =========================================================
+# ---------------------------------------------------------
 # List of available VM's - with fbr magic
 vm.vbox () {
   vm=$(VBoxManage list vms | fzf +s +m -e --reverse) &&
   uuid=$(echo "$vm" | ack --cc '{([a-z0-9\-]+)}' --output '$1') &&
   VBoxManage startvm $uuid
 }
+
 vm.fusion () {
   vm=`vmrun list | fzf +s +m -e --reverse` &&
   echo $vm
@@ -333,9 +337,9 @@ vm.fusion () {
 
 
 
-# =========================================================
+# ---------------------------------------------------------
 # File related stuff
-# =========================================================
+# ---------------------------------------------------------
 file.size () { wc -c < $1 }
 # Monitor IO in real-time (open files etc).
 files.open () { sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }' }
@@ -354,9 +358,9 @@ ddd() {
   sudo sh -c "$cmd"
 }
 
-# =========================================================
+# ---------------------------------------------------------
 # Network stuff
-# =========================================================
+# ---------------------------------------------------------
 function ip.internal { ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' }
 alias ip.public='dig +short myip.opendns.com @resolver1.opendns.com'
 alias ip='ip.internal; ip.public'
@@ -371,9 +375,9 @@ alias net.sniff4="sudo ngrep -d 'en4' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.flushdns='dscacheutil -flushcache'
 alias flushdns='net.flushdns'
 
-# =========================================================
+# ---------------------------------------------------------
 # Compression
-# =========================================================
+# ---------------------------------------------------------
 
 z1 () {
   local input=$1; local output=${2:-$1}.tar.gz
@@ -426,9 +430,9 @@ fi
 }
 
 
-# =========================================================
+# ---------------------------------------------------------
 # Useful file size aliases
-# =========================================================
+# ---------------------------------------------------------
 
 randfile () {
   local size=$1
@@ -448,9 +452,9 @@ size_in_bytes () { stat -f %z "$1" }
 echo_size () { echo $(format_number $(to_kb $(size_in_bytes "$1")))"kB" }
 
 
-# =========================================================
+# ---------------------------------------------------------
 # TMUX
-# =========================================================
+# ---------------------------------------------------------
 ta_function() { tmux attach -t $1 }
 tk_function() { tmux kill-session -t $1 }
 alias t='tmux'
@@ -460,9 +464,9 @@ alias 'tmux-attach'=ta_function
 alias 'tmux-at'=ta_function
 alias 'tmux-kill'=tk_function
 
-# =========================================================
+# ---------------------------------------------------------
 # FZF
-# =========================================================
+# ---------------------------------------------------------
 
 # Fuzzy match against history, edit selected value
 fhist() {
@@ -515,4 +519,35 @@ ft() {
   session=$(tmux list-sessions -F "#{session_name}" | \
     fzf-tmux --query="$1" --select-1 --exit-0) &&
   tmux switch-client -t "$session"
+}
+
+
+# ---------------------------------------------------------
+# GHQ (Git util)
+# ---------------------------------------------------------
+ghq () {
+  if [ "$1" = look -a -n "$2" ]; then
+    local repos=($(command ghq list -p "$2"))
+    case ${#repos[@]} in
+      0)
+        echo 'No repo found.'
+        return 1
+        ;;
+      1)
+        cd "${repos[0]}"
+        return
+        ;;
+      *)
+        local PS3="Select repo: "
+        select reponame in ${repos[@]}; do
+          cd "${reponame}"
+          return
+        done
+    esac
+  elif [ "$1" = get -a -n "$2" ]; then
+    command ghq "$@"
+    cd $(command ghq list -e -p "$2")
+    return
+  fi
+  command ghq "$@"
 }
