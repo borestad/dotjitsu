@@ -63,21 +63,24 @@ zplug load --verbose
 
 
 # Colors
-#eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
+eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 
 # Automatically list directory contents on `cd`.
 auto-cd () {
   emulate -L zsh;
   # explicit sexy ls'ing as aliases arent honored in here.
-  hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -AFh --color --group-directories-first || ls -A
+  #hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -AFh --color --group-directories-first || ls -A
+  exa -a --group-directories-first
   [ -f "package.json" ] && cs package.json
 
   local dirs=`find . -maxdepth 1 -mindepth 1 -type d | wc -l`
   local files=`find . -maxdepth 1 -mindepth 1 -type f | wc -l`
-  local total=`find . -maxdepth 1 -mindepth 1| wc -l`
-
+  #local total=`find . -maxdepth 1 -mindepth 1| wc -l`
   #echo -e "$total items ($dirs dirs| $files files)"
-  echo -e "\n$dirs directories, $files files (`files.last_modified_directory`)"
+
+  local total=`memoize fd . $PWD | wc -l`
+  echo -e "\n$dirs directories, $files files, $total total"
+  #echo -e "`files.last_modified_directory`"
 
 
 
@@ -87,6 +90,7 @@ chpwd_functions=( auto-cd $chpwd_functions )
 
 
 source "$HOME/.aliases"
+source "$DOTJITSU/bin/_memoize"
 
 # fzf
 source $ZPLUG_HOME/repos/junegunn/fzf/shell/key-bindings.zsh

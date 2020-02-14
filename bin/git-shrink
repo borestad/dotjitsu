@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# https://stackoverflow.com/questions/38171899/how-to-reduce-the-depth-of-an-existing-git-clone/46004595#46004595
+
+echo '⭐️ Clear the reflog:'
+git reflog expire --expire=all --all
+
+echo '⭐️ Remove all tags:'
+git tag -l | xargs git tag -d
+
+echo '⭐️ Delete all dangling objects'
+git gc --prune=all

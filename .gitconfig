@@ -253,3 +253,7 @@ default = simple
 
 [submodule]
   recurse = true
+
+[ghq]
+  root = ~/code
+  #root = ~/go/src
