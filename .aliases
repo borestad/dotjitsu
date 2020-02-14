@@ -37,7 +37,7 @@ alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias sqlite='sqlite3'
 alias vnstat='/usr/local/bin/vnstat -i en0'
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
-alias wget='wget --no-check-certificate'
+alias wget='wget --no-check-certificate --no-verbose --compression auto'
 alias ws='ws -d'
 cs () { cat "$@" | jase scripts 2>/dev/null | pygmentize -O style=monokai -g -l json }
 ct () { ctt "$@" | cat -n | less -R }
@@ -526,8 +526,10 @@ ft() {
 # GHQ (Git util)
 # ---------------------------------------------------------
 ghq () {
+  # https://fotoallerlei.com/post/2019-09-29-ghq/#change-the-ghq-root-directory
   if [ "$1" = look -a -n "$2" ]; then
     local repos=($(command ghq list -p "$2"))
+    echo "repos: $repos"
     case ${#repos[@]} in
       0)
         echo 'No repo found.'
