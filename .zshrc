@@ -78,8 +78,8 @@ auto-cd () {
   #local total=`find . -maxdepth 1 -mindepth 1| wc -l`
   #echo -e "$total items ($dirs dirs| $files files)"
 
-  local total=`memoize fd . $PWD | wc -l`
-  echo -e "\n$dirs directories, $files files, $total total"
+  #local total=`memoize fd . $PWD | wc -l`
+  #echo -e "\n$dirs directories, $files files, $total total"
   #echo -e "`files.last_modified_directory`"
 
 

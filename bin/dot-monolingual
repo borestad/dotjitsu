@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-cd "$(dirname $0)"/..
 
 echo ''; hr - '#' -
 echo "[CLEANING LANGUAGES]"
@@ -10,11 +9,12 @@ dfc
 echo
 
 
-echo "Finding all *.lproj"
+echo "Finding all *.lproj in $(pwd)"
 # Keep sv|en|en_GB|.lproj
 
 
-sudo gfind $HOME/ -type d -regextype posix-egrep -regex '.*(ar|ca|cs|da|de|el|en_AU|es|es_419|fi|fr|fr_CA|he|hi|hr|hu|id|it|ja|ko|ms|nl|no|pl|pt|pt_PT|ro|ru|sk|th|tr|uk|vi|zh_CN|zh_HK|zh_TW|German|French|Japanese|Italian|Spanish|Dutch)\.lproj$' -print0 | pv -t | sudo gxargs -r0 -- rm -rv
+sudo gfind $(pwd) -type d -regextype posix-egrep -regex '.*(ar|ca|cs|da|de|el|en_AU|es|es_419|fi|fr|fr_CA|he|hi|hr|hu|id|it|ja|ko|ms|nl|no|pl|pt|pt_PT|ro|ru|sk|th|tr|uk|vi|zh_CN|zh_HK|zh_TW|German|French|Japanese|Italian|Spanish|Dutch)\.lproj$' -print0 | sudo gxargs -r0 -- rm -rv
+
 #sudo gfind / -type d -regextype posix-egrep -regex '.*(ar|ca|cs|da|de|el|en_AU|es|es_419|fi|fr|fr_CA|he|hi|hr|hu|id|it|ja|ko|ms|nl|no|pl|pt|pt_PT|ro|ru|sk|th|tr|uk|vi|zh_CN|zh_HK|zh_TW|German|French|Japanese|Italian|Spanish|Dutch)\.lproj$' -delete
 
 echo
