@@ -19,6 +19,9 @@ source $ZPLUG_HOME/init.zsh
 
 
 zplug "sorin-ionescu/prezto"
+zplug "eth-p/bat-extras"
+zplug "unixorn/git-extra-commands"
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # zplug "junegunn/fzf", \
 #   as:command, \
@@ -26,7 +29,6 @@ zplug "sorin-ionescu/prezto"
 #   use:"bin/{fzf-tmux,fzf}"
 #zplug 'dracula/zsh', as:theme
 #zplug "wookayin/fzf-fasd"
-
 
 
 
@@ -40,13 +42,8 @@ fi
 
 
 source "${ZDOTDIR:-$HOME}/.env"
-# source "$DOTJITSU/.docker-aliases"
 source ~/.private/.zshrc
 source "/usr/local/etc/grc.bashrc"      # Colourify common commands (unalias things that breaks)
-
-
-# Load zplug
-zplug load --verbose
 
 
 # ----------------------------------------------------
@@ -72,17 +69,16 @@ auto-cd () {
   #hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -AFh --color --group-directories-first || ls -A
   exa -a --group-directories-first
   [ -f "package.json" ] && cs package.json
+  [ -d ".git" ] && git recent
 
   local dirs=`find . -maxdepth 1 -mindepth 1 -type d | wc -l`
   local files=`find . -maxdepth 1 -mindepth 1 -type f | wc -l`
-  #local total=`find . -maxdepth 1 -mindepth 1| wc -l`
+  local total=`find . -maxdepth 1 -mindepth 1| wc -l`
   #echo -e "$total items ($dirs dirs| $files files)"
 
   #local total=`memoize fd . $PWD | wc -l`
-  #echo -e "\n$dirs directories, $files files, $total total"
+  echo -e "\n$dirs directories, $files files, $total total"
   #echo -e "`files.last_modified_directory`"
-
-
 
 }
 
@@ -92,6 +88,11 @@ chpwd_functions=( auto-cd $chpwd_functions )
 source "$HOME/.aliases"
 source "$DOTJITSU/bin/_memoize"
 
-# fzf
-source $ZPLUG_HOME/repos/junegunn/fzf/shell/key-bindings.zsh
+# fzf-completion
 source $ZPLUG_HOME/repos/junegunn/fzf/shell/completion.zsh
+
+# Load zplug
+zplug load --verbose
+
+# fzf: keybindings (can't be cached by zplug)
+source $ZPLUG_HOME/repos/junegunn/fzf/shell/key-bindings.zsh

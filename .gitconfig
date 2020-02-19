@@ -3,167 +3,167 @@
 # https://github.com/skwp/dotfiles/blob/master/git/gitconfig
 
 [hub]
-  protocol = https
+	protocol = https
 
 [user]
-  name = Johan Borestad
-  email = johan@borestad.com
-  signingkey = 2C7C92079C672564
-  # useConfigOnly = true
+	name = Johan Borestad
+	email = johan@borestad.com
+	signingkey = 2C7C92079C672564
+	# useConfigOnly = true
 
 
 [includeIf "gitdir:~/netent/"]
-  [user]
-    name = Johan Borestad
-    email = "johan.borestad@netent.com"
-  [core]
-        #sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
+	[user]
+		name = Johan Borestad
+		email = "johan.borestad@netent.com"
+	[core]
+		#sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
 
 [credential]
-        #helper = osxkeychain
+				#helper = osxkeychain
 
 [color]
-  ui = true
+	ui = true
 
 [init]
-  templatedir = ~/.dotjitsu/packages/git/templates
+	templatedir = ~/.dotjitsu/packages/git/templates
 
 [pager]
-  # insanely beautiful diffs ==> npm install -g diff-so-fancy
-  diff = diff-so-fancy# | less --tabs=4 -RFX
-  show = diff-so-fancy# | less --tabs=4 -RFX
+	# insanely beautiful diffs ==> npm install -g diff-so-fancy
+	diff = diff-so-fancy# | less --tabs=4 -RFX
+	show = diff-so-fancy# | less --tabs=4 -RFX
 
 [interactive]
-  diffFilter = diff-so-fancy
+	diffFilter = diff-so-fancy
 
 [color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
+	current = yellow reverse
+	local = yellow
+	remote = green
 
 [color "diff"]
-  meta = yellow
-  frag = magenta bold
-  old = red bold
-  new = green bold
-  commit = yellow bold
-  whitespace = red reverse
+	meta = yellow
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	commit = yellow bold
+	whitespace = red reverse
 
 [alias]
-  # Custom
-  promote = !$DOTFILES/bin/git-promote
-  wtf     = !$DOTFILES/bin/git-wtf
-  rank-contributors = !$DOTFILES/bin/git-rank-contributors
-  count   = !git shortlog -sn
+	# Custom
+	promote = !$DOTFILES/bin/git-promote
+	wtf     = !$DOTFILES/bin/git-wtf
+	rank-contributors = !$DOTFILES/bin/git-rank-contributors
+	count   = !git shortlog -sn
 
-  # add
-  a = add                           # add
-  chunkyadd = add --patch           # stage commits chunk by chunk
+	# add
+	a = add                           # add
+	chunkyadd = add --patch           # stage commits chunk by chunk
 
-  # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
-  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-  snapshots = !git stash list --grep snapshot
+	# via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+	snapshots = !git stash list --grep snapshot
 
-  #via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
-  recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+	#via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
+	recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
 
-  # branch
-  b = branch -v                     # branch (verbose)
+	# branch
+	b = branch -v                     # branch (verbose)
 
-  # commit
-  c = commit -m                     # commit with message
-  ca = commit -am                   # commit all with message
-  ci = commit                       # commit
-  amend = commit --amend            # ammend your last commit
-  ammend = commit --amend           # ammend your last commit
+	# commit
+	c = commit -m                     # commit with message
+	ca = commit -am                   # commit all with message
+	ci = commit                       # commit
+	amend = commit --amend            # ammend your last commit
+	ammend = commit --amend           # ammend your last commit
 
-  # checkout
-  co = checkout                     # checkout
-  nb = checkout -b                  # create and switch to a new branch (mnemonic: "git new branch branchname...")
+	# checkout
+	co = checkout                     # checkout
+	nb = checkout -b                  # create and switch to a new branch (mnemonic: "git new branch branchname...")
 
-  # cherry-pick
-  cp = cherry-pick -x               # grab a change from a branch
+	# cherry-pick
+	cp = cherry-pick -x               # grab a change from a branch
 
-  # diff
-  d = diff                          # diff unstaged changes
-  dc = diff --cached                # diff staged changes
+	# diff
+	d = diff                          # diff unstaged changes
+	dc = diff --cached                # diff staged changes
 
-  # `git di $number` shows the diff between the state `$number` revisions ago and the current state
-  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
+	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
-  last = diff HEAD^                 # diff last committed change
+	last = diff HEAD^                 # diff last committed change
 
-  # log
-  l = log --graph --date=short
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-  changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
-  short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
-  simple = log --pretty=format:\" * %s\"
-  shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
-  branchauthors = "! for branch in `git branch -r | grep -v /HEAD`;do echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; done | sort -r"
+	# log
+	l = log --graph --date=short
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+	short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+	simple = log --pretty=format:\" * %s\"
+	shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+	branchauthors = "! for branch in `git branch -r | grep -v /HEAD`;do echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; done | sort -r"
 
-  # pull
-  pl = pull                         # pull
+	# pull
+	pl = pull                         # pull
 
-  # push
-  ps = push                         # push
+	# push
+	ps = push                         # push
 
-  # rebase
-  rc = rebase --continue            # continue rebase
-  rs = rebase --skip                # skip rebase
+	# rebase
+	rc = rebase --continue            # continue rebase
+	rs = rebase --skip                # skip rebase
 
-  # remote
-  r = remote -v                     # show remotes (verbose)
+	# remote
+	r = remote -v                     # show remotes (verbose)
 
-  # reset
-  unstage = reset HEAD              # remove files from index (tracking)
-  undo = reset HEAD~                # Undo last commit
-  uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
-  filelog = log -u                  # show changes to a file
-  mt = mergetool                    # fire up the merge tool
+	# reset
+	unstage = reset HEAD              # remove files from index (tracking)
+	undo = reset HEAD~                # Undo last commit
+	uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
+	filelog = log -u                  # show changes to a file
+	mt = mergetool                    # fire up the merge tool
 
-  # stash
-  ss = stash # stash changes
-  sl = stash list # list stashes
-  sa = stash apply # apply stash (restore changes)
-  sd = stash drop # drop stashes (destory changes)
+	# stash
+	ss = stash # stash changes
+	sl = stash list # list stashes
+	sa = stash apply # apply stash (restore changes)
+	sd = stash drop # drop stashes (destory changes)
 
-  # status
-  s = status # status
-  st = status # status
-  stat = status # status
+	# status
+	s = status # status
+	st = status # status
+	stat = status # status
 
-  # tag
-  t = tag -n # show tags with <n> lines of each tag message
+	# tag
+	t = tag -n # show tags with <n> lines of each tag message
 
-  # svn helpers
-  svnr = svn rebase
-  svnd = svn dcommit
-  svnl = svn log --oneline --show-commit
-  squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-Initial commit}\");};f"
-  trash = "!mkdir -p .trash && git ls-files --others --exclude-standard | gxargs gmv -f -t .trash"
-  g = grep --break --heading --line-number
+	# svn helpers
+	svnr = svn rebase
+	svnd = svn dcommit
+	svnl = svn log --oneline --show-commit
+	squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-Initial commit}\");};f"
+	trash = "!mkdir -p .trash && git ls-files --others --exclude-standard | gxargs gmv -f -t .trash"
+	g = grep --break --heading --line-number
 
 [format]
-  pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
+	pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 
 [core]
-  excludesfile = ~/.gitignore
-  editor = nano
-  ignorecase = false
-  pager = diff-so-fancy
+	excludesfile = ~/.gitignore
+	editor = nano
+	ignorecase = false
+	pager = diff-so-fancy
 
 [apply]
-  whitespace = nowarn
+	whitespace = nowarn
 
 [mergetool]
-  keepBackup = false
+	keepBackup = false
 
 [difftool]
-  prompt = false
+	prompt = false
 
 [help]
-  autocorrect = 1
+	autocorrect = 1
 
 [push]
 # See `git help config` (search for push.default)
@@ -173,87 +173,87 @@
 default = simple
 
 [rerere]
-  # Remember my merges
-  # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
-  enabled = true
+	# Remember my merges
+	# http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
+	enabled = true
 
 [include]
-  path = .gitconfig.user
+	path = .gitconfig.user
 
 [difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path =
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
 
 [mergetool "sourcetree"]
-  cmd = /Users/johan/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
+	cmd = /Users/johan/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
 
 [filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 
 [gc]
-  autoDetach = false
+	autoDetach = false
 
 [commit]
-  #gpgsign = true
-  verbose = true
+	#gpgsign = true
+	verbose = true
 
 [pull]
-  rebase = true
+	rebase = true
 
 [tig]
-  line-graphics = yes  # Disable graphics characters
-  tab-size = 4    # Number of spaces per tab
-  mouse = no
+	line-graphics = yes  # Disable graphics characters
+	tab-size = 4    # Number of spaces per tab
+	mouse = no
 
 [http "https://git.demo.netent.io"]
-  sslCAInfo = /Users/johan.borestad/.flynn/ca-certs/production.pem
+	sslCAInfo = /Users/johan.borestad/.flynn/ca-certs/production.pem
 
 [credential "https://git.demo.netent.io"]
-  helper = /usr/local/bin/flynn git-credentials
+	helper = /usr/local/bin/flynn git-credentials
 
 [fetch]
-  prune = true
+	prune = true
 
 [gui]
-  pruneDuringFetch = true
+	pruneDuringFetch = true
 
 [gitflow "branch"]
-  develop = develop
-  master = master
+	develop = develop
+	master = master
 
 [gitflow "prefix"]
-  feature = feature/
-  release = release/
-  hotfix = hotfix/
-  support = support/
-  versiontag = v
+	feature = feature/
+	release = release/
+	hotfix = hotfix/
+	support = support/
+	versiontag = v
 
 [http]
 	postBuffer = 524288000
 
 [color "diff-highlight"]
-  oldNormal = red bold
-  oldHighlight = red bold 52
-  newNormal = green bold
-  newHighlight = green bold 22
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
 
 [diff-so-fancy]
-  first-run = true
+	first-run = true
 
 [grep]
-  extendRegexp = true
-  lineNumber = true
+	extendRegexp = true
+	lineNumber = true
 
 [gpg]
-  #program = gpg2
+	#program = gpg2
 
 [submodule]
-  recurse = true
+	recurse = true
+	fetchJobs = 8
 
 [ghq]
-  root = ~/code
-  #root = ~/go/src
+	root = ~/code
