@@ -32,6 +32,6 @@ insert_final_newline = true
 [pre-commit]
 indent_size = 4
 
-[{Makefile,**.mk}]
+[{Makefile,**.mk,.gitconfig}]
 # Use tabs for indentation (Makefiles require tabs)
 indent_style = tab

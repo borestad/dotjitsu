@@ -36,8 +36,9 @@ brew 'dialog'                       # Display user-friendly message boxes from s
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'entr'                         # Run arbitrary commands when files change
 brew 'exa'                          # Modern replacement for 'ls
-brew 'faas-cli'                     # CLI tool for quick access to files and directories
+brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
 brew 'fasd'                         # CLI tool for quick access to files and directories
+brew 'ffind'                        # Friendlier find
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
 brew 'fzf'                          # Command-line fuzzy finder written in Go
@@ -60,6 +61,7 @@ brew 'lazydocker'                   # The lazier way to manage everything docker
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
 brew 'm-cli'                        # Swiss Army Knife for macOS
 brew 'mas'                          # Mac App Store command-line interface
+brew 'most'                         # Powerful paging program
 brew 'mozjpeg'                      # Improved JPEG encoder
 brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
 brew 'multitail'                    # Tail multiple files in one terminal simultaneously
@@ -84,6 +86,7 @@ brew 'speedtest_cli'                # Command-line interface for https://speedte
 brew 'sqlite'
 brew 'sshfs'                        # File system client based on SSH File Transfer Protocol
 brew 'stow'                         # Organize software neatly under a single directory tree (e.g. /usr/local)
+brew 'sd'                           # Intuitive find & replace CLI
 brew 'svtplay-dl'
 brew 'sysbench'
 brew 'tig'
@@ -110,6 +113,7 @@ brew 'unison'                       # File synchronization tool for OSX
 
 brew 'psgrep'
 brew 'pgrep'
+brew 'pygments'                     # Generic syntax highlighter
 #brew 'spot'
 brew 'svgo'
 

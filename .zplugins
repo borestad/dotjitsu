@@ -1,3 +1,2 @@
 
 zplug "tcnksm/docker-alias", use:zshrc
-zplug "wookayin/fzf-fasd"
