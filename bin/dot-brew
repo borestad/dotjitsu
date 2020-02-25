@@ -1,9 +1,9 @@
-#!/usr/bin/env zsh
+#!/bin/bash
+set -Eeuo pipefail
 
 cd "$(dirname $0)"/..
 
-echo ''; hr - '#' -
-echo "[BREW FORMULAS]\n"
+hr -
 
 #brew -v update
 brew -v bundle --file=$HOME/.dotjitsu/Brewfile
