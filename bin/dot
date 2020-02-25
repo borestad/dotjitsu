@@ -17,7 +17,6 @@ if [ ! type "brew" &> /dev/null ]; then
 fi
 
 if [ ! type "hr" &> /dev/null ]; then; brew install hr; fi
-if [ ! type "stow" &> /dev/null ]; then; brew install stow; fi
 
 chmod go-w '/usr/local/share'
 
@@ -31,7 +30,7 @@ chmod go-w '/usr/local/share'
 #./bin/dot-curl
 #./bin/dot-osx
 #./bin/dot-osx-services
-./bin/dot-python
+#./bin/dot-python
 #./bin/dot-ruby
 ./bin/dot-ssh
 ./bin/dot-symlink

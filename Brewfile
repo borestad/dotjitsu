@@ -11,7 +11,7 @@ tap 'homebrew/services'
 # ================================
 # DEPS / PROGRAMMING LANGUAGES
 # ================================
-brew 'node@12', args: ["force", "overwrite"]
+brew 'node@12'
 brew 'git'
 brew 'python'                       # Interpreted, interactive, object-oriented programming language
 brew 'python3'                      # Interpreted, interactive, object-oriented programming language
