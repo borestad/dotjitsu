@@ -1,0 +1,41 @@
+# Automatically normalize line endings for all text-based files
+# http://git-scm.com/docs/gitattributes#_end_of_line_conversion
+* text=auto
+
+*.7z            binnary -delta
+*.acf           binnary -delta
+*.blend         binnary -delta
+*.dds           binnary -delta
+*.env           binnary -delta
+*.eot           binnary -delta
+*.exe           binnary -delta
+*.fbx           binnary -delta
+*.FBX           binnary -delta
+*.fla           binnary -delta
+*.flv           binnary -delta
+*.gif           binnary -delta
+*.gz            binnary -delta
+*.gzip          binnary -delta
+*.hdr           binnary -delta
+*.ico           binnary -delta
+*.jpeg          binnary -delta
+*.jpg           binnary -delta
+*.m4a           binnary -delta
+*.mov           binnary -delta
+*.mp3           binnary -delta
+*.mp4           binnary -delta
+*.obj           binnary -delta
+*.ogg           binnary -delta
+*.otf           binnary -delta
+*.pdf           binnary -delta
+*.png           binnary -delta
+*.pyc           binnary -delta
+*.rar           binnary -delta
+*.swf           binnary -delta
+*.tga           binnary -delta
+*.ttf           binnary -delta
+*.wav           binnary -delta
+*.webm          binnary -delta
+*.woff          binnary -delta
+*.woff2         binnary -delta
+*.zip           binnary -delta
