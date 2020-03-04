@@ -2,11 +2,21 @@
 
 # https://stackoverflow.com/questions/38171899/how-to-reduce-the-depth-of-an-existing-git-clone/46004595#46004595
 
-echo '⭐️ Clear the reflog:'
-git reflog expire --expire=all --all
+hr -
+echo 'BEFORE'
+git count-objects -vH
+hr -
 
 echo '⭐️ Remove all tags:'
 git tag -l | xargs git tag -d
 
+echo '⭐️ Clear the reflog:'
+git reflog expire --expire=now --all --verbose
+
 echo '⭐️ Delete all dangling objects'
-git gc --prune=all
+git gc --prune=now
+
+hr -
+echo 'AFTER'
+git count-objects -vH
+hr -
