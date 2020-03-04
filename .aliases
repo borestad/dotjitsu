@@ -47,7 +47,7 @@ alias a='fasd -a'        # any
 alias d='fasd -d'        # directory
 alias f='fasd -f'        # file
 alias s='fasd -si'       # show / search / select
-alias sd='fasd -sid'     # interactive directory selection
+#alias sd='fasd -sid'     # interactive directory selection
 alias sf='fasd -sif'     # interactive file selection
 alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
@@ -116,9 +116,8 @@ alias ne="cd $HOME/netent"
 alias dj='code $HOME/.dotjitsu'
 alias djp='git-pull $HOME/.dotjitsu'
 
-append() {
-  grep -q -F $1 $2 || echo $1 >> $2
-}
+alias gd="git diff -- :!package-lock.json :!yarn.lock"
+append() { grep -q -F $1 $2 || echo $1 >> $2 }
 
 alias exa='exa --group-directories-first'
 alias ls='gls --color --group-directories-first'
@@ -553,3 +552,11 @@ ghq () {
 }
 
 alias gsa='git submodule add'
+
+
+# ---------------------------------------------------------
+# WGET
+# ---------------------------------------------------------
+crwl() {
+  wget --tries=inf --timestamping --recursive --level=inf --convert-links --page-requisites --no-parent --reject-regex '\?C=' "$@"
+}

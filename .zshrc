@@ -22,6 +22,7 @@ zplug "sorin-ionescu/prezto"
 zplug "eth-p/bat-extras"
 zplug "unixorn/git-extra-commands"
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug 'reegnz/jq-zsh-plugin'
 
 # zplug "junegunn/fzf", \
 #   as:command, \
@@ -85,14 +86,10 @@ auto-cd () {
 chpwd_functions=( auto-cd $chpwd_functions )
 
 
-source "$HOME/.aliases"
-source "$DOTJITSU/bin/_memoize"
-
-# fzf-completion
-source $ZPLUG_HOME/repos/junegunn/fzf/shell/completion.zsh
 
 # Load zplug
 zplug load --verbose
 
-# fzf: keybindings (can't be cached by zplug)
+source "$HOME/.aliases"
+source $ZPLUG_HOME/repos/junegunn/fzf/shell/completion.zsh
 source $ZPLUG_HOME/repos/junegunn/fzf/shell/key-bindings.zsh

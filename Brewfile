@@ -57,6 +57,7 @@ brew 'imageoptim-cli'               # CLI for ImageOptim, ImageAlpha and JPEGmin
 brew 'jpeg'                         # Image manipulation library
 brew 'jpegoptim'                    # Utility to optimize JPEG files
 brew 'jq'                           # Lightweight and flexible command-line JSON processor
+brew 'jid'                          # Json incremental digger
 brew 'lazydocker'                   # The lazier way to manage everything docker
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
 brew 'm-cli'                        # Swiss Army Knife for macOS
@@ -127,13 +128,14 @@ brew 'redis'
 # ================================
 tap 'isacikgoz/taps'
 brew 'gitbatch'                     # Manage your git repositories in one place
-
+brew 'bfg'                          # Remove large files or passwords from Git history like git-filter-branch
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'ghq'                          # Remote repository management made easy
 brew 'git-extras'                   # Small git utilities
 brew 'git-lfs'                      # Git extension for versioning large files
 brew 'github/gh/gh'
 brew 'git-plus'                     # Git utilities: git multi, git relation, git old-branches, git recent
+brew 'git-filter-repo'              # Quickly rewrite git repository history
 
 
 
