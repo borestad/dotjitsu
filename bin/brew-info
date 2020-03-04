@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+ag --no-numbers --no-group -i 'desc "' $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/ \
+| sd ' desc ' '|' | column -t -s '|' | fzf --reverse -e
