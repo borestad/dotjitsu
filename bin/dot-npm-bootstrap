@@ -1,13 +1,14 @@
 #!/usr/bin/env zsh
 
-yarn global add
-#bcat@latest \
+yarn global add \
+  bcat@latest \
   jase@latest \
   http-server@latest \
-  diff-so-fancy@latest
-
+  diff-so-fancy@latest \
+  local-web-server@latest \
+  jq.node@latest
 #vtop@latest \
-  local-web-server
+
 
 # public-ip@latest \
   #casperjs@latest \
