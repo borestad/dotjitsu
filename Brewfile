@@ -127,15 +127,16 @@ brew 'redis'
 # Git utils
 # ================================
 tap 'isacikgoz/taps'
-brew 'gitbatch'                     # Manage your git repositories in one place
 brew 'bfg'                          # Remove large files or passwords from Git history like git-filter-branch
-brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'ghq'                          # Remote repository management made easy
 brew 'git-extras'                   # Small git utilities
-brew 'git-lfs'                      # Git extension for versioning large files
-brew 'github/gh/gh'
-brew 'git-plus'                     # Git utilities: git multi, git relation, git old-branches, git recent
 brew 'git-filter-repo'              # Quickly rewrite git repository history
+brew 'git-lfs'                      # Git extension for versioning large files
+brew 'git-plus'                     # Git utilities: git multi, git relation, git old-branches, git recent
+brew 'gitbatch'                     # Manage your git repositories in one place
+brew 'github/gh/gh'
+brew 'hub'                          # Add GitHub support to git on the command-line
+brew 'mr'                           # Multiple Repository management tool
 
 
 
