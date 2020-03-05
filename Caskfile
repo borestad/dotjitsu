@@ -12,6 +12,7 @@ tap 'homebrew/cask-versions'
 #cask 'dropbox'
 
 cask 'alfred'
+cask 'aerial'
 cask 'app-tamer'
 cask 'appcleaner'
 cask 'applepi-baker'
