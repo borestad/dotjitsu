@@ -7,16 +7,26 @@ sudo xcodebuild -license accept
 export ZSH=$HOME/.dotjitsu
 
 cd $HOME/.dotjitsu
-$HOME/.repos/git-friendly/pull
+$HOME/.repos/git-friendly/pull || git pull
 
 ROOT=$(git rev-parse --show-toplevel)
 cd $ROOT
 
-if [ ! type "brew" &> /dev/null ]; then
-	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-fi
+# if [ ! type "brew" &> /dev/null ]; then
+# 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# fi
 
-if [ ! type "hr" &> /dev/null ]; then; brew install hr; fi
+
+./bin/dot-brew
+
+brew install \
+	htop ncdu tig git hr mr zplug coreutils binutils findutils \
+	Schniz/tap/fnm
+
+eval "$(fnm env --multi)"
+
+fnm install
+fnm use 12.16.1
 
 chmod go-w '/usr/local/share'
 

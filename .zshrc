@@ -23,15 +23,7 @@ zplug "eth-p/bat-extras"
 zplug "unixorn/git-extra-commands"
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug 'reegnz/jq-zsh-plugin'
-
-# zplug "junegunn/fzf", \
-#   as:command, \
-#   hook-build:"./install --bin", \
-#   use:"bin/{fzf-tmux,fzf}"
-#zplug 'dracula/zsh', as:theme
-#zplug "wookayin/fzf-fasd"
-
-
+zplug "junegunn/fzf"
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then

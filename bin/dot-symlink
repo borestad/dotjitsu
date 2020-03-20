@@ -1,30 +1,28 @@
 #!/usr/bin/env node
 
-const fs = require('fs')
-const path = require('path')
-const homedir = require('os').homedir();
-const dotjitsu = path.join(__dirname, '..')
+const fs = require("fs");
+const path = require("path");
+const homedir = require("os").homedir();
+const dotjitsu = path.join(__dirname, "..");
 
-process.chdir(dotjitsu)
-console.log('Symlinking files:\n')
+process.chdir(dotjitsu);
+console.log("Symlinking files:\n");
 
-const dotfiles = fs.readdirSync('.')
-  .filter(f => f.startsWith('.') && fs.statSync(f).isFile())
-
+const dotfiles = fs
+  .readdirSync(".")
+  .filter(f => f.startsWith(".") && fs.statSync(f).isFile());
 
 for (let file of dotfiles) {
-  const target = path.join(homedir, file)
+  const target = path.join(homedir, file);
   try {
-    fs.unlinkSync(target)
-  } catch (e) { }
-  fs.symlinkSync(path.join(dotjitsu, file), target)
-  console.log(target)
+    fs.unlinkSync(target);
+  } catch (e) {}
+  fs.symlinkSync(path.join(dotjitsu, file), target);
+  console.log(target);
 }
-
 
 // # echo ''; hr - '#' -
 // # echo "[SYMLINKING]\n"
-
 
 // # DOTJITSU=$HOME/.dotjitsu
 
@@ -56,12 +54,9 @@ for (let file of dotfiles) {
 
 // # #$HOME/.private/bin/dotp-symlink
 
-
-
 // # # Youtube-dl
 // # # mkdir -p ~/.config/youtube-dl && \
 // # # 	ln -sfv $DOTJITSU/packages/youtube-dl/config ~/.config/youtube-dl
-
 
 // # # Sublime Text
 // # #mkdir -p ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
