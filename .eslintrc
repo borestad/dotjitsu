@@ -3,7 +3,11 @@
   "env": {
     "node": true,
     "es6": true,
-    "browser": true
+    "browser": false
   },
-  "rules": {}
+  "rules": {
+    "no-console": "off",
+    "no-plusplus": "off",
+    "comma-dangle": ["error", "never"]
+  }
 }
