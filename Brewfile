@@ -11,7 +11,7 @@ tap 'homebrew/services'
 # ================================
 # DEPS / PROGRAMMING LANGUAGES
 # ================================
-brew 'node@12'
+#brew 'node@12'
 brew 'git'
 brew 'python'                       # Interpreted, interactive, object-oriented programming language
 brew 'python3'                      # Interpreted, interactive, object-oriented programming language
@@ -85,7 +85,7 @@ brew 'rename'                       # Perl-powered file rename script with many 
 brew 'ripgrep'
 brew 'speedtest_cli'                # Command-line interface for https://speedtest.net bandwidth tests
 brew 'sqlite'
-brew 'sshfs'                        # File system client based on SSH File Transfer Protocol
+#brew 'sshfs'                        # File system client based on SSH File Transfer Protocol
 brew 'stow'                         # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew 'sd'                           # Intuitive find & replace CLI
 brew 'svtplay-dl'
@@ -137,8 +137,6 @@ brew 'gitbatch'                     # Manage your git repositories in one place
 brew 'github/gh/gh'
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'mr'                           # Multiple Repository management tool
-
-
 
 # ================================
 # GNU TOOLS
