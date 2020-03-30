@@ -90,6 +90,7 @@ brew 'stow'                         # Organize software neatly under a single di
 brew 'sd'                           # Intuitive find & replace CLI
 brew 'svtplay-dl'
 brew 'sysbench'
+brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 brew 'tig'
 brew 'tmux'
 brew 'trash'
