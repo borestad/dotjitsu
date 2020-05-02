@@ -157,6 +157,8 @@
 	packedGitWindowSize = 1512m
 	compression = 1
 	autocrlf = input
+	quotepath = false
+	commitGraph = true
 
 [pack]
 	deltaCacheSize = 1024m
@@ -206,6 +208,7 @@ default = simple
 
 [gc]
 	autoDetach = false
+	writeCommitGraph = true
 
 [commit]
 	#gpgsign = true
@@ -221,13 +224,14 @@ default = simple
 
 [fetch]
 	prune = true
+	pruneTags = true
 
 [gui]
 	pruneDuringFetch = true
 
 [gitflow "branch"]
-	develop = develop
-	master = master
+	develop = master
+	master =
 
 [gitflow "prefix"]
 	feature = feature/

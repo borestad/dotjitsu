@@ -3,7 +3,6 @@
 const util = require('util')
 const exec = util.promisify(require('child_process').exec)
 
-
 // # PROCESSNAME = '/bin/ncdu'
 // # CPU_TRESHOLD = 99
 
@@ -27,28 +26,27 @@ async function notify(title, text) {
 }
 
 async function main() {
-  let { stdout, stderr } = await exec('ps -e | grep ncdu');
+  const { stdout, stderr } = await exec('ps -e | grep ncdu')
 
   // 15009 ??         0:08.13 timeout -s SIGINT 3600s /usr/local/bin/ncdu
   // 15010 ??        22:59.65 /usr/local/bin/ncdu
   // 77570 ttys005    0:00.03 /usr/local/bin/ncdu
 
   if (stderr) {
-    console.error(`error: ${stderr}`);
+    console.error(`error: ${stderr}`)
   }
 
-
-  const processes = stdout.trim()
+  const processes = stdout
+    .trim()
     .split('\n')
     .map(r => r.split(/\s+/))
 
-  for (let p of processes) {
-
+  for (const p of processes) {
     // console.log(p)
     const [pid, tty, cputime, ...command] = p
 
     // Hack: exclude useless processes for autokill (keep for debugging)
-    if (! /ncdu|timeout/.test(command[0])) {
+    if (!/ncdu|timeout/.test(command[0])) {
       continue
     }
 
@@ -57,17 +55,16 @@ async function main() {
       tty,
       cputime,
       command
-    });
-
+    })
 
     // Autokill process that lost it's TTY
     if (tty === '??') {
-      let cmd = `/bin/kill -9 ${pid}`
+      const cmd = `/bin/kill -9 ${pid}`
 
       try {
         await exec(cmd)
         await notify('Autokill success', 'killing ncdu')
-      } catch (err) {
+      } catch (error) {
         await notify('Autokill error', `killing ncdu failed: ${cmd}`)
       }
     }

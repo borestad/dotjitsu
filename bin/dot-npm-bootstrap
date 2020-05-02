@@ -10,7 +10,26 @@ yarn global add \
 
 # Linters
 yarn global add \
-  eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react
+  eslint \
+  eslint-config-airbnb \
+  eslint-plugin-import \
+  eslint-plugin-jsx-a11y \
+  eslint-plugin-react \
+  eslint-plugin-sonarjs \
+  typescript \
+  eslint-config-standard \
+  eslint-plugin-standard \
+  eslint-plugin-promise \
+  eslint-plugin-import \
+  eslint-plugin-node \
+  @typescript-eslint/eslint-plugin \
+  prettier \
+  eslint-config-prettier \
+  eslint-plugin-prettier \
+  eslint-plugin-unicorn
+  @typescript-eslint/parser
+
+
 
 #vtop@latest \
 

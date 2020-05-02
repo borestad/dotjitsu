@@ -39,7 +39,7 @@ chmod go-w '/usr/local/share'
 ./bin/dot-npm-bootstrap
 #./bin/dot-curl
 #./bin/dot-osx
-#./bin/dot-osx-services
+./bin/dot-osx-services
 #./bin/dot-python
 #./bin/dot-ruby
 ./bin/dot-ssh

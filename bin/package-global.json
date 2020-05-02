@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "bcat": "^1.2.0",
+    "diff-so-fancy": "^1.2.7",
+    "diff2html-cli": "^5.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-xo": "^0.29.1",
+    "eslint-config-xo-typescript": "^0.26.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "fkill": "^7.0.0",
+    "fkill-cli": "^6.0.0",
+    "git-recent": "^1.1.1",
+    "git-run": "^0.5.5",
+    "http-server": "^0.12.1",
+    "inliner": "^1.13.1",
+    "jase": "^1.2.0",
+    "jq.node": "^2.1.2",
+    "local-web-server": "^4.0.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.2",
+    "vtop": "^0.6.1",
+    "xo": "^0.28.0"
+  }
+}
