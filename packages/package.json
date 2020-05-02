@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "bcat": "^1.2.0",
+    "diff-so-fancy": "^1.2.7",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-unicorn": "^18.0.1",
+    "git-recent": "^1.1.1",
+    "http-server": "^0.12.1",
+    "jase": "^1.2.0",
+    "jq.node": "^2.1.2",
+    "jscpd": "^3.1.0",
+    "local-web-server": "^4.0.0",
+    "lodash": "^4.17.15",
+    "prettier": "^2.0.2",
+    "typescript": "^3.8.3",
+    "yarn-deduplicate": "^2.0.0"
+  }
+}

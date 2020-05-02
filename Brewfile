@@ -112,6 +112,7 @@ brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
 brew 'unison'                       # File synchronization tool for OSX
+brew 'Schniz/tap/fnm'
 
 brew 'psgrep'
 brew 'pgrep'
@@ -138,6 +139,9 @@ brew 'gitbatch'                     # Manage your git repositories in one place
 brew 'github/gh/gh'
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'mr'                           # Multiple Repository management tool
+
+#tap 'gitea/tap', 'https://gitea.com/gitea/homebrew-gitea'
+#brew 'gitea'
 
 # ================================
 # GNU TOOLS

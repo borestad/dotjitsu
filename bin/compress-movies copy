@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+#pngquant --strip -s1 -v -f --ext .png $1
+
+#find . -name '*.png' -print0 | xargs -0 -P12 -L1 pngquant --quality 75-90 --skip-if-larger --strip -s1 -v -f --ext .png
+
+#printf '%s\n' "$file"
+#done
+
+#exit 0
+
+find . -type f -maxdepth 1 -name '*.MOV' -print0 |
+while IFS= read -r -d '' fname; do
+
+	hr -
+
+  BASENAME=${fname##*/}
+  INPUT="$BASENAME"
+  #OUTPUT="_converted/$BASENAME"
+  OUTPUT=_converted/output.mp4
+
+  # echo "fname:      $fname"
+  # echo "BASENAME:   $BASENAME"
+  echo "Input:      $INPUT"
+  echo "Output:     $OUTPUT"
+  mkdir -p "./_converted"
+
+  echo
+
+
+  #echo "ffmpeg -i \"$INPUT\" -map_metadata 0 -vcodec libx264 -crf 22 \"$OUTPUT\""
+  #ffmpeg -- -i $INPUT -map_metadata 0 -vcodec libx264 -crf 22 $OUTPUT
+	#touch -r "$INPUT" "$OUTPUT"
+done

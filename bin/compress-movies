@@ -1,0 +1,53 @@
+#!/usr/bin/env node
+//  Example: https://blog.logrocket.com/generating-video-previews-with-node-js-and-ffmpeg/
+
+const ffmpeg = require('fluent-ffmpeg')
+const glob = require('glob')
+const util = require('util').promisify
+const fs = require('fs-extra')
+const path = require('path')
+
+const log = console.log
+
+const QUALITY = '22'
+
+async function run() {
+  const files = glob.sync('*.{MOV,mov}')
+
+  files.map(
+    (file) =>
+      new Promise((resolve, reject) => {
+        ffmpeg(`./${file}`)
+          .outputOptions('-map_metadata', '0', '-vcodec', 'libx264', '-crf', QUALITY)
+          .output(file.replace('.MOV', `-converted-${QUALITY}.mp4`))
+          .on('progress', (progress) => {
+            log(`[ffmpeg] ${JSON.stringify(progress)}`)
+          })
+          .on('error', (err) => {
+            log(`[ffmpeg] error: ${err.message}`)
+            reject(err)
+          })
+          .on('end', () => {
+            log('[ffmpeg] finished')
+            resolve()
+          })
+          .run()
+      })
+  )
+
+  // for (const file of files) {
+  //   console.log(path.basename(file))
+
+  //   ffmpeg(`./${file}`)
+  //     .outputOptions('-map_metadata', '0', '-vcodec', 'libx264', '-crf', '24', 'yadif')
+  //     .output(file.replace('.MOV', '-converted-24.mp4'))
+  //     .on('progress', (progress) => {
+  //       console.log(`Processing: ${progress.percent}% done`)
+  //     })
+  //     .run()
+  // }
+
+  console.log(files)
+}
+
+run()
