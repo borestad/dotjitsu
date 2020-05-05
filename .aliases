@@ -113,6 +113,8 @@ alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"
 alias ne="cd $HOME/netent"
+alias dj='code $HOME/.dotjitsu'
+alias djp='git-pull $HOME/.dotjitsu'
 
 alias gd="git diff -- :!package-lock.json :!yarn.lock"
 append() { grep -q -F $1 $2 || echo $1 >> $2 }
@@ -558,6 +560,4 @@ alias gsa='git submodule add'
 crwl() {
   wget --tries=inf --timestamping --recursive --level=inf --convert-links --page-requisites --no-parent --reject-regex '\?C=' "$@"
 }
-
-
 alias mrsort="gawk -v RS=\"\" '{ gsub(\"\n\", \"###\"); print }' .mrconfig | sort -f | gawk -v ORS=\"\n\n\" '{ gsub(\"###\", \"\n\"); print }' > .mrconfig.tmp && mv .mrconfig.tmp .mrconfig"
