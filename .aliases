@@ -170,7 +170,7 @@ alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --colo
 # ---------------------------------------------------------
 # Others
 # ---------------------------------------------------------
-alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal tee | tee fs_usage.log'
+alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal tee iTerm2 | tee fs_usage.log'
 alias spotlight.rebuild='sudo mdutil -E /'
 
 # ---------------------------------------------------------
