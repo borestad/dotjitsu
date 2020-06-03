@@ -65,6 +65,7 @@ brew 'mas'                          # Mac App Store command-line interface
 brew 'most'                         # Powerful paging program
 brew 'mozjpeg'                      # Improved JPEG encoder
 brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
+brew 'micro'                        # Modern and intuitive terminal-based text editor
 brew 'multitail'                    # Tail multiple files in one terminal simultaneously
 brew 'ncdu'                         # NCurses Disk Usage
 brew 'nethogs'                      # Net top tool grouping bandwidth per process
