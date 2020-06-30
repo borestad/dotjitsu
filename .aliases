@@ -114,7 +114,7 @@ alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"
 alias ne="cd $HOME/netent"
 alias dj='code $HOME/.dotjitsu'
-alias djp='git-pull $HOME/.dotjitsu'
+alias djp='git-pull $HOME/.dotjitsu; git-pull $HOME/.private;'
 
 alias gd="git diff -- :!package-lock.json :!yarn.lock"
 append() { grep -q -F $1 $2 || echo $1 >> $2 }
