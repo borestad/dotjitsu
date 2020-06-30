@@ -85,7 +85,7 @@ TODISABLE+=('com.apple.spindump_agent' \
 	'com.apple.ReportPanic' \
 	'com.apple.DiagnosticReportCleanup' \
 	'com.apple.TrustEvaluationAgent')
-	
+
 # Screentime
 TODISABLE+=('com.apple.ScreenTimeAgent' \
 	'com.apple.UsageTrackingAgent')
@@ -128,7 +128,7 @@ TODISABLE+=('com.apple.telephonyutilities.callservicesd' \
 
 for agent in "${TODISABLE[@]}"
 do
-    mv ./System/Library/LaunchAgents/${agent}.plist ./System/Library/LaunchAgents/${agent}.plist.bak
+    #mv ./System/Library/LaunchAgents/${agent}.plist ./System/Library/LaunchAgents/${agent}.plist.bak
     echo "[OK] Agent ${agent} disabled"
 done
 
@@ -159,6 +159,6 @@ TODISABLE+=('com.apple.netbiosd' \
 
 for daemon in "${TODISABLE[@]}"
 do
-    mv ./System/Library/LaunchDaemons/${daemon}.plist ./System/Library/LaunchDaemons/${daemon}.plist.bak
+    #mv ./System/Library/LaunchDaemons/${daemon}.plist ./System/Library/LaunchDaemons/${daemon}.plist.bak
     echo "[OK] Daemon ${daemon} disabled"
 done

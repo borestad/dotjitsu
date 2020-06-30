@@ -87,7 +87,7 @@ brew 'ripgrep'
 brew 'speedtest_cli'                # Command-line interface for https://speedtest.net bandwidth tests
 brew 'sqlite'
 #brew 'sshfs'                        # File system client based on SSH File Transfer Protocol
-brew 'stow'                         # Organize software neatly under a single directory tree (e.g. /usr/local)
+#brew 'stow'                         # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew 'sd'                           # Intuitive find & replace CLI
 brew 'svtplay-dl'
 brew 'sysbench'
@@ -149,15 +149,15 @@ brew 'mr'                           # Multiple Repository management tool
 # ================================
 brew 'binutils'
 brew 'binwalk'
-brew 'coreutils'
 brew 'cmake'
+brew 'coreutils'
 brew 'findutils'
+brew 'gawk'
 brew 'gnu-indent'
 brew 'gnu-sed'
 brew 'gnu-tar'
 brew 'gnu-time'
 brew 'gnu-which'
-brew 'gawk'
 brew 'gnutls'
 brew 'grep'
 brew 'moreutils'

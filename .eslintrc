@@ -1,13 +1,15 @@
 {
-  "extends": ["airbnb"],
+  "extends": ["standard"],
   "env": {
-    "node": true,
-    "es6": true,
-    "browser": false
+    // "node": true,
+    // "es6": true,
+    // "browser": false
   },
   "rules": {
     "no-console": "off",
     "no-plusplus": "off",
-    "comma-dangle": ["error", "never"]
+    "comma-dangle": ["error", "never"],
+    "promise/param-names": "off",
+    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 1 }]
   }
 }
