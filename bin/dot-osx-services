@@ -6,3 +6,17 @@ brew services start redis
 
 # ln -sfv /usr/local/opt/syncthing/*.plist ~/Library/LaunchAgents
 # launchctl load ~/Library/LaunchAgents/homebrew.mxcl.syncthing.plist
+
+# Kill Adobe services
+# https://apple.stackexchange.com/questions/138941/how-do-i-stop-the-adobe-creative-cloud-app-from-auto-launching-on-login/356217#356217
+sudo launchctl disable system/com.adobe.acc.installer.v2
+sudo launchctl disable system/com.adobe.acc.installer
+sudo launchctl disable system/Adobe_Genuine_Software_Integrity_Service
+sudo launchctl disable system/com.adobe.AdobeCreativeCloud
+sudo launchctl disable system/com.adobe.agsservice
+launchctl disable gui/$(id -u)/com.adobe.acc.AdobeCreativeCloud.2416
+launchctl disable gui/$(id -u)/com.adobe.accmac.2256
+launchctl disable gui/$(id -u)/com.adobe.CCXProcess.2252
+launchctl disable gui/$(id -u)/com.adobe.CreativeCloud
+launchctl disable gui/$(id -u)/com.adobe.CCLibrary.4032
+launchctl disable gui/$(id -u)/com.adobe.AdobeCreativeCloud

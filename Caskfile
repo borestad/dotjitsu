@@ -17,10 +17,10 @@ tap 'homebrew/cask-versions'
 
 cask 'aerial'
 cask 'alfred'
-cask 'app-tamer'
+#cask 'app-tamer'
 cask 'appcleaner'
-cask 'balenaetcher'
-cask 'cakebrew'
+#cask 'balenaetcher'
+#cask 'cakebrew'
 cask 'charles'
 cask 'firefox'
 cask 'gitup'
@@ -30,11 +30,12 @@ cask 'insomnia'
 cask 'istat-menus'
 cask 'iterm2'
 cask 'kap'
-cask 'launchcontrol'
+cask 'keka'
+#cask 'launchcontrol'
 cask 'lepton'
 cask 'mountain-duck'
 cask 'openemu-experimental'
-cask 'path-finder'
+# cask 'path-finder'
 cask 'sizeup'
 cask 'skitch'
 cask 'slack'
@@ -42,8 +43,8 @@ cask 'smartgit'
 cask 'spotify'
 cask 'steam'
 cask 'sublime-text'
-cask 'the-unarchiver'
-cask 'transmission'
+#cask 'the-unarchiver'
+#cask 'transmission'
 cask 'visual-studio-code'
 cask 'vlc'
 
@@ -70,9 +71,9 @@ cask 'font-source-serif-pro'
 # ================================
 # Mac OS X: Quick Look Plugins
 # ================================
-cask 'suspicious-package'   # An Application for Inspecting macOS Installer Packages
+# cask 'suspicious-package'   # An Application for Inspecting macOS Installer Packages
 cask 'qlstephen'            # View plain text files without a file extension
-cask 'qlcolorcode'          # Preview source code files with syntax highlighting
-cask 'quicklook-json'       # Preview JSON files
-cask 'qlimagesize'          # Display image size and resolution
-#cask 'webpquicklook'
+# cask 'qlcolorcode'          # Preview source code files with syntax highlighting
+# cask 'quicklook-json'       # Preview JSON files
+# cask 'qlimagesize'          # Display image size and resolution
+# cask 'webpquicklook'
