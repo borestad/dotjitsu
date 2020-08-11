@@ -22,8 +22,6 @@ zplug "sorin-ionescu/prezto"
 zplug "eth-p/bat-extras"
 zplug "unixorn/git-extra-commands"
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug 'reegnz/jq-zsh-plugin'
-zplug "junegunn/fzf"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:1
 
 # Install plugins if there are plugins that have not been installed
