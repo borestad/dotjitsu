@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+const fdir = require('fdir')
+
+// get all files in a directory synchronously
+// const files = fdir.sync('path/to/dir');
+
+// or asynchronously
+fdir.async('/')
+  .then((x) => {
+    console.log(x)
+  })
