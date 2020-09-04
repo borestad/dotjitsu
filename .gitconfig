@@ -261,7 +261,7 @@ default = simple
 
 [submodule]
 	recurse = true
-	fetchJobs = 8
+	fetchJobs = 10
 
 [ghq]
 	root = ~/code

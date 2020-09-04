@@ -9,7 +9,7 @@ if [[ -d "$TARGET" ]]; then
   echo "PATH: $TARGET"
   cd $TARGET
   git rebase --abort &> /dev/null
-  git fetch --recurse-submodules --depth 1 --verbose
+  git fetch --recurse-submodules --verbose
   git remote prune origin
   #git fsck
 else
