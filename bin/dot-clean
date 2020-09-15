@@ -16,6 +16,8 @@ echo
 echo "✓ Disable localsnapshot"
 sudo tmutil disable localsnapshot
 
+sudo periodic daily weekly monthly
+
 # Kill log files slowing down the shell
 echo "✓ Removing *.asl"
 find /private/var/log/asl -name '*.asl' | sudo xargs rm -rfv

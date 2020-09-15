@@ -1,0 +1,78 @@
+#! /bin/bash
+function usage {
+  echo "usage: $0 -ms path_of_file"
+  echo "  -m to remove useless exif entries"
+  echo "  -s to show current exit entries"
+  exit -1
+}
+if [ $# != 2 ]; then
+  usage
+fi
+OP=$1
+SRC=$2
+if [ ! -f "$SRC" ]; then
+  echo "error: file not found"
+  exit -2
+fi
+if [ $OP = "-m" ]; then
+  cp "$SRC" "$SRC"."_tmp"
+  exiftool -all= "$SRC"
+
+  # exiftool -overwrite_original \
+  #     -TagsFromFile "$SRC"."_tmp" \
+  #     -ExposureTime  \
+  #     -FNumber \
+  #     -ExposureProgram \
+  #     -ISO \
+  #     -DateTimeOriginal \
+  #     -CreateDate \
+  #     -ExposureCompensation \
+  #     -MaxApertureValue \
+  #     -MeteringMode \
+  #     -LightSource \
+  #     -Flash \
+  #     -FocalLength \
+  #     -SubSecTime \
+  #     -SubSecTimeOriginal \
+  #     -SubSecTimeDigitized \
+  #     -ColorSpace \
+  #     -ExifImageWidth \
+  #     -ExifImageHeight \
+  #     -SensingMethod \
+  #     -CustomRendered \
+  #     -ExposureMode \
+  #     -WhiteBalance \
+  #     -DigitalZoomRatio \
+  #     -FocalLengthIn35mmFormat \
+  #     -SceneCaptureType \
+  #     -GainControl \
+  #     -Contrast \
+  #     -Saturation \
+  #     -Sharpness \
+  #     -SubjectDistanceRange \
+  #     -GPSVersionID \
+  #     -GPSLatitudeRef \
+  #     -GPSLatitude \
+  #     -GPSLongitudeRef \
+  #     -GPSLongitude \
+  #     -Make \
+  #     -Model \
+  #   "$SRC"
+
+
+  exiftool -overwrite_original \
+      -TagsFromFile "$SRC"."_tmp" \
+      -x ExifImageWidth \
+      -x ExifImageHeight \
+    "$SRC"
+
+  exiftool -delete_original! "$SRC"
+  rm -f "$SRC"."_tmp"
+
+else
+  if [ $OP = "-s" ]; then
+    exiftool "$SRC"
+  else
+    usage
+  fi
+fi

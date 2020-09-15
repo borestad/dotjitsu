@@ -11,9 +11,7 @@ tap 'homebrew/services'
 # ================================
 # DEPS / PROGRAMMING LANGUAGES
 # ================================
-brew 'git'
 # brew 'git-annex'
-brew 'git-lfs'
 brew 'go'
 # brew 'haskell-stack'
 # brew 'haskell-stack ghc cabal-install'
@@ -47,7 +45,6 @@ brew 'graphicsmagick'               # Image processing tools collection
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'hugo'                         # Configurable static site generator
 brew 'hydra'                        # Network logon cracker which supports many services
-brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
 brew 'knock'                        # Port-knock server
 brew 'libav'                        # Audio and video processing tools
 brew 'mc'                           # Terminal-based visual file manager
