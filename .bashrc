@@ -7,3 +7,5 @@ export NVM_DIR="$HOME/.nvm"
 
 . "/usr/local/etc/profile.d/bash_completion.sh"
 
+
+source /Users/johan/.config/broot/launcher/bash/br

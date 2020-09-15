@@ -13,6 +13,7 @@ export ZPLUG_HOME=$HOME/.repos/zplug
 # zmodload zsh/zprof
 
 source $ZPLUG_HOME/init.zsh
+source /Users/johan/.config/broot/launcher/bash/br
 
 #zplug "modules/prompt", from:prezto
 
@@ -75,8 +76,6 @@ auto-cd () {
 }
 
 chpwd_functions=( auto-cd $chpwd_functions )
-
-
 
 # Load zplug
 zplug load --verbose

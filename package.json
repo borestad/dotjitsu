@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "blend-promise-utils": "^1.27.0",
     "debug": "^4.1.1",
     "execa": "^4.0.0",
+    "exiftool-vendored": "^12.0.0",
     "fdir": "^2.1.0",
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^9.0.0",

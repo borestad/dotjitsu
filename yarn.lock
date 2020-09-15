@@ -38,6 +38,16 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
+batch-cluster@^5.11.1:
+  version "5.11.1"
+  resolved "https://registry.yarnpkg.com/batch-cluster/-/batch-cluster-5.11.1.tgz#a0ff8dd648909075f666db4417d0ba9ecfdcb456"
+  integrity sha512-QS4rtr7/V8BBz/IVTDCr54WWcEGVQ33r44mmstUXHda9tkzciPzxRVntMlV0bnHn66VLpwoCAb6NPQOvW9iQlA==
+
+blend-promise-utils@^1.27.0:
+  version "1.27.0"
+  resolved "https://registry.yarnpkg.com/blend-promise-utils/-/blend-promise-utils-1.27.0.tgz#16a882d4da09b0f748c5b380bc7a26a386622e71"
+  integrity sha512-JvpnIZfjT5dU1nDGBI1hdJqQUT+CtpPtmhy8IfIeQg+AWjcH0M+AndJuj0OG3iN44Ws6I0854/mcXYs8apD9LQ==
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
@@ -117,6 +127,28 @@ execa@^4.0.0:
     onetime "^5.1.0"
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
+
+exiftool-vendored.exe@^12.4.0:
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/exiftool-vendored.exe/-/exiftool-vendored.exe-12.4.0.tgz#7161f309b96f555fc0ea1a727d33716de095b34f"
+  integrity sha512-HqljVg85K/w5ZOF4q5PO8iHhQ6Wxeu89m/Figburhra8VoN43kHADFdhbjsn5+5HMlsmte49vgAAuiwBxzvKZw==
+
+exiftool-vendored.pl@^12.4.0:
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/exiftool-vendored.pl/-/exiftool-vendored.pl-12.4.0.tgz#ab136c6516f132766ef8d0de5083387bebe5302b"
+  integrity sha512-k4Gth1JWYj05PNgXDza6ANe1yAQ+7TOg/WRIhDrAi783RI13nJharYIYmOHc2/CiP8M3onsaAj/WyLwxG2JHHw==
+
+exiftool-vendored@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/exiftool-vendored/-/exiftool-vendored-12.0.0.tgz#94f5a024f981f65cf3c51d38b9d08c84ca736fa7"
+  integrity sha512-jq7xUGOT88vHcqGl4O82zffHVW8a/buE3KtCqnWJWZ9+bVUgkfmPrditJF6FUcGB+DxSn2mkXnUyr1RxnmXSZg==
+  dependencies:
+    batch-cluster "^5.11.1"
+    luxon "^1.24.1"
+    tz-lookup "^6.1.25"
+  optionalDependencies:
+    exiftool-vendored.exe "^12.4.0"
+    exiftool-vendored.pl "^12.4.0"
 
 fdir@^2.1.0:
   version "2.1.0"
@@ -223,6 +255,11 @@ log-symbols@^1.0.2:
   resolved "https://registry.yarnpkg.com/log-symbols/-/log-symbols-1.0.2.tgz#376ff7b58ea3086a0f09facc74617eca501e1a18"
   dependencies:
     chalk "^1.0.0"
+
+luxon@^1.24.1:
+  version "1.24.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.24.1.tgz#a8383266131ed4eaed4b5f430f96f3695403a52a"
+  integrity sha512-CgnIMKAWT0ghcuWFfCWBnWGOddM0zu6c4wZAWmD0NN7MZTnro0+833DF6tJep+xlxRPg4KtsYEHYLfTMBQKwYg==
 
 merge-stream@^2.0.0:
   version "2.0.0"
@@ -362,6 +399,11 @@ touch@^3.1.0:
   integrity sha512-WBx8Uy5TLtOSRtIq+M03/sKDrXCLHxwDcquSP2c43Le03/9serjQBIztjRz6FkJez9D/hleyAXTBGLwwZUw9lA==
   dependencies:
     nopt "~1.0.10"
+
+tz-lookup@^6.1.25:
+  version "6.1.25"
+  resolved "https://registry.yarnpkg.com/tz-lookup/-/tz-lookup-6.1.25.tgz#34d68a7e1ccfcb51f29a9893d2d48e4118d873cd"
+  integrity sha512-fFewT9o1uDzsW1QnUU1ValqaihFnwiUiiHr1S79/fxOzKXYYvX+EHeRnpvQJ9B3Qg67wPXT6QF2Esc4pFOrvLg==
 
 universalify@^1.0.0:
   version "1.0.0"
