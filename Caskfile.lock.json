@@ -2,10 +2,16 @@
   "entries": {
     "tap": {
       "homebrew/cask-fonts": {
-        "revision": "5da0b6517f9bab6783bd2be23ebf379a13ac8da9"
+        "revision": "05ca9a1455a06a2eda4627c80df6c399899af024"
       },
       "homebrew/cask-versions": {
-        "revision": "c0350f259bcfe2044fbeb98fbacfa89577cd5617"
+        "revision": "2adafac61bc7f7972cc24062c041a7ecf8bb66dc"
+      },
+      "homebrew/cask-drivers": {
+        "revision": "d1323ba6b1aa8bb0be12a5101ad1b63e68d23530"
+      },
+      "microsoft/git": {
+        "revision": "3ddf73c187923bb50eb2a581a4dae3323d50de24"
       }
     },
     "cask": {
@@ -404,6 +410,60 @@
             "appdir": "/Applications"
           }
         }
+      },
+      "docker": {
+        "version": "2.3.0.4,46911",
+        "options": {
+          "full_name": "docker",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "ngrok": {
+        "version": "latest",
+        "options": {
+          "full_name": "ngrok",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "sony-ps4-remote-play": {
+        "version": "latest",
+        "options": {
+          "full_name": "sony-ps4-remote-play",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "smartsynchronize": {
+        "version": "4.1.1.1",
+        "options": {
+          "full_name": "smartsynchronize",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "transmission": {
+        "version": "3.00",
+        "options": {
+          "full_name": "transmission",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "git-credential-manager-core": {
+        "version": "2.0.194.40577",
+        "options": {
+          "full_name": "git-credential-manager-core",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
       }
     }
   },
@@ -412,7 +472,7 @@
       "catalina": {
         "HOMEBREW_VERSION": "2.5.1",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "80d4e37f03cae803d4ac590beee7bb6c00ea0df8",
+        "Homebrew/homebrew-core": "ddc3eb64b22162c41f83bf0561e7652d3884d4ed",
         "CLT": "1103.0.32.62",
         "Xcode": "11.5",
         "macOS": "10.15.6"

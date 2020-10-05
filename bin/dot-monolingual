@@ -1,42 +1,57 @@
 #!/usr/bin/env bash
 
+# p=$0
+# LOCATION=${'test':-'apa'}
+LOCATION=${1:-`pwd`}
 
-echo ''; hr - '#' -
+echo $LOCATION
+
+echo ''; hr -
 echo "[CLEANING LANGUAGES]"
 echo
 
-dfc
+dfc -Wsdliuh -q mount
 echo
 
-echo "Finding all *.lproj in $(pwd)"
+echo "Finding all *.lproj in $LOCATION"
 # Keep sv|en|en_GB|.lproj
 
 # Truncate lines
 tput rmam
 
-REGEX='.*(ar|ca|cs|da|de|el|en_AU|es|es_\w+|fi|fr|fr_\w+|he|hi|hr|hu|id|it|ja|ko|ms|nl|no|pl|pt|pt_\w+|ro|ru|sk|th|tr|uk|vi|zh_\w+|German|French|Japanese|Italian|Spanish|Dutch)\.lproj$'
+REGEX='.*(am|ar|ca|cs|bn|bg|da|de|el|et|en_AU|es|es|fa|fi|fr|fil|fr|gu|he|hi|hr|hu|id|it|is|ja|ko|kn|lv|lt|ms|ml|mr|nl|nb|no|pl|pt|pt|ro|ru|sk|sr|sl|sw|ta|te|th|tr|uk|vi|zh|zh|German|French|Japanese|Italian|Spanish|Dutch)([_-]\w+)?\.lproj$'
 #sudo gfind "$(pwd)" -type d -regextype posix-egrep -regex $REGEX -print0 | sudo gxargs -r0 -- rm -rv
 rm -f /tmp/dot-monolingual
-sudo gfind / -type d ! -path "*/Volumes/*" ! -path "*/System/Volumes/*" -regextype posix-egrep -regex $REGEX -exec rm -rfv {} + 2>&1 | tee /tmp/dot-monolingual
+
+#sudo gfind / -type d ! -path "*/Volumes/*" ! -path "*/System/Volumes/*" -regextype posix-egrep -regex $REGEX -exec rm -rfv {} + 2>&1 | tee /tmp/dot-monolingual
 #sudo gfind $(pwd) -type d -regextype posix-egrep -regex $REGEX >| /tmp/dot-monolingual
+
+i=0
+#sudo fd -HI $REGEX $LOCATION -0 | sudo xargs -0 rm -rfv
+sudo fd -HI $REGEX $LOCATION -0 | while IFS= read -r -d '' fname; do
+  ((i=i+1))
+  # sudo xargs -0 grm -rfv #2>/dev/null
+  sudo grm -rfv "$fname" 2>/dev/null
+  printf "[$i] Removed \"$fname\" \n"
+done
 
 #sudo gfind / -type d -regextype posix-egrep -regex '.*(ar|ca|cs|da|de|el|en_AU|es|es_419|fi|fr|fr_CA|he|hi|hr|hu|id|it|ja|ko|ms|nl|no|pl|pt|pt_PT|ro|ru|sk|th|tr|uk|vi|zh_CN|zh_HK|zh_TW|German|French|Japanese|Italian|Spanish|Dutch)\.lproj$' -delete
 
 
-sudo gfind / -type d -regextype posix-egrep -regex $REGEX -print0 | while read -d $'\0' file; do
-  #echo $file
-  echo "$((COUNTER++)) $file"
-	# bundleid=`/usr/libexec/PlistBuddy -c Print:CFBundleIdentifier "$file" 2>&1`
-	# rc=$?
-	# if [[ $rc == 0 ]]; then
-	# 	# echo "<dict><key>architectures</key><true/><key>bundle</key><string>$bundleid</string><key>languages</key><true/></dict>"
-  #   echo $rc
-  #   echo 'hello'
-	# fi
-done
+# sudo gfind / -type d -regextype posix-egrep -regex $REGEX -print0 | while read -d $'\0' file; do
+#   #echo $file
+#   echo "$((COUNTER++)) $file"
+# 	# bundleid=`/usr/libexec/PlistBuddy -c Print:CFBundleIdentifier "$file" 2>&1`
+# 	# rc=$?
+# 	# if [[ $rc == 0 ]]; then
+# 	# 	# echo "<dict><key>architectures</key><true/><key>bundle</key><string>$bundleid</string><key>languages</key><true/></dict>"
+#   #   echo $rc
+#   #   echo 'hello'
+# 	# fi
+# done
 
 echo
-dfc
+dfc -Wsdliuh -q mount
 
 #find ~/code -type d -name node_modules | xargs rm -rfv
 #rm -rfv ~/.tmp/*

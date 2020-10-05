@@ -8,4 +8,7 @@ export NVM_DIR="$HOME/.nvm"
 . "/usr/local/etc/profile.d/bash_completion.sh"
 
 
-source /Users/johan/.config/broot/launcher/bash/br
+source $HOME/.config/broot/launcher/bash/br
+
+# fnm (Fast Node Manager)
+eval "$(fnm env --multi)"      # Colourify common commands (unalias things that breaks)

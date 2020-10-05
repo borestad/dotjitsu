@@ -39,6 +39,7 @@ alias vnstat='/usr/local/bin/vnstat -i en0'
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 alias wget='wget --no-check-certificate --no-verbose --compression auto'
 alias ws='ws -d'
+alias dfc='/usr/local/bin/dfc -Wdliuh -q mount -t apfs'
 cs () { cat "$@" | jase scripts 2>/dev/null | bat }
 
 #
@@ -74,9 +75,10 @@ wh () { which -a "$@" | ctt2 }
 function clone {
   url=$1;
   reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
-  git clone $url $reponame;
+  echo "Reponame: $reponame"
+  git clone $*;
   cd $reponame;
-  echo "" && hub log --oneline --graph --date=short -n 5 && echo ""
+  echo "" && git log --oneline --graph --date=short -n 5 && echo ""
 }
 
 alias fetch='git fetch --verbose && echo "" && hub log --oneline --graph --date=short -n 1 && echo ""'
@@ -217,7 +219,7 @@ fi
 # ---------------------------------------------------------
 # Cli Tricks
 # ---------------------------------------------------------
-alias history.stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+alias history.stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head -n 50"
 
 die () {
     [[ -n "$1" ]] && echo "$1"
@@ -310,9 +312,7 @@ chdir.rm () {
 
 # Load 8 cores at once.
 system.maxcpu () {
-  dn=/dev/null
-  yes > $dn & yes > $dn & yes > $dn & yes > $dn &
-  yes > $dn & yes > $dn & yes > $dn & yes > $dn &
+  stress --cpu 64 --timeout 60
 }
 
 ps.kill () { kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
@@ -395,39 +395,7 @@ z3 () {
   tar cf - $input | pv -s $(du -sk $input | awk '{print $input*1024}') | pbzip2 -c -9 > $output
 }
 
-xtract () {
- if [ -z "$1" ]; then
-    # display usage if no parameters given
-    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
- else
-    if [ -f $1 ] ; then
-        # NAME=${1%.*}
-        # mkdir $NAME && cd $NAME
-        case $1 in
-          *.tar.bz2)   tar xvjf $1    ;;
-          *.tar.gz)    tar xvzf $1    ;;
-          *.tar.xz)    tar xvJf $1    ;;
-          *.lzma)      unlzma $1      ;;
-          *.bz2)       bunzip2 $1     ;;
-          *.rar)       unrar x -ad $1 ;;
-          *.gz)        gunzip $1      ;;
-          *.tar)       tar xvf $1     ;;
-          *.tbz2)      tar xvjf $1    ;;
-          *.tgz)       tar xvzf $1    ;;
-          *.zip)       unzip $1       ;;
-          *.Z)         uncompress $1  ;;
-          *.7z)        7z x $1        ;;
-          *.xz)        unxz $1        ;;
-          *.exe)       cabextract $1  ;;
-          *)           echo "extract: '$1' - cannot be extracted via extract()" ;;
-        esac
-        #cd $1* && open .
-    else
-        echo "$1 - file does not exist"
-    fi
-fi
-}
-
+alias xtract='unar'
 
 # ---------------------------------------------------------
 # Useful file size aliases
@@ -562,4 +530,10 @@ alias gsa='git submodule add'
 crwl() {
   wget --tries=inf --timestamping --recursive --level=inf --convert-links --page-requisites --no-parent --reject-regex '\?C=' "$@"
 }
+
 alias mrsort="gawk -v RS=\"\" '{ gsub(\"\n\", \"###\"); print }' .mrconfig | sort -f | gawk -v ORS=\"\n\n\" '{ gsub(\"###\", \"\n\"); print }' > .mrconfig.tmp && mv .mrconfig.tmp .mrconfig"
+
+#alias make='grc --colour=auto /usr/local/opt/make/libexec/gnubin/make '
+alias make='/usr/local/opt/make/libexec/gnubin/make '
+# make() {}
+  # grc --colour=auto /usr/bin/make $*

@@ -82,7 +82,7 @@ alias d:last='d:latest'
 alias d:latest='docker ps -ql'
 alias d:list='d:all'
 alias d:rm-all='docker rm -f DA'
-alias d:rm-none-image='docker rmi $(docker images -f dangling=true -q)'
+alias d:rm-dangling='docker rmi $(docker images -f dangling=true -q)'
 alias d:start-all='docker start DA'
 alias d:stop-all='docker stop DA'
 
