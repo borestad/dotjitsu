@@ -63,6 +63,8 @@ zstyle ':prezto:load' pmodule \
 # zstyle ':prezto:module:completion:*:hosts' etc-host-ignores \
 #   '0.0.0.0' '127.0.0.1'
 
+zstyle ':completion:*:*:make:*' tag-order 'targets'
+
 #
 # Editor
 #

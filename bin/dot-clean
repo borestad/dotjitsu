@@ -3,6 +3,7 @@
 cd "$(dirname $0)"/..
 
 DISKSPACE_BEFORE=$(($(stat -f --format="%a*%S" .)))
+DISKSPACE_BEFORE_GB=`expr $DISKSPACE_BEFORE / 1000000000`
 
 echo ''; hr -
 echo
@@ -16,6 +17,7 @@ echo
 echo "✓ Disable localsnapshot"
 sudo tmutil disable localsnapshot
 
+echo "✓ Periodic maintainence scripts"
 sudo periodic daily weekly monthly
 
 # Kill log files slowing down the shell
@@ -33,16 +35,18 @@ brew cleanup -s &> /dev/null
 rm -rf $(brew --cache) &> /dev/null
 
 DISKSPACE_AFTER=$(($(stat -f --format="%a*%S" .)))
-
+DISKSPACE_AFTER_GB=`expr $DISKSPACE_AFTER / 1000000000`
 
 echo
 
-COUNT=`expr $DISKSPACE_BEFORE - $DISKSPACE_AFTER`
+DIFF=`expr $DISKSPACE_BEFORE - $DISKSPACE_AFTER`
+DIFF_MB=`expr $DIFF / 1000000`
 
 echo "Disk space:"
-echo "Before: $DISKSPACE_BEFORE B"
-echo "After:  $DISKSPACE_AFTER B"
-echo "Diff:   $COUNT B"
+echo "Before: $DISKSPACE_BEFORE_GB GB"
+echo "After:  $DISKSPACE_AFTER_GB GB"
+
+echo "Diff:   $DIFF_MB MB ($DIFF Bytes)"
 
 
 #dfc

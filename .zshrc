@@ -13,7 +13,7 @@ export ZPLUG_HOME=$HOME/.repos/zplug
 # zmodload zsh/zprof
 
 source $ZPLUG_HOME/init.zsh
-source /Users/johan/.config/broot/launcher/bash/br
+source $HOME/.config/broot/launcher/bash/br
 
 #zplug "modules/prompt", from:prezto
 
@@ -36,7 +36,11 @@ fi
 
 source "${ZDOTDIR:-$HOME}/.env"
 source ~/.private/.zshrc
-source "/usr/local/etc/grc.bashrc"      # Colourify common commands (unalias things that breaks)
+source "/usr/local/etc/grc.zsh"      # Colourify common commands (unalias things that breaks)
+
+# fnm (Fast Node Manager)
+eval "$(fnm env --multi)"      # Colourify common commands (unalias things that breaks)
+
 
 
 # ----------------------------------------------------
@@ -77,7 +81,7 @@ auto-cd () {
 
 chpwd_functions=( auto-cd $chpwd_functions )
 
+source "$HOME/.aliases"
+
 # Load zplug
 zplug load --verbose
-
-source "$HOME/.aliases"

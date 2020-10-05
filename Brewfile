@@ -33,10 +33,9 @@ brew 'bandwhich'                    # Bourne-Again SHell, a UNIX command interpr
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
 brew 'bat'                          # Clone of cat(1) with syntax highlighting and Git integration
-brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'bento4'                       # Full-featured MP4 format and MPEG DASH library and tools
 brew 'bmon'                         # Interface bandwidth monitor
-brew 'bento4'                       # Full-featured MP4 format and MPEG DASH library and tools
+brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'broot'                        # New way to see and navigate directory trees
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
@@ -59,8 +58,8 @@ brew 'goaccess'                     # Log analyzer and interactive viewer for th
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'grc'                          # Colorize logfiles and command output
-brew 'hh'                           # Bash and zsh history suggest box
 brew 'hashdeep'                     # Recursively compute digests on files/directories
+brew 'hh'                           # Bash and zsh history suggest box
 brew 'htop'                         # Improved top (interactive process viewer)
 brew 'httpie'                       # User-friendly cURL replacement (command-line HTTP client)
 brew 'httpry'                       # Packet sniffer for displaying and logging HTTP traffic
@@ -109,6 +108,7 @@ brew 'sd'                           # Intuitive find & replace CLI
 brew 'speedtest-cli'                # Command-line interface for https://speedtest.net bandwidth tests
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
+brew 'stress'                       # Tool to impose load on and stress test a computer system
 brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
 brew 'svtplay-dl'
 brew 'sysbench'
@@ -150,9 +150,10 @@ brew 'git-filter-repo'              # Quickly rewrite git repository history
 brew 'git-lfs'                      # Git extension for versioning large files
 brew 'git-plus'                     # Git utilities: git multi, git relation, git old-branches, git recent
 brew 'gitbatch'                     # Manage your git repositories in one place
-brew 'github/gh/gh'
+brew 'gh'
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'mr'                           # Multiple Repository management tool
+
 
 #tap 'gitea/tap', 'https://gitea.com/gitea/homebrew-gitea'
 #brew 'gitea'
