@@ -360,9 +360,6 @@ ddd() {
 # ---------------------------------------------------------
 # Network stuff
 # ---------------------------------------------------------
-function ip.internal { ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' }
-alias ip.public='dig +short myip.opendns.com @resolver1.opendns.com'
-alias ip='ip.internal; ip.public'
 alias net.connections='lsof -l -i +L -R -V'
 alias net.established='lsof -l -i +L -R -V | grep ESTABLISHED'
 alias net.available_ip="ping -t 1 255.255.255.255 > /dev/null; arp -a"
