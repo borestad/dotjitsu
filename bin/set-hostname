@@ -1,0 +1,28 @@
+#!/bin/sh
+
+
+HOSTNAME=$1
+
+if [ "$HOSTNAME" = "" ]; then
+  echo "ERROR: a hostname needs to be provided" >&2
+  exit 1
+fi
+
+
+echo
+echo "✔ Set computer name to: '$HOSTNAME'"
+
+sudo scutil --set ComputerName "$HOSTNAME"
+sudo scutil --set HostName "$HOSTNAME"
+sudo scutil --set LocalHostName "$HOSTNAME"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$HOSTNAME"
+
+
+# Restart DNS
+echo "✔ Restart DNS ..."
+sudo killall -HUP mDNSResponder &>/dev/null
+sudo killall mDNSResponderHelper &>/dev/null
+sudo dscacheutil -flushcache &>/dev/null
+
+echo "✔ Profit! 🍺"
+echo
