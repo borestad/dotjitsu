@@ -368,7 +368,7 @@ alias net.sockets_services='netstat -tulp'
 alias net.sniff0="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff1="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff4="sudo ngrep -d 'en4' -t '^(GET|POST) ' 'tcp and port 80'"
-alias net.flushdns='dscacheutil -flushcache'
+alias net.flushdns='sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache'
 alias flushdns='net.flushdns'
 
 # ---------------------------------------------------------
