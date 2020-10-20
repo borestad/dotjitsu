@@ -3,13 +3,58 @@ set -Eeuo pipefail
 
 cd "$(dirname $0)"/..
 
-hr -
+t () {
+  date "+%F %H:%M:%S"
+}
 
-#brew -v update
-brew -v bundle --file=$HOME/.dotjitsu/Brewfile
-#brew -v upgrade --file=$HOME/.dotjitsu/Brewfile
-#brew unlink git-lfs && brew link git-lfs
-#brew cleanup
 
-# Force system using Brewfile node.js version (key-only)
-#brew link --overwrite node@12 --force
+# Update brew itself
+$HOME/.dotjitsu/bin/hr -
+echo "`t`: START:   brew update"
+/usr/local/bin/brew update
+echo "`t`: STOP:    brew update"
+
+
+# Install Brewfile formulas
+$HOME/.dotjitsu/bin/hr -
+echo "`t`: START:   brew bundle (Brewfile)"
+/usr/local/bin/brew -v bundle --file=$HOME/.dotjitsu/Brewfile
+echo "`t`: STOP:    brew bundle (Brewfile)"
+
+
+# Update installed bundles (even those not in Brew/Caskfile
+$HOME/.dotjitsu/bin/hr -
+echo "`t`: START:   brew upgrade"
+/usr/local/bin/brew upgrade
+echo "`t`: STOP:    brew upgrade"
+
+
+# Cleanup
+$HOME/.dotjitsu/bin/hr -
+echo "`t`: START:   brew cleanup"
+/usr/local/bin/brew cleanup
+echo "`t`: STOP:    brew cleanup"
+
+# Cache API-reponses
+$HOME/.dotjitsu/bin/hr -
+echo "`t`: START:   brew API"
+cd ~/.config
+/usr/local/bin/wget https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && mv brew-formula.json.tmp brew-formula.json
+/usr/local/bin/wget https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && mv brew-cask.json.tmp brew-cask.json
+echo "`t`: STOP:    brew API"
+
+
+
+if [ -t 1 ] ; then
+  # Install Caskfile formulas (only if interactive shell)
+  $HOME/.dotjitsu/bin/hr -
+  echo "`t`: START:   brew bundle (Caskfile)"
+  /usr/local/bin/brew -v bundle --file=~/.dotjitsu/Caskfile
+  echo "`t`: STOP:    brew bundle (Caskfile)"
+ fi
+
+
+$HOME/.dotjitsu/bin/hr -
+echo ""
+echo "All done! Enjoy a cold one! 🍺 "
+echo ""

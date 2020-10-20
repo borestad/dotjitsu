@@ -21,6 +21,13 @@ echo "`t`: START:   brew update"
 /usr/local/bin/brew update
 echo "`t`: STOP:    brew update"
 
+
+$HOME/.dotjitsu/bin/hr -
+echo "`t`: START:   brew bundle"
+/usr/local/bin/brew -v bundle --file=$HOME/.dotjitsu/Brewfile
+echo "`t`: STOP:    brew bundle"
+
+
 # Update installed bundles
 $HOME/.dotjitsu/bin/hr -
 echo "`t`: START:   brew upgrade"
