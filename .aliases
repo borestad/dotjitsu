@@ -5,8 +5,12 @@
 # ---------------------------------------------------------
 #alias ncdu="ncdu -x -1bre"
 #alias git=hub
-alias ...='cd ../../'
 alias ..="cd .."
+alias ...='cd ../../'
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
 alias ag='ag --stats'
 alias b='brew'
 alias bif='brew info'
@@ -81,9 +85,6 @@ function clone {
   echo "" && git log --oneline --graph --date=short -n 5 && echo ""
 }
 
-alias fetch='git fetch --verbose && echo "" && hub log --oneline --graph --date=short -n 1 && echo ""'
-
-
 # Compare original and gzipped file size
 function gz() {
   local origsize=$(wc -c < "$1");
@@ -111,7 +112,7 @@ function gthumbnails() {
 # ---------------------------------------------------------
 # GOTO aliases
 # ---------------------------------------------------------
-alias -- -="cd -"
+alias --="cd -"
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"

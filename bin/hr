@@ -42,7 +42,7 @@ hr() {
 hrs() {
     local WORD
 
-    for WORD in "${@:-#}"
+    for WORD in "${@:-—}"
     do
         hr "$WORD"
     done

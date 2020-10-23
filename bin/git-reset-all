@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+title () {
+  hr; echo -e "$@";
+}
+
+#
+# Forcefully resets & cleans the repository and all submodules
+# Info
+git status
+
+# Prepare
+title '✨ Abort all running rebase'
+git rebase --abort &> /dev/null
+
+title '✨ Fetch latest commits'
+git fetch -j 10 -p -f
+
+# # Ready set go!
+# git reset --hard
+# git submodule foreach --recursive 'git reset HEAD --hard'
+# git submodule foreach --recursive 'git checkout -- . || :'
+# git submodule update --init --recursive
+# git clean -d -f -f -x
+# git submodule foreach --recursive git clean -d -f -f -x
+
+
+title '✨ Reset to origin/HEAD'
+git reset --hard origin/HEAD
+
+title '✨ Reset submodules to origin/HEAD'
+git submodule foreach --recursive 'git reset --hard origin/HEAD'
+
+title '✨ Update submodules to latest origin/HEAD'
+git submodule update --init --recursive
+
+title '✨ Clean all files'
+git clean -dxf
+
+title '✨ Clean all files in submodules'
+git submodule foreach --recursive git clean -dxf

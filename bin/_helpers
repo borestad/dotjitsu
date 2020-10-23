@@ -78,3 +78,9 @@ line () {
   echo -e "⚡ ${IBla}${text}${RCol}"
   echo ""
 }
+
+title () {
+  local text=$@; echo ""
+  hr
+  echo -e "text\n"
+}
