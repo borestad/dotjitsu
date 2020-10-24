@@ -20,7 +20,6 @@
 		#sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
 
 [credential]
-	helper = ""
 				#helper = osxkeychain
 
 [color]
@@ -278,6 +277,7 @@ default = simple
 [rebase]
 	stat = true
 [credential]
+	helper = 
 	helper = manager-core
 [credential "https://dev.azure.com"]
 	useHttpPath = true

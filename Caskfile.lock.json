@@ -2,16 +2,16 @@
   "entries": {
     "tap": {
       "homebrew/cask-fonts": {
-        "revision": "05ca9a1455a06a2eda4627c80df6c399899af024"
+        "revision": "7870ea547a01b8e0d4149e6b7eb1e15664683454"
       },
       "homebrew/cask-versions": {
-        "revision": "2adafac61bc7f7972cc24062c041a7ecf8bb66dc"
+        "revision": "01a2bb752119308efb196e573bcc3199e828c5f8"
       },
       "homebrew/cask-drivers": {
-        "revision": "d1323ba6b1aa8bb0be12a5101ad1b63e68d23530"
+        "revision": "c432d7371266c40edc7bb0fd13ba01b3463a6cfc"
       },
       "microsoft/git": {
-        "revision": "3ddf73c187923bb50eb2a581a4dae3323d50de24"
+        "revision": "4fd390b3cddcdc1b5f03aecbc6ae7a8a878bacba"
       }
     },
     "cask": {
@@ -25,7 +25,7 @@
         }
       },
       "aerial": {
-        "version": "2.0.9",
+        "version": "2.1.0",
         "options": {
           "full_name": "aerial",
           "args": {
@@ -97,7 +97,7 @@
         }
       },
       "rsyncosx": {
-        "version": "6.4.2",
+        "version": "6.4.6",
         "options": {
           "full_name": "rsyncosx",
           "args": {
@@ -223,7 +223,7 @@
         }
       },
       "smartgit": {
-        "version": "20.1.4",
+        "version": "20.1.5",
         "options": {
           "full_name": "smartgit",
           "args": {
@@ -457,9 +457,495 @@
         }
       },
       "git-credential-manager-core": {
-        "version": "2.0.194.40577",
+        "version": "2.0.252.766",
         "options": {
           "full_name": "git-credential-manager-core",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-hack-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-hack-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-fira-code-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-fira-code-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-fira-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-fira-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-firago": {
+        "version": "1.000",
+        "options": {
+          "full_name": "font-firago",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-victor-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-victor-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-victor-mono": {
+        "version": "latest",
+        "options": {
+          "full_name": "font-victor-mono",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-inconsolata-g": {
+        "version": "latest",
+        "options": {
+          "full_name": "font-inconsolata-g",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-3270-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-3270-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-agave-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-agave-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-anonymice-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-anonymice-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-arimo-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-arimo-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-aurulent-sans-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-aurulent-sans-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-bigblue-terminal-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-bigblue-terminal-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-bitstream-vera-sans-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-bitstream-vera-sans-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-blex-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-blex-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-caskaydia-cove-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-caskaydia-cove-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-code-new-roman-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-code-new-roman-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-cousine-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-cousine-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-daddy-time-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-daddy-time-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-dejavu-sans-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-dejavu-sans-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-droid-sans-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-droid-sans-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-fantasque-sans-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-fantasque-sans-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-go-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-go-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-gohufont-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-gohufont-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-hackgen-nerd": {
+        "version": "2.2.0",
+        "options": {
+          "full_name": "font-hackgen-nerd",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-hasklug-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-hasklug-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-heavy-data-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-heavy-data-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-hurmit-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-hurmit-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-im-writing-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-im-writing-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-inconsolata-go-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-inconsolata-go-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-inconsolata-lgc-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-inconsolata-lgc-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-inconsolata-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-inconsolata-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-iosevka-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-iosevka-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-jetbrains-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-jetbrains-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-lekton-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-lekton-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-liberation-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-liberation-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-meslo-lg-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-meslo-lg-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-monofur-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-monofur-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-monoid-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-monoid-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-mononoki-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-mononoki-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-mplus-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-mplus-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-noto-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-noto-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-open-dyslexic-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-open-dyslexic-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-overpass-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-overpass-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-profont-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-profont-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-proggy-clean-tt-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-proggy-clean-tt-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-roboto-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-roboto-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-sauce-code-pro-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-sauce-code-pro-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-shure-tech-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-shure-tech-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-space-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-space-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-terminess-ttf-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-terminess-ttf-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-tinos-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-tinos-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-ubuntu-mono-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-ubuntu-mono-nerd-font",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
+      },
+      "font-ubuntu-nerd-font": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "font-ubuntu-nerd-font",
           "args": {
             "appdir": "/Applications"
           }
@@ -470,11 +956,11 @@
   "system": {
     "macos": {
       "catalina": {
-        "HOMEBREW_VERSION": "2.5.1",
+        "HOMEBREW_VERSION": "2.5.4",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "ddc3eb64b22162c41f83bf0561e7652d3884d4ed",
-        "CLT": "1103.0.32.62",
-        "Xcode": "11.5",
+        "Homebrew/homebrew-core": "6154757287860f83aacc04ac6c37b23da98d2b43",
+        "CLT": "",
+        "Xcode": "12.0.1",
         "macOS": "10.15.6"
       }
     }

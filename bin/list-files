@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+const { fdir } = require("fdir");
+const path = require('path')
+const dir = process.argv[2] || process.cwd()
+
+const api = new fdir()
+  .filter((path) => console.log(path) || path.startsWith("/System/Volumes"))
+  .filter((path) => path.startsWith("/System/Volumes/Data"))
+  .withFullPaths()
+  .withDirs()
+  .crawl(dir);
+
+
+api.withPromise().then((files) => {
+  for (let x of files) {
+    // console.log(x)
+  }
+});

@@ -4,17 +4,15 @@
 # LOCATION=${'test':-'apa'}
 LOCATION=${1:-`pwd`}
 
-echo $LOCATION
-
-echo ''; hr -
-echo "[CLEANING LANGUAGES]"
-echo
-
-dfc -Wsdliuh -q mount
 echo
 
 echo "Finding all *.lproj in $LOCATION"
 # Keep sv|en|en_GB|.lproj
+
+tmpfile=$(mktemp /tmp/monolingual-`date +%F--%H%M%S`.XXXXXX.txt)
+
+echo "Tempfile: $tmpfile"
+echo
 
 # Truncate lines
 tput rmam
@@ -26,14 +24,69 @@ rm -f /tmp/dot-monolingual
 #sudo gfind / -type d ! -path "*/Volumes/*" ! -path "*/System/Volumes/*" -regextype posix-egrep -regex $REGEX -exec rm -rfv {} + 2>&1 | tee /tmp/dot-monolingual
 #sudo gfind $(pwd) -type d -regextype posix-egrep -regex $REGEX >| /tmp/dot-monolingual
 
+total=0
 i=0
 #sudo fd -HI $REGEX $LOCATION -0 | sudo xargs -0 rm -rfv
-sudo fd -HI $REGEX $LOCATION -0 | while IFS= read -r -d '' fname; do
+
+# These folders are protected, do not bother (unless System Integrity Protection is disabled)
+#EXCLUDE="*Safari*"
+EXCLUDE="**/System/**"
+
+##########################################################
+# 1. Find all files
+##########################################################
+sudo fd -td -u -aHI $REGEX "$LOCATION" -0 --one-file-system -E 'Volumes' -E 'System' -E 'usr' -E 'Safari.app' | while IFS= read -r -d '' fname; do
   ((i=i+1))
-  # sudo xargs -0 grm -rfv #2>/dev/null
-  sudo grm -rfv "$fname" 2>/dev/null
-  printf "[$i] Removed \"$fname\" \n"
+  #(( $i % 100 == 0 )) && echo -n '⌘'
+  echo -ne "$i |                                                                                                                                                                                                                                                                                     \r"
+  echo -ne "$i | $fname\r"
+
+  echo $fname >> $tmpfile
+  # # sudo xargs -0 grm -rfv #2>/dev/null
+  # if [ ! -L "$fname" ]; then
+  #   # sudo grm -rf "$fname" 2>/dev/null
+  #   # sudo grm -rf "$fname" | pv -l >/dev/null
+  #   retVal=$?
+
+  #   if [ $retVal -ne 0 ]; then
+  #     printf "[$i] SIP Error:  \"$fname\" \n"
+  #   else
+  #     printf "[$i] Removed \"$fname\" \n"
+  #   fi
+
+  # else
+  #   printf "[$i] Skipped symlink \"$fname\" \n"
+  # fi
 done
+
+total=`cat $tmpfile | wc -l`
+echo
+echo "Tempfile length: ($total) *.lproj"
+
+
+##########################################################
+# 2. Delete all files
+##########################################################
+while IFS= read -r fname; do
+  ((i=i+1))
+
+  if [ ! -L "$fname" ]; then
+    sudo grm -rf "$fname" 2>/dev/null
+    # sudo grm -rf "$fname" | pv -l >/dev/null
+    retVal=$?
+
+    if [ $retVal -ne 0 ]; then
+      printf "[$i / $total] SIP Error:  \"$fname\" \n"
+    else
+      printf "[$i / $total] Removed \"$fname\" \n"
+    fi
+
+  else
+    printf "[$i / $total] Skipped symlink \"$fname\" \n"
+  fi
+
+
+done < "$tmpfile"
 
 #sudo gfind / -type d -regextype posix-egrep -regex '.*(ar|ca|cs|da|de|el|en_AU|es|es_419|fi|fr|fr_CA|he|hi|hr|hu|id|it|ja|ko|ms|nl|no|pl|pt|pt_PT|ro|ru|sk|th|tr|uk|vi|zh_CN|zh_HK|zh_TW|German|French|Japanese|Italian|Spanish|Dutch)\.lproj$' -delete
 
@@ -51,7 +104,7 @@ done
 # done
 
 echo
-dfc -Wsdliuh -q mount
+#dfc -Wsdliuh -q mount
 
 #find ~/code -type d -name node_modules | xargs rm -rfv
 #rm -rfv ~/.tmp/*
