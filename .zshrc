@@ -26,7 +26,8 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:1
 
 # Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
+#if ! zplug check --verbose; then
+if ! zplug check; then
     printf "Install? [y/N]: "
     if read -q; then
         echo; zplug install
@@ -84,4 +85,5 @@ chpwd_functions=( auto-cd $chpwd_functions )
 source "$HOME/.aliases"
 
 # Load zplug
-zplug load --verbose
+#zplug load --verbose
+zplug load
