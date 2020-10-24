@@ -2,5 +2,9 @@
 
 cd "$(dirname $0)"
 
-./ip.internal
+
+echo -n "Internal:    "
+ ./ip.internal
+
+echo -n "Public:      "
 ./ip.public

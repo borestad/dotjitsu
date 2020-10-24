@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+
+# ---------------------------------------------------------
+# HELPERS
+# ---------------------------------------------------------
+NUM_CORES=`getconf _NPROCESSORS_ONLN`
+
 # ---------------------------------------------------------
 # Globals & system overrids
 # ---------------------------------------------------------
@@ -45,6 +51,7 @@ alias wget='wget --no-check-certificate --no-verbose --compression auto'
 alias ws='ws -d'
 alias dfc='/usr/local/bin/dfc -Wdliuh -q mount -t apfs'
 cs () { cat "$@" | jase scripts 2>/dev/null | bat }
+alias sort="sort -S 50% --parallel=$NUM_CORES"
 
 #
 # fasd
@@ -112,12 +119,12 @@ function gthumbnails() {
 # ---------------------------------------------------------
 # GOTO aliases
 # ---------------------------------------------------------
-alias --="cd -"
+alias -- -="cd -"
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"
 alias ne="cd $HOME/netent"
-alias dj='code $HOME/.dotjitsu'
+alias dj="code $HOME/.private/dotjitsu.code-workspace"
 alias djp='git-pull $HOME/.dotjitsu; git-pull $HOME/.private;'
 
 alias gd="git diff -- :!package-lock.json :!yarn.lock"
@@ -176,6 +183,7 @@ alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --colo
 # ---------------------------------------------------------
 alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal gtee iTerm2 | tee fs_usage.log'
 spotlight.rebuild () { sudo mdutil -i off /; sudo rm -rf /.Spotlight*; sudo mdutil -i on /; sudo mdutil -E /; }
+spotlight.search () { mdfind . }
 
 
 # ---------------------------------------------------------
@@ -184,8 +192,9 @@ spotlight.rebuild () { sudo mdutil -i off /; sudo rm -rf /.Spotlight*; sudo mdut
 
 # Create directory and immediately move into that dir
 mk ()  { mkdir -p "$@" && cd "$_"; }
-mkt () { hr -; cd $(mktemp -d -p $HOME/tmp); pwd | tee /dev/tty | pbcopy; echo; }
-mktc () { cd $(mktemp -d) && pwd && hr - && clone $1 }
+mkt () { hr -; cd $(mktemp -d -p $HOME/tmp); pwd; echo; }
+mktcopy () { hr -; cd $(mktemp -d -p $HOME/tmp); pwd | tee /dev/tty | pbcopy; echo; }
+mktclone () { cd $(mktemp -d) && pwd && hr - && clone $1 }
 
 # Opens file in EDITOR.
 edit () {

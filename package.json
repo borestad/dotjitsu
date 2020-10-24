@@ -1,15 +1,16 @@
 {
   "dependencies": {
     "blend-promise-utils": "^1.27.0",
-    "debug": "^4.1.1",
-    "execa": "^4.0.0",
-    "exiftool-vendored": "^12.0.0",
-    "fdir": "^2.1.0",
+    "debug": "^4.2.0",
+    "execa": "^4.0.3",
+    "exiftool-vendored": "^12.2.0",
+    "fdir": "^4.1.0",
     "fluent-ffmpeg": "^2.1.2",
-    "fs-extra": "^9.0.0",
+    "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
-    "ora": "^1.3.0",
+    "ora": "^5.1.0",
     "p-map": "^4.0.0",
+    "picomatch": "^2.2.2",
     "touch": "^3.1.0"
   }
 }

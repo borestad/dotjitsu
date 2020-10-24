@@ -41,6 +41,7 @@ brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'cv'                           # Progress: Coreutils Progress Viewer
 brew 'dfc'                          # Display graphs and colors of file system space/usage
+brew 'dust'                         # More intuitive version of du in rust
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'entr'                         # Run arbitrary commands when files change
@@ -96,6 +97,7 @@ brew 'pngcheck'                     # Print info and check PNG, JNG, and MNG fil
 brew 'pngquant'                     # PNG image optimizing utility
 brew 'ppsspp'                       # PlayStation Portable emulator
 brew 'psgrep'                       # Shortcut for the 'ps aux | grep' idiom
+brew 'procs'                        # Modern replacement for ps written by Rust
 brew 'pv'                           # Monitor data's progress through a pipe
 brew 'pygments'                     # Generic syntax highlighter
 brew 'rdiff-backup'                 # Reverse differential backup tool, over a network or locally
@@ -106,19 +108,20 @@ brew 'rsync'                        # Utility that provides fast incremental fil
 brew 'Schniz/tap/fnm'               # Fast and simple Node.js version manager
 brew 'sd'                           # Intuitive find & replace CLI
 brew 'speedtest-cli'                # Command-line interface for https://speedtest.net bandwidth tests
+brew 'starship'                     # Cross-shell prompt for astronauts
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 brew 'stress'                       # Tool to impose load on and stress test a computer system
 brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
-brew 'svtplay-dl'
-brew 'sysbench'
+brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
+brew 'sysbench'                     # System performance benchmark tool
 brew 'tig'                          # Text interface for Git repositories
-brew 'tmux'
-brew 'trash'
-brew 'tree'
+brew 'tmux'                         # Terminal multiplexer
+brew 'tokei'                        # Program that allows you to count code, quickly
+brew 'trash'                        # CLI tool that moves files or folder to the trash
+brew 'tree'                         # Display directories as trees (with optional color/HTML output)
 brew 'unar'                         # Command-line unarchiving tools supporting multiple formats
 brew 'unison'                       # File synchronization tool for OSX
-brew 'unrar'
 brew 'vbindiff'                     # Visual Binary Diff
 brew 'vcsh'                         # Config manager based on git
 brew 'vnstat'                       # Console-based network traffic monitor
@@ -150,7 +153,7 @@ brew 'git-filter-repo'              # Quickly rewrite git repository history
 brew 'git-lfs'                      # Git extension for versioning large files
 brew 'git-plus'                     # Git utilities: git multi, git relation, git old-branches, git recent
 brew 'gitbatch'                     # Manage your git repositories in one place
-brew 'gh'
+brew 'gh'                           # GitHub command-line tool
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'mr'                           # Multiple Repository management tool
 
