@@ -22,7 +22,6 @@ brew 'python3'                      # Interpreted, interactive, object-oriented 
 # ================================
 #brew 'git-crypt'                    # Enable transparent encryption/decryption of files in a git repo
 
-#brew 'spot'
 #brew 'sshfs'                       # File system client based on SSH File Transfer Protocol
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew 'ag'                           # A code-searching tool similar to ack, but faster
@@ -41,9 +40,9 @@ brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'cv'                           # Progress: Coreutils Progress Viewer
 brew 'dfc'                          # Display graphs and colors of file system space/usage
-brew 'dust'                         # More intuitive version of du in rust
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
+brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
 brew 'exa'                          # Modern replacement for 'ls
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
@@ -67,6 +66,7 @@ brew 'httpry'                       # Packet sniffer for displaying and logging 
 brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
+brew 'mackup'                       # Keep your Mac's application settings in sync
 brew 'imageoptim-cli'               # CLI for ImageOptim, ImageAlpha and JPEGmini
 brew 'jid'                          # Json incremental digger
 brew 'jpeg'                         # Image manipulation library
@@ -77,6 +77,7 @@ brew 'lnav'                         # Curses-based tool for viewing and analyzin
 brew 'm-cli'                        # Swiss Army Knife for macOS
 brew 'mas'                          # Mac App Store command-line interface
 brew 'micro'                        # Modern and intuitive terminal-based text editor
+brew 'mmv'                          # Move, copy, append, and link multiple files
 brew 'most'                         # Powerful paging program
 brew 'mozjpeg'                      # Improved JPEG encoder
 brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
@@ -96,21 +97,22 @@ brew 'plzip'                        # Data compressor
 brew 'pngcheck'                     # Print info and check PNG, JNG, and MNG files
 brew 'pngquant'                     # PNG image optimizing utility
 brew 'ppsspp'                       # PlayStation Portable emulator
-brew 'psgrep'                       # Shortcut for the 'ps aux | grep' idiom
 brew 'procs'                        # Modern replacement for ps written by Rust
+brew 'psgrep'                       # Shortcut for the 'ps aux | grep' idiom
 brew 'pv'                           # Monitor data's progress through a pipe
 brew 'pygments'                     # Generic syntax highlighter
 brew 'rdiff-backup'                 # Reverse differential backup tool, over a network or locally
 brew 'rename'                       # Perl-powered file rename script with many helpful built-ins
+brew 'renameutils'                  # Tools for file renaming
 brew 'ripgrep'                      # Search tool like grep and The Silver Searcher
 brew 'rsnapshot'                    # File system snapshot utility (based on rsync)
 brew 'rsync'                        # Utility that provides fast incremental file transfer
 brew 'Schniz/tap/fnm'               # Fast and simple Node.js version manager
 brew 'sd'                           # Intuitive find & replace CLI
 brew 'speedtest-cli'                # Command-line interface for https://speedtest.net bandwidth tests
-brew 'starship'                     # Cross-shell prompt for astronauts
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
+brew 'starship'                     # Cross-shell prompt for astronauts
 brew 'stress'                       # Tool to impose load on and stress test a computer system
 brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
 brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
