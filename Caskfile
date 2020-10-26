@@ -29,6 +29,7 @@ cask 'appcleaner'
 cask 'authy'
 cask 'balenaetcher'
 cask 'charles'
+cask 'dbngin'
 cask 'docker'
 cask 'find-any-file'
 cask 'firefox'
@@ -62,6 +63,7 @@ cask 'transmission'
 cask 'transnomino'
 cask 'visual-studio-code'
 cask 'vlc'
+cask 'transmit'
 
 
 # ================================
