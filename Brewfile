@@ -138,6 +138,7 @@ brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
+brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
 
 # ================================
 # Databases & tools
