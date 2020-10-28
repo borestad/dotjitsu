@@ -351,7 +351,9 @@ vm.fusion () {
 # ---------------------------------------------------------
 file.size () { wc -c < $1 }
 # Monitor IO in real-time (open files etc).
-files.open () { sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }' }
+
+files.open () { ls }
+
 # Files used, anywhere on the filesystem
 alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
 # Files being opened (OSX Only)
