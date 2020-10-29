@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#find . -type f | tr '[:upper:]' '[:lower:]' | grep -E ".*\.[a-zA-Z0-9]*$" | sed -e 's/.*\(\.[a-zA-Z0-9]*\)$/\1/' | sort | uniq -c | sort -n
+
+#find . -type f | sed -r 's/.*\/([^\/]+)/\1/' | sed 's/^[^\.]*$/<EMPTY>/' | sed -r 's/.*(\.[^\.]+)$/\1/' | sort | uniq -c | sort -nr
+fd --type f --no-ignore --hidden  -E '.git' -E 'node_modules' \
+| sed -r 's/.*\/([^\/]+)/\1/' \
+| sed 's/^[^\.]*$/<EMPTY>/' \
+| sed -r 's/.*(\.[^\.]+)$/\1/' \
+| sort | uniq -c | sort -nr | bat -P -l=bash

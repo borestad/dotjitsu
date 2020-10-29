@@ -30,11 +30,11 @@
 
 [pager]
 	# insanely beautiful diffs ==> npm install -g diff-so-fancy
-	diff = diff-so-fancy# | less --tabs=4 -RFX
-	show = diff-so-fancy# | less --tabs=4 -RFX
+	#diff = diff-so-fancy# | less --tabs=4 -RFX
+	#show = diff-so-fancy# | less --tabs=4 -RFX
 
-[interactive]
-	diffFilter = diff-so-fancy
+# [interactive]
+# 	diffFilter = diff-so-fancy
 
 [color "branch"]
 	current = yellow reverse
@@ -148,17 +148,17 @@
 	pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 
 [core]
-	excludesfile = ~/.gitignore
-	editor = nano
-	ignorecase = false
-	pager = diff-so-fancy
+	#pager = diff-so-fancy
 	attributesfile = ~/.gitattributes
+	autocrlf = input
+	commitGraph = true
+	compression = 1
+	editor = nano
+	excludesfile = ~/.gitignore
+	ignorecase = false
 	packedGitLimit = 1512m
 	packedGitWindowSize = 1512m
-	compression = 1
-	autocrlf = input
 	quotepath = false
-	commitGraph = true
 
 [pack]
 	deltaCacheSize = 1024m
@@ -190,24 +190,27 @@ default = simple
 [include]
 	path = .gitconfig.user
 
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-	prompt = false
 
-[diff]
-	tool = smartsynchronize
 
-[difftool "smartsynchronize"]
-	# cmd = /Applications/SmartSynchronize.app/smartsynchronize.sh "$LOCAL" "$REMOTE"
-	cmd = /Applications/SmartSynchronize.app/Contents/MacOS/SmartSynchronize "$LOCAL" "$REMOTE"
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    features = side-by-side line-numbers decorations
+    whitespace-error-style = 22 reverse
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+
 
 [difftool]
 	prompt = false
-
-[mergetool "sourcetree"]
-	cmd = /Users/johan/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+	colorMoved = default
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -277,7 +280,7 @@ default = simple
 [rebase]
 	stat = true
 [credential]
-	helper = 
+	helper =
 	helper = manager-core
 [credential "https://dev.azure.com"]
 	useHttpPath = true

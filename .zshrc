@@ -13,7 +13,6 @@ export ZPLUG_HOME=$HOME/.repos/zplug
 # zmodload zsh/zprof
 
 source $ZPLUG_HOME/init.zsh
-source $HOME/.config/broot/launcher/bash/br
 
 #zplug "modules/prompt", from:prezto
 
@@ -26,8 +25,8 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:1
 
 # Install plugins if there are plugins that have not been installed
-#if ! zplug check --verbose; then
-if ! zplug check; then
+if ! zplug check --verbose; then
+# if ! zplug check; then
     printf "Install? [y/N]: "
     if read -q; then
         echo; zplug install
@@ -40,7 +39,7 @@ source ~/.private/.zshrc
 source "/usr/local/etc/grc.zsh"      # Colourify common commands (unalias things that breaks)
 
 # fnm (Fast Node Manager)
-eval "$(fnm env --multi)"      # Colourify common commands (unalias things that breaks)
+eval "$(fnm env)"      # Colourify common commands (unalias things that breaks)
 
 
 
@@ -80,10 +79,12 @@ auto-cd () {
 
 }
 
-chpwd_functions=( auto-cd $chpwd_functions )
+#chpwd_functions=( auto-cd $chpwd_functions )
 
-source "$HOME/.aliases"
+
 
 # Load zplug
-#zplug load --verbose
-zplug load
+zplug load --verbose
+# zplug load
+
+source "$HOME/.aliases"
