@@ -72,4 +72,4 @@ execSync(`ln -sfv ${DOTJITSU}/package-global.json ${HOME}/.config/yarn/package.j
 // # #ln -sfv -f $HOME/.repos/.tmux/.tmux.conf ~/// # #ln -sfv $DOTJITSU/packages/tmux/.tmux.conf.local ~/
 
 // # # Disable Last Login message with new tabs (i.e Last login: Wed Apr  4 09:36:35 on ttys013)
-// # touch ~/.hushlogin
+# touch ~/.hushlogin

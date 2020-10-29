@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+
+function count2() {
+  echo 'test'
+}
+
+for d in */ ; do
+        echo "❯ $d"
+        find $d -type f | sed -r 's/.*\/([^\/]+)/\1/' | sed "s/^[^\.]*$/''/" | sed -r 's/.*(\.[^\.]+)$/\1/' | sort | uniq -c | sort -nr | bat -P -l=bash
+#       files only      | keep filename only          | no ext -> '' ext   | keep part after . (i.e. ext) | count          | sort by count desc
+done
+
+
+#find . -type f | tr '[:upper:]' '[:lower:]' | grep -E ".*\.[a-zA-Z0-9]*$" | sed -e 's/.*\(\.[a-zA-Z0-9]*\)$/\1/' | sort | uniq -c | sort -n

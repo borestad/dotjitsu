@@ -21,11 +21,12 @@ alias ag='ag --stats'
 alias b='brew'
 alias bif='brew info'
 alias cat='bat'
+alias bat.preview='bat --list-themes | fzf --preview="bat --theme={} --color=always $HOME/.dotjitsu/package.json"'
 alias cgrep="grep --color=always"
 alias code='/usr/local/bin/code -n'
 alias cp='gcp -v'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
-alias ctp="bat package.json"
+alias ctp="bat package.json | jq"
 alias h="history | fzf --reverse"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias killall="killall -v"
@@ -44,7 +45,7 @@ alias rmf='grm -rfv'
 alias serve='ws -f stats -d '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias sqlite='sqlite3'
-alias sudo='nocorrect sudo\t'
+alias sudo='nocorrect sudo '
 alias vnstat='/usr/local/bin/vnstat -i en0'
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 alias wget='wget --no-check-certificate --no-verbose --compression auto'
@@ -52,6 +53,14 @@ alias ws='ws -d'
 alias dfc='/usr/local/bin/dfc -Wdliuh -q mount -t apfs'
 cs () { cat "$@" | jase scripts 2>/dev/null | bat }
 alias sort="sort -S 50% --parallel=$NUM_CORES"
+zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto }
+
+
+# ---------------------------------------------------------
+# Filters & Pipes
+# ---------------------------------------------------------
+alias filter-group-extension="sed -r 's/.*\/([^\/]+)/\1/' | sed "s/^[^\.]*$/''/" | sed -r 's/.*(\.[^\.]+)$/\1/' | sort | uniq -c | sort -nr | bat -P -l=bash"
+
 
 #
 # fasd
@@ -133,8 +142,7 @@ append() { grep -q -F $1 $2 || echo $1 >> $2 }
 alias exa='exa --group-directories-first'
 alias ls='gls --color --group-directories-first'
 alias l='ls -A'          # Lists in multi column, hidden files.
-#alias ll='ls -lAh'       # Lists in one column, hidden files.
-alias ll='exa -lah'       # Lists in one column, hidden files.
+alias ll='exa -lah'      # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
 alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
@@ -280,14 +288,37 @@ alias addkey="ssh.addkey"
 # GIT
 # ---------------------------------------------------------
 # Checkout git branches
-git.co () {
-  local branches branch
-  local date=$(date '+%Y-%m-%d %H:%M:%S')
-  local branches=$(git branch -a)
-  echo $date
-  branch=$(echo "$branches" | fzf +m -x -e --height=30 --reverse) &&
-  ~/.repos/git-friendly/stash && ~/.repos/git-friendly/branch $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::") && pull
+# git.co () {
+#   local branches branch
+#   local date=$(date '+%Y-%m-%d %H:%M:%S')
+#   local branches=$(git branch -a)
+#   echo $date
+#   branch=$(echo "$branches" | fzf +m -x -e --height=30 --reverse) &&
+#   ~/.repos/git-friendly/stash && ~/.repos/git-friendly/branch $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::") && pull
+# }
+
+git.co() {
+  result=$(git branch -a --color=always | grep -v '/HEAD\s' | sort |
+    fzf --height 50% --border --ansi --tac --preview-window right:70% \
+      --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+    sed 's/^..//' | cut -d' ' -f1)
+
+  if [[ $result != "" ]]; then
+    if [[ $result == remotes/* ]]; then
+      git checkout --track $(echo $result | sed 's#remotes/##')
+    else
+      git checkout "$result"
+    fi
+  fi
 }
+
+gf() {
+  git -c color.status=always status --short |
+  fzf --height 50% --border --ansi -multi --ansi --nth 2..,.. \
+    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
+  cut -c4- | sed 's/.* -> //'
+}
+
 
 alias co='git.co'
 
@@ -349,15 +380,14 @@ vm.fusion () {
 # ---------------------------------------------------------
 # File related stuff
 # ---------------------------------------------------------
+
 file.size () { wc -c < $1 }
 # Monitor IO in real-time (open files etc).
-
-files.open () { ls }
-
+files.open () { sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }' }
 # Files used, anywhere on the filesystem
 alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
 # Files being opened (OSX Only)
-alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
+# alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
 # Files in use in the Users directory
 alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
 
@@ -380,8 +410,9 @@ alias net.sockets_services='netstat -tulp'
 alias net.sniff0="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff1="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff4="sudo ngrep -d 'en4' -t '^(GET|POST) ' 'tcp and port 80'"
-alias net.flushdns='sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache'
-alias flushdns='net.flushdns'
+alias net.flushdns='flushdns'
+alias flushdns='sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache'
+
 
 # ---------------------------------------------------------
 # Compression
