@@ -70,7 +70,7 @@ auto-cd () {
 
   local dirs=`find . -maxdepth 1 -mindepth 1 -type d | wc -l`
   local files=`find . -maxdepth 1 -mindepth 1 -type f | wc -l`
-  local total=`find . -maxdepth 1 -mindepth 1| wc -l`
+  local total=`find . -maxdepth 1 -mindepth 1 | wc -l`
   #echo -e "$total items ($dirs dirs| $files files)"
 
   #local total=`memoize fd . $PWD | wc -l`
@@ -79,7 +79,7 @@ auto-cd () {
 
 }
 
-#chpwd_functions=( auto-cd $chpwd_functions )
+chpwd_functions=( auto-cd $chpwd_functions )
 
 
 

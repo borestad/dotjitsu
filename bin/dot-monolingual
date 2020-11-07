@@ -2,14 +2,14 @@
 
 # p=$0
 # LOCATION=${'test':-'apa'}
-LOCATION=${1:-`pwd`}
+LOCATION=${1:-$(pwd)}
 
 echo
 
 echo "Finding all *.lproj in $LOCATION"
 # Keep sv|en|en_GB|.lproj
 
-tmpfile=$(mktemp /tmp/monolingual-`date +%F--%H%M%S`.XXXXXX.txt)
+tmpfile=$(mktemp /tmp/monolingual-$(date +%F--%H%M%S).XXXXXX.txt)
 
 echo "Tempfile: $tmpfile"
 echo
@@ -36,12 +36,12 @@ EXCLUDE="**/System/**"
 # 1. Find all files
 ##########################################################
 sudo fd -td -u -aHI $REGEX "$LOCATION" -0 --one-file-system -E 'Volumes' -E 'System' -E 'usr' -E 'Safari.app' | while IFS= read -r -d '' fname; do
-  ((i=i+1))
+  ((i = i + 1))
   #(( $i % 100 == 0 )) && echo -n '⌘'
   echo -ne "$i |                                                                                                                                                                                                                                                                                     \r"
   echo -ne "$i | $fname\r"
 
-  echo $fname >> $tmpfile
+  echo $fname >>$tmpfile
   # # sudo xargs -0 grm -rfv #2>/dev/null
   # if [ ! -L "$fname" ]; then
   #   # sudo grm -rf "$fname" 2>/dev/null
@@ -59,16 +59,15 @@ sudo fd -td -u -aHI $REGEX "$LOCATION" -0 --one-file-system -E 'Volumes' -E 'Sys
   # fi
 done
 
-total=`cat $tmpfile | wc -l`
+total=$(cat $tmpfile | wc -l)
 echo
 echo "Tempfile length: ($total) *.lproj"
-
 
 ##########################################################
 # 2. Delete all files
 ##########################################################
 while IFS= read -r fname; do
-  ((i=i+1))
+  ((i = i + 1))
 
   if [ ! -L "$fname" ]; then
     sudo grm -rf "$fname" 2>/dev/null
@@ -85,11 +84,10 @@ while IFS= read -r fname; do
     printf "[$i / $total] Skipped symlink \"$fname\" \n"
   fi
 
-
-done < "$tmpfile"
+done \
+  <"$tmpfile"
 
 #sudo gfind / -type d -regextype posix-egrep -regex '.*(ar|ca|cs|da|de|el|en_AU|es|es_419|fi|fr|fr_CA|he|hi|hr|hu|id|it|ja|ko|ms|nl|no|pl|pt|pt_PT|ro|ru|sk|th|tr|uk|vi|zh_CN|zh_HK|zh_TW|German|French|Japanese|Italian|Spanish|Dutch)\.lproj$' -delete
-
 
 # sudo gfind / -type d -regextype posix-egrep -regex $REGEX -print0 | while read -d $'\0' file; do
 #   #echo $file
