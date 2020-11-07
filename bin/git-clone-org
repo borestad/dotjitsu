@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+
+OAUTH_TOKEN=
+ORG=$1
+
+if [ "$ORG" = "" ]; then
+  echo "ERROR: an organization needs to be provided" >&2
+  exit 1
+fi
+
+
+echo $ORG
+
+curl  -H "Authorization: token $OAUTH_TOKEN" -s https://api.github.com/orgs/$ORG/repos\?per_page\=200 | perl -ne 'print "$1\n" if (/"ssh_url": "([^"]+)/)' | xargs -n 1 git clone

@@ -2,14 +2,16 @@
 
 const { fdir } = require("fdir");
 const path = require('path')
-const dir = process.argv[2] || process.cwd()
+let dir = process.argv[2] || process.cwd()
+
+process.chdir(dir)
 
 const api = new fdir()
   .filter((path) => console.log(path) || path.startsWith("/System/Volumes"))
   .filter((path) => path.startsWith("/System/Volumes/Data"))
-  .withFullPaths()
-  .withDirs()
-  .crawl(dir);
+  .withBasePath()
+  // .withDirs()
+  .crawl('.');
 
 
 api.withPromise().then((files) => {

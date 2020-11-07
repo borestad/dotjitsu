@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+#
+# Usage: git-up
+#        git-reup
+#
+
+
+
+ARGS="$@"
+PATTERN=${1:-.*}
+LOCATION=${2:-`pwd`}
+
+echo "Current path: $PWD"
+echo "Locaction: $LOCATION"
+echo -e "Args: $PATTERN\n"
+
+cd "$LOCATION"
+fd --max-depth 1 -tf "$PATTERN" . -0 | while IFS= read -r -d '' fname; do
+
+  # Extract filename & extension
+  filename="${fname%%.*}"
+
+  #filename=$(basename -- "$fname")
+  #extension="${filename##*.}"
+  #filename="${filename%.*}"
+
+  #hr -
+  #7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on "$filename.7z" "$fname"
+  #hr -
+
+  pigz -k -9 -v "$fname"
+
+  # Multithreaded
+  #7z a -t7z -mx=9 -m9=LZMA2 -mmt=15 "$filename-2.7z" "$fname"
+
+  # 7z a -t7z -m0=brotli -mx=1 "$filename.7z" "$fname"
+  #7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on "$filename.7z" "$fname"
+
+
+done
+
+
+# mkdir -p 7z
+# mkdir -p gz
+
+# mv *.7z 7z
+# mv *.gz gz
+
+#7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on archive.7z dir1

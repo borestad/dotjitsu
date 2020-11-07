@@ -39,7 +39,7 @@ alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
 alias pgrep='pgrep -fli'
 alias python=/usr/local/bin/python3.7
-alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch"
+alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch -vf"
 alias rm='grm -v'
 alias rmf='grm -rfv'
 alias serve='ws -f stats -d '
@@ -51,9 +51,12 @@ alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simu
 alias wget='wget --no-check-certificate --no-verbose --compression auto'
 alias ws='ws -d'
 alias dfc='/usr/local/bin/dfc -Wdliuh -q mount -t apfs'
-cs () { cat "$@" | jase scripts 2>/dev/null | bat }
+cs () { bat "$@" | jq '.scripts' 2>/dev/null }
 alias sort="sort -S 50% --parallel=$NUM_CORES"
 zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto }
+#alias todo="ag --color-line-number '1;36' --color-path '1;36' --ignore-case  --silent '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))'"
+alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
+alias qmv='qmv -e "subl -w -n" -f destination-only'
 
 
 # ---------------------------------------------------------
