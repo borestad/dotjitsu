@@ -23,7 +23,7 @@ brew install \
 	htop ncdu tig git hr mr zplug coreutils binutils findutils \
 	Schniz/tap/fnm
 
-eval "$(fnm env --multi)"
+eval "$(fnm env)"
 
 fnm install
 fnm use 12.16.1

@@ -143,3 +143,14 @@ $RECYCLE.BIN/
 *.map
 
 **/vendor/**
+
+
+# Yarn: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.yarn/*
+!.yarn/cache
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+

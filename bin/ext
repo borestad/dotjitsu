@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 
+tempfile=`mktemp /tmp/ext.XXXXXXXXXXXXXXXXXXXXXXX.txt`
 
-function count2() {
-  echo 'test'
-}
+# Optimize by writing to file in one huge chunk
+fd -a -i --type f --no-ignore --hidden  --one-file-system -E '.git' -E 'node_modules' -E '**cache**' \
+  | tee >( tac > $tempfile ) &> /dev/null
 
-for d in */ ; do
-        echo "❯ $d"
-        find $d -type f | sed -r 's/.*\/([^\/]+)/\1/' | sed "s/^[^\.]*$/''/" | sed -r 's/.*(\.[^\.]+)$/\1/' | sort | uniq -c | sort -nr | bat -P -l=bash
-#       files only      | keep filename only          | no ext -> '' ext   | keep part after . (i.e. ext) | count          | sort by count desc
-done
+(
+  rg -N -I '^(.*/)([^/]+)$' -r '$2' |                     # Remove all paths (keep filenames only)
+  rg -N -I '^[^\.]*$' -r '$0.<NO_EXTENSION>' --passthru | # Normalize files with no extension
+  rg -N -I '.*(\.[^\.]+)$' -r '$1' |                      # Strip filenames (but keep extension)
+  sort | uniq -c | sort -nr | tac | bat -P -l=bash        # Sort / Uniq / Output / Prettify
+) < "$tempfile"
 
 
-#find . -type f | tr '[:upper:]' '[:lower:]' | grep -E ".*\.[a-zA-Z0-9]*$" | sed -e 's/.*\(\.[a-zA-Z0-9]*\)$/\1/' | sort | uniq -c | sort -n
+echo -e "\nTotal `wc -l < $tempfile` files"
+
+rm $tempfile

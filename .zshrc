@@ -3,6 +3,28 @@
 ulimit -n 10000
 # zmodload zsh/zprof
 
+#source "$HOME/.env"
+
+unsetopt correct              # Disable ZSH annoying auto correct
+unsetopt nomatch              # Disable ZSH annoying glob error
+
+setopt APPEND_HISTORY         # Adds history
+setopt COMPLETE_IN_WORD
+setopt EXTENDED_HISTORY       # Record timestamp of command in HISTFILE
+setopt HIST_IGNORE_ALL_DUPS   # Don't record dupes in history
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
+setopt IGNORE_EOF
+setopt INC_APPEND_HISTORY
+setopt LOCAL_TRAPS            # Allow functions to have local traps
+setopt NO_HUP
+setopt NO_LIST_BEEP
+setopt PROMPT_SUBST
+setopt SHARE_HISTORY          # Share history between sessions ???
+
+#setopt NO_BG_NICE         # Don't nice background tasks
+# setopt LOCAL_OPTIONS     # Allow functions to have local options (breaks directory plugin)
+
 # ----------------------------------------------------------------------------
 # Zplug
 # ----------------------------------------------------------------------------
@@ -14,14 +36,11 @@ export ZPLUG_HOME=$HOME/.repos/zplug
 
 source $ZPLUG_HOME/init.zsh
 
-#zplug "modules/prompt", from:prezto
-
-
-
 zplug "sorin-ionescu/prezto"
 zplug "eth-p/bat-extras"
 zplug "unixorn/git-extra-commands"
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+# zplug "wookayin/fzf-fasd"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:1
 
 # Install plugins if there are plugins that have not been installed
@@ -35,13 +54,10 @@ fi
 
 
 source "${ZDOTDIR:-$HOME}/.env"
-source ~/.private/.zshrc
-source "/usr/local/etc/grc.zsh"      # Colourify common commands (unalias things that breaks)
-
-# fnm (Fast Node Manager)
-eval "$(fnm env)"      # Colourify common commands (unalias things that breaks)
-
-
+source $HOME/.private/.zshrc
+source "/usr/local/etc/grc.zsh"       # Colourify common commands (unalias things that breaks)
+eval "$(fnm env)"                     # fnm (Fast Node Manager)
+eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 
 # ----------------------------------------------------
 # Tmux
@@ -57,29 +73,9 @@ eval "$(fnm env)"      # Colourify common commands (unalias things that breaks)
 
 
 # Colors
-eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 
-# Automatically list directory contents on `cd`.
-auto-cd () {
-  emulate -L zsh;
-  # explicit sexy ls'ing as aliases arent honored in here.
-  #hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -AFh --color --group-directories-first || ls -A
-  exa -a --group-directories-first
-  [ -f "package.json" ] && cs package.json
-  [ -d ".git" ] && git recent
 
-  local dirs=`find . -maxdepth 1 -mindepth 1 -type d | wc -l`
-  local files=`find . -maxdepth 1 -mindepth 1 -type f | wc -l`
-  local total=`find . -maxdepth 1 -mindepth 1 | wc -l`
-  #echo -e "$total items ($dirs dirs| $files files)"
 
-  #local total=`memoize fd . $PWD | wc -l`
-  echo -e "\n$dirs directories, $files files, $total total"
-  #echo -e "`files.last_modified_directory`"
-
-}
-
-chpwd_functions=( auto-cd $chpwd_functions )
 
 
 
@@ -88,3 +84,5 @@ zplug load --verbose
 # zplug load
 
 source "$HOME/.aliases"
+source $DOTJITSU/._keybindings
+source $DOTJITSU/._hooks

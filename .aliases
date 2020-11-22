@@ -1,35 +1,51 @@
 #!/usr/bin/env bash
 
 
-# ---------------------------------------------------------
-# HELPERS
-# ---------------------------------------------------------
+# =============================================================================
+# ✨ HELPERS
+# =============================================================================
 NUM_CORES=`getconf _NPROCESSORS_ONLN`
 
-# ---------------------------------------------------------
-# Globals & system overrids
-# ---------------------------------------------------------
-#alias ncdu="ncdu -x -1bre"
-#alias git=hub
+# =============================================================================
+# ✨ Globals & overrides
+# =============================================================================
+alias ag='ag --stats'
+alias code='/usr/local/bin/code -n'
+alias killall="killall -v"
+
+# =============================================================================
+# ✨ Shortcut & Utils
+# =============================================================================
+
 alias ..="cd .."
 alias ...='cd ../../'
 alias ..2="cd ../.."
 alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
-alias ag='ag --stats'
+
+alias python='/usr/local/bin/python3.7'
+alias sqlite='sqlite3'
+
+
+# =============================================================================
+# ✨ CoreUtils
+# =============================================================================
+alias rm='grm -v'
+alias rmf='grm -rfv'
+
 alias b='brew'
 alias bif='brew info'
 alias cat='bat'
 alias bat.preview='bat --list-themes | fzf --preview="bat --theme={} --color=always $HOME/.dotjitsu/package.json"'
 alias cgrep="grep --color=always"
-alias code='/usr/local/bin/code -n'
+
 alias cp='gcp -v'
 alias crontab='VISUAL=nano EDITOR=nano crontab'
 alias ctp="bat package.json | jq"
 alias h="history | fzf --reverse"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
-alias killall="killall -v"
+
 alias mkdir='gmkdir -pv'
 alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 alias mv='gmv -v'
@@ -38,30 +54,32 @@ alias ncdu2="/usr/local/bin/ncdu"
 alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
 alias pgrep='pgrep -fli'
-alias python=/usr/local/bin/python3.7
+
 alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch -vf"
-alias rm='grm -v'
-alias rmf='grm -rfv'
 alias serve='ws -f stats -d '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
-alias sqlite='sqlite3'
+
 alias sudo='nocorrect sudo '
 alias vnstat='/usr/local/bin/vnstat -i en0'
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 alias wget='wget --no-check-certificate --no-verbose --compression auto'
 alias ws='ws -d'
 alias dfc='/usr/local/bin/dfc -Wdliuh -q mount -t apfs'
-cs () { bat "$@" | jq '.scripts' 2>/dev/null }
+cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null }
 alias sort="sort -S 50% --parallel=$NUM_CORES"
 zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto }
 #alias todo="ag --color-line-number '1;36' --color-path '1;36' --ignore-case  --silent '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))'"
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias qmv='qmv -e "subl -w -n" -f destination-only'
+touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
+
+#alias ncdu="ncdu -x -1bre"
+#alias git=hub
 
 
-# ---------------------------------------------------------
-# Filters & Pipes
-# ---------------------------------------------------------
+# ⚡️ =============================================================================
+# ️️⚡️ Filters & Pipes
+# ⚡️ =============================================================================
 alias filter-group-extension="sed -r 's/.*\/([^\/]+)/\1/' | sed "s/^[^\.]*$/''/" | sed -r 's/.*(\.[^\.]+)$/\1/' | sort | uniq -c | sort -nr | bat -P -l=bash"
 
 
@@ -128,9 +146,11 @@ function gthumbnails() {
     ffmpeg -ss 1 -i "$file" -vframes 1 -vcodec png -an -y "${file%.mp4}.png"
   done
 }
-# ---------------------------------------------------------
+
+
+# =============================================================================
 # GOTO aliases
-# ---------------------------------------------------------
+# =============================================================================
 alias -- -="cd -"
 alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
@@ -144,7 +164,7 @@ append() { grep -q -F $1 $2 || echo $1 >> $2 }
 
 alias exa='exa --group-directories-first'
 alias ls='gls --color --group-directories-first'
-alias l='ls -A'          # Lists in multi column, hidden files.
+alias l='exa -Ga'          # Lists in multi column, hidden files.
 alias ll='exa -lah'      # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
@@ -156,9 +176,9 @@ alias lc='lt -c'         # Lists sorted by date, most recent last, shows change 
 alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
 alias sl='ls'            # I often screw this up.
 
-# ---------------------------------------------------------
+# =============================================================================
 # Gnu utils (to enforce presedence)
-# ---------------------------------------------------------
+# =============================================================================
 alias xargs='/usr/local/bin/gxargs'
 alias find='/usr/local/bin/gfind'
 alias locate='/usr/local/bin/glocate'
@@ -166,9 +186,9 @@ alias updatedb='/usr/local/bin/gupdatedb'
 
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # Find
-# ---------------------------------------------------------
+# =============================================================================
 ff () {
   IFS=""
   local result=`fd $1`
@@ -189,21 +209,22 @@ alias qfih='find $( pwd )  -follow -name "*.h" 2>/dev/null | xargs grep --color 
 alias qfis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h" 2>/dev/null | xargs grep --color  -e '
 alias qfif='find $( pwd ) -follow -type f  2>/dev/null| xargs grep --color -e '
 alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --color  -e '
-# ---------------------------------------------------------
+# =============================================================================
 # Others
-# ---------------------------------------------------------
+# =============================================================================
 alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal gtee iTerm2 | tee fs_usage.log'
 spotlight.rebuild () { sudo mdutil -i off /; sudo rm -rf /.Spotlight*; sudo mdutil -i on /; sudo mdutil -E /; }
 spotlight.search () { mdfind . }
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # Boilerplate shortcuts
-# ---------------------------------------------------------
+# =============================================================================
 
 # Create directory and immediately move into that dir
 mk ()  { mkdir -p "$@" && cd "$_"; }
-mkt () { hr -; cd $(mktemp -d -p $HOME/tmp); pwd; echo; }
+mkt () { hr -; cd $(mktemp -d); pwd; echo; }
+mktt () { hr -; cd $(mktemp -d -p $HOME/tmp); pwd; echo; }
 mktcopy () { hr -; cd $(mktemp -d -p $HOME/tmp); pwd | tee /dev/tty | pbcopy; echo; }
 mktclone () { cd $(mktemp -d) && pwd && hr - && clone $1 }
 
@@ -237,9 +258,9 @@ fi
 
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # Cli Tricks
-# ---------------------------------------------------------
+# =============================================================================
 alias history.stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head -n 50"
 
 die () {
@@ -248,9 +269,9 @@ die () {
 }
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # OSX tricks
-# ---------------------------------------------------------
+# =============================================================================
 
 # Open curr dir in preview.app.
 osx.openPreview () {
@@ -271,9 +292,9 @@ EOF
 # Lock current session and proceed to the login screen.
 alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 
-# ---------------------------------------------------------
+# =============================================================================
 # SSH
-# ---------------------------------------------------------
+# =============================================================================
 ssh.addkey () {
   # ssh $1 "tee -a ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub
   ssh $1 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub  # '?sa' is a glob, not a typo!
@@ -287,9 +308,9 @@ alias addkey="ssh.addkey"
 
 
 
-# ---------------------------------------------------------
-# GIT
-# ---------------------------------------------------------
+# =============================================================================
+#  ✨ GIT
+# =============================================================================
 # Checkout git branches
 # git.co () {
 #   local branches branch
@@ -330,9 +351,9 @@ alias co='git.co'
 #alias gho='(cd $(ghq list --full-path | fzf) && git browse)'
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # CD
-# ---------------------------------------------------------
+# =============================================================================
 # cd to the default working directory set by current_working_project
 chdir.default () {
   export wdir=`cat $HOME/.tmp/current_project_path`
@@ -350,9 +371,9 @@ chdir.rm () {
   '~' >> $HOME/.tmp/current_project_path
 }
 
-# ---------------------------------------------------------
+# =============================================================================
 # System stuff
-# ---------------------------------------------------------
+# =============================================================================
 
 # Load 8 cores at once.
 system.maxcpu () {
@@ -361,9 +382,9 @@ system.maxcpu () {
 
 ps.kill () { kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
 
-# ---------------------------------------------------------
+# =============================================================================
 # Lists (with fzf magic)
-# ---------------------------------------------------------
+# =============================================================================
 # List of available VM's - with fbr magic
 vm.vbox () {
   vm=$(VBoxManage list vms | fzf +s +m -e --reverse) &&
@@ -380,9 +401,9 @@ vm.fusion () {
 
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # File related stuff
-# ---------------------------------------------------------
+# =============================================================================
 
 file.size () { wc -c < $1 }
 # Monitor IO in real-time (open files etc).
@@ -402,9 +423,9 @@ ddd() {
   sudo sh -c "$cmd"
 }
 
-# ---------------------------------------------------------
+# =============================================================================
 # Network stuff
-# ---------------------------------------------------------
+# =============================================================================
 alias net.connections='lsof -l -i +L -R -V'
 alias net.established='lsof -l -i +L -R -V | grep ESTABLISHED'
 alias net.available_ip="ping -t 1 255.255.255.255 > /dev/null; arp -a"
@@ -417,9 +438,9 @@ alias net.flushdns='flushdns'
 alias flushdns='sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache'
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # Compression
-# ---------------------------------------------------------
+# =============================================================================
 
 z1 () {
   local input=$1; local output=${2:-$1}.tar.gz
@@ -440,9 +461,9 @@ z3 () {
 
 alias xtract='unar'
 
-# ---------------------------------------------------------
+# =============================================================================
 # Useful file size aliases
-# ---------------------------------------------------------
+# =============================================================================
 
 randfile () {
   local size=$1
@@ -462,21 +483,22 @@ size_in_bytes () { stat -f %z "$1" }
 echo_size () { echo $(format_number $(to_kb $(size_in_bytes "$1")))"kB" }
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # TMUX
-# ---------------------------------------------------------
+# =============================================================================
 ta_function() { tmux attach -t $1 }
 tk_function() { tmux kill-session -t $1 }
-alias t='tmux'
+
+alias tm='tmux'
 alias 'tmux-new'='tmux new-session -A -s $(basename $PWD | tr -d .)'
 alias 'tmux-ls'='tmux ls'
 alias 'tmux-attach'=ta_function
 alias 'tmux-at'=ta_function
 alias 'tmux-kill'=tk_function
 
-# ---------------------------------------------------------
+# =============================================================================
 # FZF
-# ---------------------------------------------------------
+# =============================================================================
 
 # Fuzzy match against history, edit selected value
 fhist() {
@@ -496,24 +518,25 @@ fhist() {
 #     && cd "$DIR"
 # }
 
-# fkill - kill process
+
 fkill() {
+  # fkill - kill processes
   ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
 }
 
-# fe [FUZZY PATTERN] - Open the selected file with the default editor
-#   - Bypass fuzzy finder if there's only one match (--select-1)
-#   - Exit if there's no match (--exit-0)
 fe() {
+  # fe [FUZZY PATTERN] - Open the selected file with the default editor
+  #   - Bypass fuzzy finder if there's only one match (--select-1)
+  #   - Exit if there's no match (--exit-0)
   local file
   file=$(fzf-tmux --query="$1" --select-1 --exit-0)
   [ -n "$file" ] && ${EDITOR:-vim} "$file"
 }
 
-# Modified version where you can press
-#   - CTRL-O to open with `open` command,
-#   - CTRL-E or Enter key to open with the $EDITOR
 fo() {
+  # Modified version where you can press
+  #   - CTRL-O to open with `open` command,
+  #   - CTRL-E or Enter key to open with the $EDITOR
   local out file key
   out=$(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)
   key=$(head -1 <<< "$out")
@@ -532,9 +555,9 @@ ft() {
 }
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # GHQ (Git util)
-# ---------------------------------------------------------
+# =============================================================================
 ghq () {
   # https://fotoallerlei.com/post/2019-09-29-ghq/#change-the-ghq-root-directory
   if [ "$1" = look -a -n "$2" ]; then
@@ -567,9 +590,9 @@ ghq () {
 alias gsa='git submodule add'
 
 
-# ---------------------------------------------------------
+# =============================================================================
 # WGET
-# ---------------------------------------------------------
+# =============================================================================
 crwl() {
   wget --tries=inf --timestamping --recursive --level=inf --convert-links --page-requisites --no-parent --reject-regex '\?C=' "$@"
 }
