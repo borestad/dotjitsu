@@ -9,4 +9,4 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # fnm (Fast Node Manager)
-eval "$(fnm env --multi)"      # Colourify common commands (unalias things that breaks)
+eval "$(fnm env)"      # Colourify common commands (unalias things that breaks)

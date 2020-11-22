@@ -24,6 +24,7 @@ brew 'python3'                      # Interpreted, interactive, object-oriented 
 
 #brew 'sshfs'                       # File system client based on SSH File Transfer Protocol
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
+brew 'ack'                          # Search tool like grep, but optimized for programmer
 brew 'ag'                           # A code-searching tool similar to ack, but faster
 brew 'archey'                       # Graphical system information display for macOS
 brew 'aria2'                        # Download with resuming and segmented downloading
@@ -88,6 +89,7 @@ brew 'nginx'                        # HTTP(S) server and reverse proxy, and IMAP
 brew 'ngrep'                        # Network grep
 brew 'nload'                        # Realtime console network usage monitor
 brew 'nmap'                         # Port scanning utility for large networks
+brew 'noti'                         # Trigger notifications when a process completes
 brew 'optipng'                      # PNG file optimizer
 brew 'pbzip2'                       # Parallel bzip2
 brew 'pgrep'                        # OpenBSD and Darwin versions of pgrep, pkill, and pfind
@@ -109,7 +111,9 @@ brew 'rsnapshot'                    # File system snapshot utility (based on rsy
 brew 'rsync'                        # Utility that provides fast incremental file transfer
 brew 'Schniz/tap/fnm'               # Fast and simple Node.js version manager
 brew 'sd'                           # Intuitive find & replace CLI
+brew 'sk'                           # Fuzzy Finder in rust!
 brew 'speedtest-cli'                # Command-line interface for https://speedtest.net bandwidth tests
+brew 'teamookla/speedtest'                # Command-line interface for https://speedtest.net bandwidth tests
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 brew 'starship'                     # Cross-shell prompt for astronauts
@@ -160,6 +164,8 @@ brew 'git-plus'                     # Git utilities: git multi, git relation, gi
 brew 'gitbatch'                     # Manage your git repositories in one place
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'mr'                           # Multiple Repository management tool
+brew 'pygitup'                      # Nicer 'git pull'
+
 
 
 #tap 'gitea/tap', 'https://gitea.com/gitea/homebrew-gitea'

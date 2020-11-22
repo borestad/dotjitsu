@@ -1,0 +1,129 @@
+#!/usr/bin/env ts-node
+//  Example: https://blog.logrocket.com/generating-video-previews-with-node-js-and-ffmpeg/
+
+process.env.DEBUG = '*convert*'
+
+const ffmpeg = require('fluent-ffmpeg')
+const glob = require('glob')
+const util = require('util').promisify
+const fs = require('fs-extra')
+const path = require('path')
+const touch = require('touch')
+const debug = require('debug')
+const pu = require('blend-promise-utils')
+const pmap = require('p-map')
+const execa = require('execa')
+
+const exiftool = require('exiftool-vendored').exiftool
+
+// Collect info
+// ===
+const candidates = async () =>
+  await glob
+    .sync('**/*.{MOV,mov,avi,AVI,mpg,MPG,mp4}')
+    // .sync('**/*.{mpg,MPG}')
+    .filter((fpath) => !/-q|Nikon/.test(fpath))
+
+// const toAdd = candidates.filter(x => !existing.includes(x))
+
+async function fileInfo(file) {
+  // Take deep paths into considerations
+  const p = path.parse(file)
+  const input = path.join(p.dir, p.base)
+
+  const exif = await exiftool.read(input)
+  const date = exif.MediaCreateDate || exif.DateTimeOriginal
+
+  // console.log(date.rawValue)
+  // console.log(exif['CreateDate: ExifDateTime'])
+  try {
+    date.rawValue
+  } catch (error) {
+    // console.log('ERROR --------------')
+    // console.log(exif)
+  }
+
+  // console.log(exif.CreateDate.year)
+
+  return {
+    input,
+  }
+}
+
+
+  const tmpInfoFile = `${output}.txt`
+  const newOutput = output.replace('.mp4', '-metadata.mp4')
+
+  await execa('mp4extract', ['moov/udta', input, tmpInfoFile])
+    .then(() => {
+      console.log(`Found: moov/udta data available for: ${input}`)
+    })
+    .catch(() => {})
+
+  await execa('mp4extract', ['moov/meta', input, tmpInfoFile])
+    .then(() => {
+      console.log(`Found: moov/meta data available for: ${input}`)
+    })
+    .catch(() => {})
+
+  if (fs.existsSync(tmpInfoFile)) {
+    console.log('Inject Metadata:')
+    console.log('data:', tmpInfoFile)
+    console.log('from:', output)
+    console.log('to:   ', newOutput)
+    await execa('mp4edit', ['--insert', `moov:${tmpInfoFile}`, output, newOutput]).catch(
+      console.error
+    )
+
+    await fs.unlink(tmpInfoFile).catch(console.error)
+    await fs.unlink(output).catch(console.error)
+    await fs.rename(newOutput, output).catch(console.error)
+  } else {
+    console.log('Skip injecting metadata')
+    // await fs.rename(newOutput, output).catch(console.error)
+  }
+
+  try {
+    // await fs.unlink(output).catch(console.error)
+    // await fs.rename(newOutput, output).catch(console.error)
+  } catch (error) {
+    // console.log(e)
+  }
+}
+
+async function run() {
+  console.log('Scanning video files...')
+  const files = await candidates()
+  STORE.candidates = files.length
+
+  console.log(`...${files.length} videos found`)
+  const videos = await files.map(fileInfo)
+
+  // https://video.stackexchange.com/questions/23741/how-to-prevent-ffmpeg-from-dropping-metadata
+  // exiftool -TagsFromFile a.MOV "-all:all>all:all" c.MOV
+
+  let j = 0
+
+  const mapper = async (video) => {
+    console.log(`🍿 ${++j}`.padEnd(5), video)
+
+    if (!video.exists) {
+      await convert(video.input, video.output).catch((error) => {
+        console.log('---- ERROR ----')
+        console.error(error)
+      })
+
+      await copyTags(video.input, video.output)
+    } else {
+    }
+
+    // console.log( `🍿 ${++j}`.padEnd(5), video)
+    return video
+  }
+
+  await pmap(videos, mapper, { concurrency: 1 })
+
+  exiftool.end()
+}
+
+run()

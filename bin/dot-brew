@@ -33,7 +33,8 @@ echo "✨ brew cleanup"
 # Cache API-reponses
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew API"
-cd ~/.config
+
+mkdir -p ~/.config/cache && cd "$_"
 /usr/local/bin/wget https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && mv brew-formula.json.tmp brew-formula.json
 /usr/local/bin/wget https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && mv brew-cask.json.tmp brew-cask.json
 

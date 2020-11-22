@@ -19,6 +19,7 @@ echo "Pulling in latest changes for all repositories..."
 
 # Find all git repositories and update it to the master latest revision
 for i in $(find . -type d -name ".git" | cut -c 3-); do
+    hr -
     echo "⭐️ $i";
     echo ;
 
