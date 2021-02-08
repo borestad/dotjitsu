@@ -7,4 +7,4 @@ fd -i --type f --no-ignore --hidden  -E '.git' -E 'node_modules' -E '**cache**' 
 | sed -r 's/.*\/([^\/]+)/\1/' \
 | sed 's/^[^\.]*$/<NO_EXTENSION>/' \
 | sed -r 's/.*(\.[^\.]+)$/\1/' \
-| sort | uniq -c | sort -nr | bat -P -l=bash
+| sort | uniq -c | sort -nr | tac | bat -P -l=bash

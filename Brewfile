@@ -16,6 +16,7 @@ brew 'git'
 brew 'golang'
 brew 'python'                       # Interpreted, interactive, object-oriented programming language
 brew 'python3'                      # Interpreted, interactive, object-oriented programming language
+brew 'rust'                         # Safe, concurrent, practical language
 
 # ================================
 # CLI stuff
@@ -107,13 +108,14 @@ brew 'rdiff-backup'                 # Reverse differential backup tool, over a n
 brew 'rename'                       # Perl-powered file rename script with many helpful built-ins
 brew 'renameutils'                  # Tools for file renaming
 brew 'ripgrep'                      # Search tool like grep and The Silver Searcher
+brew 'ripgrep-all'                  # Wrapper around ripgrep that adds multiple rich file types
 brew 'rsnapshot'                    # File system snapshot utility (based on rsync)
 brew 'rsync'                        # Utility that provides fast incremental file transfer
 brew 'Schniz/tap/fnm'               # Fast and simple Node.js version manager
 brew 'sd'                           # Intuitive find & replace CLI
 brew 'sk'                           # Fuzzy Finder in rust!
 brew 'speedtest-cli'                # Command-line interface for https://speedtest.net bandwidth tests
-brew 'teamookla/speedtest'                # Command-line interface for https://speedtest.net bandwidth tests
+brew 'teamookla/speedtest'          # Command-line interface for https://speedtest.net bandwidth tests
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 brew 'starship'                     # Cross-shell prompt for astronauts

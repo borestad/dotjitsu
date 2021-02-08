@@ -2,19 +2,18 @@
 
 // https://stackoverflow.com/questions/3040677/locale-codes-for-iphone-lproj-folders
 
-const { fdir } = require("fdir");
 const path = require('path')
+const { fdir } = require('fdir')
 
-
-const REGEX=/.*(am|ar|ca|cs|bn|bg|cy|da|de|el|eu|et|en_AU|en_JP|en_CN|en_SG|en_IN|en_CA|es|es|fa|fi|fr|fil|fr|gu|gre|he|hi|hr|hu|id|it|is|ja|ko|kn|ku|lv|lt|ms|ml|mr|nl|nb|no|mai|pa|pl|pt|pt|ro|ru|sk|sr|sl|sw|ta|te|th|tr|uk|vi|zh|zh|yue|German|French|Japanese|Italian|Spanish|Dutch|latin|Latn|valencia)([_-]\w+)?\.lproj$/i
+const REGEX = /.*(am|ar|ca|cs|bn|bg|cy|da|de|el|eu|et|en_AU|en_JP|en_CN|en_SG|en_IN|en_CA|es|es|fa|fi|fr|fil|fr|gu|gre|he|hi|hr|hu|id|it|is|ja|ko|kn|ku|lv|lt|ms|ml|mr|nl|nb|no|mai|pa|pl|pt|pt|ro|ru|sk|sr|sl|sw|ta|te|th|tr|uk|vi|zh|zh|yue|German|French|Japanese|Italian|Spanish|Dutch|latin|Latn|valencia)([_-]\w+)?\.lproj$/i
 
 // create the builder
 const api = new fdir()
   // .glob("*.lproj")
   // .filter((path) => path.endsWith(".lproj"))
-  .withFullPaths()
-  .withDirs()
-  .crawl('.');
+  // .withFullPaths()
+  // .withDirs()
+  .crawl('.')
 
 // get all files in a directory synchronously
 // const files = api.sync();
@@ -23,24 +22,19 @@ const api = new fdir()
 api.withPromise().then((files) => {
   // do something with the result here.
   // console.log(files.length)
-
-
   // for (let i = 0; i < 100; i++) {
   //   console.log(files[i])
   // }
   // files.forEach(x => {
   //   console.log(x)
   // })
-
   // let lprojs = files.filter(x => x.endsWith('.lproj'))
   // let lprojs2 = lprojs.filter(x => !REGEX.test(x))
-
   // for (let x of lprojs2) {
   //   // console.log(x)
   //   console.log(path.basename(x))
   // }
-
-});
+})
 
 /*
 | lproj identifiers              | L#  | C#  | Display name               |

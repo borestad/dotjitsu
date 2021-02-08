@@ -36,6 +36,7 @@ alias rmf='grm -rfv'
 
 alias b='brew'
 alias bif='brew info'
+alias cask='brew install --cask'
 alias cat='bat'
 alias bat.preview='bat --list-themes | fzf --preview="bat --theme={} --color=always $HOME/.dotjitsu/package.json"'
 alias cgrep="grep --color=always"
@@ -238,6 +239,7 @@ edit () {
 
 alias e='edit'
 alias zr='echo "Reloading zsh..."; rm -fv ~/.zcompdump*; reset; exec $SHELL -l;'
+alias zra='echo "Reloading aliases..."; source ~/.aliases;'
 alias reload='zr'
 alias reloadshell='zr'
 
@@ -295,16 +297,16 @@ alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resourc
 # =============================================================================
 # SSH
 # =============================================================================
-ssh.addkey () {
+addkey () {
   # ssh $1 "tee -a ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub
   ssh $1 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_?sa.pub  # '?sa' is a glob, not a typo!
   echo "sshkey done."
 }
 
-alias ssh.pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
-alias ssh.keygen='ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa; ssh.pubkey'
-alias pubkey="ssh.pubkey"
-alias addkey="ssh.addkey"
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+alias keygen='ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa; ssh.pubkey'
+alias ssh.pubkey="pubkey"
+alias ssh.addkey="addkey"
 
 
 
@@ -322,10 +324,10 @@ alias addkey="ssh.addkey"
 # }
 
 git.co() {
-  result=$(git branch -a --color=always | grep -v '/HEAD\s' | sort |
+  result=($(git branch -a --color=always | grep -v '/HEAD\s' | sort |
     fzf --height 50% --border --ansi --tac --preview-window right:70% \
       --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
-    sed 's/^..//' | cut -d' ' -f1)
+    sed 's/^..//' | cut -d' ' -f1))
 
   if [[ $result != "" ]]; then
     if [[ $result == remotes/* ]]; then

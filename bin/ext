@@ -1,19 +1,46 @@
 #!/usr/bin/env bash
 
+LOCATION=${1:-$(pwd)}
 tempfile=`mktemp /tmp/ext.XXXXXXXXXXXXXXXXXXXXXXX.txt`
 
+echo "» Searching files in $LOCATION"
 # Optimize by writing to file in one huge chunk
-fd -a -i --type f --no-ignore --hidden  --one-file-system -E '.git' -E 'node_modules' -E '**cache**' \
-  | tee >( tac > $tempfile ) &> /dev/null
+fd -i --type f --no-ignore --hidden  --one-file-system -E '.git' -E 'node_modules' -E '**cache**' -E '**Cache**' \
+  | tee >( tac > $tempfile ) | cat &> /dev/null
+
+
+files=`wc -l < $tempfile`
+echo " .... found $files files"
+
+
+# sed -r 's/(^[^\.]*$)/\1.<NO_EXTENSION>/' |
+echo $tempfile
+echo -e "\n» Processing data \n"
+
+# ( rg -N -I '^(.*/)([^/]+)$' -r '$2' |                     # Remove all paths (keep filenames only)
+#   rg -N -I '^[^\.]*$' -r '$0.<NO_EXTENSION>' --passthru | # Normalize files with no extension
+#   rg '.<NO_EXTENSION>' -r '' |
+#   rg -N -I '.*(\.[^\.]+)$' -r '$1' |                      # Strip filenames (but keep extension)
+#   sort | uniq -c | sort -nr | tac | bat -P -l=bash        # Sort / Uniq / Output / Prettify
+# ) < "$tempfile"
+
+
+# echo -e "\n» Processing data \n"
+# (
+#   sed -r 's/.*\/([^\/]+)/\1/' \
+# | rg -N -I '^.*/([^/]+)$' -r '$1'  \
+# | sed -r 's/.*(\.[^\.]+)$/\1/' \
+# | sort | uniq -c | sort -nr | tac | bat -P -l=bash
+# ) < "$tempfile"
+
 
 (
-  rg -N -I '^(.*/)([^/]+)$' -r '$2' |                     # Remove all paths (keep filenames only)
-  rg -N -I '^[^\.]*$' -r '$0.<NO_EXTENSION>' --passthru | # Normalize files with no extension
-  rg -N -I '.*(\.[^\.]+)$' -r '$1' |                      # Strip filenames (but keep extension)
-  sort | uniq -c | sort -nr | tac | bat -P -l=bash        # Sort / Uniq / Output / Prettify
+  rg -N -I '^(.*/)([^/]+)$' -r '$2' \
+| sed 's/^[^\.]*$/<NO_EXTENSION>/' \
+| sed -r 's/.*(\.[^\.]+)$/\1/' \
+| sort | uniq -c | sort -nr | tac | bat -P -l=bash
 ) < "$tempfile"
 
-
 echo -e "\nTotal `wc -l < $tempfile` files"
-
-rm $tempfile
+echo
+#rm $tempfile
