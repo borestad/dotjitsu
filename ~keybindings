@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+function fzf-ssh () {
+  local selected_host=$(grep "Host " ~/.ssh/config | grep -v '*' | cut -b 6- | FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS_NO_PREVIEW fzf --query "$LBUFFER" --prompt="SSH Remote > ")
+
+  if [ -n "$selected_host" ]; then
+    BUFFER="ssh ${selected_host}"
+    zle accept-line
+  fi
+  zle reset-prompt
+}
+
+zle -N fzf-ssh
+bindkey '^s' fzf-ssh

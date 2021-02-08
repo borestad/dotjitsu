@@ -84,5 +84,5 @@ zplug load --verbose
 # zplug load
 
 source "$HOME/.aliases"
-source $DOTJITSU/._keybindings
-source $DOTJITSU/._hooks
+source $DOTJITSU/~keybindings
+source $DOTJITSU/~hooks
