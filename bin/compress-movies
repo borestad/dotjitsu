@@ -3,14 +3,12 @@
 
 process.env.DEBUG = '*convert*'
 
+const path = require('path')
 const ffmpeg = require('fluent-ffmpeg')
 const glob = require('glob')
-const util = require('util').promisify
 const fs = require('fs-extra')
-const path = require('path')
 const touch = require('touch')
 const debug = require('debug')
-const pu = require('blend-promise-utils')
 const pmap = require('p-map')
 const execa = require('execa')
 
@@ -18,23 +16,23 @@ const execa = require('execa')
 // const exiftool = new ExifTool({ taskTimeoutMillis: 5000 })
 const exiftool = require('exiftool-vendored').exiftool
 
-const QUALITY = '24'
+const args = process.argv.slice(2)
+
+const QUALITY = isNumeric(args[0]) ? args[0] : '26'
 const DEINTERLACE = false
 const STORE = { candidates: 0 }
 
+const noop = () => {}
+
+function isNumeric(value) {
+  return /^-?\d+$/.test(value)
+}
+
 function getConvertedFileName(file) {
-  const { dir, base, name } = path.parse(file)
-  const output = `${name}-q${QUALITY}${DEINTERLACE ? `-deinterlaced-1080-50` : ''}-x265.mp4`
+  const { dir, _base, name } = path.parse(file)
+  const output = `${name}-q${QUALITY}${DEINTERLACE ? `-deinterlaced-1080-50` : ''}.mp4`
 
   return path.join(dir, output)
-}
-
-function isInterlaced() {
-  return new Promise((resolve, reject) => {})
-}
-
-function roundDown10(i) {
-  return parseInt(i / 10, 10) * 10
 }
 
 let i = 0
@@ -42,7 +40,8 @@ let i = 0
 async function convert(input, output) {
   return new Promise((resolve, reject) => {
     const log = debug(`[${++i}/${STORE.candidates}] convert:${input}`)
-    const tmp = { lastPercent: 0 }
+
+    const before = Number(fs.statSync(input).size)
 
     ffmpeg(`./${input}`)
       .outputOptions(
@@ -105,18 +104,26 @@ async function convert(input, output) {
 
       // .output(`${path.parse(input).name}-converted-${QUALITY}.mp4`)
       .on('progress', (progress) => {
-        const { frames, currentFps, currentKbps, targetSize, timemark, percent } = progress // eslint-disable-line @typescript-eslint/no-unused-vars
-        // log(`[ffmpeg: ${input}] ${JSON.stringify(progress)}`)
+        const { _frames, _currentFps, _currentKbps, targetSize, _timemark, percent } = progress
         const estimate = ((targetSize / percent) * 100).toFixed(0)
-        log(`${Math.round(percent)}% - ${targetSize} Kb - (${estimate}) ${output}`)
 
-        // log('apa')
-        // console.log('test')
+        const lpercent = Math.round(percent)
+        const ltargetsize = (targetSize / 100).toFixed(1)
+        const lestimate = (estimate / 1000).toFixed(1)
+        const lbefore = (before / 1000_000).toFixed(1)
+        const ldiff = ((estimate / before) * 1000 * 100).toFixed(1)
+
+        // log(`» ${lpercent}% - ${ltargetsize} Mb - (~${lestimate} / ${lbefore}) ${output}`)
+        log(
+          `» ${lpercent}% - ${ltargetsize} Mb - (Before: ${lbefore} - Estimate: ${lestimate} | ${ldiff}%) - ${output}`
+        )
       })
+
       .on('error', (err) => {
         log(`[ffmpeg] error: ${err.message}`)
         reject(err)
       })
+
       .on('end', () => {
         console.log()
         const before = Number((fs.statSync(input).size / 1000_000).toFixed(2))
@@ -125,7 +132,6 @@ async function convert(input, output) {
 
         console.log(`  Before: ${before} MB`)
         console.log(`  After:  ${after} MB (${diff}%)`)
-        // console.log(before, after)
 
         // Touch the output and preserve file dates
         touch.sync(output, {
@@ -142,10 +148,7 @@ async function convert(input, output) {
 // Collect info
 // ===
 const candidates = async () =>
-  await glob
-    .sync('**/*.{MOV,mov,avi,AVI,mpg,MPG}')
-    // .sync('**/*.{mpg,MPG}')
-    .filter((fpath) => !/-q|Nikon/.test(fpath))
+  glob.sync('**/*.{MOV,mov,avi,AVI,mpg,MPG,flv,FLV}').filter((fpath) => !/-q|Nikon/.test(fpath))
 
 // const toAdd = candidates.filter(x => !existing.includes(x))
 
@@ -157,7 +160,6 @@ async function fileInfo(file) {
   const exists = fs.existsSync(output)
 
   const exif = await exiftool.read(input)
-
   const date = exif.MediaCreateDate || exif.DateTimeOriginal
 
   // console.log(date.rawValue)
@@ -200,13 +202,13 @@ async function copyTags(input, output) {
     .then(() => {
       console.log(`Found: moov/udta data available for: ${input}`)
     })
-    .catch(() => {})
+    .catch(noop)
 
   await execa('mp4extract', ['moov/meta', input, tmpInfoFile])
     .then(() => {
       console.log(`Found: moov/meta data available for: ${input}`)
     })
-    .catch(() => {})
+    .catch(noop)
 
   if (fs.existsSync(tmpInfoFile)) {
     console.log('Inject Metadata:')
@@ -239,7 +241,7 @@ async function run() {
   STORE.candidates = files.length
 
   console.log(`...${files.length} videos found`)
-  const videos = await files.map(fileInfo)
+  const videos = files.map(fileInfo)
 
   // https://video.stackexchange.com/questions/23741/how-to-prevent-ffmpeg-from-dropping-metadata
   // exiftool -TagsFromFile a.MOV "-all:all>all:all" c.MOV
@@ -256,10 +258,8 @@ async function run() {
       })
 
       await copyTags(video.input, video.output)
-    } else {
     }
 
-    // console.log( `🍿 ${++j}`.padEnd(5), video)
     return video
   }
 
