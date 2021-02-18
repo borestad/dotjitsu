@@ -64,13 +64,14 @@ cask 'transnomino'
 cask 'visual-studio-code'
 cask 'vlc'
 cask 'transmit'
+cask 'proxyman'
 
 
 # ================================
 # Mac OS X: Quick Look Plugins
 # ================================
 # cask 'suspicious-package'   # An Application for Inspecting macOS Installer Packages
-cask 'qlstephen'              # View plain text files without a file extension
+# cask 'qlstephen'              # View plain text files without a file extension
 # cask 'qlcolorcode'          # Preview source code files with syntax highlighting
 # cask 'quicklook-json'       # Preview JSON files
 # cask 'qlimagesize'          # Display image size and resolution
