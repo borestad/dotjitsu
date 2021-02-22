@@ -27,7 +27,7 @@ for (const file of dotfiles) {
   console.log(target)
 }
 
-execSync(`ln -sfv ${DOTJITSU}/package-global.json ${HOME}/.config/yarn/package.json`)
+// execSync(`ln -sfv ${DOTJITSU}/package-global.json ${HOME}/.config/yarn/package.json`)
 // fs.symlinkSync( j(HOME, '.config/yarn/global'))
 
 // # echo ''; hr - '#' -

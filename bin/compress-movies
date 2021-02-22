@@ -11,14 +11,11 @@ const touch = require('touch')
 const debug = require('debug')
 const pmap = require('p-map')
 const execa = require('execa')
-
-// const ExifTool = require("exiftool-vendored").ExifTool
-// const exiftool = new ExifTool({ taskTimeoutMillis: 5000 })
 const exiftool = require('exiftool-vendored').exiftool
 
 const args = process.argv.slice(2)
 
-const QUALITY = isNumeric(args[0]) ? args[0] : '26'
+const QUALITY = isNumeric(args[0]) ? args[0] : '24'
 const DEINTERLACE = false
 const STORE = { candidates: 0 }
 
@@ -31,28 +28,35 @@ function isNumeric(value) {
 function getConvertedFileName(file) {
   const { dir, _base, name } = path.parse(file)
   const output = `${name}-q${QUALITY}${DEINTERLACE ? `-deinterlaced-1080-50` : ''}.mp4`
-
   return path.join(dir, output)
 }
 
 let i = 0
+const DB = {}
 
 async function convert(input, output) {
   return new Promise((resolve, reject) => {
     const log = debug(`[${++i}/${STORE.candidates}] convert:${input}`)
-
     const before = Number(fs.statSync(input).size)
+
+    DB[input] = {
+      input,
+      output,
+      startTime: new Date().getTime(),
+      currentTime: new Date().getTime(),
+      deltaTime: 0,
+      size: {
+        before: Number(fs.statSync(input).size),
+      },
+    }
 
     ffmpeg(`./${input}`)
       .outputOptions(
         ...[
-          // Copy metadata
-          // '-map_metadata',
-          // '0',
-
-          // Use x264
+          // Use x265
           '-vcodec',
           'libx265',
+
           '-tag:v',
           'hvc1',
 
@@ -60,7 +64,23 @@ async function convert(input, output) {
           '-preset',
           'veryfast',
 
+          // Quality settings
+          '-crf',
+          QUALITY,
+
+          // Make it Apple/Quicktime compatible ( YUV planar color space with 4:2:0 chroma)
+          '-pix_fmt',
+          'yuv420p',
+
+          // Copy metadata
+          '-map_metadata',
+          '0',
+
           // '-tune','film',
+          // '-hwaccel cuvid',
+          // Disable smoothing
+          // '--selective-sao 0',
+          // '--no-sao',
 
           // '-filter:v',
           // 'hqdn3d=4.0:3.0:6.0:4.5',
@@ -79,8 +99,9 @@ async function convert(input, output) {
           // '-r', '30',
           // '-threads', '12',
 
-          // Downscale to 900p
-
+          // Downscale to <XXX>p
+          '-vf',
+          'scale=-1:720',
           // '-vf', 'yadif=1:-1:0,scale=-1:1280',
           // '-vf', 'yadif=1:-1:0,scale=160:-1',
 
@@ -89,14 +110,6 @@ async function convert(input, output) {
           // '-vf', 'scale=1600:-1',
           // '-vsync', 'vfr',
           // '-filter:v', 'fps=fps=30',
-
-          // Quality settings
-          '-crf',
-          QUALITY,
-
-          // Make it Apple/Quicktime compatible ( YUV planar color space with 4:2:0 chroma)
-          '-pix_fmt',
-          'yuv420p',
         ]
           .flat()
           .filter(Boolean)
@@ -104,18 +117,22 @@ async function convert(input, output) {
 
       // .output(`${path.parse(input).name}-converted-${QUALITY}.mp4`)
       .on('progress', (progress) => {
-        const { _frames, _currentFps, _currentKbps, targetSize, _timemark, percent } = progress
+        DB[input].currentTime = new Date().getTime()
+        DB[input].deltaTime = DB[input].currentTime - DB[input].startTime
+
+        const { _frames, currentFps, _currentKbps, targetSize, _timemark, percent } = progress
         const estimate = ((targetSize / percent) * 100).toFixed(0)
 
         const lpercent = Math.round(percent)
-        const ltargetsize = (targetSize / 100).toFixed(1)
+        const ltargetsize = (targetSize / 1000).toFixed(1)
         const lestimate = (estimate / 1000).toFixed(1)
         const lbefore = (before / 1000_000).toFixed(1)
         const ldiff = ((estimate / before) * 1000 * 100).toFixed(1)
+        const ldelta = ~~(DB[input].deltaTime / 1000)
 
         // log(`» ${lpercent}% - ${ltargetsize} Mb - (~${lestimate} / ${lbefore}) ${output}`)
         log(
-          `» ${lpercent}% - ${ltargetsize} Mb - (Before: ${lbefore} - Estimate: ${lestimate} | ${ldiff}%) - ${output}`
+          `» ${ldelta} sec - ${lpercent}% - (${ltargetsize} / ${lestimate} / ${lbefore} Mb | ${ldiff}%) - ${currentFps} FPS`
         )
       })
 
@@ -219,6 +236,7 @@ async function copyTags(input, output) {
       console.error
     )
 
+    // Cleanup temporary files
     await fs.unlink(tmpInfoFile).catch(console.error)
     await fs.unlink(output).catch(console.error)
     await fs.rename(newOutput, output).catch(console.error)

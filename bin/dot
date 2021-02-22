@@ -25,8 +25,8 @@ brew install \
 
 eval "$(fnm env)"
 
-fnm install
-fnm use 12.16.1
+fnm install 14.15.5
+fnm use 14.15.5
 
 chmod go-w '/usr/local/share'
 

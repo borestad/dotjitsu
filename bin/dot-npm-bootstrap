@@ -10,13 +10,11 @@ yarn global add                           \
   babel-node@latest                       \
   bcat@latest                             \
   diff-so-fancy@latest                    \
-  eslint@latest                           \
   git-recent@latest                       \
   http-server@latest                      \
   jase@latest                             \
   jq.node@latest                          \
   local-web-server@latest                 \
-  prettier@latest                         \
   ts-node@latest                          \
   typescript@latest
 
@@ -25,8 +23,10 @@ yarn global add                           \
 hr -
 echo '✨ Install Linters \n'
 yarn global add                           \
+  prettier@latest                         \
+  eslint@latest                           \
   @typescript-eslint/eslint-plugin@latest \
-  @typescript-eslint/parser               \
+  @typescript-eslint/parser@latest        \
   eslint-config-airbnb@latest             \
   eslint-config-prettier@latest           \
   eslint-config-standard@latest           \
@@ -39,7 +39,6 @@ yarn global add                           \
   eslint-plugin-sonarjs@latest            \
   eslint-plugin-standard@latest           \
   eslint-plugin-unicorn@latest
-
 
 
 #vtop@latest \
