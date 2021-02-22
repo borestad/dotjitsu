@@ -100,8 +100,8 @@ async function convert(input, output) {
           // '-threads', '12',
 
           // Downscale to <XXX>p
-          '-vf',
-          'scale=-1:720',
+          // '-vf',
+          // 'scale=-1:720',
           // '-vf', 'yadif=1:-1:0,scale=-1:1280',
           // '-vf', 'yadif=1:-1:0,scale=160:-1',
 
