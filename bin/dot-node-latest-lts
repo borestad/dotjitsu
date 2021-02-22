@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# set -x
+
+fnm install --lts
+
+latest=`echo $(fnm list | grep lts-latest | cut -d ' ' -f 2)`
+
+fnm default $latest
+fnm use $latest
+

@@ -12,12 +12,12 @@
 	# useConfigOnly = true
 
 
-[includeIf "gitdir:~/netent/"]
+[includeIf "gitdir:~/work/"]
 	[user]
 		name = Johan Borestad
-		email = "johan.borestad@netent.com"
+		email = "johan.borestad@teliacompany.com"
 	[core]
-		#sshCommand = "ssh -i ~/.ssh/id_rsa.netent"
+		#sshCommand = "ssh -i ~/.ssh/id_rsa.work"
 
 [credential]
 	helper =

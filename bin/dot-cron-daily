@@ -15,17 +15,12 @@ t () {
   date "+%F %H:%M:%S"
 }
 
-echo "`t`: START:   dot-brew start"
-$HOME/.dotjitsu/bin/dot-brew
-echo "`t`: STOP:    dot-brew end"
 
-echo "`t`: START:   dot-cask start"
-$HOME/.dotjitsu/bin/dot-cask
-echo "`t`: STOP:    dot-cask end"
+hr && $HOME/.dotjitsu/bin/dot-node-latest-lts | bat -f
+hr && $HOME/.dotjitsu/bin/dot-brew | bat -f
+hr && $HOME/.dotjitsu/bin/dot-cask | bat -f
+hr && /usr/local/bin/brew upgrade --cask | bat -f
 
-echo "`t`: START:   dot-cask start"
-/usr/local/bin/brew cask upgrade
-echo "`t`: STOP:    dot-cask end"
 
 
 

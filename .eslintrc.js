@@ -72,11 +72,12 @@ const conf = {
 
       // Uses eslint-config-prettier to disable ESLint rules from
       // @typescript-eslint/eslint-plugin that would conflict with prettier
-      'prettier/@typescript-eslint',
+      // 'prettier/@typescript-eslint',
+      // 'eslint-config-prettier',
 
       // Turns off all rules that are unnecessary or might conflict with Prettier.
       // https://github.com/prettier/eslint-config-prettier/blob/master/standard.js
-      'prettier/standard',
+      'prettier',
 
       // Enables eslint-plugin-prettier and eslint-config-prettier.
       // This will display prettier errors as ESLint errors.
@@ -259,7 +260,7 @@ const conf = {
        * Import Plugin Rules
        * ----------------------------------------------------
        */
-      'import/no-unresolved': OFF, // FIXME: Doesn't resolve '@netent/origin'
+      'import/no-unresolved': OFF,
       'import/no-useless-path-segments': ['error'],
       'import/named': 'error',
       'import/namespace': 'error',
