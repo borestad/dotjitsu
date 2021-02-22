@@ -39,6 +39,11 @@ async function convert(input, output) {
     const log = debug(`[${++i}/${STORE.candidates}] convert:${input}`)
     const before = Number(fs.statSync(input).size)
 
+    DB.last = {
+      input,
+      output,
+    }
+
     DB[input] = {
       input,
       output,
@@ -57,7 +62,7 @@ async function convert(input, output) {
           '-vcodec',
           'libx265',
 
-          '-tag:v',
+          '-vtag',
           'hvc1',
 
           // https://superuser.com/questions/490683/cheat-sheets-and-presets-settings-that-actually-work-with-ffmpeg-1-0
@@ -70,12 +75,20 @@ async function convert(input, output) {
 
           // Make it Apple/Quicktime compatible ( YUV planar color space with 4:2:0 chroma)
           '-pix_fmt',
-          'yuv420p',
+          'yuv420p', // yuv420p10le
 
           // Copy metadata
           '-map_metadata',
           '0',
 
+          '-movflags',
+          'faststart',
+
+          // '-color_trc',
+          // 'smpte2084',
+
+          // '-color_primaries',
+          // 'bt2020',
           // '-tune','film',
           // '-hwaccel cuvid',
           // Disable smoothing
@@ -132,7 +145,7 @@ async function convert(input, output) {
 
         // log(`» ${lpercent}% - ${ltargetsize} Mb - (~${lestimate} / ${lbefore}) ${output}`)
         log(
-          `» ${ldelta} sec - ${lpercent}% - (${ltargetsize} / ${lestimate} / ${lbefore} Mb | ${ldiff}%) - ${currentFps} FPS`
+          `Q${QUALITY} » ${ldelta} sec - ${lpercent}% - (${ltargetsize} / ${lestimate} / ${lbefore} Mb | ${ldiff}%) - ${currentFps} FPS`
         )
       })
 
@@ -173,7 +186,7 @@ async function fileInfo(file) {
   // Take deep paths into considerations
   const p = path.parse(file)
   const input = path.join(p.dir, p.base)
-  const output = getConvertedFileName(input)
+  const output = `${getConvertedFileName(input)}`
   const exists = fs.existsSync(output)
 
   const exif = await exiftool.read(input)
@@ -192,7 +205,7 @@ async function fileInfo(file) {
 
   return {
     input,
-    output,
+    output: output.replace('.mp4', '~===TEMP===~.mp4'),
     exists,
   }
 }
@@ -232,6 +245,7 @@ async function copyTags(input, output) {
     console.log('data:', tmpInfoFile)
     console.log('from:', output)
     console.log('to:   ', newOutput)
+
     await execa('mp4edit', ['--insert', `moov:${tmpInfoFile}`, output, newOutput]).catch(
       console.error
     )
@@ -239,7 +253,7 @@ async function copyTags(input, output) {
     // Cleanup temporary files
     await fs.unlink(tmpInfoFile).catch(console.error)
     await fs.unlink(output).catch(console.error)
-    await fs.rename(newOutput, output).catch(console.error)
+    await fs.rename(newOutput, output.replace('~===TEMP===~', '')).catch(console.error)
   } else {
     console.log('Skip injecting metadata')
     // await fs.rename(newOutput, output).catch(console.error)
@@ -275,15 +289,30 @@ async function run() {
         console.error(error)
       })
 
-      await copyTags(video.input, video.output)
+      await copyTags(video.input, video.output).catch(console.error)
     }
 
     return video
   }
 
-  await pmap(videos, mapper, { concurrency: 1 })
+  await pmap(videos, mapper, { concurrency: 1 }).catch(console.error)
 
   exiftool.end()
 }
+
+process.on('SIGINT', function () {
+  try {
+    console.log('Caught interrupt signal')
+    console.log(`Delete temporary file "${DB?.last?.output}"`)
+
+    if (/~/.test(DB.last.output)) {
+      fs.unlinkSync(DB.last.output)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+  process.exit()
+})
 
 run()
