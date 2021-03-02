@@ -18,49 +18,49 @@ docker.stop-remove-all() {
 alias docker.get-latest-container-id="docker ps -l -q"
 
 # Get container process
-alias d.ps="docker ps"
-alias dps='d.ps'
+alias dk.ps="docker ps"
+alias dps='dk.ps'
 
 # Get process included stop container
-alias d.pa="docker ps -a"
-alias docker.ps-all-containers=d.pa
+alias dk.pa="docker ps -a"
+alias docker.ps-all-containers=dk.pa
 
 # Get images
-alias d.i="docker images"
-alias docker.get-images="d.i"
+alias dk.i="docker images"
+alias docker.get-images="dk.i"
 
 # Get container IP
-alias d.ip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+alias dk.ip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 
 # Run deamonized container, e.g., $dkd base /bin/echo hello
-alias d.kd="docker run -d -P"
+alias dk.kd="docker run -d -P"
 
 # Run interactive container, e.g., $dki base /bin/bash
-alias d.ki="docker run -i -t -P"
+alias dk.ki="docker run -i -t -P"
 
 # Execute interactive container, e.g., $dex base /bin/bash
-alias d.ex="docker exec -i -t"
+alias dk.ex="docker exec -i -t"
 
 # Stop all containers
-d.stop() { docker stop $(docker ps -a -q); }
+dk.stop() { docker stop $(docker ps -a -q); }
 
 # Remove all containers
-d.rm() { docker rm $(docker ps -a -q); }
+dk.rm() { docker rm $(docker ps -a -q); }
 
 # Stop and Remove all containers
-alias d.rmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
+alias dk.rmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 
 # Remove all images
-d.ri() { docker rmi $(docker images -q); }
+dk.ri() { docker rmi $(docker images -q); }
 
 # Dockerfile build, e.g., $dbu tcnksm/test
-d.bu() { docker build -t=$1 .; }
+dk.bu() { docker build -t=$1 .; }
 
 # Show all alias related docker
-d.alias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
+dk.alias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
 
 # Bash into running container
-d.bash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
+dk.bash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
 
 # On demand foreground OS bash shells that delete on shell exit
 # https://github.com/nerdalert/dotfiles/blob/master/bash_profile_docker_aliases

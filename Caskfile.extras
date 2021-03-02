@@ -63,6 +63,7 @@ cask 'plex-media-player'
 cask 'sonos'
 #cask 'teeworlds'
 #cask 'wineskin-winery'
+# cask 'sony-ps4-remote-play'
 
 # ================================
 # SCIENCE

@@ -80,9 +80,10 @@ eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 
 
 # Load zplug
-zplug load --verbose
+zplug load #--verbose
 # zplug load
 
 source "$HOME/.aliases"
+source "${HOME}/.docker-aliases"
 source $DOTJITSU/~keybindings
 source $DOTJITSU/~hooks

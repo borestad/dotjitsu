@@ -39,12 +39,12 @@ mkdir -p ~/.config/cache && cd "$_"
 /usr/local/bin/wget https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && mv brew-cask.json.tmp brew-cask.json
 
 
-if [ -t 1 ] ; then
-  # Install Caskfile formulas (only if interactive shell)
-  $HOME/.dotjitsu/bin/hr -
-  echo "✨ brew bundle (Caskfile)"
-  /usr/local/bin/brew -v bundle --file=~/.dotjitsu/Caskfile
- fi
+# if [ -t 1 ] ; then
+#   # Install Caskfile formulas (only if interactive shell)
+#   $HOME/.dotjitsu/bin/hr -
+#   echo "✨ brew bundle (Caskfile)"
+#   /usr/local/bin/brew -v bundle --file=~/.dotjitsu/Caskfile
+#  fi
 
 
 $HOME/.dotjitsu/bin/hr -

@@ -15,7 +15,7 @@ const exiftool = require('exiftool-vendored').exiftool
 
 const args = process.argv.slice(2)
 
-const QUALITY = isNumeric(args[0]) ? args[0] : '24'
+const QUALITY = isNumeric(args[0]) ? args[0] : '22'
 const DEINTERLACE = false
 const STORE = { candidates: 0 }
 
@@ -178,7 +178,7 @@ async function convert(input, output) {
 // Collect info
 // ===
 const candidates = async () =>
-  glob.sync('**/*.{MOV,mov,avi,AVI,mpg,MPG,flv,FLV}').filter((fpath) => !/-q|Nikon/.test(fpath))
+  glob.sync('*.{MOV,mov,avi,AVI,mpg,MPG,flv,FLV}').filter((fpath) => !/-q|Nikon/.test(fpath))
 
 // const toAdd = candidates.filter(x => !existing.includes(x))
 
@@ -303,9 +303,9 @@ async function run() {
 process.on('SIGINT', function () {
   try {
     console.log('Caught interrupt signal')
-    console.log(`Delete temporary file "${DB?.last?.output}"`)
 
-    if (/~/.test(DB.last.output)) {
+    if (/~/.test(DB?.last?.output)) {
+      console.log(`Delete temporary file "${DB.last.output}"`)
       fs.unlinkSync(DB.last.output)
     }
   } catch (error) {
