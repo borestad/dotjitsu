@@ -4,6 +4,8 @@
 hr -
 echo '✨ Install Binaries\n'
 
+npm install --global yarn
+
 yarn global add                           \
   @babel/core@latest                      \
   @babel/node@latest                      \

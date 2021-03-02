@@ -3,7 +3,7 @@
 # Don't open all sessions
 chmod 000  ~/Library/Application\ Support/Sublime\ Text\ 3/Local/Session.sublime_session
 
-/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl -n -- "$@"
+~/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl -n -- "$@"
 
 # Restore permissions
 chmod 644  ~/Library/Application\ Support/Sublime\ Text\ 3/Local/Session.sublime_session

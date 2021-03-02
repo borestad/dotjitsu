@@ -22,13 +22,14 @@
 [credential]
 	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager-core
-				#helper = osxkeychain
+	#helper = osxkeychain
 
 [color]
 	ui = true
 
 [init]
 	templatedir = ~/.dotjitsu/packages/git/templates
+	defaultBranch = main
 
 [pager]
 	# insanely beautiful diffs ==> npm install -g diff-so-fancy
@@ -289,5 +290,6 @@ default = simple
 	root = ~/code
 [rebase]
 	stat = true
+
 [credential "https://dev.azure.com"]
 	useHttpPath = true

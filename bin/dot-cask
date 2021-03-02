@@ -2,11 +2,10 @@
 
 cd "$(dirname $0)"/..
 
-echo ''; hr - '#' -
-echo "[BREW CASK FORMULAS]\n"
+echo "✨ brew bundle (Caskfile)"
 
-/usr/local/bin/brew -v update
-/usr/local/bin/brew -v bundle --file=~/.dotjitsu/Caskfile
-
-# Fix for broken 'brew cask'
-#for c in `brew cask list`; do ! brew cask info $c | grep -qF "Not installed" || brew cask install $c; done
+if [ -t 1 ] ; then
+  # Install Caskfile formulas (only if interactive shell)
+  $HOME/.dotjitsu/bin/hr -
+  /usr/local/bin/brew -v bundle --file=~/.dotjitsu/Caskfile
+fi

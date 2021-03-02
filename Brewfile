@@ -22,7 +22,6 @@ brew 'rust'                         # Safe, concurrent, practical language
 # CLI stuff
 # ================================
 #brew 'git-crypt'                    # Enable transparent encryption/decryption of files in a git repo
-
 #brew 'sshfs'                       # File system client based on SSH File Transfer Protocol
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew 'ack'                          # Search tool like grep, but optimized for programmer
@@ -34,10 +33,12 @@ brew 'bandwhich'                    # Bourne-Again SHell, a UNIX command interpr
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
 brew 'bat'                          # Clone of cat(1) with syntax highlighting and Git integration
-brew 'bento4'                       # Full-featured MP4 format and MPEG DASH library and tools
+brew 'bento4'
+brew 'hugo'                         # Configurable static site generator
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'broot'                        # New way to see and navigate directory trees
+brew 'chromedriver'                 # Tool for automated testing of webapps across many browsers
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'cv'                           # Progress: Coreutils Progress Viewer
@@ -46,6 +47,7 @@ brew 'dialog'                       # Display user-friendly message boxes from s
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
+brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
 brew 'exa'                          # Modern replacement for 'ls
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
@@ -68,15 +70,16 @@ brew 'httpry'                       # Packet sniffer for displaying and logging 
 brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
-brew 'mackup'                       # Keep your Mac's application settings in sync
 brew 'imageoptim-cli'               # CLI for ImageOptim, ImageAlpha and JPEGmini
 brew 'jid'                          # Json incremental digger
 brew 'jpeg'                         # Image manipulation library
 brew 'jpegoptim'                    # Utility to optimize JPEG files
 brew 'jq'                           # Lightweight and flexible command-line JSON processor
+brew 'kubernetes-cli'               # Tool to report network interface bandwidth
 brew 'lazydocker'                   # The lazier way to manage everything docker
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
 brew 'm-cli'                        # Swiss Army Knife for macOS
+brew 'mackup'                       # Keep your Mac's application settings in sync
 brew 'mas'                          # Mac App Store command-line interface
 brew 'micro'                        # Modern and intuitive terminal-based text editor
 brew 'mmv'                          # Move, copy, append, and link multiple files
@@ -107,15 +110,14 @@ brew 'pygments'                     # Generic syntax highlighter
 brew 'rdiff-backup'                 # Reverse differential backup tool, over a network or locally
 brew 'rename'                       # Perl-powered file rename script with many helpful built-ins
 brew 'renameutils'                  # Tools for file renaming
-brew 'ripgrep'                      # Search tool like grep and The Silver Searcher
 brew 'ripgrep-all'                  # Wrapper around ripgrep that adds multiple rich file types
+brew 'ripgrep'                      # Search tool like grep and The Silver Searcher
 brew 'rsnapshot'                    # File system snapshot utility (based on rsync)
 brew 'rsync'                        # Utility that provides fast incremental file transfer
 brew 'fnm'                          # Fast and simple Node.js version manager
 brew 'sd'                           # Intuitive find & replace CLI
 brew 'sk'                           # Fuzzy Finder in rust!
 brew 'speedtest-cli'                # Command-line interface for https://speedtest.net bandwidth tests
-brew 'teamookla/speedtest'          # Command-line interface for https://speedtest.net bandwidth tests
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 brew 'starship'                     # Cross-shell prompt for astronauts
@@ -144,7 +146,14 @@ brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
-brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
+
+
+
+# ================================
+# Custom taps
+# ================================
+tap 'teamookla/speedtest'
+brew 'teamookla/speedtest/speedtest' # Ookla Speedtest
 
 # ================================
 # Databases & tools
