@@ -1,0 +1,327 @@
+#!/bin/bash
+REMOTE=8080  # Remote port for tunneling.
+LOCAL=18080  # Local  port for tunneling.
+GUEST=$USER  # Alternative username to login with.
+DEST='~'     # Destination folder on target server to download\upload files.
+TIME=60      # Timer for tunneling command. Tunnel will be closed after 60 seconds, but it will stay open if used.
+EDITOR=nano  # Confile editor.
+KEY=~/.ssh/id_rsa.pub # SSH key to use in command Sshkey(Add my ssh key to host).
+CONFILES=$(echo ~/.ssh/{config,config*[!~]}) # SSH confiles list.
+
+#------------------------{ Add your commands to this list }----------------------------------------
+cmdlist_renew () { cmdlist=(
+	#Command#  #Description#
+    "Username" "Change ssh username to \Z2$GUEST\Z0"
+    ''         ''
+	"ls  -la"  "List Files"
+	"free -h"  "Show free memory"
+	"df  -ih"  "Show free inodes"
+	"df   -h"  "Show free disk space"
+    ''         ''
+    "Info"     "Full system info"
+	"Sshkey"   "Add my ssh key to \Z4$target\Z0"
+	"Alias"    "Add my usefull aliases to \Z4$target\Z0"
+    "Copy"     "Copy selected file or dir to \Z4$target\Z0"
+    ''         ''
+    "Dest"     "Change destination folder \Z4$DEST\Z0 on \Z4$target\Z0"
+    "Upload"   "Upload   file or folder from \Z4$PWD\Z0 to \Z4$target:${DEST}\Z0"
+    "Download" "Download file or folder from \Z4$target:${DEST}\Z0 to \Z4$PWD\Z0"
+    ''         ''
+    "Local"    "Change local  port \Z1$LOCAL\Z0"
+    "Remote"   "Change remote port \Z1$REMOTE\Z0"
+    "Tunnel"   "Start portunneling from \Z4$target\Z0 port \Z1$REMOTE\Z0 to local port \Z1$LOCAL\Z0"
+    ''         ''
+    "ShowConf" "Show ssh config for this host"
+    "EditConf" "Edit ssh config for this host"
+); }
+
+confile=~/.sshtorc
+tmpfile=/tmp/sshtorc
+[[ -e $confile ]] && . "$confile"
+[[ -e $tmpfile ]] && . "$tmpfile"
+#--------------------------------------------------------------------+
+#Color picker, usage: printf ${BLD}${CUR}${RED}${BBLU}"Hello!)"${DEF}|
+#-------------------------+--------------------------------+---------+
+#       Text color        |       Background color         |         |
+#-----------+-------------+--------------+-----------------+         |
+# Base color|Lighter shade|  Base color  | Lighter shade   |         |
+#-----------+-------------+--------------+-----------------+         |
+BLK='\e[30m'; blk='\e[90m'; BBLK='\e[40m'; bblk='\e[100m' #| Black   |
+RED='\e[31m'; red='\e[91m'; BRED='\e[41m'; bred='\e[101m' #| Red     |
+GRN='\e[32m'; grn='\e[92m'; BGRN='\e[42m'; bgrn='\e[102m' #| Green   |
+YLW='\e[33m'; ylw='\e[93m'; BYLW='\e[43m'; bylw='\e[103m' #| Yellow  |
+BLU='\e[34m'; blu='\e[94m'; BBLU='\e[44m'; bblu='\e[104m' #| Blue    |
+MGN='\e[35m'; mgn='\e[95m'; BMGN='\e[45m'; bmgn='\e[105m' #| Magenta |
+CYN='\e[36m'; cyn='\e[96m'; BCYN='\e[46m'; bcyn='\e[106m' #| Cyan    |
+WHT='\e[37m'; wht='\e[97m'; BWHT='\e[47m'; bwht='\e[107m' #| White   |
+#----------------------------------------------------------+---------+
+# Effects                                                            |
+#--------------------------------------------------------------------+
+DEF='\e[0m'   #Default color and effects                             |
+BLD='\e[1m'   #Bold\brighter                                         |
+DIM='\e[2m'   #Dim\darker                                            |
+CUR='\e[3m'   #Italic font                                           |
+UND='\e[4m'   #Underline                                             |
+INV='\e[7m'   #Inverted                                              |
+COF='\e[?25l' #Cursor Off                                            |
+CON='\e[?25h' #Cursor On                                             |
+#--------------------------------------------------------------------+
+# Text positioning, usage: XY 10 10 "Hello World!"                   |
+XY   () { printf "\e[${2};${1}H${3}"; } #                            |
+#--------------------------------------------------------------------+
+# Print line, usage: line - 10 | line -= 20 | line "Hello World!" 20 |
+line () { printf -v LINE "%$2s"; printf -- "${LINE// /$1}"; } #      |
+# Create sequence like {0..X}                                        |
+cnt () { printf -v _N %$1s; _N=(${_N// / 1}); printf "${!_N[*]}"; } #|
+#----------------{ Check that dialog is installed }------------------+
+install_help="
+${BLD}sshto$DEF requires that the package '${GRN}dialog$DEF' is installed.
+Type this into the terminal and press return:
+
+    ${BLD}%s$DEF
+
+Then run ${BLD}sshto$DEF again
+"
+how_to_install () {
+    which yum     &> /dev/null && installer='yum -y install dialog'
+    which brew    &> /dev/null && installer='brew install dialog'
+    which apt-get &> /dev/null && installer='apt-get install -y dialog'
+    printf "$install_help" "$installer"
+    exit 1
+}
+
+which dialog &> /dev/null || how_to_install
+#------------------------{ Yes to ssh }------------------------------------------------------------
+ssh_yes () {
+# If connecting first time send 'yes' on ssh's request.
+# Expect must be installed on server.  Options:
+#   $1 - ssh address with parameters(if needed)
+#
+# Usage example:
+#   ssh_yes "-p22 user@localhost"
+assword='
+    "assword:" { exit }
+    "$ "       { send "exit\n" }
+'
+expect <<  EOF
+spawn  ssh $1
+expect {
+    "yes/no" {
+        send "yes\n"
+        expect { $assword }
+    }
+    $assword
+}
+EOF
+}
+
+#------------------------{ System Info commands }--------------------------------------------------
+system_info () {
+    clear
+    ssh $SSH_OPT $target "
+        printf '\n${BLD}Hostname:${DEF}\n'
+        hostname
+
+        printf '\n${BLD}Interfaces:${DEF}\n'
+        ip a
+
+        printf '\n${BLD}Memory:${DEF}\n'
+        LANG=Us free --si -h
+
+        printf '\n${BLD}CPU:${DEF}\n'
+        lscpu
+
+        printf '\n${BLD}Disk:${DEF}\n'
+        df -h; echo; df -ih; echo; lsblk
+
+        printf '\n${BLD}Software:${DEF}\n'
+        uname -a; echo
+        [[ -e /usr/bin/lsb_release ]] && { lsb_release -a; echo; }
+        [[ -e /usr/bin/java        ]] && { java  -version; echo; }
+        [[ -e /usr/bin/psql        ]] && { psql  -V      ; echo; }
+        [[ -e /usr/sbin/nginx      ]] && { nginx -v      ; echo; }
+
+        printf '${BLD}Logged in Users:${DEF}\n'
+        who
+
+        printf '\n${BLD}Port usage info:${DEF}\n'
+        netstat -tulpn 2> /dev/null
+
+        printf '\n${BLD}Processes:${DEF}\n'
+        top -bcn1 | head -n30
+    "
+    pause
+}
+#------------------------{ Show\Edit ssh config }--------------------------------------------------
+show_conf () { clear; ssh -G $target; pause; }
+edit_conf () { $EDITOR $(grep -ril "Host[[:space:]]$target" $CONFILES); }
+
+#------------------------{ Pause function }--------------------------------------------------------
+pause () { printf "\n${BLD}"; read -p 'press any key to continue'; printf "\n${DEF}"; }
+
+#------------------------{ SSH to target server }--------------------------------------------------
+go_to_target () { clear; ssh $SSH_OPT $target || pause; }
+
+#------------------------{ Add aliases }-----------------------------------------------------------
+add_aliases () {
+    clear
+    scp $SSH_OPT ~/.bash_aliases $target:~
+    ssh $SSH_OPT $target "grep '. ~/.bash_aliases' .bashrc || echo '. ~/.bash_aliases' >> .bashrc"
+}
+
+#------------------------{ Run command }-----------------------------------------------------------
+run_command () { clear; ssh $SSH_OPT -t $target $command; pause; }
+
+#------------------------{ Add ssh key }-----------------------------------------------------------
+add_sshkey () { clear; ssh_yes "$SSH_OPT $target" > /dev/null; ssh-copy-id -i $KEY $SSH_OPT $target; }
+
+#------------------------{ Tunnelling command}-----------------------------------------------------
+portunneling () { ssh $SSH_OPT $target -f -L 127.0.0.1:$LOCAL:127.0.0.1:$REMOTE sleep $TIME; }
+
+#------------------------{ Exit function }---------------------------------------------------------
+bye () { clear; [[ $(uname -s) == "Darwin" ]] && ls -G || ls --color=auto; exit 0; }; trap bye INT
+
+
+#------------------------------{ Dialog functions }------------------------------------------------
+#------------------------{ Copy selected file to server }------------------------------------------
+copy_files () {
+    filename=$(dialog --ok-label "COPY" --cancel-label "BACK" --output-fd 1 --aspect 100 --colors --fselect $PWD/ 10 80)
+	case $filename:$? in
+        $PWD|$PWD/:0) return;;
+                 *:0) scp -r $SSH_OPT $filename $target:~;;
+                 *:*) return;;
+	esac;             copy_files
+}
+
+#------------------------{ Change alternative username }-------------------------------------------
+username () {
+    new_user=$(dialog --ok-label "CHANGE" --cancel-label "BACK" --output-fd 1 --max-input 20 \
+                        --aspect 100 --colors --inputbox 'Change alternative username' 10 30 $GUEST)
+	case $new_user:$? in
+                 *:0) GUEST=${new_user:-$GUEST}; SSH_OPT="-oUser=$GUEST"; USERNOTE="Username changed to \Z2$GUEST\Z0.";;
+                 *:*) return;;
+	esac
+}
+
+#------------------------{ Change local port for tunnelling }--------------------------------------
+local_port () {
+    new_local=$(dialog --ok-label "CHANGE" --cancel-label "BACK" --output-fd 1 --max-input 5 \
+                       --aspect 100 --colors --inputbox 'Change local port' 10 30 $LOCAL)
+    LOCAL=${new_local:-$LOCAL}
+}
+
+#------------------------{ Change remote port for tunnelling }-------------------------------------
+remote_port () {
+    new_remote=$(dialog --ok-label "CHANGE" --cancel-label "BACK" --output-fd 1 --max-input 5 \
+                        --aspect 100 --colors --inputbox 'Change remote port' 10 30 $REMOTE)
+    REMOTE=${new_remote:-$REMOTE}
+}
+
+#------------------------{ Upload\Download dialogs }-----------------------------------------------
+downpath () {
+    new_path=$(dialog --ok-label "CHANGE" --cancel-label "BACK" --output-fd 1 --max-input 100 \
+                       --aspect 100 --colors --inputbox 'Change download folder' 10 50 $DEST)
+    DEST=${new_path:-$DEST}
+}
+
+upload () {
+    filelist=( $(ls -sh1 $PWD | awk '{print $2,$1}') )
+	filename=$(dialog --output-fd 1 --ok-label "UPLOAD" --cancel-label "BACK" \
+                      --menu "Select file\folder to upload:" 0 0 0 "${filelist[@]:2}")
+	case $filename:$? in
+                 *:0) [[ $filename ]] && scp -r $SSH_OPT $filename $target:$DEST/;;
+                 *:*) return;;
+	esac;             upload
+}
+
+dlst () { filelist=( $(ssh $SSH_OPT $target ls -sh1 $DEST | awk '{print $2,$1}') ) || second_dialog; }
+down () {
+	filename=$(dialog --output-fd 1 --ok-label "DOWNLOAD" --cancel-label "BACK" \
+                      --menu "Select file\folder to download:" 0 0 0 "${filelist[@]:2}")
+	case $filename:$? in
+                 *:0) [[ $filename ]] && scp -r $SSH_OPT $target:$DEST/$filename .;;
+                 *:*) return;;
+	esac;             down
+}
+
+#------------------------{ Switch menu mode to contents view or full list }------------------------
+new_list () {
+    list=(); match=
+    for item in "${fullist[@]}"; {
+        case         $item:$match in
+                 -*\ *\ *-:1) break  ;;
+           -*\ $filter\ *-:*) match=1;;
+        esac
+        [[ $match ]] && list+=( "$item" )
+    }
+    [[ ${list[*]} ]] && echo "filter='$filter'" > "$tmpfile" || { list=( "${fullist[@]}" ); rm "$tmpfile"; }
+}
+
+contents_menu () {
+	filter=$(dialog --output-fd 1 --ok-label "SELECT" --cancel-label "BACK" \
+                    --no-items --menu "Select list of hosts:" 0 0 0 "All" "${content[@]}")
+	case $filter:$? in
+             All:0) list=( "${fullist[@]}" )
+                    echo "filter=" > $tmpfile;;
+               *:0) new_list;;
+	esac;           first_dialog
+}
+
+#------------------------{ First dialog - Select host }--------------------------------------------
+first_dialog () {
+	target=$(dialog --extra-button --extra-label "RUN COMMAND"         \
+					--ok-label "CONNECT" --cancel-label "EXIT" --colors \
+                    --help-button --help-label  "CONTENTS" --output-fd 1 \
+					--menu "Select host to connect to. $USERNOTE" 0 0 0 "${list[@]}")
+	case $target:$? in
+       -*\ *\ *-:*) first_dialog ;;
+               *:0) go_to_target  ; first_dialog;;
+               *:2) contents_menu;;
+      	       *:3) second_dialog;;
+      	       *:*) bye;;
+  	esac
+}
+
+#------------------------{ Second dialog - Select command }----------------------------------------
+second_dialog () {
+    cmdlist_renew
+	command=$(dialog --ok-label "RUN" --cancel-label "BACK" --output-fd 1 \
+                     --extra-button    --extra-label "CONNECT" --colors    \
+                     --menu "Select command to run on host \Z4$target\Z0. $USERNOTE" 0 0 0 "${cmdlist[@]}")
+	case $command:$? in
+           Sshkey:0) add_sshkey  ;;
+            Alias:0) add_aliases ;;
+             Info:0) system_info ;;
+             Copy:0) copy_files  ;;
+         Username:0) username    ;;
+           Upload:0) upload      ;;
+             Dest:0) downpath    ;;
+         Download:0) dlst; down  ;;
+            Local:0) local_port  ;;
+           Remote:0) remote_port ;;
+           Tunnel:0) portunneling;;
+         ShowConf:0) show_conf   ;;
+         EditConf:0) edit_conf   ;;
+                *:3) go_to_target;;
+                *:0) run_command ;;
+                *:*) first_dialog;;
+	esac;            second_dialog
+}
+
+#-------------{ Create hosts list. Get hosts and descriptions from ~/.ssh/config. }----------------
+while read -r name desc; do
+    case $name in
+        'DUMMY') name="{ $desc }" name_length=${#name}
+                 name_left=$[(40-name_length)/2] name_right=$[40-(name_left+name_length)]
+                 printf -v tmp "%${name_left}s_NAME_%${name_right}s"
+                 tmp=${tmp// /-}  name=${tmp//_NAME_/$name}
+                 content+=( "$desc" ); desc=$(line - 20);;
+           '#'*) continue;;
+    esac
+    fullist+=( "$name" "$desc" ) #Add HostName and Description to the list
+done < <(sed -n '/*/d; s/#Host \(.*\)#\(.*\)#.*/\1\2/p; s/ #/ /; s/Host //p' $CONFILES)
+list=( "${fullist[@]}" )
+[[ $filter ]] && new_list
+
+#--{ Go baby, GO!) }--
+first_dialog; bye
