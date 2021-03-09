@@ -49,7 +49,7 @@ alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulato
 
 alias mkdir='gmkdir -pv'
 alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
-alias mv='gmv -v'
+alias mv='gmv -vi'
 alias ncdu="/usr/local/bin/ncdu -xe --color dark"
 alias ncdu2="/usr/local/bin/ncdu"
 alias nx='PATH=$(npm bin):$PATH'

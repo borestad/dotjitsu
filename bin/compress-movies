@@ -67,7 +67,12 @@ async function convert(input, output) {
 
           // https://superuser.com/questions/490683/cheat-sheets-and-presets-settings-that-actually-work-with-ffmpeg-1-0
           '-preset',
-          'veryfast',
+          // 'veryfast',
+          'slow',
+
+          // Replace black bars with blurry background
+          // '-lavfi',
+          // '[0:v]scale=1920*2:1080*2,boxblur=luma_radius=min(h,w)/20:luma_power=1:chroma_radius=min(cw,ch)/20:chroma_power=1[bg];[0:v]scale=-1:1080[ov];[bg][ov]overlay=(W-w)/2:(H-h)/2,crop=w=1920:h=1080',
 
           // Quality settings
           '-crf',
@@ -83,6 +88,10 @@ async function convert(input, output) {
 
           '-movflags',
           'faststart',
+
+          // denoise
+          // '-vf',
+          // 'hqdn3d=4.0:3.0:6.0:4.5',
 
           // '-color_trc',
           // 'smpte2084',
@@ -115,7 +124,8 @@ async function convert(input, output) {
           // Downscale to <XXX>p
           // '-vf',
           // 'scale=-1:720',
-          // '-vf', 'yadif=1:-1:0,scale=-1:1280',
+          // '-vf',
+          // 'yadif=1:-1:0,scale=-1:1280',
           // '-vf', 'yadif=1:-1:0,scale=160:-1',
 
           //  <width>:<height>

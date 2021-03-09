@@ -3,4 +3,4 @@
 # "Repairs movie exif data to enable them to be sorted correctly in Photos.app"
 # https://exiftool.org/forum/index.php?topic=11184.0
 
-exiftool -m -P -overwrite_original_in_place -api QuickTimeUTC=1 "-CreateDate<filename" "-ModifyDate<filename" "-Track*Date<filename" "-Media*Date<filename" -execute -m -P -overwrite_original_in_place -wm w "-FileCreateDate<filename" "-FileModifyDate<filename" -execute -m -P -overwrite_original_in_place -wm w "-Keys:CreationDate<FileModifyDate" "-UserData:DateTimeOriginal<FileModifyDate" -common_args **/*.mp4
+exiftool -m -P -overwrite_original_in_place -api QuickTimeUTC=1 "-CreateDate<filename" "-ModifyDate<filename" "-Track*Date<filename" "-Media*Date<filename" -execute -m -P -overwrite_original_in_place -wm w "-FileCreateDate<filename" "-FileModifyDate<filename" -execute -m -P -overwrite_original_in_place -wm w "-Keys:CreationDate<FileModifyDate" "-UserData:DateTimeOriginal<FileModifyDate" -common_args *.mp4
