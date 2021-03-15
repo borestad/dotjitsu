@@ -17,7 +17,7 @@ echo
 # Truncate lines
 tput rmam
 
-REGEX='.*(am|ar|ca|cs|bn|bg|da|de|el|et|en_AU|es|es|fa|fi|fr|fil|fr|gu|he|hi|hr|hu|id|it|is|ja|ko|kn|lv|lt|ms|ml|mr|nl|nb|no|pl|pt|pt|ro|ru|sk|sr|sl|sw|ta|te|th|tr|uk|vi|zh|zh|German|French|Japanese|Italian|Spanish|Dutch)([_-]\w+)?\.lproj$'
+REGEX='.*(am|ar|ca|cs|bn|bg|da|de|el|et|en_AU|es|es|fa|fi|fr|fil|fr|gu|he|hi|hr|hu|id|it|is|ja|ko|kn|lv|lt|ms|ml|mr|nl|nb|no|pl|pt|ro|ru|sk|sr|sl|sw|ta|te|th|tr|uk|vi|zh|zh|German|French|Japanese|Italian|Spanish|Dutch)([_-]\w+)?\.lproj$'
 #sudo gfind "$(pwd)" -type d -regextype posix-egrep -regex $REGEX -print0 | sudo gxargs -r0 -- rm -rv
 rm -f /tmp/dot-monolingual
 
@@ -35,7 +35,7 @@ EXCLUDE="**/System/**"
 ##########################################################
 # 1. Find all files
 ##########################################################
-sudo fd -td -u -aHI $REGEX "$LOCATION" -0 --one-file-system -E 'Volumes' -E 'System' -E 'usr' -E 'Safari.app' | while IFS= read -r -d '' fname; do
+sudo fd -td -tl -u -aHI $REGEX "$LOCATION" -0 --one-file-system -E 'Volumes' -E 'System' -E 'usr' -E 'Safari.app' | while IFS= read -r -d '' fname; do
   ((i = i + 1))
   #(( $i % 100 == 0 )) && echo -n '⌘'
   echo -ne "$i |                                                                                                                                                                                                                                                                                     \r"
