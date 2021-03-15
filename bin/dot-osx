@@ -39,8 +39,11 @@ echo "☑️  Always show scrollbars"
 defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 # Possible values: 'WhenScrolling', 'Automatic' and 'Always'
 
-# Disable the over-the-top focus ring animation
+echo "☑️  Disable the over-the-top focus ring animation"
 defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
+
+echo "☑️  Adjust toolbar title rollover delay"
+defaults write NSGlobalDomain NSToolbarTitleViewRolloverDelay -float 0
 
 # Disable smooth scrolling
 # (Uncomment if you’re on an older Mac that messes up the animation)
