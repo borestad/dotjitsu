@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# https://stackoverflow.com/questions/6109225/echoing-the-last-command-run-in-bash
+# echo 'Enter your computer password:'
+# sudo -v
+
+
+#launchctl disable gui/$UID/com.apple.photoanalysisd
+#launchctl kill -TERM gui/$UID/com.apple.photoanalysisd
+
+die() { echo >&2 -e "\nERROR: $@\n"; exit 1; }
+run2() { "$@"; code=$?; [ $code -ne 0 ] && die "command [$*] failed with error code $code"; }
+run() { "$@"; code=$?;  echo "﹩ $*"; }
+
+
+while true; do
+    run sudo pkill -9 photoanalysisd
+    run sudo pkill -9 photolibraryd
+    run sudo pkill -9 cloudphotosd
+    run sudo pkill -9 mds_stores
+    run sudo pkill -9 mds
+    run sudo pkill -9 mdsync
+    sleep 1
+done
