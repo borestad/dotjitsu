@@ -56,7 +56,8 @@ alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
 alias pgrep='pgrep -fli'
 
-alias retroarch="/Applications/RetroArch.app/Contents/MacOS/RetroArch -vf"
+alias retroarch="~/Applications/RetroArch.app/Contents/MacOS/RetroArch -vf"
+alias pigz='pigz -v'
 alias serve='ws -f stats -d '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 

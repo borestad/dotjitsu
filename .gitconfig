@@ -20,7 +20,6 @@
 		#sshCommand = "ssh -i ~/.ssh/id_rsa.work"
 
 [credential]
-	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager-core
 	#helper = osxkeychain
 
@@ -290,6 +289,5 @@ default = simple
 	root = ~/code
 [rebase]
 	stat = true
-
 [credential "https://dev.azure.com"]
 	useHttpPath = true

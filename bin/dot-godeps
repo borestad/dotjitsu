@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+
+go get -v github.com/fiatjaf/jiq/cmd/jiq
+go get -u github.com/h2non/bimg
