@@ -38,7 +38,6 @@ brew 'hugo'                         # Configurable static site generator
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'broot'                        # New way to see and navigate directory trees
-brew 'chromedriver'                 # Tool for automated testing of webapps across many browsers
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'cv'                           # Progress: Coreutils Progress Viewer
@@ -58,7 +57,7 @@ brew 'ffmpeg'                       # Play, record, convert, and stream audio an
 brew 'fswatch'                      # Monitor a directory for changes and run a shell command
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
-brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
+# brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'grc'                          # Colorize logfiles and command output
@@ -135,6 +134,7 @@ brew 'unison'                       # File synchronization tool for OSX
 brew 'vbindiff'                     # Visual Binary Diff
 brew 'vcsh'                         # Config manager based on git
 brew 'vnstat'                       # Console-based network traffic monitor
+brew 'vips'                         # Image processing library
 brew 'watch'                        # Executes a program periodically, showing output fullscreen
 brew 'watchman'                     # Watch files and take action when they change
 brew 'webkit2png'                   # Create screenshots of webpages from the terminal
