@@ -14,6 +14,7 @@ sudo launchctl disable system/com.adobe.acc.installer
 sudo launchctl disable system/Adobe_Genuine_Software_Integrity_Service
 sudo launchctl disable system/com.adobe.AdobeCreativeCloud
 sudo launchctl disable system/com.adobe.agsservice
+
 launchctl disable gui/$(id -u)/com.adobe.acc.AdobeCreativeCloud.2416
 launchctl disable gui/$(id -u)/com.adobe.accmac.2256
 launchctl disable gui/$(id -u)/com.adobe.CCXProcess.2252

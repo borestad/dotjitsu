@@ -122,6 +122,7 @@ brew 'sshuttle'                     # Proxy server that works as a poor man's VP
 brew 'starship'                     # Cross-shell prompt for astronauts
 brew 'stress'                       # Tool to impose load on and stress test a computer system
 brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
+brew 'svn'                          # Nodejs-based tool for optimizing SVG vector graphics files
 brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
 brew 'sysbench'                     # System performance benchmark tool
 brew 'tig'                          # Text interface for Git repositories

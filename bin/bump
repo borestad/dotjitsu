@@ -1,0 +1,8 @@
+#!/usr/bin/env dash
+
+
+git add .
+
+git commit -m "🔨Bump"
+
+git push -v

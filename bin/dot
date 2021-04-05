@@ -17,10 +17,8 @@ cd $ROOT
 # fi
 
 
-./bin/dot-brew
-
 brew install \
-	htop ncdu tig git hr mr zplug coreutils binutils findutils \
+	htop ncdu tig git hr mr zplug coreutils binutils findutils mr \
 	Schniz/tap/fnm
 
 eval "$(fnm env)"
@@ -28,10 +26,10 @@ eval "$(fnm env)"
 fnm install 14.15.5
 fnm use 14.15.5
 
-chmod go-w '/usr/local/share'
+compaudit | xargs chmod g-w 2&> /dev/null
 
+./bin/dot-brew
 ./bin/dot-clone
-#./bin/dot-brew
 ./bin/dot-crontab
 #./bin/dot-gem
 #./bin/dot-nvm

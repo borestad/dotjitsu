@@ -35,4 +35,6 @@ pip3 install --upgrade wheel
 
 pip3 install google_images_download
 pip3 install gitsome
+pip3 install pillow
+pip3 install imgp
 
