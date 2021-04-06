@@ -251,7 +251,7 @@ alias reloadshell='zr'
 
 
 brew.info () {
- #grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
+ grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
 }
 
 if (( $+commands[http] )); then

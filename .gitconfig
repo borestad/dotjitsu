@@ -5,23 +5,8 @@
 [hub]
 	protocol = https
 
-[user]
-	name = Johan Borestad
-	email = johan@borestad.com
-	signingkey = 2C7C92079C672564
-	# useConfigOnly = true
-
-
-[includeIf "gitdir:~/work/"]
-	[user]
-		name = Johan Borestad
-		email = "johan.borestad@teliacompany.com"
-	[core]
-		#sshCommand = "ssh -i ~/.ssh/id_rsa.work"
-
 [credential]
 	helper = /usr/local/share/gcm-core/git-credential-manager-core
-	#helper = osxkeychain
 
 [color]
 	ui = true
@@ -50,101 +35,6 @@
 	new = green bold
 	commit = yellow bold
 	whitespace = red reverse
-
-[alias]
-	# Custom
-	promote = !$DOTFILES/bin/git-promote
-	wtf     = !$DOTFILES/bin/git-wtf
-	rank-contributors = !$DOTFILES/bin/git-rank-contributors
-	count   = !git shortlog -sn
-
-	# add
-	a = add                           # add
-	chunkyadd = add --patch           # stage commits chunk by chunk
-
-	# via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
-	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-	snapshots = !git stash list --grep snapshot
-
-	#via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
-	recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
-
-	# branch
-	b = branch -v                     # branch (verbose)
-
-	# commit
-	c = commit -m                     # commit with message
-	ca = commit -am                   # commit all with message
-	ci = commit                       # commit
-	amend = commit --amend            # ammend your last commit
-	ammend = commit --amend           # ammend your last commit
-
-	# checkout
-	co = checkout                     # checkout
-	nb = checkout -b                  # create and switch to a new branch (mnemonic: "git new branch branchname...")
-
-	# cherry-pick
-	cp = cherry-pick -x               # grab a change from a branch
-
-	# diff
-	d = diff                          # diff unstaged changes
-	dc = diff --cached                # diff staged changes
-
-	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
-	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
-
-	last = diff HEAD^                 # diff last committed change
-
-	# log
-	l = log --graph --date=short
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-	changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
-	short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
-	simple = log --pretty=format:\" * %s\"
-	shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
-	branchauthors = "! for branch in `git branch -r | grep -v /HEAD`;do echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; done | sort -r"
-
-	# pull
-	pl = pull                         # pull
-
-	# push
-	ps = push                         # push
-
-	# rebase
-	rc = rebase --continue            # continue rebase
-	rs = rebase --skip                # skip rebase
-
-	# remote
-	r = remote -v                     # show remotes (verbose)
-
-	# reset
-	unstage = reset HEAD              # remove files from index (tracking)
-	undo = reset HEAD~                # Undo last commit
-	uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
-	filelog = log -u                  # show changes to a file
-	mt = mergetool                    # fire up the merge tool
-
-	# stash
-	ss = stash # stash changes
-	sl = stash list # list stashes
-	sa = stash apply # apply stash (restore changes)
-	sd = stash drop # drop stashes (destory changes)
-
-	# status
-	s = status # status
-	st = status # status
-	stat = status # status
-
-	# tag
-	t = tag -n # show tags with <n> lines of each tag message
-
-	# svn helpers
-	svnr = svn rebase
-	svnd = svn dcommit
-	svnl = svn log --oneline --show-commit
-	squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-Initial commit}\");};f"
-	trash = "!mkdir -p .trash && git ls-files --others --exclude-standard | gxargs gmv -f -t .trash"
-	g = grep --break --heading --line-number
 
 [format]
 	pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
@@ -191,8 +81,7 @@ default = simple
 
 [include]
 	path = .gitconfig.user
-
-
+	path = .gitconfig.alias
 
 [core]
     pager = delta
@@ -209,8 +98,6 @@ default = simple
     file-style = bold yellow ul
     file-decoration-style = none
 
-
-
 [diff]
     tool = smartsynchronize
 
@@ -220,7 +107,6 @@ default = simple
 
 [difftool "smartsynchronize"]
     cmd = /Applications/SmartSynchronize.app/Contents/MacOS/SmartSynchronize "$LOCAL" "$REMOTE"
-
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -287,6 +173,7 @@ default = simple
 
 [ghq]
 	root = ~/code
+
 [rebase]
 	stat = true
 	autoStash = true
