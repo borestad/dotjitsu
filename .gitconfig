@@ -289,5 +289,7 @@ default = simple
 	root = ~/code
 [rebase]
 	stat = true
+	autoStash = true
+
 [credential "https://dev.azure.com"]
 	useHttpPath = true
