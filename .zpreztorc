@@ -43,8 +43,8 @@ zstyle ':prezto:load' pmodule \
   'syntax-highlighting' \
   'autosuggestions' \
   'osx' \
-  'git' \
-  'prompt'
+  'git'
+#  'prompt'
 
 #
 # Autosuggestions

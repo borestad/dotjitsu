@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 #!/usr/bin/env zsh
 
 ulimit -n 10000
@@ -79,11 +86,22 @@ eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 
 
 
-# Load zplug
-zplug load #--verbose
-# zplug load
 
 source "$HOME/.aliases"
 source "${HOME}/.docker-aliases"
 source $DOTJITSU/~keybindings
 source $DOTJITSU/~hooks
+
+# # # alias g='git'
+# # # compdef g='git'
+# # # setopt complete_aliases
+
+# eval "$(starship init zsh)"
+source ~/.repos/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Load zplug
+#zplug load #--verbose
+# zplug load

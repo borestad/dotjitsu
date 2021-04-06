@@ -24,6 +24,7 @@ brew 'rust'                         # Safe, concurrent, practical language
 #brew 'git-crypt'                    # Enable transparent encryption/decryption of files in a git repo
 #brew 'sshfs'                       # File system client based on SSH File Transfer Protocol
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
+#brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 brew 'ack'                          # Search tool like grep, but optimized for programmer
 brew 'ag'                           # A code-searching tool similar to ack, but faster
 brew 'archey'                       # Graphical system information display for macOS
@@ -34,7 +35,6 @@ brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
 brew 'bat'                          # Clone of cat(1) with syntax highlighting and Git integration
 brew 'bento4'
-brew 'hugo'                         # Configurable static site generator
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'broot'                        # New way to see and navigate directory trees
@@ -46,7 +46,7 @@ brew 'dialog'                       # Display user-friendly message boxes from s
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
-brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
+#brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
 brew 'exa'                          # Modern replacement for 'ls
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
@@ -54,14 +54,15 @@ brew 'fasd'                         # CLI tool for quick access to files and dir
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
 brew 'ffind'                        # Friendlier find
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
+brew 'fish'                         # User-friendly command-line shell for UNIX-like operating systems
 brew 'fswatch'                      # Monitor a directory for changes and run a shell command
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
-# brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'grc'                          # Colorize logfiles and command output
 brew 'hashdeep'                     # Recursively compute digests on files/directories
+brew 'hugo'                         # Configurable static site generator
 brew 'hh'                           # Bash and zsh history suggest box
 brew 'htop'                         # Improved top (interactive process viewer)
 brew 'httpie'                       # User-friendly cURL replacement (command-line HTTP client)

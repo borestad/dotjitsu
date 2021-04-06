@@ -40,12 +40,15 @@ cask 'gitup'
 cask 'google-chrome'
 cask 'handbrake'
 cask 'iina'
+cask 'notion'
 cask 'imagealpha'
 cask 'imageoptim'
 cask 'insomnia'
 cask 'istat-menus'
 cask 'iterm2'
 cask 'kap'
+cask 'plistedit-pro'
+cask 'lingon-x'
 cask 'keka'
 cask 'lepton'
 cask 'mountain-duck'
@@ -68,6 +71,7 @@ cask 'transmit'
 cask 'transnomino'
 cask 'visual-studio-code'
 cask 'vlc'
+cask 'xmind'
 
 
 # ================================
@@ -107,6 +111,7 @@ cask 'font-source-sans-pro'
 cask 'font-source-serif-pro'
 cask 'font-victor-mono-nerd-font'
 cask 'font-victor-mono'
+cask 'font-meslo-lg-nerd-font'
 
 # NERD FONTS
 # ~/Library/Fonts
