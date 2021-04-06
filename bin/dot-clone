@@ -8,48 +8,19 @@ echo "Updating ZSH Frameworks ...\n"
 mkdir -p $HOME/.repos
 cd $HOME/.repos
 
-# line 'oh-my-zsh'
-# git_clone_or_pull \
-#   'https://github.com/robbyrussell/oh-my-zsh.git' \
-#   ~/.repos/oh-my-zsh
+for f in *; do
+    if [ -d "$f" ]; then
+        # Will not run if no directories are available
+        cd $f
+        mr register
+        cd ..
+    fi
+done
 
-line 'Prezto'
-git_clone_or_pull \
-  'https://github.com/sorin-ionescu/prezto.git' \
-  ~/.repos/zprezto
+cd $HOME
 
-line 'Git friendly'
-git_clone_or_pull \
-  'https://github.com/jamiew/git-friendly.git' \
-  ~/.repos/git-friendly
+hr
+mr status | sed '/^[[:space:]]*$/d'
+hr
 
-# line 'Better npm'
-# git_clone_or_pull \
-#   'https://github.com/lukechilds/zsh-better-npm-completion.git' \
-#   ~/.repos/zsh-better-npm-completion
-
-# line 'Git subrepo'
-# git_clone_or_pull \
-#   'https://github.com/ingydotnet/git-subrepo.git' \
-#   ~/.repos/git-subrepo
-
-# line 'Ligaturizer'
-# git_clone_or_pull \
-#   'https://github.com/rojiani/Ligaturizer.git' \
-#   ~/.repos/ligaturizer
-
-line 'osx-terminal-themes'
-git_clone_or_pull \
-  'https://github.com/lysyi3m/osx-terminal-themes.git' \
-  ~/.repos/osx-terminal-themes
-
-line '.tmux'
-git_clone_or_pull 'https://github.com/gpakosz/.tmux.git' \
-~/.repos/.tmux
-
-# line 'Powerline fonts'
-# git_clone_or_pull \
-#   'https://github.com/powerline/fonts.git' \
-#   ~/.repos/powerline-fonts
-# cd ~/.repos/powerline-fonts && ./install.sh
-
+mr update -j4
