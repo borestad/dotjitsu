@@ -41,12 +41,13 @@ brew 'broot'                        # New way to see and navigate directory tree
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'cv'                           # Progress: Coreutils Progress Viewer
+brew 'cliclick'                     # Tool for emulating mouse and keyboard events
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
-#brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
+brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
 brew 'exa'                          # Modern replacement for 'ls
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
@@ -87,6 +88,7 @@ brew 'most'                         # Powerful paging program
 brew 'mozjpeg'                      # Improved JPEG encoder
 brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
 brew 'multitail'                    # Tail multiple files in one terminal simultaneously
+brew 'neofetch'                     # Fast, highly customisable system info script
 brew 'ncdu'                         # NCurses Disk Usage
 brew 'nethogs'                      # Net top tool grouping bandwidth per process
 brew 'nginx'                        # HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server
@@ -178,7 +180,7 @@ brew 'gitbatch'                     # Manage your git repositories in one place
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'mr'                           # Multiple Repository management tool
 brew 'pygitup'                      # Nicer 'git pull'
-
+brew 'git-quick-stats'              # Simple and efficient way to access statistics in gitp
 
 
 #tap 'gitea/tap', 'https://gitea.com/gitea/homebrew-gitea'

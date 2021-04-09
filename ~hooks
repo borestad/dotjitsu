@@ -7,7 +7,7 @@ dir-info () {
   #echo -e "$total items ($dirs dirs| $files files)"
 
   #local total=`memoize fd . $PWD | wc -l`
-  echo -e "✨ $dirs directories, $files files, $total total"
+  echo -e "$dirs directories, $files files, $total total"
   #echo -e "`files.last_modified_directory`"
 }
 
@@ -16,15 +16,15 @@ auto-cd () {
   emulate -L zsh;
   # explicit sexy ls'ing as aliases arent honored in here.
   #hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -AFh --color --group-directories-first || ls -A
-  hr -
   dir-info
+  echo
   # echo
-  exa -a --group-directories-first
+  exa -a --group-directories-first --icons
   [ -f "package.json" ] && cs package.json
 
   echo
   [ -d ".git" ] && git recent | sed 's/^[[:space:]]*//'
-
+  hr -
   # echo
 }
 

@@ -33,6 +33,7 @@ alias sqlite='sqlite3'
 # =============================================================================
 alias rm='grm -v'
 alias rmf='grm -rfv'
+alias g='git'; compdef g='git'
 
 alias b='brew'
 alias bif='brew info'
@@ -52,6 +53,7 @@ alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
 alias mv='gmv -vi'
 alias ncdu="/usr/local/bin/ncdu -xe --color dark"
 alias ncdu2="/usr/local/bin/ncdu"
+alias n='ncdu -1'
 alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
 alias pgrep='pgrep -fli'
@@ -74,7 +76,7 @@ zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto }
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias qmv='qmv -e "subl -w -n" -f destination-only'
 touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
-
+alias neofetch='neofetch --config ~/.dotjitsu/neofetch.conf'
 #alias ncdu="ncdu -x -1bre"
 #alias git=hub
 
@@ -82,7 +84,8 @@ touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtou
 # ⚡️ =============================================================================
 # ️️⚡️ Filters & Pipes
 # ⚡️ =============================================================================
-alias filter-group-extension="sed -r 's/.*\/([^\/]+)/\1/' | sed "s/^[^\.]*$/''/" | sed -r 's/.*(\.[^\.]+)$/\1/' | sort | uniq -c | sort -nr | bat -P -l=bash"
+alias filter-group-extension='sed -r "s/.*\/([^\/]+)/\1/" | sed s/^[^\.]*$/""/ | sed -r "s/.*(\.[^\.]+)$/\1/" | sort | uniq -c | sort -nr | bat -P -l=bash'
+
 find-sum () {
   DIR='.'; EXT=$1
   # find $DIR -type f -name "*.$EXT" -printf "%s\n" | gawk -M '{t+=$1}END{print t}'
@@ -171,8 +174,9 @@ append() { grep -q -F $1 $2 || echo $1 >> $2 }
 
 alias exa='exa --group-directories-first'
 alias ls='gls --color --group-directories-first'
-alias l='exa -Ga'          # Lists in multi column, hidden files.
-alias ll='exa -lah'      # Lists in one column, hidden files.
+alias l='exa -Ga --icons'          # Lists in multi column, hidden files.
+alias ll='exa --icons -lah --no-permissions --no-user -T -L1'
+#alias ll='exa -lah'      # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
 alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
@@ -251,7 +255,7 @@ alias reloadshell='zr'
 
 
 brew.info () {
- grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse
+ grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse -e
 }
 
 if (( $+commands[http] )); then
