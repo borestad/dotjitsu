@@ -1,0 +1,5 @@
+#!/usr/bin/env dash
+
+# tput cup 1 0
+tput cup 10 0 && tput ed
+printf '\033[2J\033[3J\033[1;1H'``
