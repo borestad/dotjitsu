@@ -2,6 +2,13 @@
 #
 # https://github.com/skwp/dotfiles/blob/master/git/gitconfig
 
+[include]
+	path = .gitconfig.user
+	path = .gitconfig.alias
+
+[includeIf "gitdir:~/work/"]
+    path = ~/.private/.gitconfig.work
+
 [hub]
 	protocol = https
 
@@ -78,10 +85,6 @@ default = simple
 	# Remember my merges
 	# http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
 	enabled = true
-
-[include]
-	path = .gitconfig.user
-	path = .gitconfig.alias
 
 [core]
     pager = delta
