@@ -23,7 +23,7 @@ zplug "sorin-ionescu/prezto"
 zplug "eth-p/bat-extras"
 zplug "unixorn/git-extra-commands"
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "wookayin/fzf-fasd", defer:1
+# zplug "wookayin/fzf-fasd", defer:1
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:1
 
 # Install plugins if there are plugins that have not been installed

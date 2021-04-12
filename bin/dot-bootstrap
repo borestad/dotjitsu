@@ -1,0 +1,59 @@
+#!/usr/bin/env zsh
+
+echo 'Enter your computer password:'
+sudo -v
+sudo xcodebuild -license accept
+
+export ZSH=$HOME/.dotjitsu
+
+cd $HOME/.dotjitsu
+$HOME/.repos/git-friendly/pull || git pull
+
+ROOT=$(git rev-parse --show-toplevel)
+cd $ROOT
+
+# if [ ! type "brew" &> /dev/null ]; then
+# 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# fi
+
+
+brew install \
+	htop ncdu tig git hr mr zplug coreutils binutils findutils mr \
+	Schniz/tap/fnm
+
+eval "$(fnm env)"
+
+fnm install 14.15.5
+fnm use 14.15.5
+
+compaudit | xargs chmod g-w 2&> /dev/null
+
+./bin/dot-brew
+./bin/dot-clone
+./bin/dot-crontab
+#./bin/dot-gem
+#./bin/dot-nvm
+#./bin/nas
+./bin/dot-npm-bootstrap
+#./bin/dot-curl
+#./bin/dot-osx
+./bin/dot-osx-services
+#./bin/dot-python
+#./bin/dot-ruby
+./bin/dot-ssh
+./bin/dot-symlink
+./bin/dot-clean
+
+# Docker
+#ln -sfv /Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion /usr/local/share/zsh/site-functions/_docker
+#ln -sfv /Applications/Docker.app/Contents/Resources/etc/docker-machine.zsh-completion /usr/local/share/zsh/site-functions/_docker-machine
+#ln -sfv /Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion /usr/local/share/zsh/site-functions/_docker-compose
+
+#brew link git-annex
+#brew link git-lfs
+
+
+# Make sure zsh is available as a shell
+command -v zsh | sudo tee -a /etc/shells
+
+$HOME/.private/bin/dotp
