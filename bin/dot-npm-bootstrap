@@ -4,43 +4,51 @@
 hr -
 echo '✨ Install Binaries\n'
 
+npm config --global set cache ~/.cache/npm-cache
 npm install --global yarn
 
-yarn global add                           \
-  @babel/core@latest                      \
-  @babel/node@latest                      \
-  babel-node@latest                       \
-  bcat@latest                             \
-  diff-so-fancy@latest                    \
-  git-recent@latest                       \
-  http-server@latest                      \
-  jase@latest                             \
-  jq.node@latest                          \
-  local-web-server@latest                 \
-  ts-node@latest                          \
+
+args=(
+  # Globals
+  @babel/core@latest
+  @babel/node@latest
+  bcat@latest
+  diff-so-fancy@latest
+  git-recent@latest
+  http-server@latest
+  jase@latest
+  jq.node@latest
+  local-web-server@latest
+  ts-node@latest
   typescript@latest
+  pnpm@latest
 
-
-# Linters
-hr -
-echo '✨ Install Linters \n'
-yarn global add                           \
-  prettier@latest                         \
-  eslint@latest                           \
-  @typescript-eslint/eslint-plugin@latest \
-  @typescript-eslint/parser@latest        \
-  eslint-config-airbnb@latest             \
-  eslint-config-prettier@latest           \
-  eslint-config-standard@latest           \
-  eslint-plugin-import@latest             \
-  eslint-plugin-jsx-a11y@latest           \
-  eslint-plugin-node@latest               \
-  eslint-plugin-prettier@latest           \
-  eslint-plugin-promise@latest            \
-  eslint-plugin-react@latest              \
-  eslint-plugin-sonarjs@latest            \
-  eslint-plugin-standard@latest           \
+  # Linters
+  prettier@latest
+  eslint@latest
+  @typescript-eslint/eslint-plugin@latest
+  @typescript-eslint/parser@latest
+  eslint-config-airbnb@latest
+  eslint-config-prettier@latest
+  eslint-config-standard@latest
+  eslint-plugin-import@latest
+  eslint-plugin-jsx-a11y@latest
+  eslint-plugin-node@latest
+  eslint-plugin-prettier@latest
+  eslint-plugin-promise@latest
+  eslint-plugin-react@latest
+  eslint-plugin-sonarjs@latest
   eslint-plugin-unicorn@latest
+)
+
+
+NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
+#yarn global add "${args[@]}"
+
+
+# hr -
+# echo '✨ Install Linters \n'
+# yarn global add                           \
 
 
 #vtop@latest \

@@ -6,16 +6,6 @@
 echo "Updating ZSH Frameworks ...\n"
 
 mkdir -p $HOME/.repos
-cd $HOME/.repos
-
-for f in *; do
-    if [ -d "$f" ]; then
-        # Will not run if no directories are available
-        cd $f
-        mr register
-        cd ..
-    fi
-done
 
 cd $HOME
 
@@ -23,4 +13,15 @@ hr
 mr status | sed '/^[[:space:]]*$/d'
 hr
 
-mr update -j4
+mr update -j8
+
+cd $HOME/.repos
+for f in *; do
+    if [ -d "$f" ]; then
+        # Will not run if no directories are available
+        cd $f
+        fix-git-https-to-git &> /dev/null
+        mr register
+        cd ..
+    fi
+done

@@ -38,9 +38,9 @@ fi
 source /usr/local/etc/grc.zsh       # Colourify common commands (unalias things that breaks)
 source ~/.repos/powerlevel10k/config/p10k-robbyrussell.zsh
 source ~/.repos/powerlevel10k/powerlevel10k.zsh-theme # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-source ${ZDOTDIR:-$HOME}/.env
-source $DOTJITSU/~hooks
-source $DOTJITSU/~keybindings
+source ~/.dotjitsu/.env$
+source ~/.dotjitsu/.hooks$
+source ~/.dotjitsu/.keybindings$
 
 eval "$(fnm env)"                     # fnm (Fast Node Manager)
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)

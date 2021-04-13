@@ -5,6 +5,7 @@ tap 'homebrew/cask-fonts'
 tap 'homebrew/cask-versions'
 tap 'homebrew/cask-drivers'
 tap 'microsoft/git'
+tap 'buo/cask-upgrade'
 
 # ================================
 # FORMULAS FOR DEVS
@@ -40,20 +41,21 @@ cask 'gitup'
 cask 'google-chrome'
 cask 'handbrake'
 cask 'iina'
-cask 'notion'
 cask 'imagealpha'
 cask 'imageoptim'
 cask 'insomnia'
 cask 'istat-menus'
 cask 'iterm2'
 cask 'kap'
-cask 'plistedit-pro'
-cask 'lingon-x'
 cask 'keka'
 cask 'lepton'
+cask 'lingon-x'
+cask 'miro'
 cask 'mountain-duck'
 cask 'ngrok'
+cask 'notion'
 cask 'openemu-experimental'
+cask 'plistedit-pro'
 cask 'proxyman'
 cask 'retroarch'
 cask 'rsyncosx'
@@ -63,6 +65,7 @@ cask 'skitch'
 cask 'slack'
 cask 'smartgit'
 cask 'smartsynchronize'
+cask 'sparkleshare'
 cask 'spotify'
 cask 'steam'
 cask 'sublime-text'
@@ -85,8 +88,16 @@ cask 'xmind'
 # cask 'webpquicklook'
 
 
-
-
+# Mac App Store
+mas 'Wifi Explorer', id: 494803304
+# mas 'Outlook', id: 420212497
+# mas 'Giphy Capture', id: 668208984
+# mas 'Keynote', id: 409183694
+# mas 'Numbers', id: 409203825
+# mas 'Spark', id: 1176895641
+# mas 'Speedtest', id: 1153157709
+# mas 'Things', id: 904280696
+# mas 'Tweetbot', id: 1384080005
 
 
 
