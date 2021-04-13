@@ -32,10 +32,11 @@ i=0
 #EXCLUDE="*Safari*"
 EXCLUDE="**/System/**"
 
+
 ##########################################################
 # 1. Find all files
 ##########################################################
-sudo fd -td -tl -u -aHI $REGEX "$LOCATION" -0 --one-file-system -E 'Volumes' -E 'System' -E 'usr' -E 'Safari.app' | while IFS= read -r -d '' fname; do
+fd -td -tl -u -aHI $REGEX "$LOCATION" -0 --one-file-system -E 'Volumes' -E 'System' -E 'usr' -E 'Safari.app' | while IFS= read -r -d '' fname; do
   ((i = i + 1))
   #(( $i % 100 == 0 )) && echo -n '⌘'
   echo -ne "$i |                                                                                                                                                                                                                                                                                     \r"
@@ -69,8 +70,8 @@ echo "Tempfile length: ($total) *.lproj"
 while IFS= read -r fname; do
   ((i = i + 1))
 
-  if [ ! -L "$fname" ]; then
-    sudo grm -rf "$fname" 2>/dev/null
+  # if [ ! -L "$fname" ]; then
+    grm -rf "$fname" 2>/dev/null
     # sudo grm -rf "$fname" | pv -l >/dev/null
     retVal=$?
 
@@ -80,9 +81,9 @@ while IFS= read -r fname; do
       printf "[$i / $total] Removed \"$fname\" \n"
     fi
 
-  else
-    printf "[$i / $total] Skipped symlink \"$fname\" \n"
-  fi
+  # else
+    #printf "[$i / $total] Skipped symlink \"$fname\" \n"
+  # fi
 
 done \
   <"$tmpfile"

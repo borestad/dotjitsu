@@ -13,7 +13,11 @@ process.chdir(DOTJITSU)
 console.log('Symlinking files:\n')
 
 const dotfiles = fs.readdirSync('.').filter((f) => {
-  return f.startsWith('.') && (fs.statSync(f).isFile() || fs.statSync(f).isSymbolicLink())
+  return (
+    f.startsWith('.') &&
+    !f.endsWith('$') &&
+    (fs.statSync(f).isFile() || fs.statSync(f).isSymbolicLink())
+  )
 })
 
 for (const file of dotfiles) {
@@ -27,10 +31,8 @@ for (const file of dotfiles) {
   console.log(target)
 }
 
-
 // Manual adding files/folders
 execSync(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
-
 
 // execSync(`ln -sfv ${DOTJITSU}/package-global.json ${HOME}/.config/yarn/package.json`)
 // fs.symlinkSync( j(HOME, '.config/yarn/global'))

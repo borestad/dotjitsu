@@ -6,6 +6,7 @@ echo "✨ brew bundle (Caskfile)"
 
 if [ -t 1 ] ; then
   # Install Caskfile formulas (only if interactive shell)
+  /usr/local/bin/brew cu
   ~/.dotjitsu/bin/hr -
   /usr/local/bin/brew -v bundle --file=~/.dotjitsu/Caskfile
   ~/.dotjitsu/bin/dot-monolingual ~/Applications

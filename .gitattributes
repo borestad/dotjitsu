@@ -6,7 +6,6 @@
 *.acf           binnary -delta
 *.blend         binnary -delta
 *.dds           binnary -delta
-*.env           binnary -delta
 *.eot           binnary -delta
 *.exe           binnary -delta
 *.fbx           binnary -delta

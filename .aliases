@@ -31,6 +31,7 @@ alias sqlite='sqlite3'
 # =============================================================================
 # ✨ CoreUtils
 # =============================================================================
+alias nano='micro'
 alias rm='grm -v'
 alias rmf='grm -rfv'
 alias g='git'; compdef g='git'
@@ -43,7 +44,7 @@ alias bat.preview='bat --list-themes | fzf --preview="bat --theme={} --color=alw
 alias cgrep="grep --color=always"
 
 alias cp='gcp -v'
-alias crontab='VISUAL=nano EDITOR=nano crontab'
+alias crontab='VISUAL=micro EDITOR=micro crontab'
 alias ctp="bat package.json | jq"
 alias h="history | fzf --reverse"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"

@@ -3,11 +3,11 @@
 # https://github.com/skwp/dotfiles/blob/master/git/gitconfig
 
 [include]
-	path = .gitconfig.user
-	path = .gitconfig.alias
+	path = ~/.private/.gitconfig-user
+	path = ~/.dotjitsu/.gitconfig-alias$
 
 [includeIf "gitdir:~/work/"]
-    path = ~/.private/.gitconfig.work
+    path = ~/.private/.gitconfig-work
 
 [hub]
 	protocol = https
@@ -52,7 +52,7 @@
 	autocrlf = input
 	commitGraph = true
 	compression = 1
-	editor = nano
+	editor = micro
 	excludesfile = ~/.gitignore
 	ignorecase = false
 	packedGitLimit = 1512m
