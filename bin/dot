@@ -17,19 +17,10 @@ eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
 
-#dot-brew
-
 /usr/local/bin/brew bundle --file=$HOME/.dotjitsu/Brewfile
 
 dot-crontab
 dot-npm-bootstrap
-dot-symlink
-#dot-clean
-
-# Docker
-#ln -sfv /Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion /usr/local/share/zsh/site-functions/_docker
-#ln -sfv /Applications/Docker.app/Contents/Resources/etc/docker-machine.zsh-completion /usr/local/share/zsh/site-functions/_docker-machine
-#ln -sfv /Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion /usr/local/share/zsh/site-functions/_docker-compose
 
 #brew link git-annex
 #brew link git-lfs
