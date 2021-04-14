@@ -24,6 +24,8 @@
 	<true/>
 	<key>CommandSelection</key>
 	<true/>
+	<key>CompactMinimalTabBarHeight</key>
+	<real>26</real>
 	<key>Control</key>
 	<integer>1</integer>
 	<key>CopyLastNewline</key>
@@ -57852,7 +57854,7 @@
 	<key>Default Bookmark Guid</key>
 	<string>89A7486A-2F6E-41A2-9114-14C20D8EFA4F</string>
 	<key>DefaultTabBarHeight</key>
-	<real>20</real>
+	<real>26</real>
 	<key>DimBackgroundWindows</key>
 	<false/>
 	<key>DimInactiveSplitPanes</key>
@@ -59026,7 +59028,7 @@
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>15</integer>
+			<integer>12</integer>
 			<key>Working Directory</key>
 			<string>/Users/johan</string>
 		</dict>

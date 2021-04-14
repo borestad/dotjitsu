@@ -29,7 +29,7 @@ alias sqlite='sqlite3'
 
 
 # =============================================================================
-# ✨ CoreUtils
+# ✨ Custom utils
 # =============================================================================
 alias nano='micro'
 alias rm='grm -v'
@@ -80,6 +80,18 @@ touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtou
 alias neofetch='neofetch --config ~/.dotjitsu/neofetch.conf'
 #alias ncdu="ncdu -x -1bre"
 #alias git=hub
+
+dir-info () {
+  local dirs=`find . -maxdepth 1 -mindepth 1 -type d | wc -l`
+  local files=`find . -maxdepth 1 -mindepth 1 -type f | wc -l`
+  local total=`find . -maxdepth 1 -mindepth 1 | wc -l`
+  #echo -e "$total items ($dirs dirs| $files files)"
+
+  #local total=`memoize fd . $PWD | wc -l`
+  echo -e "$dirs directories, $files files, $total total"
+  #echo -e "`files.last_modified_directory`"
+}
+
 
 
 # ⚡️ =============================================================================
@@ -176,7 +188,7 @@ append() { grep -q -F $1 $2 || echo $1 >> $2 }
 alias exa='exa --group-directories-first'
 alias ls='gls --color --group-directories-first'
 alias l='exa -Ga --icons'          # Lists in multi column, hidden files.
-alias ll='exa --icons -lah --no-permissions --no-user -T -L1'
+alias ll='exa --icons -lah --no-permissions --no-user -T -L1; echo; hr; echo "\n"'
 #alias ll='exa -lah'      # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
