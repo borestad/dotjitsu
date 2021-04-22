@@ -11,12 +11,12 @@ t () {
 # Update brew itself
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew update"
-/usr/local/bin/brew update
+/usr/local/bin/brew -v update
 
 # Install Brewfile formulas
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew bundle (Brewfile)"
-/usr/local/bin/brew -v bundle --file=$HOME/.dotjitsu/Brewfile
+/usr/local/bin/brew bundle --file=$HOME/.dotjitsu/Brewfile
 
 # Update installed bundles (even those not in Brew/Caskfile
 $HOME/.dotjitsu/bin/hr -

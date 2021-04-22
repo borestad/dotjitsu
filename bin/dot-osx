@@ -26,6 +26,13 @@ echo -e "\n\nGeneral UI/UX" && hr
 echo "☑️  Disable the sound effects on boot"
 sudo nvram SystemAudioVolume=" "
 
+echo "☑️  Disable the sound effects in UI"
+defaults write NSGlobalDomain com.apple.sound.beep.volume -int 0
+defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0
+
+echo "☑️  Enable volume change feedback"
+defaults write NSGlobalDomain com.apple.sound.beep.feedback -bool true
+
 echo "☑️  Disable transparency in the menu bar and elsewhere on Yosemite"
 # defaults write com.apple.universalaccess reduceTransparency -bool true
 
@@ -35,8 +42,8 @@ defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.5
 echo "☑️  Set sidebar icon size to medium"
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
-echo "☑️  Always show scrollbars"
-defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+echo "☑️  Show scrollbars setting"
+defaults write NSGlobalDomain AppleShowScrollBars -string "Automatic"
 # Possible values: 'WhenScrolling', 'Automatic' and 'Always'
 
 echo "☑️  Disable the over-the-top focus ring animation"
@@ -698,6 +705,7 @@ defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 echo "☑️  Enable the debug menu in Disk Utility"
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
+defaults write com.apple.DiskUtility SidebarShowAllDevices -bool true
 
 echo "☑️  Auto-play videos when opened with QuickTime Player"
 defaults write com.apple.QuickTimePlayerX MGPlayMovieOnOpen -bool true

@@ -32,7 +32,9 @@ for (const file of dotfiles) {
 }
 
 // Manual adding files/folders
+// execSync(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
 execSync(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
+// execSync(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
 
 // execSync(`ln -sfv ${DOTJITSU}/package-global.json ${HOME}/.config/yarn/package.json`)
 // fs.symlinkSync( j(HOME, '.config/yarn/global'))

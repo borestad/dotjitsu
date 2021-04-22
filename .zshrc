@@ -40,7 +40,6 @@ source ~/.repos/powerlevel10k/config/p10k-robbyrussell.zsh
 source ~/.repos/powerlevel10k/powerlevel10k.zsh-theme # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source ~/.dotjitsu/.env$
 source ~/.dotjitsu/.hooks$
-source ~/.dotjitsu/.keybindings$
 
 eval "$(fnm env)"                     # fnm (Fast Node Manager)
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
@@ -50,8 +49,10 @@ eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
 # ===== Load Zplug
 zplug load #--verbose
 
+# Must be loaded after zplug to get
 source ~/.aliases
 source ~/.docker-aliases
+source ~/.dotjitsu/.keybindings$
 
 # ===== Basics
 setopt NO_BEEP                  # don't beep on error

@@ -71,15 +71,15 @@ while IFS= read -r fname; do
   ((i = i + 1))
 
   # if [ ! -L "$fname" ]; then
-    grm -rf "$fname" 2>/dev/null
+    grm -rfv "$fname" 2>/dev/null &
     # sudo grm -rf "$fname" | pv -l >/dev/null
-    retVal=$?
+#    retVal=$?
 
-    if [ $retVal -ne 0 ]; then
-      printf "[$i / $total] SIP Error:  \"$fname\" \n"
-    else
-      printf "[$i / $total] Removed \"$fname\" \n"
-    fi
+    # if [ $retVal -ne 0 ]; then
+    #   printf "[$i / $total] SIP Error:  \"$fname\" \n"
+    # else
+    #   printf "[$i / $total] Removed \"$fname\" \n"
+    # fi
 
   # else
     #printf "[$i / $total] Skipped symlink \"$fname\" \n"
