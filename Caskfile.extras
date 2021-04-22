@@ -5,11 +5,11 @@ tap 'caskroom/fonts'
 tap 'caskroom/versions'
 tap 'homebrew/cask-drivers'
 
+
+
 # ================================
 # FORMULAS FOR DEVS
 # ================================
-cask 'atom'
-cask 'app-tamer'
 cask 'anybar'
 cask 'bitbar'
 cask 'caffeine'
@@ -20,7 +20,6 @@ cask 'cyberduck'
 cask 'disk-inventory-x'
 cask 'diskwave'
 # cask 'dockertoolbox'
-
 cask 'fluid'
 cask 'forklift'
 cask 'fwbuilder'

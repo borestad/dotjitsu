@@ -35,7 +35,7 @@ hr() {
             LINE="$LINE$WORD"
         done
 
-        printf "\e[30m${LINE:0:$COLS}\e[0m"
+        printf "\e[30m${LINE:0:$COLS}\e[0m\n"
     fi
 }
 
