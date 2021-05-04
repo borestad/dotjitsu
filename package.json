@@ -3,7 +3,7 @@
     "blend-promise-utils": "^1.27.0",
     "debug": "^4.2.0",
     "execa": "^4.0.3",
-    "exiftool-vendored": "^12.2.0",
+    "exiftool-vendored": "^14.3.0",
     "fdir": "^4.1.0",
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^9.0.1",
