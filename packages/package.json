@@ -22,7 +22,7 @@
     "jq.node": "^2.1.2",
     "jscpd": "^3.1.0",
     "local-web-server": "^4.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "prettier": "^2.0.2",
     "typescript": "^3.8.3",
     "yarn-deduplicate": "^2.0.0"
