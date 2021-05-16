@@ -109,7 +109,7 @@ brew 'ngrep'                        # Network grep
 brew 'nload'                        # Realtime console network usage monitor
 brew 'nmap'                         # Port scanning utility for large networks
 brew 'noti'                         # Trigger notifications when a process completes
-brew 'nushell '                     # Modern shell for the GitHub era
+brew 'nushell'                      # Modern shell for the GitHub era
 brew 'optipng'                      # PNG file optimizer
 brew 'pbzip2'                       # Parallel bzip2
 brew 'pgrep'                        # OpenBSD and Darwin versions of pgrep, pkill, and pfind
