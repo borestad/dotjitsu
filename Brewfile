@@ -145,6 +145,7 @@ brew 'tig'                          # Text interface for Git repositories
 brew 'tmux'                         # Terminal multiplexer
 brew 'tokei'                        # Program that allows you to count code, quickly
 brew 'trash'                        # CLI tool that moves files or folder to the trash
+brew 'tealdeer'                     # Very fast implementation of tldr in Rust
 brew 'tree'                         # Display directories as trees (with optional color/HTML output)
 brew 'unar'                         # Command-line unarchiving tools supporting multiple formats
 brew 'unison'                       # File synchronization tool for OSX
