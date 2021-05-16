@@ -49,10 +49,10 @@ brew 'bento4'
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'broot'                        # New way to see and navigate directory trees
+brew 'cliclick'                     # Tool for emulating mouse and keyboard events
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'cv'                           # Progress: Coreutils Progress Viewer
-brew 'cliclick'                     # Tool for emulating mouse and keyboard events
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
@@ -67,18 +67,20 @@ brew 'fd'                           # Simple, fast and user-friendly alternative
 brew 'ffind'                        # Friendlier find
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
 brew 'fish'                         # User-friendly command-line shell for UNIX-like operating systems
+brew 'fnm'                          # Fast and simple Node.js version manager
 brew 'fswatch'                      # Monitor a directory for changes and run a shell command
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'grc'                          # Colorize logfiles and command output
+brew 'grex'                         # Command-line tool for generating regular expressions
 brew 'hashdeep'                     # Recursively compute digests on files/directories
-brew 'hugo'                         # Configurable static site generator
 brew 'hh'                           # Bash and zsh history suggest box
 brew 'htop'                         # Improved top (interactive process viewer)
 brew 'httpie'                       # User-friendly cURL replacement (command-line HTTP client)
 brew 'httpry'                       # Packet sniffer for displaying and logging HTTP traffic
+brew 'hugo'                         # Configurable static site generator
 brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
@@ -99,14 +101,15 @@ brew 'most'                         # Powerful paging program
 brew 'mozjpeg'                      # Improved JPEG encoder
 brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
 brew 'multitail'                    # Tail multiple files in one terminal simultaneously
-brew 'neofetch'                     # Fast, highly customisable system info script
 brew 'ncdu'                         # NCurses Disk Usage
+brew 'neofetch'                     # Fast, highly customisable system info script
 brew 'nethogs'                      # Net top tool grouping bandwidth per process
 brew 'nginx'                        # HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server
 brew 'ngrep'                        # Network grep
 brew 'nload'                        # Realtime console network usage monitor
 brew 'nmap'                         # Port scanning utility for large networks
 brew 'noti'                         # Trigger notifications when a process completes
+brew 'nushell '                     # Modern shell for the GitHub era
 brew 'optipng'                      # PNG file optimizer
 brew 'pbzip2'                       # Parallel bzip2
 brew 'pgrep'                        # OpenBSD and Darwin versions of pgrep, pkill, and pfind
@@ -127,7 +130,6 @@ brew 'ripgrep-all'                  # Wrapper around ripgrep that adds multiple 
 brew 'ripgrep'                      # Search tool like grep and The Silver Searcher
 brew 'rsnapshot'                    # File system snapshot utility (based on rsync)
 brew 'rsync'                        # Utility that provides fast incremental file transfer
-brew 'fnm'                          # Fast and simple Node.js version manager
 brew 'sd'                           # Intuitive find & replace CLI
 brew 'sk'                           # Fuzzy Finder in rust!
 brew 'speedtest-cli'                # Command-line interface for https://speedtest.net bandwidth tests
@@ -148,8 +150,8 @@ brew 'unar'                         # Command-line unarchiving tools supporting 
 brew 'unison'                       # File synchronization tool for OSX
 brew 'vbindiff'                     # Visual Binary Diff
 brew 'vcsh'                         # Config manager based on git
-brew 'vnstat'                       # Console-based network traffic monitor
 brew 'vips'                         # Image processing library
+brew 'vnstat'                       # Console-based network traffic monitor
 brew 'watch'                        # Executes a program periodically, showing output fullscreen
 brew 'watchman'                     # Watch files and take action when they change
 brew 'webkit2png'                   # Create screenshots of webpages from the terminal
@@ -157,6 +159,7 @@ brew 'wget'                         # Internet file retriever
 brew 'whatmask'                     # Network settings helper
 brew 'youtube-dl'                   # Download YouTube videos from the command-line
 brew 'zopfli'                       # New zlib (gzip, deflate) compatible compressor
+brew 'zoxide'                       # Shell extension to navigate your filesystem faster
 brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
