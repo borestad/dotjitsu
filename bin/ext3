@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+#time find . -type f | grep -E ".*\.[a-zA-Z0-9]*$" | sed -e 's/.*\(\.[a-zA-Z0-9]*\)$/\1/' | sort | uniq -c | sort -n
+
+
+gfind . -type f -printf "%s\t%f\n" | awk '
+{
+ split($2, ext, ".")
+ e = ext[length(ext)]
+ size[e] += $1
+}
+
+END{
+ for(i in size)
+   print size[i], i
+}' | sort -n
