@@ -75,11 +75,12 @@
 	autocorrect = 1
 
 [push]
+	recurseSubmodules = check
 # See `git help config` (search for push.default)
 # for more information on different options of the below setting.
 #
 # Setting to git 2.0 default to suppress warning message
-default = simple
+	default = simple
 
 [rerere]
 	# Remember my merges
@@ -109,7 +110,7 @@ default = simple
 	colorMoved = default
 
 [difftool "smartsynchronize"]
-    cmd = /Applications/SmartSynchronize.app/Contents/MacOS/SmartSynchronize "$LOCAL" "$REMOTE"
+    cmd = /Applications/SmartSynchronize.app/Contents/MacOS/SmartSynchronize $LOCAL $REMOTE
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -122,15 +123,15 @@ default = simple
 	writeCommitGraph = true
 
 [commit]
-	#gpgsign = true
+	gpgSign = false
 	verbose = true
 
 [pull]
 	rebase = true
 
 [tig]
-	line-graphics = yes  # Disable graphics characters
-	tab-size = 4    # Number of spaces per tab
+	line-graphics = yes # Disable graphics characters
+	tab-size = 4 # Number of spaces per tab
 	mouse = no
 
 [fetch]
@@ -183,3 +184,12 @@ default = simple
 
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+
+[smartgit "submodule"]
+	fetchalways = false
+	update = true
+	initializenew = true
+
+[taggrouping]
+	groups =
+	singles =
