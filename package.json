@@ -1,16 +1,16 @@
 {
   "dependencies": {
-    "blend-promise-utils": "^1.27.0",
-    "debug": "^4.2.0",
-    "execa": "^4.0.3",
-    "exiftool-vendored": "^12.2.0",
-    "fdir": "^4.1.0",
+    "blend-promise-utils": "^1.28.0",
+    "debug": "^4.3.2",
+    "execa": "^5.1.1",
+    "exiftool-vendored": "^15.2.0",
+    "fdir": "^5.1.0",
     "fluent-ffmpeg": "^2.1.2",
-    "fs-extra": "^9.0.1",
-    "glob": "^7.1.6",
-    "ora": "^5.1.0",
-    "p-map": "^4.0.0",
-    "picomatch": "^2.2.2",
+    "fs-extra": "^10.0.0",
+    "glob": "^7.1.7",
+    "ora": "^5.4.1",
+    "p-map": "^5.1.0",
+    "picomatch": "^2.3.0",
     "touch": "^3.1.0"
   }
 }
