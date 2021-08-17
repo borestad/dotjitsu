@@ -36,6 +36,9 @@ brew 'packer-completion'
 #brew 'sshfs'                       # File system client based on SSH File Transfer Protocol
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 #brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
+
+brew 'kondo'                        # Save disk space by cleaning non-essential files from software projects
+brew 'rargs'                        # Save disk space by cleaning non-essential files from software projects
 brew 'ack'                          # Search tool like grep, but optimized for programmer
 brew 'ag'                           # A code-searching tool similar to ack, but faster
 brew 'archey'                       # Graphical system information display for macOS
@@ -56,6 +59,7 @@ brew 'cv'                           # Progress: Coreutils Progress Viewer
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
+brew 'duf'                          # Disk Usage/Free Utility - a better 'df' alternative
 brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
 brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
@@ -66,6 +70,7 @@ brew 'faas-cli'                     # CLI for templating and/or deploying FaaS f
 brew 'fasd'                         # CLI tool for quick access to files and directories
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
 brew 'ffind'                        # Friendlier find
+brew 'fselect'                      # Find files with SQL-like queries
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
 brew 'fish'                         # User-friendly command-line shell for UNIX-like operating systems
 brew 'fnm'                          # Fast and simple Node.js version manager
@@ -82,6 +87,7 @@ brew 'htop'                         # Improved top (interactive process viewer)
 brew 'httpie'                       # User-friendly cURL replacement (command-line HTTP client)
 brew 'httpry'                       # Packet sniffer for displaying and logging HTTP traffic
 brew 'hugo'                         # Configurable static site generator
+brew 'hyperfine'                    # Command-line benchmarking tool
 brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
@@ -175,6 +181,8 @@ brew 'zsh'
 # ================================
 tap 'teamookla/speedtest'
 brew 'teamookla/speedtest/speedtest' # Ookla Speedtest
+tap 'cantino/mcfly'
+brew 'mcfly'
 
 # ================================
 # Databases & tools

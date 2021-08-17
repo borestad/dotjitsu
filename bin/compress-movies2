@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+
+# PATH=$1
+# echo $PATH
+
+# ffmpegSettings="-stats -probesize 50M -analyzeduration 100M -y -ignore_unknown -map_metadata 0 -map 0:0 -map 0:1 -c:a aac -b:a 384k -strict -2 -c:s copy -c:v libx265 -tune grain -tag:v hvc1 -preset medium -level 4.2 -crf 27 -x265-params deblock=-1,-1"
+
+# glob="*.mov"
+
+# #execute find and do the converting
+# gfind $PATH -maxdepth 1 -type f -iname $glob \
+#   -exec sh -c 'x="{}"; /usr/local/bin/ffmpeg -i "{}" '\
+#   $ffmpegSettings' \
+#   -f mov "${x%.mov}.h265.mov" && touch -r "{}" "${x%.mov}.h265.mov" && rm "{}"' \;
+
+
+filePath=$1
+echo $filePath
+
+ffmpegSettings="-stats -probesize 50M -analyzeduration 100M -y -ignore_unknown -map_metadata 0 -map 0:0 -map 0:1 -c:a aac -b:a 384k -strict -2 -c:s copy -c:v libx265 -tune grain -tag:v hvc1 -preset medium -level 4.2 -crf 26 -x265-params deblock=-1,-1"
+
+findString="*.MOV"
+
+#execute find and do the converting
+find $filePath -type f -iname $findString \
+  -exec sh -c 'x="{}"; /usr/local/bin/ffmpeg -i "{}" '$ffmpegSettings' -f mov "${x%.MOV}.h265.mov" && touch -r "{}" "${x%.MOV}.h265.mov" && rm "{}"' \;

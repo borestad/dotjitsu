@@ -69,7 +69,7 @@ alias vnstat='/usr/local/bin/vnstat -i en0'
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 alias wget='wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
 alias ws='ws -d'
-alias dfc='/usr/local/bin/dfc -Wdliuh -q mount -t apfs'
+alias dfc='/usr/local/bin/dfc -Wdluh -q mount -t apfs'
 cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null }
 alias sort="sort -S 50% --parallel=$NUM_CORES"
 zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto }
@@ -459,7 +459,7 @@ alias net.sniff0="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff1="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff4="sudo ngrep -d 'en4' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.flushdns='flushdns'
-flushdns() { sudo killall -HUP mDNSResponder; sudo killall mDNSResponderHelper; sudo dscacheutil -flushcache }
+flushdns() { echo "DNS cache flushing ..."; sudo killall -HUP mDNSResponder; sudo killall mDNSResponderHelper; sudo dscacheutil -flushcache; echo "✓ DNS cache cleared!" }
 
 
 # =============================================================================

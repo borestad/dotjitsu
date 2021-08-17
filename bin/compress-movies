@@ -15,10 +15,12 @@ const exiftool = require('exiftool-vendored').exiftool
 
 const args = process.argv.slice(2)
 
-const QUALITY = isNumeric(args[0]) ? args[0] : '22'
+// ----------------------------------------------------------------
+const QUALITY = isNumeric(args[0]) ? args[0] : '24'
+const PRESET = 'medium'
 const DEINTERLACE = false
 const STORE = { candidates: 0 }
-
+// ----------------------------------------------------------------
 const noop = () => {}
 
 function isNumeric(value) {
@@ -26,7 +28,7 @@ function isNumeric(value) {
 }
 
 function getConvertedFileName(file) {
-  const { dir, _base, name } = path.parse(file)
+  const { dir, _base, name }  = path.parse(file)
   const output = `${name}-q${QUALITY}${DEINTERLACE ? `-deinterlaced-1080-50` : ''}.mp4`
   return path.join(dir, output)
 }
@@ -58,81 +60,34 @@ async function convert(input, output) {
     ffmpeg(`./${input}`)
       .outputOptions(
         ...[
-          // Use x265
-          '-vcodec',
-          'libx265',
+          // ...['-vf', 'scale=-2:1440:flags=lanczos'], // Downscale to <XXX>p
+          // ...['-vf', 'scale=1600:-1:flags=lanczos,unsharp'], // Downscale to <XXX>p
+          // ...['-r', '60'], // Downscale to <XXX>p
+          // ...['-vf', "crop=trunc(iw/2)*2:trunc(ih/2)*2"],
+          // ...['-threads', 2],
+          ...['-vcodec', 'libx265'], // Use x265
+          ...['-vtag', 'hvc1'],
+          ...['-preset', PRESET], // https://superuser.com/questions/490683/cheat-sheets-and-presets-settings-that-actually-work-with-ffmpeg-1-0
+          ...['-crf', QUALITY], // Quality settings
+          ...['-tune', 'grain'],
+          // DEINTERLACE && [
+          //   '-vf', 'yadif=1:-1:0'
+          // ],
 
-          '-vtag',
-          'hvc1',
+          // ...['-tune', 'grain'],
+          // ...['-x265-params', 'deblock=-1,-1'],
 
-          // https://superuser.com/questions/490683/cheat-sheets-and-presets-settings-that-actually-work-with-ffmpeg-1-0
-          '-preset',
-          // 'veryfast',
-          'slow',
+          // 'slow',
 
           // Replace black bars with blurry background
           // '-lavfi',
           // '[0:v]scale=1920*2:1080*2,boxblur=luma_radius=min(h,w)/20:luma_power=1:chroma_radius=min(cw,ch)/20:chroma_power=1[bg];[0:v]scale=-1:1080[ov];[bg][ov]overlay=(W-w)/2:(H-h)/2,crop=w=1920:h=1080',
 
-          // Quality settings
-          '-crf',
-          QUALITY,
-
           // Make it Apple/Quicktime compatible ( YUV planar color space with 4:2:0 chroma)
-          '-pix_fmt',
-          'yuv420p', // yuv420p10le
+          ...['-pix_fmt', 'yuv420p'], // yuv420p10le
+          ...['-map_metadata', '0'], // Copy metadata
+          ...['-movflags', 'faststart'],
 
-          // Copy metadata
-          '-map_metadata',
-          '0',
-
-          '-movflags',
-          'faststart',
-
-          // denoise
-          // '-vf',
-          // 'hqdn3d=4.0:3.0:6.0:4.5',
-
-          // '-color_trc',
-          // 'smpte2084',
-
-          // '-color_primaries',
-          // 'bt2020',
-          // '-tune','film',
-          // '-hwaccel cuvid',
-          // Disable smoothing
-          // '--selective-sao 0',
-          // '--no-sao',
-
-          // '-filter:v',
-          // 'hqdn3d=4.0:3.0:6.0:4.5',
-          // 'hqdn3d= 2:1:2:3',
-          // 'nlmeans',
-
-          // De-Interlace
-          // DEINTERLACE && [
-          //   '-vf', 'yadif=1:-1:0'
-          // ],
-
-          // '-vf', 'yadif=1:-1:0',
-          // '-r', '50',
-
-          // '-filter:v', 'minterpolate=fps=25:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1',
-          // '-r', '30',
-          // '-threads', '12',
-
-          // Downscale to <XXX>p
-          // '-vf',
-          // 'scale=-1:720',
-          // '-vf',
-          // 'yadif=1:-1:0,scale=-1:1280',
-          // '-vf', 'yadif=1:-1:0,scale=160:-1',
-
-          //  <width>:<height>
-          // '-vf', 'scale=1600:900',
-          // '-vf', 'scale=1600:-1',
-          // '-vsync', 'vfr',
-          // '-filter:v', 'fps=fps=30',
         ]
           .flat()
           .filter(Boolean)
@@ -146,12 +101,12 @@ async function convert(input, output) {
         const { _frames, currentFps, _currentKbps, targetSize, _timemark, percent } = progress
         const estimate = ((targetSize / percent) * 100).toFixed(0)
 
-        const lpercent = Math.round(percent)
-        const ltargetsize = (targetSize / 1000).toFixed(1)
-        const lestimate = (estimate / 1000).toFixed(1)
-        const lbefore = (before / 1000_000).toFixed(1)
-        const ldiff = ((estimate / before) * 1000 * 100).toFixed(1)
-        const ldelta = ~~(DB[input].deltaTime / 1000)
+        const lpercent     = Math.round(percent)
+        const ltargetsize  = (targetSize / 1000).toFixed(1)
+        const lestimate    = (estimate / 1000).toFixed(1)
+        const lbefore      = (before / 1000_000).toFixed(1)
+        const ldiff        = ((estimate / before) * 1000 * 100).toFixed(1)
+        const ldelta       = ~~(DB[input].deltaTime / 1000)
 
         // log(`» ${lpercent}% - ${ltargetsize} Mb - (~${lestimate} / ${lbefore}) ${output}`)
         log(
@@ -250,6 +205,8 @@ async function copyTags(input, output) {
     })
     .catch(noop)
 
+  // console.log(tmpInfoFile)
+
   if (fs.existsSync(tmpInfoFile)) {
     console.log('Inject Metadata:')
     console.log('data:', tmpInfoFile)
@@ -266,14 +223,7 @@ async function copyTags(input, output) {
     await fs.rename(newOutput, output.replace('~===TEMP===~', '')).catch(console.error)
   } else {
     console.log('Skip injecting metadata')
-    // await fs.rename(newOutput, output).catch(console.error)
-  }
-
-  try {
-    // await fs.unlink(output).catch(console.error)
-    // await fs.rename(newOutput, output).catch(console.error)
-  } catch (error) {
-    // console.log(e)
+    await fs.rename(output, output.replace('~===TEMP===~', '')).catch(console.error)
   }
 }
 
@@ -326,3 +276,41 @@ process.on('SIGINT', function () {
 })
 
 run()
+
+// denoise
+// '-vf',
+// 'hqdn3d=4.0:3.0:6.0:4.5',
+
+// '-color_trc',
+// 'smpte2084',
+
+// '-color_primaries',
+// 'bt2020',
+// '-tune','film',
+// '-hwaccel cuvid',
+// Disable smoothing
+// '--selective-sao 0',
+// '--no-sao',
+
+// '-filter:v',
+// 'hqdn3d=4.0:3.0:6.0:4.5',
+// 'hqdn3d= 2:1:2:3',
+// 'nlmeans',
+
+// De-Interlace
+
+// '-vf', 'yadif=1:-1:0',
+// '-r', '50',
+
+// '-filter:v', 'minterpolate=fps=25:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1',
+// '-r', '30',
+// '-threads', '12',
+// '-vf',
+// 'yadif=1:-1:0,scale=-1:1280',
+// '-vf', 'yadif=1:-1:0,scale=160:-1',
+
+//  <width>:<height>
+// '-vf', 'scale=1600:900',
+// '-vf', 'scale=1600:-1',
+// '-vsync', 'vfr',
+// '-filter:v', 'fps=fps=30',

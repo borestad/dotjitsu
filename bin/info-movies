@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+#pngquant --strip -s1 -v -f --ext .png $1
+
+#find . -name '*.png' -print0 | xargs -0 -P12 -L1 pngquant --quality 75-90 --skip-if-larger --strip -s1 -v -f --ext .png
+
+#printf '%s\n' "$file"
+#done
+
+#exit 0
+
+#find . -type f -maxdepth 1 -name '*.mov' -print0 |
+fd --glob '*.{mov,mp4}' -E '*q*' -0 |
+while IFS= read -r -d '' fname; do
+
+	# hr -
+  BASENAME=${fname##*/}
+  NAME="$BASENAME"
+
+  # echo "fname:      $fname"
+  # echo "BASENAME:   $BASENAME"
+  printf "$NAME,"
+  FPS=`ffprobe -v 0 -of csv=p=0 -select_streams v:0 -show_entries stream=r_frame_rate "$fname"`
+  #CODEC=`ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$fname"`
+  #RESOLUTION=`ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$fname"`
+  INFO=`ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,height,width,duration -of default=noprint_wrappers=1:nokey=1 "$fname" | sd '\n' ',' | sed -z 's/.$//'`
+  # printf " - $FPS - "
+  #printf `expr $FPS`
+  #printf " - ($(($FPS)))"
+  FPS="$(($FPS))"
+  #printf " - $CODEC"
+  #printf " - $RESOLUTION"
+  echo "$FPS,$INFO"
+  #echo
+
+#  echo "Output:     $OUTPUT"
+  #mkdir -p "./_converted"
+
+
+
+  #echo "ffmpeg -i \"$INPUT\" -map_metadata 0 -vcodec libx264 -crf 22 \"$OUTPUT\""
+  #ffmpeg -- -i $INPUT -map_metadata 0 -vcodec libx264 -crf 22 $OUTPUT
+	#touch -r "$INPUT" "$OUTPUT"
+done

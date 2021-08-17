@@ -58206,12 +58206,16 @@
 			<false/>
 			<key>Background Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.098039215686274508</real>
+				<real>0.18672084808349609</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.098039215686274508</real>
+				<real>0.1553654670715332</real>
 				<key>Red Component</key>
-				<real>0.098039215686274508</real>
+				<real>0.11794736865840605</real>
 			</dict>
 			<key>Background Image Is Tiled</key>
 			<false/>
@@ -59986,7 +59990,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>kCPKSelectionViewPreferredModeKey</key>
-	<integer>2</integer>
+	<integer>7</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
 	<true/>
 	<key>preferIntegratedGPU</key>
