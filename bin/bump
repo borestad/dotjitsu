@@ -3,6 +3,9 @@
 
 git add .
 
-git commit -m "🔨Bump"
+stats=$(git diff --cached --shortstat)
 
-git push -v
+
+git commit -m "🔨 BUMP:$stats"
+#git push -v
+~/.dotjitsu/bin/push

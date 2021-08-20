@@ -41,10 +41,6 @@ git push -v --set-upstream $args | tee $tmpfile
 exit_code=$?
 push=`cat $tmpfile`
 
-echo '---'
-echo push
-echo '---'
-
 if [ $exit_code != 0 ]; then
   echo -e "${color_error}Ouch, push failed!${color_reset}\n\n$push"
   exit $exit_code
