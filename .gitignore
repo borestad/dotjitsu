@@ -139,7 +139,7 @@ $RECYCLE.BIN/
 .cache
 .tmp
 *.lock.json
-
+paused.conf
 
 
 # Yarn: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
