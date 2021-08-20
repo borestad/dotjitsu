@@ -61,7 +61,7 @@ brew 'entr'                         # Run arbitrary commands when files change
 brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
 brew 'exa'                          # Modern replacement for 'ls
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
-brew 'f'                            # Scriptable ping program for checking if multiple hosts are up
+brew 'fping'                        # Scriptable ping program for checking if multiple hosts are up
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
 brew 'fasd'                         # CLI tool for quick access to files and directories
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
