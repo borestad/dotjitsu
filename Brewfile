@@ -61,6 +61,7 @@ brew 'entr'                         # Run arbitrary commands when files change
 brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
 brew 'exa'                          # Modern replacement for 'ls
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
+brew 'f'                            # Scriptable ping program for checking if multiple hosts are up
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
 brew 'fasd'                         # CLI tool for quick access to files and directories
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
@@ -95,6 +96,7 @@ brew 'lnav'                         # Curses-based tool for viewing and analyzin
 brew 'm-cli'                        # Swiss Army Knife for macOS
 brew 'mackup'                       # Keep your Mac's application settings in sync
 brew 'mas'                          # Mac App Store command-line interface
+brew 'masscan'                      # TCP port scanner, scans entire Internet in under 5 minutes
 brew 'micro'                        # Modern and intuitive terminal-based text editor
 brew 'mmv'                          # Move, copy, append, and link multiple files
 brew 'most'                         # Powerful paging program
@@ -141,11 +143,11 @@ brew 'svgo'                         # Nodejs-based tool for optimizing SVG vecto
 brew 'svn'                          # Nodejs-based tool for optimizing SVG vector graphics files
 brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
 brew 'sysbench'                     # System performance benchmark tool
+brew 'tealdeer'                     # Very fast implementation of tldr in Rust
 brew 'tig'                          # Text interface for Git repositories
 brew 'tmux'                         # Terminal multiplexer
 brew 'tokei'                        # Program that allows you to count code, quickly
 brew 'trash'                        # CLI tool that moves files or folder to the trash
-brew 'tealdeer'                     # Very fast implementation of tldr in Rust
 brew 'tree'                         # Display directories as trees (with optional color/HTML output)
 brew 'unar'                         # Command-line unarchiving tools supporting multiple formats
 brew 'unison'                       # File synchronization tool for OSX
