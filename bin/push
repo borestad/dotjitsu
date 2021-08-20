@@ -34,12 +34,8 @@ if [ -z $* ]; then
 else
   args="$*"
 fi
-
-tmpfile=$(mktemp /tmp/git-push.XXXXXX)
-
-git push -v --set-upstream $args | tee $tmpfile
+push=$(git push --set-upstream $args 2>&1)
 exit_code=$?
-push=`cat $tmpfile`
 
 if [ $exit_code != 0 ]; then
   echo -e "${color_error}Ouch, push failed!${color_reset}\n\n$push"
@@ -54,7 +50,7 @@ fi
 if echo $push | grep "\[new branch\]" >/dev/null; then
   parent=$(get_parent)
   if [ -z "$parent" ]; then
-    parent="master"
+    parent="main"
   fi
   refs="$parent...$branch"
   echo "🚀  Pushed a new branch '$branch' remotely"
