@@ -2,9 +2,16 @@
 
 cd "$(dirname $0)"
 
-
 echo -n "Internal:    "
  ./ip.internal
 
 echo -n "Public:      "
 ./ip.public
+
+echo
+
+echo -n "Gateway:     "
+route -n get default | grep 'gateway' | awk '{print $2}'
+
+echo -n "DNS:         "
+scutil --dns | grep nameserver | sort -u | awk '{print $3}'
