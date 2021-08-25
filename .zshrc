@@ -40,6 +40,7 @@ source ~/.repos/powerlevel10k/config/p10k-robbyrussell.zsh
 source ~/.repos/powerlevel10k/powerlevel10k.zsh-theme # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source ~/.dotjitsu/.env$
 source ~/.dotjitsu/.hooks$
+source ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
 
 eval "$(fnm env)"                     # fnm (Fast Node Manager)
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/dircolors.ansi-dark)
