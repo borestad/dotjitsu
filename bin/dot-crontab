@@ -13,6 +13,6 @@ MAILTO=""
 (crontab -l ; echo "* * * * * /Users/johan/.dotjitsu/bin/dot-cron-minute  &> /dev/null &") | sort - | uniq - | crontab -
 (crontab -l ; echo "10 * * * * /Users/johan/.dotjitsu/bin/dot-cron-hourly &> /dev/null &") | sort - | uniq - | crontab -
 (crontab -l ; echo "0 20 * * * /Users/johan/.dotjitsu/bin/dot-cron-daily  &> /dev/null &") | sort - | uniq - | crontab -
-
+(crontab -l ; echo "0 21 * * * /Users/johan/.private/bin/dotp-cron-daily  &> /dev/null &") | sort - | uniq - | crontab -
 hr -
 crontab -l

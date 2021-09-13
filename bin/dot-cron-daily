@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -m
-LOG_LOCATION="$HOME/logs/cron-hourly"
+LOG_LOCATION="$HOME/logs/cron-daily"
 TERM="xterm-256color"
 
 mkdir -p $LOG_LOCATION
