@@ -15,6 +15,7 @@ console.log('Symlinking files:\n')
 const dotfiles = fs.readdirSync('.').filter((f) => {
   return (
     f.startsWith('.') &&
+    !f.startsWith('.DS_Store') &&
     !f.endsWith('$') &&
     (fs.statSync(f).isFile() || fs.statSync(f).isSymbolicLink())
   )

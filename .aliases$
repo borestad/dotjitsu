@@ -6,17 +6,82 @@
 # =============================================================================
 NUM_CORES=`getconf _NPROCESSORS_ONLN`
 
+
+# =============================================================================
+# List aliases
+# =============================================================================
+alias gls='gls --color=auto --group-directories-first'
+alias exa='exa --group-directories-first'
+alias ls='gls --color --group-directories-first'
+alias l='exa -Ga --icons'          # Lists in multi column, hidden files.
+# alias ll='exa --icons -Lah --no-permissions --no-user -T -L1'
+alias ll='exa --icons -la --no-permissions --no-user -T -L1 --no-time --git --icons'
+alias lll='exa --icons -la --no-permissions --no-user -T --no-time --git --icons -g -R --git-ignore -L2 -I "*.git"'
+#alias ll='exa -lah'      # Lists in one column, hidden files.
+alias lr='ll -R'         # Lists human readable sizes, recursively.
+alias la='ll -A'         # Lists human readable sizes, hidden files.
+alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
+alias lx='ll -XB'        # Lists sorted by extension (GNU only).
+alias lk='ll -Sr'        # Lists sorted by size, largest last.
+alias lt='ll -tr'        # Lists sorted by date, most recent last.
+alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
+alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
+alias sl='ls'            # I often screw this up.
+
+# =============================================================================
+# Find aliases
+# =============================================================================
+ff () {
+  IFS=""
+  local result=`fd $1`
+  echo -e $result
+  echo -e $result | wc -l
+}
+
+alias fff='ag -G "\.(js?x|ts?x|json)$" '
+alias fic='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp"  | xargs grep --color  -e '
+alias fih='find $( pwd )  -follow -name "*.h" | xargs grep --color -e '
+alias fis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h"  | xargs grep --color  -e '
+alias fif='find $( pwd ) -follow -ty
+pe f -not -name "*~" -not -name "*swp" | xargs grep --color -e '
+alias fip='find $( pwd )  -follow  -name "*.ts"  | xargs grep --color  -e '
+alias qff='find $( pwd ) -follow 2>/dev/null -name '
+alias qfic='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" 2>/dev/null | xargs grep --color  -e '
+alias qfih='find $( pwd )  -follow -name "*.h" 2>/dev/null | xargs grep --color -e '
+alias qfis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h" 2>/dev/null | xargs grep --color  -e '
+alias qfif='find $( pwd ) -follow -type f  2>/dev/null| xargs grep --color -e '
+alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --color  -e '
+
+
 # =============================================================================
 # ✨ Globals & overrides
 # =============================================================================
+
 alias ag='ag --stats'
 alias code='/usr/local/bin/code -n'
+alias cp='gcp -v'
+alias dfc='/usr/local/bin/dfc -Wdluh -q mount -t apfs'
+alias fd="fd --hidden --exclude '.git'"
 alias killall="killall -v"
+alias less='/usr/local/bin/less --incsearch'
+alias mkdir='gmkdir -pv'
+alias mtr='/usr/local/bin/grc -es --colour=auto mtr'
+alias mv='gmv -vi'
+alias pgrep='pgrep -fli'
+alias pigz='pigz -v'
+alias qmv='qmv -e "subl -w -n" -f destination-only'
+alias rm='grm -v'
+alias sort="sort -S 50% --parallel=$NUM_CORES"
+alias sudo='nocorrect sudo '
+alias vnstat='/usr/local/bin/vnstat -i en0'
+alias wget='wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
+alias ws='ws -d'
+
+
 
 # =============================================================================
 # ✨ Shortcut & Utils
 # =============================================================================
-
 alias ..="cd .."
 alias ...='cd ../../'
 alias ..2="cd ../.."
@@ -31,66 +96,40 @@ alias sqlite='sqlite3'
 # =============================================================================
 # ✨ Custom utils
 # =============================================================================
-alias nano='micro'
-alias rm='grm -v'
-alias rmf='grm -rfv'
-alias g='git'; compdef g='git'
-
+#alias todo="ag --color-line-number '1;36' --color-path '1;36' --ignore-case  --silent '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))'"
 alias b='brew'
+alias bat.preview='bat --list-themes | fzf --preview="bat --theme={} --color=always $HOME/.dotjitsu/package.json"'
 alias bif='brew info'
 alias cask='brew install --cask'
-alias cat='bat'
-alias bat.preview='bat --list-themes | fzf --preview="bat --theme={} --color=always $HOME/.dotjitsu/package.json"'
 alias cgrep="grep --color=always"
-
-alias cp='gcp -v'
 alias crontab='VISUAL=micro EDITOR=micro crontab'
 alias ctp="bat package.json | jq"
+alias ffind='noglob fd -g --no-ignore'
+alias g='git'; #compdef g='git'
 alias h="history | fzf --reverse"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
-
-alias mkdir='gmkdir -pv'
-alias mtr='sudo /usr/local/bin/grc -es --colour=auto mtr'
-alias mv='gmv -vi'
+alias n='ncdu -1'
+alias nano='micro'
 alias ncdu="/usr/local/bin/ncdu -xe --color dark"
 alias ncdu2="/usr/local/bin/ncdu"
-alias n='ncdu -1'
+alias neofetch='neofetch --config ~/.dotjitsu/neofetch.conf'
 alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
-alias pgrep='pgrep -fli'
-
 alias retroarch="~/Applications/RetroArch.app/Contents/MacOS/RetroArch -vf"
-alias pigz='pigz -v'
+alias rmf='grm -rfv'
 alias serve='ws -f stats -d '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
-
-alias sudo='nocorrect sudo '
-alias vnstat='/usr/local/bin/vnstat -i en0'
-alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
-alias wget='wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
-alias ws='ws -d'
-alias dfc='/usr/local/bin/dfc -Wdluh -q mount -t apfs'
-cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null }
-alias sort="sort -S 50% --parallel=$NUM_CORES"
-zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto }
-#alias todo="ag --color-line-number '1;36' --color-path '1;36' --ignore-case  --silent '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))'"
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
-alias qmv='qmv -e "subl -w -n" -f destination-only'
+alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
+alias zup='zinit update -p; zr'
+cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null }
 touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
-alias neofetch='neofetch --config ~/.dotjitsu/neofetch.conf'
+zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto }
 #alias ncdu="ncdu -x -1bre"
 #alias git=hub
+wherebat () { where "$1" | fzf --preview 'bat -p {}' }
 
-dir-info () {
-  local dirs=`find . -maxdepth 1 -mindepth 1 -type d | wc -l`
-  local files=`find . -maxdepth 1 -mindepth 1 -type f | wc -l`
-  local total=`find . -maxdepth 1 -mindepth 1 | wc -l`
-  #echo -e "$total items ($dirs dirs| $files files)"
-
-  #local total=`memoize fd . $PWD | wc -l`
-  echo -e "$dirs directories, $files files, $total total"
-  #echo -e "`files.last_modified_directory`"
-}
+alias duf='duf -hide-fs devfs'
 
 # ⚡️ =============================================================================
 # ️️⚡️ Filters & Pipes
@@ -103,16 +142,15 @@ find-sum () {
    /usr/local/bin/gfind $DIR -type f -iname "*$EXT" -printf '%s\n' | /usr/local/bin/gawk -M '{t+=$1}END{print t}'
 }
 
-
 #
 # fasd
 #
-alias a='fasd -a'        # any
-alias d='fasd -d'        # directory
-alias f='fasd -f'        # file
-alias s='fasd -si'       # show / search / select
-#alias sd='fasd -sid'     # interactive directory selection
-alias sf='fasd -sif'     # interactive file selection
+# alias a='fasd -a'        # any
+# alias d='fasd -d'        # directory
+# alias f='fasd -f'        # file
+# alias s='fasd -si'       # show / search / select
+# #alias sd='fasd -sid'     # interactive directory selection
+# alias sf='fasd -sif'     # interactive file selection
 alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
 
@@ -183,20 +221,6 @@ alias djp='git-pull $HOME/.dotjitsu; git-pull $HOME/.private;'
 alias gd="git diff -- :!package-lock.json :!yarn.lock"
 append() { grep -q -F $1 $2 || echo $1 >> $2 }
 
-alias exa='exa --group-directories-first'
-alias ls='gls --color --group-directories-first'
-alias l='exa -Ga --icons'          # Lists in multi column, hidden files.
-alias ll='exa --icons -lah --no-permissions --no-user -T -L1; echo; hr; echo "\n"'
-#alias ll='exa -lah'      # Lists in one column, hidden files.
-alias lr='ll -R'         # Lists human readable sizes, recursively.
-alias la='ll -A'         # Lists human readable sizes, hidden files.
-alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
-alias lx='ll -XB'        # Lists sorted by extension (GNU only).
-alias lk='ll -Sr'        # Lists sorted by size, largest last.
-alias lt='ll -tr'        # Lists sorted by date, most recent last.
-alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
-alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
-alias sl='ls'            # I often screw this up.
 
 # =============================================================================
 # Gnu utils (to enforce presedence)
@@ -207,30 +231,6 @@ alias locate='/usr/local/bin/glocate'
 alias updatedb='/usr/local/bin/gupdatedb'
 
 
-
-# =============================================================================
-# Find
-# =============================================================================
-ff () {
-  IFS=""
-  local result=`fd $1`
-  echo -e $result
-  echo -e $result | wc -l
-}
-
-alias fff='ag -G "\.(js?x|ts?x|json)$" '
-alias fic='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp"  | xargs grep --color  -e '
-alias fih='find $( pwd )  -follow -name "*.h" | xargs grep --color -e '
-alias fis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h"  | xargs grep --color  -e '
-alias fif='find $( pwd ) -follow -ty
-pe f -not -name "*~" -not -name "*swp" | xargs grep --color -e '
-alias fip='find $( pwd )  -follow  -name "*.ts"  | xargs grep --color  -e '
-alias qff='find $( pwd ) -follow 2>/dev/null -name '
-alias qfic='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" 2>/dev/null | xargs grep --color  -e '
-alias qfih='find $( pwd )  -follow -name "*.h" 2>/dev/null | xargs grep --color -e '
-alias qfis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h" 2>/dev/null | xargs grep --color  -e '
-alias qfif='find $( pwd ) -follow -type f  2>/dev/null| xargs grep --color -e '
-alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --color  -e '
 # =============================================================================
 # Others
 # =============================================================================
@@ -244,10 +244,10 @@ spotlight.search () { mdfind . }
 # =============================================================================
 
 # Create directory and immediately move into that dir
-mk ()  { mkdir -p "$@" && cd "$_"; }
-mkt () { hr -; cd $(mktemp -d); pwd; echo; }
-mktt () { hr -; cd $(mktemp -d -p $HOME/tmp); pwd; echo; }
-mktcopy () { hr -; cd $(mktemp -d -p $HOME/tmp); pwd | tee /dev/tty | pbcopy; echo; }
+mk ()       { mkdir -p "$@" && cd "$_"; }
+mkt ()      { hr -; cd $(mktemp -d); pwd; echo; }
+mktt ()     { hr -; cd $(mktemp -d -p $HOME/tmp); pwd; echo; }
+mktcopy ()  { hr -; cd $(mktemp -d -p $HOME/tmp); pwd | tee /dev/tty | pbcopy; echo; }
 mktclone () { cd $(mktemp -d) && pwd && hr - && clone $1 }
 
 # Opens file in EDITOR.
@@ -257,10 +257,9 @@ edit () {
   $EDITOR $dir
 }
 
-
 alias e='edit'
 alias zr='echo "Reloading zsh..."; rm -fv ~/.zcompdump*; reset; exec $SHELL -l;'
-alias zra='echo "Reloading aliases..."; source ~/.aliases;'
+alias zra='echo "Reloading aliases..."; source ~/.dotjitsu/aliases;'
 alias reload='zr'
 alias reloadshell='zr'
 
@@ -269,16 +268,9 @@ brew.info () {
  grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse -e
 }
 
-if (( $+commands[http] )); then
-  alias GET='http GET'
-  # alias HEAD='http -I'
-  # alias POST='http POST'
-  # alias PUT='http PUT'
-  # alias PATCH='http PATCH'
-  # alias DELETE='http DELETE'
-  # alias OPTIONS='http OPTIONS'
-fi
-
+cask.info () {
+ grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse -e
+}
 
 
 # =============================================================================

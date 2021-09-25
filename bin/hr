@@ -21,6 +21,7 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+COLOR=238
 COLS="$(tput cols)"
 if (( COLS <= 0 )) ; then
     COLS="${COLUMNS:-80}"
@@ -35,14 +36,14 @@ hr() {
             LINE="$LINE$WORD"
         done
 
-        printf "\e[30m${LINE:0:$COLS}\e[0m\n"
+        echo "$(tput setaf $COLOR)${LINE:0:$COLS}$(tput sgr0)"
     fi
 }
 
 hrs() {
     local WORD
 
-    for WORD in "${@:-—}"
+    for WORD in "${@:-─}"
     do
         hr "$WORD"
     done

@@ -1,6 +1,6 @@
 export PS1="\[\033[33;1m\]\w\[\033[m\] ❯❯❯ "
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+source ~/.dotjitsu/fzf.bash
 
 . "/usr/local/etc/profile.d/bash_completion.sh"
 
