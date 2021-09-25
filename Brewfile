@@ -37,18 +37,18 @@ brew 'packer-completion'
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 #brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 
-brew 'kondo'                        # Save disk space by cleaning non-essential files from software projects
-brew 'rargs'                        # Save disk space by cleaning non-essential files from software projects
+brew 'autoconf'                     # Automatic configure script builder
 brew 'ack'                          # Search tool like grep, but optimized for programmer
 brew 'ag'                           # A code-searching tool similar to ack, but faster
 brew 'archey'                       # Graphical system information display for macOS
+brew 'autojump'                     # Shell extension to jump to frequently used directories
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'axel'                         # Light UNIX download accelerator
 brew 'bandwhich'                    # Bourne-Again SHell, a UNIX command interpreter
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
 brew 'bat'                          # Clone of cat(1) with syntax highlighting and Git integration
-brew 'bento4'
+brew 'bento4'                       # Full-featured MP4 format and MPEG DASH library and tools
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'broot'                        # New way to see and navigate directory trees
@@ -59,24 +59,27 @@ brew 'cv'                           # Progress: Coreutils Progress Viewer
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
+brew 'docker-compose'               # Isolated development environments using Docker
+brew 'docker-machine'               # Create Docker hosts locally and on cloud providers
 brew 'duf'                          # Disk Usage/Free Utility - a better 'df' alternative
 brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
 brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
 brew 'exa'                          # Modern replacement for 'ls
+brew 'exercism'                     # Command-line tool to interact with exercism.io
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
-brew 'fping'                        # Scriptable ping program for checking if multiple hosts are up
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
 brew 'fasd'                         # CLI tool for quick access to files and directories
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
-brew 'ffind'                        # Friendlier find
-brew 'fselect'                      # Find files with SQL-like queries
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
 brew 'fish'                         # User-friendly command-line shell for UNIX-like operating systems
 brew 'fnm'                          # Fast and simple Node.js version manager
+brew 'fping'                        # Scriptable ping program for checking if multiple hosts are up
+brew 'fselect'                      # Find files with SQL-like queries
 brew 'fswatch'                      # Monitor a directory for changes and run a shell command
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
+brew 'gotop'                        # Terminal based graphical activity monitor inspired by gtop and vtop
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'grc'                          # Colorize logfiles and command output
@@ -96,6 +99,7 @@ brew 'jid'                          # Json incremental digger
 brew 'jpeg'                         # Image manipulation library
 brew 'jpegoptim'                    # Utility to optimize JPEG files
 brew 'jq'                           # Lightweight and flexible command-line JSON processor
+brew 'kondo'                        # Save disk space by cleaning non-essential files from software projects
 brew 'kubernetes-cli'               # Tool to report network interface bandwidth
 brew 'lazydocker'                   # The lazier way to manage everything docker
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
@@ -123,6 +127,7 @@ brew 'pbzip2'                       # Parallel bzip2
 brew 'pgrep'                        # OpenBSD and Darwin versions of pgrep, pkill, and pfind
 brew 'pidof'                        # Display the PID number for a given process name
 brew 'pigz'                         # Parallel gzip
+brew 'pixz'                         # Parallel, indexed, xz compressor
 brew 'plzip'                        # Data compressor
 brew 'pngcheck'                     # Print info and check PNG, JNG, and MNG files
 brew 'pngquant'                     # PNG image optimizing utility
@@ -131,6 +136,7 @@ brew 'procs'                        # Modern replacement for ps written by Rust
 brew 'psgrep'                       # Shortcut for the 'ps aux | grep' idiom
 brew 'pv'                           # Monitor data's progress through a pipe
 brew 'pygments'                     # Generic syntax highlighter
+brew 'rargs'                        # Util like xargs + awk with pattern matching support
 brew 'rdiff-backup'                 # Reverse differential backup tool, over a network or locally
 brew 'rename'                       # Perl-powered file rename script with many helpful built-ins
 brew 'renameutils'                  # Tools for file renaming
@@ -140,7 +146,6 @@ brew 'rsnapshot'                    # File system snapshot utility (based on rsy
 brew 'rsync'                        # Utility that provides fast incremental file transfer
 brew 'sd'                           # Intuitive find & replace CLI
 brew 'sk'                           # Fuzzy Finder in rust!
-brew 'speedtest-cli'                # Command-line interface for https://speedtest.net bandwidth tests
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 brew 'starship'                     # Cross-shell prompt for astronauts
@@ -150,6 +155,7 @@ brew 'svn'                          # Nodejs-based tool for optimizing SVG vecto
 brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
 brew 'sysbench'                     # System performance benchmark tool
 brew 'tealdeer'                     # Very fast implementation of tldr in Rust
+brew 'thefuck'                      # Programmatically correct mistyped console commands
 brew 'tig'                          # Text interface for Git repositories
 brew 'tmux'                         # Terminal multiplexer
 brew 'tokei'                        # Program that allows you to count code, quickly
@@ -175,6 +181,14 @@ brew 'zsh-syntax-highlighting'
 brew 'zsh'
 
 
+
+# ================================
+# AWS
+# ================================
+tap 'aws/tap'
+brew 'awscli'
+brew 'aws-sam-cli'
+brew 'aws-keychain'
 
 # ================================
 # Custom taps
@@ -227,6 +241,7 @@ brew 'gnu-time'
 brew 'gnu-which'
 brew 'gnutls'
 brew 'grep'
+brew 'less'
 brew 'moreutils'
 brew 'wdiff'
 

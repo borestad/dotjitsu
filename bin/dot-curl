@@ -3,9 +3,9 @@
 mkdir -pv $HOME/.local
 
 # Docker autocompletion
-curl -fLo ~/.zprezto/modules/completion/external/src/_docker \
+curl -fLo ~/.prezto/modules/completion/external/src/_docker \
   https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
 
 # Docker compose autocompletion
-curl -fLo ~/.zprezto/modules/completion/external/src/_docker-compose \
+curl -fLo ~/.prezto/modules/completion/external/src/_docker-compose \
   https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/zsh/_docker-compose
