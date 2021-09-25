@@ -1,94 +1,141 @@
 #!/usr/bin/env bash
 
+# ===================================================
+# ⚡️ Helper
+# ===================================================
+function addPath {
+  case ":$PATH:" in
+    *":$1:"*) :;;           # already there
+    *) PATH="$1:$PATH";;    # or PATH="$PATH:$1"
+  esac
+}
+
+# ===================================================
+# ⚡️ Lang
+# ===================================================
 export LANG='en_US.UTF-8'
 
+# ===================================================
+# ⚡️ Dotfiles
+# ===================================================
 export DOTFILES="$HOME/.dotjitsu"
 export DOTJITSU_FRAMEWORK="prezto"
 export DOTJITSU="$HOME/.dotjitsu"
 export PRIVATE="$HOME/.private"
+export KEYTIMEOUT=1
 
+# ===================================================
+# ⚡️ FZF
+# ===================================================
+export FZF_TMUX_HEIGHT='90%'
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS_NO_PREVIEW='--height 80% --layout=reverse --border --inline-info --pointer=»'
-export FZF_DEFAULT_OPTS_PREVIEW="--bind 'ctrl-j:ignore,ctrl-k:ignore' --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS_NO_PREVIEW"
+export FZF_CTRL_R_OPTS=''
+#export _FZF_DEFAULT_OPTS_NO_PREVIEW='--height 80% --layout=reverse --border --inline-info --pointer=»'
+export _FZF_DEFAULT_OPTS_NO_PREVIEW='--height 90% --border --layout=reverse --inline-info --pointer=❯'
+export _FZF_DEFAULT_OPTS_PREVIEW="--bind 'ctrl-j:ignore,ctrl-k:ignore' --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+export FZF_DEFAULT_OPTS="$_FZF_DEFAULT_OPTS_NO_PREVIEW"
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color=hl:#eb4034,hl+:#ff0000"
-# export FZF_ALT_C_COMMAND='fd . -td . $HOME'
 export FZF_ALT_C_COMMAND='fd . code work --base-directory $HOME -td'
 
 export GEM_HOME="$HOME/.gem"
 export GOPATH="$HOME/.go"
 export GREP_OPTIONS="--color=auto"
 
+# ===================================================
+# ⚡️ HOMEBREW
+# ===================================================
 export HOMEBREW_AUTO_UPDATE_SECS=86400
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ANALYTICS=1
 
+# ===================================================
+# ⚡️ XDG
+# ===================================================
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=${HOME}/.config}
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:=${HOME}/.cache}
 export XDG_DATA_HOME=${XDG_DATA_HOME:=${HOME}/.local/share}
 
+# ===================================================
+# ⚡️ FNM
+# ===================================================
 export FNM_DIR="$XDG_DATA_HOME/.fnm"
 
 # export ZDOTDIR=${ZDOTDIR:=${XDG_CONFIG_HOME}/zsh}
 # export DYLD_INSERT_LIBRARIES="/usr/local/lib/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
 
+# ===================================================
+# ⚡️ PATHS
+# ===================================================
 # Local node_modules takes presedence
-export PATH="./node_modules/.bin:$PATH"
-#export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+addPath "./node_modules/.bin"
+#addPath "$HOME/.config/yarn/global/node_modules/.bin"
 #export NODE_PATH=$HOME/.config/yarn/global/node_modules
 export NODE_PATH=$XDG_DATA_HOME/yarn/global/node_modules
-export PATH="$HOME/bin:$PATH"
-export PATH="$DOTJITSU/bin:$PATH"
-export PATH="$PRIVATE/bin:$PATH:"
-export PATH="$HOME/.go/bin:$PATH"
-export PATH="$PATH:$HOME/.repos/git-friendly"
-export PATH="$HOME/bin/apache-maven-3.0.5/bin:$PATH"
-export PATH="/usr/local/opt/sqlite/bin:$PATH"
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/binutils/bin:$PATH"
-export PATH="/usr/local/opt/mozjpeg/bin:$PATH"
-export PATH="$HOME/Library/Python/3.8/bin:$PATH"
-export PATH="/usr/local/opt/openjdk@8/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
+addPath "$HOME/bin"
+addPath "$DOTJITSU/bin"
+addPath "$PRIVATE/bin"
+addPath "$HOME/.go/bin"
+addPath "$HOME/.repos/git-friendly"
+addPath "$HOME/bin/apache-maven-3.0.5/bin"
+addPath "/usr/local/opt/sqlite/bin"
+addPath "/usr/local/opt/python/libexec/bin"
+addPath "/usr/local/opt/gnu-sed/libexec/gnubin"
+addPath "/usr/local/opt/make/libexec/gnubin"
+addPath "/usr/local/opt/binutils/bin"
+addPath "/usr/local/opt/mozjpeg/bin"
+addPath "$HOME/Library/Python/3.8/bin"
+addPath "/usr/local/opt/openjdk@8/bin"
+addPath "$HOME/.cargo/bin"
 
 # Use core-utils directly
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+addPath "/usr/local/opt/coreutils/libexec/gnubin"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
  # If you'd like to use existing homebrew v1 completions
  # export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 
-#
-# Editors
-#
-export BAT_CONFIG_PATH="$HOME/.dotjitsu/.bat.conf"
+
+# ===================================================
+# ⚡️ DOCKER
+# ===================================================
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+# ===================================================
+# ⚡️ EDITORS
+# ===================================================
+export BAT_CONFIG_PATH="$HOME/.dotjitsu/bat.conf"
 export BROWSER=chromium
 export EDITOR='code'
 export GIT_EDITOR="code --wait --new-window"
-#export JAVA_HOME=$(greadlink -f /usr/bin/javac | sed "s:/bin/javac::")
 export JAVA_HOME=/usr/local/opt/openjdk@8
 export N_PREFIX="$HOME/.config/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 #export PAGER='fzf --ansi'
-export PAGER='less'
+export PAGER='bat'
 export VISUAL='code'
 
 
 export HISTSIZE=100000
 export SAVEHIST=100000
-export HISTFILE=~/.zsh_history  # ensure history file visibility
+export HISTFILE=~/.cache/zsh_history  # ensure history file visibility
 export HH_CONFIG=hicolor        # get more colors
 
 export VAGRANT_DEFAULT_PROVIDER=vmware_fusion
 
 # GPG / Fix for signed commits
 export GPG_TTY=$(tty)
-export NODE_REPL_HISTORY=~/.node_repl_history 	# Enable persistent REPL history for `node`.
+export NODE_REPL_HISTORY=~/.cache/node_repl_history 	# Enable persistent REPL history for `node`.
 export NODE_REPL_HISTORY_SIZE='32768'               # Allow 32³ entries; the default is 1000.
 export NODE_REPL_MODE='sloppy' 						# Use sloppy mode by default, matching web browsers.
 
 
-# Starships
+# Starship
 export STARSHIP_CONFIG=$DOTFILES/starship.toml
+
+# evalcache
+export ZSH_EVALCACHE_DIR=$XDG_CACHE_HOME/zsh-evalcache
+
+# Remove duplicates in PATH & preserve order (should not be needed, but hey !?)
+export PATH=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')

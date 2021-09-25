@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# ag --no-numbers --no-group -i 'desc "' $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/ \
+# | sd ' desc ' '|' | column -t -s '|' | fzf --reverse -e
+
+
+FZF_DEFAULT_OPT="--layout=reverse --border --inline-info --pointer=» --height=100"
+
+cat ~/.config/cache/brew-cask.json | jq '.[] | "\(.token) | \(.desc) | \(.url)"' \
+| sd '"' '' | sd 'null' '' | column -t -s'|' | fzf --reverse -e --no-hscroll --height=100

@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# https://git-scm.com/docs/githooks
+# A git hook that runs after "git pull"
+
+echo "✓ git hook: post-merge (pull)"
+
+echo $0
+echo $1
+

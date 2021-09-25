@@ -16,14 +16,11 @@ cask 'caffeine'
 #cask 'cdock'
 cask 'cheatsheet'
 cask 'controlplane'
-cask 'cyberduck'
 cask 'disk-inventory-x'
 cask 'diskwave'
 # cask 'dockertoolbox'
-cask 'fluid'
 cask 'forklift'
 cask 'fwbuilder'
-cask 'handbrake'
 cask 'hammerspoon'
 cask 'install-disk-creator'
 cask 'jadengeller-helium'
@@ -32,7 +29,6 @@ cask 'licecap'
 cask 'loading'
 cask 'macdown'
 cask 'madruby'
-cask 'monolingual'
 cask 'paw'
 cask 'path-finder'
 cask 'sdformatter'
@@ -50,20 +46,9 @@ cask 'xbench'
 #cask 'viscosity'
 cask 'unetbootin'
 cask 'webhook'
-cask 'vmware-fusion'
 cask 'vagrant'
 
 
-# ================================
-# ENTERTAINMENT & AFTERWORK :-)
-# ================================
-cask 'dolphin'
-cask 'kodi'
-cask 'plex-media-player'
-cask 'sonos'
-#cask 'teeworlds'
-#cask 'wineskin-winery'
-# cask 'sony-ps4-remote-play'
 
 # ================================
 # SCIENCE

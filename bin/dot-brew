@@ -48,6 +48,9 @@ mkdir -p ~/.config/cache && cd "$_"
 
 $HOME/.dotjitsu/bin/hr -
 
+
+rm -f /usr/local/share/zsh/site-functions/_git
+
 echo ""
 echo "All done! Enjoy a cold one! 🍺 "
 echo ""
