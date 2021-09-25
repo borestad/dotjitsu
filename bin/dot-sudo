@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+sudo chown root /usr/local/Cellar/mtr/*/sbin/mtr-packet
+sudo chmod 4755 /usr/local/Cellar/mtr/*/sbin/mtr-packet
+
+#ln -s /usr/local/Cellar/mtr/*/sbin/mtr /usr/local/bin/mtr
+#ln -s /usr/local/Cellar/mtr/*/sbin/mtr-packet /usr/local/bin/mtr-packet

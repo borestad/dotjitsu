@@ -2,19 +2,23 @@
 
 # Automatically list directory contents on `cd`.
 auto-cd () {
+
+  # If not running interactively, don't do anything
+  [[ -o interactive ]] || return
+
   emulate -L zsh;
-  # explicit sexy ls'ing as aliases arent honored in here.
-  #hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -AFh --color --group-directories-first || ls -A
-  dir-info
-  echo
+
+  # explicit sexy ls'ing as aliases arent honored in here
+  # dir-info
+  # echo
   # echo
   exa -a --group-directories-first --icons
   [ -f "package.json" ] && cs package.json
 
-  echo
+  #echo
   [ -d ".git" ] && git recent | sed 's/^[[:space:]]*//'
-  hr -
+  # hr
   # echo
 }
 
-chpwd_functions=( auto-cd $chpwd_functions )
+# chpwd_functions=( auto-cd $chpwd_functions )

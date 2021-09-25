@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# https://git-scm.com/docs/githooks
+# A git hook that runs after "git checkout/clone/switch"
+
+echo "✓ git hook: post-checkout"
+
+echo $0
+echo $1
+
