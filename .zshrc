@@ -136,6 +136,7 @@ set +o list_types               # Disable forward slashes
 setopt NO_BEEP                  # don't beep on error
 setopt NO_HIST_BEEP             # don't beep on no history
 setopt NO_LIST_BEEP             # don't beep on no list
+set bell-style none
 
 # ■■■ Changing Directories
 setopt AUTO_CD                  # If you type foo, and it isn't a command, and it is a directory in your cdpath, go there
@@ -163,6 +164,9 @@ setopt LOCAL_TRAPS              # Allow functions to have local traps
 setopt MENU_COMPLETE            # On an ambiguous completion, insert the first match immediately
 setopt NO_HUP
 setopt SHARE_HISTORY            # Share history between sessions ???
+
+# ■■■ Scripts etc
+typeset -U path                 # ignore doules in path
 
 
 zinit snippet ~/.p10k.zsh
