@@ -102,6 +102,7 @@ brew 'jq'                           # Lightweight and flexible command-line JSON
 brew 'kondo'                        # Save disk space by cleaning non-essential files from software projects
 brew 'kubernetes-cli'               # Tool to report network interface bandwidth
 brew 'lazydocker'                   # The lazier way to manage everything docker
+brew 'lf'                           #
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
 brew 'm-cli'                        # Swiss Army Knife for macOS
 brew 'mackup'                       # Keep your Mac's application settings in sync

@@ -11,7 +11,7 @@ NUM_CORES=`getconf _NPROCESSORS_ONLN`
 # List aliases
 # =============================================================================
 alias gls='gls --color=auto --group-directories-first'
-alias exa='exa --group-directories-first'
+alias exa='exa --group-directories-first --color=always'
 alias ls='gls --color --group-directories-first'
 alias l='exa -Ga --icons'          # Lists in multi column, hidden files.
 # alias ll='exa --icons -Lah --no-permissions --no-user -T -L1'

@@ -92,6 +92,7 @@ addPath "$HOME/.cargo/bin"
 # Use core-utils directly
 addPath "/usr/local/opt/coreutils/libexec/gnubin"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export MANWIDTH=120
 
  # If you'd like to use existing homebrew v1 completions
  # export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
@@ -138,4 +139,4 @@ export STARSHIP_CONFIG=$DOTFILES/starship.toml
 export ZSH_EVALCACHE_DIR=$XDG_CACHE_HOME/zsh-evalcache
 
 # Remove duplicates in PATH & preserve order (should not be needed, but hey !?)
-export PATH=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')
+# export PATH=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')
