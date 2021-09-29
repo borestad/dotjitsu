@@ -7,17 +7,20 @@ cd $ROOT
 # 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 # fi
 
-dot-clone
+git-pull $HOME/.dotjitsu
+git-pull $HOME/.private;
 
-$HOME/.private/bin/dotp
-dotp-symlink
+~/.dotjitsu/bin/dot-clone
+
 dot-symlink
+dotp-symlink
 
 eval "$(fnm env)"
+
 fnm install --lts
 fnm default lts-latest
 
-/usr/local/bin/brew bundle --file=$HOME/.dotjitsu/Brewfile
+~/.dotjitsu/bin/dot-brew
 
 dot-crontab
 dot-npm-bootstrap
