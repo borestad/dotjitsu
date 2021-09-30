@@ -5,13 +5,13 @@ no_color = false
 no_separator = false
 
 # Hides bar delimiters
-no_bar_delimiter = true
+no_bar_delimiter = false
 
 # Hides the title of the box surrounding system information
-no_title = false
+no_title = true
 
 # Disables the box surrounding system information.
-no_box = false
+no_box = true
 
 # Disables ASCII art
 no_ascii = false
@@ -20,10 +20,10 @@ no_ascii = false
 # custom_ascii = "/path/to/text/file"
 
 # Prefer small ASCII variant.
-small_ascii = false
+small_ascii = true
 
 # Displays a palette of your active colorscheme
-palette = true
+palette = false
 
 # Turns data into bars for specific readouts
 bar = true
@@ -44,7 +44,7 @@ random_sep_color = false
 #   - Yellow
 #   - Red
 #   - Magenta
-color = "Blue"
+color = "Red"
 
 # Specify a color for the separator.
 # Accepted values (case-sensitive):
@@ -56,7 +56,7 @@ color = "Blue"
 #   - Yellow
 #   - Red
 #   - Magenta
-separator_color = "Blue"
+separator_color = "Green"
 
 # Shorten uptime format
 short_uptime = true
@@ -66,7 +66,7 @@ long_shell = false
 
 # Toggle between the current shell or the default one
 # This feature has not yet landed in a release, only uncomment if using upstream
-# current_shell = false 
+# current_shell = false
 
 # Specify the title of the box
 box_title = " Macchina "
@@ -91,7 +91,7 @@ box_inner_margin_y = 0
 # To set 'foobar' as a theme, place foobar.json
 # in $XDG_DATA_HOME/macchina/themes
 # and set theme = "foobar" (case-sensitive)
-theme = "Beryllium"
+theme = "Boron"
 
 # Hides the specified readouts.
 # Conflicts with: show_only
@@ -116,7 +116,17 @@ theme = "Beryllium"
 #   - Battery
 # Example:
 #   hide = ["Battery", "Memory", ...]
-hide = []
+hide = [
+  'Kernel',
+  'Machine',
+  'DesktopEnvironment',
+  'WindowManager',
+  'Terminal',
+  'Packages',
+  'Processor',
+  'Resolution',
+  'Shell',
+]
 
 # Displays only the specified readouts.
 # Conflicts with: hide
