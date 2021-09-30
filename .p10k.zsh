@@ -51,7 +51,7 @@
     status                  # exit code of the last command
     command_execution_time  # duration of the last command
     # background_jobs         # presence of background jobs
-    direnv                  # direnv status (https://direnv.net/)
+    direnv                   # direnv status (https://direnv.net/)
     # asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
     # virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     # anaconda                # conda environment (https://conda.io/)
@@ -107,9 +107,9 @@
 
     # =========================[ Line #2 ]=========================
     newline
-    # ip                    # ip address and bandwidth usage for a specified network interface
+    # ip                      # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
-    # proxy                 # system-wide http/https/ftp proxy
+    proxy                 # system-wide http/https/ftp proxy
     # battery               # internal battery
     # wifi                  # wifi speed
     # example               # example user-defined segment (see prompt_example function below)
@@ -1563,11 +1563,8 @@
   # }
 
   function prompt_dirfiles() {
-    local dirs=`/usr/local/bin/fd . --hidden -I --exact-depth 1 -td | wc -l | tr -d '[:space:]'`
-    local files=`/usr/local/bin/fd . --hidden -I --exact-depth 1 -tf | wc -l | tr -d '[:space:]'`
-    local total=$(( ${dirs} + ${files}))
-
-    p10k segment -f 242 -t " $dirs dirs, $files files"
+    local text=`~/.dotjitsu/bin/dir-info`
+    p10k segment -f 248 -t "$text"
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job

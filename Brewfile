@@ -136,6 +136,7 @@ brew 'ppsspp'                       # PlayStation Portable emulator
 brew 'procs'                        # Modern replacement for ps written by Rust
 brew 'psgrep'                       # Shortcut for the 'ps aux | grep' idiom
 brew 'pv'                           # Monitor data's progress through a pipe
+#brew 'pipx'                         #
 brew 'pygments'                     # Generic syntax highlighter
 brew 'rargs'                        # Util like xargs + awk with pattern matching support
 brew 'rdiff-backup'                 # Reverse differential backup tool, over a network or locally
@@ -194,8 +195,8 @@ brew 'aws-keychain'
 # ================================
 # Custom taps
 # ================================
-tap 'teamookla/speedtest'
-brew 'teamookla/speedtest/speedtest' # Ookla Speedtest
+# tap 'teamookla/speedtest'
+# brew 'teamookla/speedtest/speedtest' # Ookla Speedtest
 tap 'cantino/mcfly'
 brew 'mcfly'
 
