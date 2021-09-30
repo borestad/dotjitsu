@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+dir=${1:-.}
+cd $dir
+
+local dirs=`/usr/local/bin/gls -d */ | wc -l`
+local files=`/usr/local/bin/gls -p -A | grep -v / | wc -l`
+local total=$(( ${dirs} + ${files}))
+
+echo "$dirs dirs, $files files, $total total"

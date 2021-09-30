@@ -1,15 +1,11 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 
 dir=${1:-.}
-# local dirs=`/usr/local/bin/fd . -td --hidden --exact-depth 1 | wc -l`
-# local files=`/usr/local/bin/fd . -tf --hidden --exact-depth 1 | wc -l`
-# local total=`/usr/local/bin/fd . --hidden --exact-depth 1 | wc -l`
-#local _path=`pwd | sed "s;$HOME;~;"`
-
 cd $dir
 
-local dirs=`/usr/local/bin/fd . --hidden -I --exact-depth 1 -td | wc -l | tr -d '[:space:]'`
-local files=`/usr/local/bin/fd . --hidden -I --exact-depth 1 -tf | wc -l | tr -d '[:space:]'`
-local total=$(( ${dirs} + ${files}))
+result=`/usr/local/bin/exa -laF --no-filesize --no-user --no-time --no-permissions --color=never -s none`
+total=`echo $result | wc -l`
+dirs=`echo $result | egrep '/$' | wc -l`
+files=$(( ${total} - ${dirs}))
 
-echo "$dirs dirs, $files files, $total total"
+echo " $dirs  $files"

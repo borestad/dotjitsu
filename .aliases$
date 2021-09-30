@@ -134,7 +134,9 @@ alias duf='duf -hide-fs devfs'
 # ⚡️ =============================================================================
 # ️️⚡️ Filters & Pipes
 # ⚡️ =============================================================================
-alias filter-group-extension='sed -r "s/.*\/([^\/]+)/\1/" | sed s/^[^\.]*$/""/ | sed -r "s/.*(\.[^\.]+)$/\1/" | sort | uniq -c | sort -nr | bat -P -l=bash'
+alias z='fasd_cd -d'
+alias string-trim-leading-whitespace="sed -e 's/^[[:space:]]*//'"
+alias string-trime-all-whitespace="tr -d '[:space:]')"
 
 find-sum () {
   DIR='.'; EXT=$1

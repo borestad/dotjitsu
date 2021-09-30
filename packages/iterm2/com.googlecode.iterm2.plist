@@ -57877,6 +57877,8 @@
 	<false/>
 	<key>DrawOutlineAroundCursor</key>
 	<false/>
+	<key>EnableProxyIcon</key>
+	<true/>
 	<key>EnableRendezvous</key>
 	<false/>
 	<key>FastForegroundJobUpdates</key>
@@ -58031,6 +58033,8 @@
 	<integer>0</integer>
 	<key>IRMemory</key>
 	<integer>4</integer>
+	<key>InvalidateShadowTimesPerSecond</key>
+	<real>0.0</real>
 	<key>JiggleTTYSizeOnClearBuffer</key>
 	<false/>
 	<key>JobName</key>
@@ -58667,7 +58671,7 @@
 			<key>Prompt Before Closing 2</key>
 			<integer>0</integer>
 			<key>Reduce Flicker</key>
-			<false/>
+			<true/>
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
@@ -58675,7 +58679,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>10000</integer>
+			<integer>100000</integer>
 			<key>Scrollback With Status Bar</key>
 			<true/>
 			<key>Scrollback in Alternate Screen</key>
@@ -59929,6 +59933,8 @@
 	<false/>
 	<key>ShowFullScreenTabBar</key>
 	<false/>
+	<key>ShowNewOutputIndicator</key>
+	<true/>
 	<key>ShowPaneTitles</key>
 	<false/>
 	<key>Size Changes Affect Profile</key>
@@ -59939,6 +59945,8 @@
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.40000000596046448</real>
+	<key>SquareWindowCorners</key>
+	<true/>
 	<key>StatusBarPosition</key>
 	<integer>1</integer>
 	<key>StretchTabsToFillBar</key>
@@ -59952,7 +59960,7 @@
 	<key>TabStyle</key>
 	<integer>1</integer>
 	<key>TabStyleWithAutomaticOption</key>
-	<integer>5</integer>
+	<integer>6</integer>
 	<key>TabViewType</key>
 	<integer>1</integer>
 	<key>TabsHaveCloseButton</key>
@@ -59989,6 +59997,8 @@
 	<integer>0</integer>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
+	<key>WorkAroundBigSurBug</key>
+	<true/>
 	<key>disableMetalWhenUnplugged</key>
 	<false/>
 	<key>findIgnoreCase_iTerm</key>
