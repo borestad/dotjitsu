@@ -51,7 +51,7 @@
     status                  # exit code of the last command
     command_execution_time  # duration of the last command
     # background_jobs         # presence of background jobs
-    # direnv                  # direnv status (https://direnv.net/)
+    direnv                  # direnv status (https://direnv.net/)
     # asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
     # virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     # anaconda                # conda environment (https://conda.io/)
@@ -1563,14 +1563,11 @@
   # }
 
   function prompt_dirfiles() {
-    local dirs=`find . -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d '[:space:]'`
-    local files=`find . -maxdepth 1 -mindepth 1 -type f | wc -l | tr -d '[:space:]'`
-    local total=`find . -maxdepth 1 -mindepth 1 | wc -l | tr -d '[:space:]'`
+    local dirs=`/usr/local/bin/fd . --hidden -I --exact-depth 1 -td | wc -l | tr -d '[:space:]'`
+    local files=`/usr/local/bin/fd . --hidden -I --exact-depth 1 -tf | wc -l | tr -d '[:space:]'`
+    local total=$(( ${dirs} + ${files}))
 
-    #echo "\e[3m$dirs dirs, $files files, $total total\e[0m"
-    text=" $dirs dirs, $files files"
-
-    p10k segment -f 242 -t $text
+    p10k segment -f 242 -t " $dirs dirs, $files files"
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job

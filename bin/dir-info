@@ -5,9 +5,11 @@ dir=${1:-.}
 # local files=`/usr/local/bin/fd . -tf --hidden --exact-depth 1 | wc -l`
 # local total=`/usr/local/bin/fd . --hidden --exact-depth 1 | wc -l`
 #local _path=`pwd | sed "s;$HOME;~;"`
-local dirs=`find $dir -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d '[:space:]'`
-local files=`find $dir -maxdepth 1 -mindepth 1 -type f | wc -l | tr -d '[:space:]'`
-local total=`find $dir -maxdepth 1 -mindepth 1 | wc -l | tr -d '[:space:]'`
 
-text="$dirs dirs, $files files, $total total"
-echo $text
+cd $dir
+
+local dirs=`/usr/local/bin/fd . --hidden -I --exact-depth 1 -td | wc -l | tr -d '[:space:]'`
+local files=`/usr/local/bin/fd . --hidden -I --exact-depth 1 -tf | wc -l | tr -d '[:space:]'`
+local total=$(( ${dirs} + ${files}))
+
+echo "$dirs dirs, $files files, $total total"

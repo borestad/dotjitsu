@@ -92,7 +92,6 @@ alias ..5="cd ../../../../.."
 alias python='/usr/local/bin/python3.7'
 alias sqlite='sqlite3'
 
-
 # =============================================================================
 # ✨ Custom utils
 # =============================================================================
@@ -113,6 +112,7 @@ alias nano='micro'
 alias ncdu="/usr/local/bin/ncdu -xe --color dark"
 alias ncdu2="/usr/local/bin/ncdu"
 alias neofetch='neofetch --config ~/.dotjitsu/neofetch.conf'
+alias macchina='/usr/local/bin/macchina --config ~/.dotjitsu/macchina.toml'
 alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
 alias retroarch="~/Applications/RetroArch.app/Contents/MacOS/RetroArch -vf"
@@ -121,7 +121,7 @@ alias serve='ws -f stats -d '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
-alias zup='zinit update -p; zr'
+alias zup='zinit update -p -v; zr'
 cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null }
 touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
 zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto }

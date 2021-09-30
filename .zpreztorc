@@ -37,8 +37,8 @@ zstyle ':prezto:load' zfunction 'zargs' 'zmv'
 #   'history' \
 #   'fasd' \
 #   'directory' \
-#   'completion' \
 #   'osx' \
+#   'completion' \
 #   'rsync'
 
 #

@@ -30,6 +30,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+source ~/.private/.zshrc
+
 # ===================================================
 # ⚡️ Plugins
 # ===================================================
@@ -49,16 +51,18 @@ zinit light mroth/evalcache
 
 source ~/.dotjitsu/.zpreztorc
 
+# https://github.com/zdharma/zinit/issues/421
 zinit snippet PZT::modules/environment/init.zsh
-zinit snippet PZT::modules/utility/init.zsh
+zinit ice svn wait as=null lucid; zinit snippet PZTM::utility
+zinit ice svn wait as=null lucid; zinit snippet PZTM::archive
 zinit snippet PZT::modules/terminal/init.zsh
 zinit snippet PZT::modules/editor/init.zsh
 zinit snippet PZT::modules/history/init.zsh
 zinit snippet PZT::modules/fasd/init.zsh
 zinit snippet PZT::modules/directory/init.zsh
-zinit snippet PZT::modules/completion/init.zsh
-zinit snippet PZT::modules/osx/init.zsh
+zinit ice svn wait as=null lucid; zinit snippet PZTM::osx
 zinit snippet PZT::modules/rsync/init.zsh
+zinit snippet PZT::modules/completion/init.zsh # Loaded last
 
 # ■■■
 zinit wait lucid for \
@@ -126,6 +130,7 @@ zinit snippet ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
 eval "$(fnm env)"                     # fnm (Fast Node Manager)
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
 _evalcache thefuck --alias
+#_evalcache direnv hook zsh
 
 
 # ===================================================
@@ -166,10 +171,12 @@ setopt NO_HUP
 setopt SHARE_HISTORY            # Share history between sessions ???
 
 # ■■■ Scripts etc
+setopt dotglob                  # Allow dotfiles in globs
 typeset -U path                 # ignore doules in path
 
 
 zinit snippet ~/.p10k.zsh
+
 
 # ===================================================
 # ⚡️ LOAD
@@ -183,3 +190,7 @@ zinit cdreplay
 
 
 eval $(thefuck --alias)
+
+
+# Run dotenv on login
+#dotenv
