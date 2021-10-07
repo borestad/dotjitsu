@@ -151,3 +151,6 @@ paused.conf
 !.yarn/versions
 .pnp.*
 *.session
+
+# History
+.*_history
