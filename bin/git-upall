@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Runs `git pull` on every directory within the current directory
+
+START=`date +%s.%N`
+
+# TODO: Use 'mr list'
+CUR_DIR=$(pwd)
+tempfile=`mktemp /tmp/git.XXXXXXXXXXXXXXXXXXXXXXX.txt`
+
+IFS=''
+/usr/local/bin/fd -a "\.git$" -uu -td --maxdepth 4 --prune | sd "/.git" "" | tee >( tac > $tempfile ) | cat &> /dev/null
+REPOS_NR=`cat $tempfile | wc -l`
+
+echo "Pulling in latest changes for $REPOS_NR repositories..."
+echo
+
+cat $tempfile | parallel -I{} -j 100 '
+    SYMBOL_SUCCESS="$(tput setaf 46)❯$(tput sgr0)"
+    SYMBOL_ERROR="$(tput setaf 196)𐄂$(tput sgr0)"
+    start=`date +%s.%N`
+
+    cd {}; cd `git-root`;
+    repo=$(basename `git config --get remote.origin.url | sd ".git" ""`)
+    git -C {} pull > /dev/null
+    RESULT=$?
+
+    end=`date +%s.%N`
+    runtime=$( printf %.1f $(echo "$end - $start" | bc -l ))
+    runtime=$(printf "%-8s" "(${runtime}s)")
+
+
+    if [ $RESULT -eq 0 ]; then
+      hrt "$SYMBOL_SUCCESS ${runtime}•  $repo "
+    else
+      hrt "$SYMBOL_ERROR $runtime $repo "
+    fi
+'
+
+END=`date +%s.%N`
+RUNTIME=$( printf %.1f $(echo "$END - $START" | bc -l ))
+
+echo
+echo "Time: ${RUNTIME}s"
