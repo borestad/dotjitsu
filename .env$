@@ -73,9 +73,11 @@ addPath "./node_modules/.bin"
 #addPath "$HOME/.config/yarn/global/node_modules/.bin"
 #export NODE_PATH=$HOME/.config/yarn/global/node_modules
 export NODE_PATH=$XDG_DATA_HOME/yarn/global/node_modules
-addPath "$HOME/bin"
-addPath "$DOTJITSU/bin"
-addPath "$PRIVATE/bin"
+export PATH=$DOTJITSU/bin:$PATH
+export PATH=$DOTJITSU/bin:$PATH
+export PATH=$PRIVATE/bin:$PATH
+export PATH=$HOME/bin:$PATH
+
 addPath "$HOME/.go/bin"
 addPath "$HOME/.repos/git-friendly"
 addPath "$HOME/bin/apache-maven-3.0.5/bin"
@@ -88,6 +90,8 @@ addPath "/usr/local/opt/mozjpeg/bin"
 addPath "$HOME/Library/Python/3.8/bin"
 addPath "/usr/local/opt/openjdk@8/bin"
 addPath "$HOME/.cargo/bin"
+addPath "/usr/local/opt/util-linux/bin"
+addPath "/usr/local/opt/util-linux/sbin"
 
 # Use core-utils directly
 addPath "/usr/local/opt/coreutils/libexec/gnubin"

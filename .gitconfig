@@ -59,6 +59,9 @@
 	deltaCacheSize = 1024m
 	packSizeLimit = 1024m
 	windowMemory = 1024m
+	allowPackReuse = true
+	threads = 16
+	useSparse = true
 
 [apply]
 	whitespace = nowarn

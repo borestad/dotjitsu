@@ -5,9 +5,8 @@ tempfile=`mktemp /tmp/ext.XXXXXXXXXXXXXXXXXXXXXXX.txt`
 
 echo "» Searching files in $LOCATION"
 # Optimize by writing to file in one huge chunk
-fd -i --type f --no-ignore --hidden  --one-file-system -E '.git' -E 'node_modules' -E '**cache**' -E '**Cache**' \
+/usr/local/bin/fd -i --type f --no-ignore --hidden  --one-file-system -E '.git' -E 'node_modules' -E '**cache**' -E '**Cache**' \
   | tee >( tac > $tempfile ) | cat &> /dev/null
-
 
 files=`wc -l < $tempfile`
 echo " .... found $files files"

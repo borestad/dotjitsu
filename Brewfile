@@ -181,6 +181,7 @@ brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
+brew 'shallow-backup'
 
 
 
@@ -244,8 +245,11 @@ brew 'gnu-which'
 brew 'gnutls'
 brew 'grep'
 brew 'less'
-brew 'moreutils'
+#brew 'moreutils'
 brew 'wdiff'
+brew 'parallel'
+brew 'util-linux'
+
 
 # ================================
 # DUPES
