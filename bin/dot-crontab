@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
 # https://crontab.guru/
-
+# https://ss64.com/osx/crontab.html
 
 MAILTO=""
 
 # (minute) (hour) (day of month) (month) (weekday)
-
 
 #(crontab -l ; echo "* * * * * /Users/johan/.dotjitsu/bin/kill-hi gh-cpu") | sort - | uniq - | crontab -
 (crontab -l ; echo "0 * * * * /Users/johan/.dotjitsu/bin/brew-update &> /dev/null &") | sort - | uniq - | crontab -
@@ -14,5 +13,12 @@ MAILTO=""
 (crontab -l ; echo "10 * * * * /Users/johan/.dotjitsu/bin/dot-cron-hourly &> /dev/null &") | sort - | uniq - | crontab -
 (crontab -l ; echo "0 20 * * * /Users/johan/.dotjitsu/bin/dot-cron-daily  &> /dev/null &") | sort - | uniq - | crontab -
 (crontab -l ; echo "0 21 * * * /Users/johan/.private/bin/dotp-cron-daily  &> /dev/null &") | sort - | uniq - | crontab -
+
+# run-parts
+(crontab -l ; echo "01 * * * * root run-parts /etc/cron.hourly") | sort - | uniq - | crontab -
+(crontab -l ; echo "02 4 * * * root run-parts /etc/cron.daily") | sort - | uniq - | crontab -
+(crontab -l ; echo "22 4 * * 0 root run-parts /etc/cron.weekly") | sort - | uniq - | crontab -
+(crontab -l ; echo "42 4 1 * * root run-parts /etc/cron.monthly") | sort - | uniq - | crontab -
+
 hr -
 crontab -l
