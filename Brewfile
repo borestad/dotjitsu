@@ -36,13 +36,13 @@ brew 'packer-completion'
 #brew 'sshfs'                       # File system client based on SSH File Transfer Protocol
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 #brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
-
-brew 'autoconf'                     # Automatic configure script builder
+#brew 'pipx'                         #
 brew 'ack'                          # Search tool like grep, but optimized for programmer
 brew 'ag'                           # A code-searching tool similar to ack, but faster
 brew 'archey'                       # Graphical system information display for macOS
-brew 'autojump'                     # Shell extension to jump to frequently used directories
 brew 'aria2'                        # Download with resuming and segmented downloading
+brew 'autoconf'                     # Automatic configure script builder
+brew 'autojump'                     # Shell extension to jump to frequently used directories
 brew 'axel'                         # Light UNIX download accelerator
 brew 'bandwhich'                    # Bourne-Again SHell, a UNIX command interpreter
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
@@ -56,6 +56,7 @@ brew 'cliclick'                     # Tool for emulating mouse and keyboard even
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'cv'                           # Progress: Coreutils Progress Viewer
+brew 'debian-utils'
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
@@ -136,7 +137,6 @@ brew 'ppsspp'                       # PlayStation Portable emulator
 brew 'procs'                        # Modern replacement for ps written by Rust
 brew 'psgrep'                       # Shortcut for the 'ps aux | grep' idiom
 brew 'pv'                           # Monitor data's progress through a pipe
-#brew 'pipx'                         #
 brew 'pygments'                     # Generic syntax highlighter
 brew 'rargs'                        # Util like xargs + awk with pattern matching support
 brew 'rdiff-backup'                 # Reverse differential backup tool, over a network or locally
@@ -147,6 +147,7 @@ brew 'ripgrep'                      # Search tool like grep and The Silver Searc
 brew 'rsnapshot'                    # File system snapshot utility (based on rsync)
 brew 'rsync'                        # Utility that provides fast incremental file transfer
 brew 'sd'                           # Intuitive find & replace CLI
+brew 'shallow-backup'
 brew 'sk'                           # Fuzzy Finder in rust!
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
@@ -181,8 +182,6 @@ brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
-brew 'shallow-backup'
-
 
 
 # ================================
