@@ -1,11 +1,20 @@
 #!/usr/bin/env zsh
 
-# Binaries
-hr -
-echo '✨ Install Binaries\n'
 
+echo "☑️  Upgrade node LTS..."
+fnm install --lts
+
+echo "☑️  Set global cache config..."
 npm config --global set cache ~/.cache/npm-cache
-npm install --global yarn
+
+if ! command -v pnpm > /dev/null 2>&1; then
+  echo "☑️  Installing pnpm..."
+   #npx pnpm add -g pnpm
+   npm install -g pnpm
+else
+  echo "☑️  Upgrading pnpm..."
+  pnpm add -g pnpm
+fi
 
 
 args=(
@@ -19,83 +28,34 @@ args=(
   jase@latest
   jq.node@latest
   local-web-server@latest
+  @types/node@
   ts-node@latest
   typescript@latest
-  pnpm@latest
+  node-notifier@latest
 
   # Linters
   prettier@latest
   eslint@latest
   @typescript-eslint/eslint-plugin@latest
   @typescript-eslint/parser@latest
-  eslint-config-airbnb@latest
-  eslint-config-prettier@latest
-  eslint-config-standard@latest
-  eslint-plugin-import@latest
-  eslint-plugin-jsx-a11y@latest
-  eslint-plugin-node@latest
-  eslint-plugin-prettier@latest
-  eslint-plugin-promise@latest
-  eslint-plugin-react@latest
-  eslint-plugin-sonarjs@latest
-  eslint-plugin-unicorn@latest
+  #eslint-config-airbnb@latest
+  # eslint-config-prettier@latest
+  # eslint-config-standard@latest
+  # eslint-plugin-import@latest
+  #eslint-plugin-jsx-a11y@latest
+  # eslint-plugin-node@latest
+  # eslint-plugin-prettier@latest
+  # eslint-plugin-promise@latest
+  # eslint-plugin-react@latest
+  # eslint-plugin-sonarjs@latest
+  # eslint-plugin-unicorn@latest
 )
 
 
-NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
+#NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
+echo "☑️  Installing global pnpm packages..."
+NODE_ENV=production pnpm install -g "${args[@]}"
 #yarn global add "${args[@]}"
 
 
-# hr -
-# echo '✨ Install Linters \n'
-# yarn global add                           \
-
-
-#vtop@latest \
-
-
-# public-ip@latest \
-  #casperjs@latest \
-  # david@latest \
-  # debug@latest \
-  # esformatter@latest \
-
-# dockly@latest \
-  # jscodeshift@latest \
-  # jscs@latest \
-  # jshint@latest \
-  # jsinspect@latest \
-  # jslint@latest \
-  # livescript@latest \
-  # node-debugger@latest \
-  # n_@latest \
-  # npm-cache@latest \
-  # npm-check@latest \
-  # pen.md@latest \
-  # pageres-cli@latest \
-  # phantomjs-prebuilt@latest \
-
-# rtail@latest \
-  # shipit-cli@latest \
-  # tmpin@latest \
-  # vantage@latest \
-  # webpack@latest \
-  # webpack-bundle-size-analyzer@latest \
-  # webpack-dev-server@latest \
-  # yo@latest
-
-# npm set progress=false
-
-# # for pkg in $packages; do
-# #   hr -
-# #   echo "Uninstalling ${pkg}"
-# #   npm un -g "${pkg}"
-# # done
-
-# for pkg in $packages; do
-#   hr -
-#   echo "Installing ${pkg}"
-#   yarn global add "${pkg}@latest"
-# done
-
-# npm set progress=true
+# yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
