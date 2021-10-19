@@ -6,5 +6,5 @@
 
 FZF_DEFAULT_OPT="--layout=reverse --border --inline-info --pointer=» --height=100"
 
-cat ~/.config/cache/brew-cask.json | jq '.[] | "\(.token) | \(.desc) | \(.url)"' \
+cat ~/.config/cache/brew-cask.json | jq '.[] | "\(.token) | \(.desc) | \(.homepage)"' \
 | sd '"' '' | sd 'null' '' | column -t -s'|' | fzf --reverse -e --no-hscroll --height=100
