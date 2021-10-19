@@ -76,6 +76,8 @@ alias sudo='nocorrect sudo '
 alias vnstat='/usr/local/bin/vnstat -i en0'
 alias wget='wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
 alias ws='ws -d'
+alias gdu='/usr/local/Cellar/gdu/*/bin/gdu -xa'
+alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
 
 
 
