@@ -24,10 +24,10 @@ echo "✨ brew upgrade"
 /usr/local/bin/brew upgrade
 
 
-# Cleanup
-$HOME/.dotjitsu/bin/hr -
-echo "✨ brew cleanup"
-/usr/local/bin/brew cleanup
+# # Cleanup
+# $HOME/.dotjitsu/bin/hr -
+# echo "✨ brew cleanup"
+# /usr/local/bin/brew cleanup
 
 # Cache API-reponses
 $HOME/.dotjitsu/bin/hr -

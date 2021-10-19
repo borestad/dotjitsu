@@ -1,4 +1,4 @@
-cask_args appdir: '/Applications'
+cask_args appdir: '~/Applications'
 
 tap 'homebrew/bundle'
 tap 'homebrew/homebrew-core'
@@ -56,7 +56,7 @@ brew 'cliclick'                     # Tool for emulating mouse and keyboard even
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'cv'                           # Progress: Coreutils Progress Viewer
-brew 'debian-utils'
+brew 'debianutils'
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
