@@ -3,19 +3,21 @@
 
 echo "☑️  Upgrade node LTS..."
 fnm install --lts
+fnm default lts-latest
 
 echo "☑️  Set global cache config..."
 npm config --global set cache ~/.cache/npm-cache
+npm config --global set fund false
+npm config --global set init-author-email "johan@borestad.com"
+npm config --global set init-author-name "Johan Borestad"
+npm config --global set init-author-url "http://borestad.com/"
+npm config --global set init-version "0.0.1"
+npm config --global set pnpm-prefix ~/.local/share/pnpm
+npm config --global set store-dir ~/.local/share/.pnpm-store
 
-if ! command -v pnpm > /dev/null 2>&1; then
-  echo "☑️  Installing pnpm..."
-   #npx pnpm add -g pnpm
-   npm install -g pnpm
-else
-  echo "☑️  Upgrading pnpm..."
-  pnpm add -g pnpm
-fi
 
+echo "☑️  Install/upgrade npm|yarn|pnpm"
+npm install -g --prefer-offline --no-audit npm yarn pnpm
 
 args=(
   # Globals
@@ -54,7 +56,7 @@ args=(
 
 #NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
 echo "☑️  Installing global pnpm packages..."
-NODE_ENV=production pnpm install -g "${args[@]}"
+NODE_ENV=production pnpm add -g "${args[@]}"
 #yarn global add "${args[@]}"
 
 
