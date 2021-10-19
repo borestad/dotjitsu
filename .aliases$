@@ -124,12 +124,12 @@ alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 alias zup='zinit update -p -v; zr'
-cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null }
+cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null; }
 touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
-zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto }
+zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto ;}
 #alias ncdu="ncdu -x -1bre"
 #alias git=hub
-wherebat () { where "$1" | fzf --preview 'bat -p {}' }
+wherebat () { where "$1" | fzf --preview 'bat -p {}' ;}
 
 alias duf='duf -hide-fs devfs'
 
@@ -174,7 +174,7 @@ alias chrome-canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Goo
 alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium"
 alias firefox="/Applications/Firefox.app/Contents/MacOS/firefox"
 
-wh () { which -a "$@" | bat }
+wh () { which -a "$@" | bat ;}
 
 function clone {
   url=$1;
@@ -223,7 +223,7 @@ alias dj="code $HOME/.private/dotjitsu.code-workspace"
 alias djp='git-pull $HOME/.dotjitsu; git-pull $HOME/.private;'
 
 alias gd="git diff -- :!package-lock.json :!yarn.lock"
-append() { grep -q -F $1 $2 || echo $1 >> $2 }
+append() { grep -q -F $1 $2 || echo $1 >> $2 ;}
 
 
 # =============================================================================
@@ -240,7 +240,7 @@ alias updatedb='/usr/local/bin/gupdatedb'
 # =============================================================================
 alias spotlight.access='sudo fs_usage -w -f filesys -e Terminal gtee iTerm2 | tee fs_usage.log'
 spotlight.rebuild () { sudo mdutil -i off /; sudo rm -rf /.Spotlight*; sudo mdutil -i on /; sudo mdutil -E /; }
-spotlight.search () { mdfind . }
+spotlight.search () { mdfind . ;}
 
 
 # =============================================================================
@@ -252,7 +252,7 @@ mk ()       { mkdir -p "$@" && cd "$_"; }
 mkt ()      { hr -; cd $(mktemp -d); pwd; echo; }
 mktt ()     { hr -; cd $(mktemp -d -p $HOME/tmp); pwd; echo; }
 mktcopy ()  { hr -; cd $(mktemp -d -p $HOME/tmp); pwd | tee /dev/tty | pbcopy; echo; }
-mktclone () { cd $(mktemp -d) && pwd && hr - && clone $1 }
+mktclone () { cd $(mktemp -d) && pwd && hr - && clone $1; }
 
 # Opens file in EDITOR.
 edit () {
@@ -400,7 +400,7 @@ system.maxcpu () {
   stress --cpu 64 --timeout 60
 }
 
-ps.kill () { kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'` }
+ps.kill () { kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'`; }
 
 # =============================================================================
 # Lists (with fzf magic)
@@ -425,9 +425,9 @@ vm.fusion () {
 # File related stuff
 # =============================================================================
 
-file.size () { wc -c < $1 }
+file.size () { wc -c < $1; }
 # Monitor IO in real-time (open files etc).
-files.open () { sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }' }
+files.open () { sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'; }
 # Files used, anywhere on the filesystem
 alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
 # Files being opened (OSX Only)
@@ -435,7 +435,7 @@ alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep
 # Files in use in the Users directory
 alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
 
-files.last_modified_directory() { echo `\ls -t | head -n 1` }
+files.last_modified_directory() { echo `\ls -t | head -n 1`; }
 
 ddd() {
   local cmd="dd if='"$1"' | pv | sudo dd of=/dev/rdisk"$2" bs=1m"
@@ -456,7 +456,7 @@ alias net.sniff0="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff1="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.sniff4="sudo ngrep -d 'en4' -t '^(GET|POST) ' 'tcp and port 80'"
 alias net.flushdns='flushdns'
-flushdns() { echo "DNS cache flushing ..."; sudo killall -HUP mDNSResponder; sudo killall mDNSResponderHelper; sudo dscacheutil -flushcache; echo "✓ DNS cache cleared!" }
+flushdns() { echo "DNS cache flushing ..."; sudo killall -HUP mDNSResponder; sudo killall mDNSResponderHelper; sudo dscacheutil -flushcache; echo "✓ DNS cache cleared!"; }
 
 
 # =============================================================================
@@ -492,23 +492,23 @@ randfile () {
 }
 
 # 1500 -> 1.500
-to_kb () { echo $(bc <<< "scale=3; $1/1000") }
+to_kb () { echo $(bc <<< "scale=3; $1/1000"); }
 
 # 10000 -> 10,000
-format_number () { printf "%'.3f\n" $1 }
+format_number () { printf "%'.3f\n" $1; }
 
 # ./some_file.txt -> 11496328
-size_in_bytes () { stat -f %z "$1" }
+size_in_bytes () { stat -f %z "$1"; }
 
 # ./some_file.txt -> 11,496.328 KB
-echo_size () { echo $(format_number $(to_kb $(size_in_bytes "$1")))"kB" }
+echo_size () { echo $(format_number $(to_kb $(size_in_bytes "$1")))"kB"; }
 
 
 # =============================================================================
 # TMUX
 # =============================================================================
-ta_function() { tmux attach -t $1 }
-tk_function() { tmux kill-session -t $1 }
+ta_function() { tmux attach -t $1; }
+tk_function() { tmux kill-session -t $1; }
 
 alias tm='tmux'
 alias 'tmux-new'='tmux new-session -A -s $(basename $PWD | tr -d .)'
@@ -523,10 +523,8 @@ alias 'tmux-kill'=tk_function
 
 # Fuzzy match against history, edit selected value
 fhist() {
-  print -z $(([ -n "$ZSH_NAME" ] && fc -l 1 || history) | \
-    tail -2000 | \
-    fzf --tac --reverse --no-sort | \
-    sed 's/ *[0-9]* *//')
+  local history=$( ( fc -l 1 || history) | tail -2000 | fzf --tac --reverse --no-sort | sed 's/ *[0-9]* *//')
+  print -z $history
 }
 
 #bindkey -s '^r' 'fhist\n'

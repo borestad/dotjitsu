@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-
 echo "☑️  Upgrade node LTS..."
 fnm install --lts
 fnm default lts-latest
@@ -14,7 +13,6 @@ npm config --global set init-author-url "http://borestad.com/"
 npm config --global set init-version "0.0.1"
 npm config --global set pnpm-prefix ~/.local/share/pnpm
 npm config --global set store-dir ~/.local/share/.pnpm-store
-
 
 echo "☑️  Install/upgrade npm|yarn|pnpm"
 npm install -g --prefer-offline --no-audit npm yarn pnpm
@@ -52,12 +50,10 @@ args=(
   # eslint-plugin-unicorn@latest
 )
 
-
 #NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
 echo "☑️  Installing global pnpm packages..."
 NODE_ENV=production pnpm add -g "${args[@]}"
 #yarn global add "${args[@]}"
-
 
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
 # npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm
