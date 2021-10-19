@@ -2,8 +2,18 @@
 
 cd "$(dirname $0)"
 
+
+echo -n "Hostname:    "
+hostname
+
+echo -n "SSID:        "
+echo -n $(/Sy*/L*/Priv*/Apple8*/V*/C*/R*/airport -I | grep -w SSID | awk '{print $2}')
+echo -n " ($(/Sy*/L*/Priv*/Apple8*/V*/C*/R*/airport -I | grep -w lastTxRate | awk '{print $2}') Mbit/s)"
+
+echo;echo
+
 echo -n "Internal:    "
- ./ip.internal
+./ip.internal
 
 echo -n "Public:      "
 ./ip.public
