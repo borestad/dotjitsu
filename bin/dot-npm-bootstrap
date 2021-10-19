@@ -25,7 +25,6 @@ args=(
   @babel/node@latest
   bcat@latest
   diff-so-fancy@latest
-  git-recent@latest
   http-server@latest
   jase@latest
   jq.node@latest
@@ -61,3 +60,4 @@ NODE_ENV=production pnpm add -g "${args[@]}"
 
 
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
+# npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm
