@@ -3,25 +3,27 @@
 # Include helpers
 . `dirname $0`/_helpers
 
-echo "Updating ZSH Frameworks ...\n"
-
 mkdir -p $HOME/.repos
 
 cd $HOME
 
 hr
-mr status | sed '/^[[:space:]]*$/d'
+mr status | sed '/^[[:space:]]*$/d' | sd "$HOME" '~'
 hr
 
-mr update -j4
+echo "Updating ZSH Frameworks ..."
+mr -j50 update
+hr
 
 cd $HOME/.repos
+
+echo "Register repos ..."
 for f in *; do
     if [ -d "$f" ]; then
         # Will not run if no directories are available
         cd $f
         fixgit-git-to-https &> /dev/null
-        mr register
+        mr register 2>/dev/null | sed '/^[[:space:]]*$/d' | sd "$HOME" '~'
         cd ..
     fi
 done

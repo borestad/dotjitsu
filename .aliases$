@@ -57,11 +57,12 @@ alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --colo
 # ✨ Globals & overrides
 # =============================================================================
 
-alias ag='ag --stats'
+alias ag='ag --hidden --stats'
 alias code='/usr/local/bin/code -n'
 alias cp='gcp -v'
 alias dfc='/usr/local/bin/dfc -Wdluh -q mount -t apfs'
 alias fd="fd --hidden --exclude '.git'"
+alias gdu='/usr/local/Cellar/gdu/*/bin/gdu -a'
 alias killall="killall -v"
 alias less='/usr/local/bin/less --incsearch'
 alias mkdir='gmkdir -pv'
@@ -70,13 +71,14 @@ alias mv='gmv -vi'
 alias pgrep='pgrep -fli'
 alias pigz='pigz -v'
 alias qmv='qmv -e "subl -w -n" -f destination-only'
+alias rg='rg --hidden'
 alias rm='grm -v'
 alias sort="sort -S 50% --parallel=$NUM_CORES"
 alias sudo='nocorrect sudo '
 alias vnstat='/usr/local/bin/vnstat -i en0'
 alias wget='wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
 alias ws='ws -d'
-alias gdu='/usr/local/Cellar/gdu/*/bin/gdu -xa'
+
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
 
 
@@ -111,7 +113,7 @@ alias h="history | fzf --reverse"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias n='ncdu -1'
 alias nano='micro'
-alias ncdu="/usr/local/bin/ncdu -xe --color dark"
+alias ncdu="gdu"
 alias ncdu2="/usr/local/bin/ncdu"
 alias neofetch='neofetch --config ~/.dotjitsu/neofetch.conf'
 alias macchina='/usr/local/bin/macchina --config ~/.dotjitsu/macchina.toml'
@@ -123,7 +125,7 @@ alias serve='ws -f stats -d '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
-alias zup='zinit update -p -v; zr'
+alias zup='rm ~/.ssh/control/git@github.com:22; zinit update -p -v; zr'
 cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null; }
 touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
 zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto ;}
