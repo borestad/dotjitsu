@@ -109,6 +109,7 @@ alias crontab='VISUAL=micro EDITOR=micro crontab'
 alias ctp="bat package.json | jq"
 alias ffind='noglob fd -g --no-ignore'
 alias g='git'; #compdef g='git'
+alias gu='gitui'
 alias h="history | fzf --reverse"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias n='ncdu -1'
