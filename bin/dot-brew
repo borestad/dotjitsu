@@ -1,26 +1,36 @@
 #!/bin/bash
 set -Eeuo pipefail
 
+# Setup
+LOG_LOCATION="$HOME/logs/brew"
+TERM="xterm-256color"
+mkdir -p $LOG_LOCATION
+exec > >(tee -i $LOG_LOCATION/dot-brew-`date +%F--%H%M%S`.log)
+exec 2>&1
+
+
 cd "$(dirname $0)"/..
 
 t () {
   date "+%F %H:%M:%S"
 }
 
-
 # Update brew itself
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew update"
+echo
 /usr/local/bin/brew -v update
 
 # Install Brewfile formulas
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew bundle (Brewfile)"
+echo
 /usr/local/bin/brew bundle --file=$HOME/.dotjitsu/Brewfile
 
 # Update installed bundles (even those not in Brew/Caskfile
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew upgrade"
+echo
 /usr/local/bin/brew upgrade
 
 
@@ -32,11 +42,17 @@ echo "✨ brew upgrade"
 # Cache API-reponses
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew API"
+echo
 
 mkdir -p ~/.config/cache && cd "$_"
 /usr/local/bin/wget https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && mv brew-formula.json.tmp brew-formula.json
 /usr/local/bin/wget https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && mv brew-cask.json.tmp brew-cask.json
 
+cat brew-formula.json | jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \
+| sd '"' '' | sd 'null' '' | column -t -s'|' > brew-formula.txt
+
+cat brew-cask.json | jq '.[] | "\(.token) | \(.desc) | \(.homepage)"' \
+| sd '"' '' | sd 'null' '' | column -t -s'|' > brew-cask.txt
 
 # if [ -t 1 ] ; then
 #   # Install Caskfile formulas (only if interactive shell)
