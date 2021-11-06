@@ -52,6 +52,7 @@ brew 'bento4'                       # Full-featured MP4 format and MPEG DASH lib
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'broot'                        # New way to see and navigate directory trees
+brew 'caddy'                        # Powerful, enterprise-ready, open source web server with automatic HTTPS
 brew 'cliclick'                     # Tool for emulating mouse and keyboard events
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
