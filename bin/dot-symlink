@@ -3,10 +3,9 @@
 const fs = require('fs')
 const path = require('path')
 const HOME = require('os').homedir()
-const { execSync } = require('child_process')
+const { execSync: exec } = require('child_process')
 
 const DOTJITSU = path.join(__dirname, '..')
-// const j = path.join
 
 process.chdir(DOTJITSU)
 
@@ -33,55 +32,5 @@ for (const file of dotfiles) {
 }
 
 // Manual adding files/folders
-// execSync(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
-execSync(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
-// execSync(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
-
-// execSync(`ln -sfv ${DOTJITSU}/package-global.json ${HOME}/.config/yarn/package.json`)
-// fs.symlinkSync( j(HOME, '.config/yarn/global'))
-
-// # echo ''; hr - '#' -
-// # echo "[SYMLINKING]\n"
-// # DOTJITSU=$HOME/.DOTJITSU
-// # #ln -sfv $DOTJITSU/packages/iterm2/.iterm2_shell_integration.zsh ~
-
-// # for c in `ls -la .*`; do ! echo $c; done
-
-// # # BASEFILES=(
-// # #  ack
-// # #  bash
-// # #  curl
-// # #  editorconfig
-// # #  fzf
-// # #  git
-// # #  htop
-// # #  nano
-// # #  prezto
-// # #  ruby
-// # #  shell
-// # #  vnstat
-// # #     wget
-// # #  zsh
-// # # )
-
-// # #rm $HOME/.bash*
-// # #rm $HOME/.git*
-
-// # #stow -Rv -t $HOME $BASEFILES
-
-// # #$HOME/.private/bin/dotp-symlink
-
-// # # Youtube-dl
-// # # mkdir -p ~/.config/youtube-dl && \// # #  ln -sfv $DOTJITSU/packages/youtube-dl/config ~/.config/youtube-dl
-
-// # # Sublime Text
-// # #mkdir -p ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
-// # #rm -rf ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User// # #ln -sfv $DOTJITSU/packages/sublime-text/User ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
-// # #rm ~/.config/htop// # #ln -sfv $DOTJITSU/packages/htop ~/.config/
-
-// # #rm ~/.config/neofetch// # #ln -sfv $DOTJITSU/packages/neofetch ~/.config/
-
-// # #ln -sfv -f $HOME/.repos/.tmux/.tmux.conf ~/// # #ln -sfv $DOTJITSU/packages/tmux/.tmux.conf.local ~/
-
-// # # Disable Last Login message with new tabs (i.e Last login: Wed Apr  4 09:36:35 on ttys013)
-// # touch ~/.hushlogin
+exec(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
+exec(`ln -sfv ${DOTJITSU}/packages/youtube-dl ${HOME}/.config/`)

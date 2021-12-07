@@ -821,6 +821,9 @@ defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
 echo "☑️  Randomize port on launch"
 defaults write org.m0k.transmission RandomPort -bool true
 
+echo "☑️  Use <Ctrl> + <Cmd> + <Click> in any window to move"
+defaults write -g NSWindowShouldDragOnGesture -bool true
+
 ###############################################################################
 echo -e "\n\nKill affected applications" && hr
 ###############################################################################

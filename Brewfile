@@ -83,6 +83,7 @@ brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
 brew 'gotop'                        # Terminal based graphical activity monitor inspired by gtop and vtop
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
+brew 'gdu',link: false              #
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'grc'                          # Colorize logfiles and command output
 brew 'grex'                         # Command-line tool for generating regular expressions

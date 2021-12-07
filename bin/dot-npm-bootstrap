@@ -21,16 +21,17 @@ args=(
   # Globals
   @babel/core@latest
   @babel/node@latest
+  @types/node@
   bcat@latest
   diff-so-fancy@latest
   http-server@latest
   jase@latest
   jq.node@latest
   local-web-server@latest
-  @types/node@
+  netlify-cli@latest
+  node-notifier@latest
   ts-node@latest
   typescript@latest
-  node-notifier@latest
 
   # Linters
   prettier@latest
