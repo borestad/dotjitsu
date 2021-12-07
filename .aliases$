@@ -133,6 +133,7 @@ zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto ;}
 #alias ncdu="ncdu -x -1bre"
 #alias git=hub
 wherebat () { where "$1" | fzf --preview 'bat -p {}' ;}
+alias ytdl='youtube-dl --config-location ~/.config/youtube-dl/config'
 
 alias duf='duf -hide-fs devfs'
 
