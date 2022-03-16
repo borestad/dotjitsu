@@ -127,6 +127,7 @@ brew 'nmap'                         # Port scanning utility for large networks
 brew 'noti'                         # Trigger notifications when a process completes
 brew 'nushell'                      # Modern shell for the GitHub era
 brew 'optipng'                      # PNG file optimizer
+brew 'mist'                         # Mac command-line tool that automatically downloads macOS Installers / Firmwares
 brew 'pbzip2'                       # Parallel bzip2
 brew 'pgrep'                        # OpenBSD and Darwin versions of pgrep, pkill, and pfind
 brew 'pidof'                        # Display the PID number for a given process name
