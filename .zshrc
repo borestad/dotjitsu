@@ -44,7 +44,7 @@ source ~/.repos/zinit/bin/zinit.zsh
 
 # ■■■ Zinit Plugins
 zinit light NICHOLAS85/z-a-eval
-zinit light zinit-zsh/z-a-submods
+zinit light zdharma-continuum/zinit-annex-submods
 zinit light mroth/evalcache
 
 # ■■■ Prezto modules - configured via ~/.zprestorc
@@ -123,6 +123,7 @@ zinit snippet ~/.dotjitsu/.hooks$
 zinit snippet ~/.dotjitsu/.aliases$
 zinit snippet ~/.dotjitsu/.keybindings$
 zinit snippet ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
+zinit snippet /usr/local/etc/grc.zsh
 # zinit snippet ~/.docker-aliases$
 
 
