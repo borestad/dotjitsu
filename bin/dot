@@ -3,21 +3,21 @@
 ROOT=$(git rev-parse --show-toplevel)
 cd $ROOT
 
+brew install fnm ncdu git tig hr htop binutils coreutils findutils sd
+
 # if [ ! type "brew" &> /dev/null ]; then
 # 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 # fi
 
-~/.dotjitsu/bin/git-pull $HOME/.dotjitsu
-~/.dotjitsu/bin/git-pull $HOME/.private
+~/.dotjitsu/bin/pull $HOME/.dotjitsu
+~/.dotjitsu/bin/pull $HOME/.private
 
 ~/.dotjitsu/bin/dot-clone
 
 ~/.dotjitsu/bin/dot-symlink
 ~/.private/bin/dotp-symlink
 
-brew install fnm
 eval "$(fnm env)"
-
 fnm install --lts
 fnm default lts-latest
 

@@ -15,7 +15,7 @@ npm config --global set pnpm-prefix ~/.local/share/pnpm
 npm config --global set store-dir ~/.local/share/.pnpm-store
 
 echo "☑️  Install/upgrade npm|yarn|pnpm"
-npm install -g --prefer-offline --no-audit npm yarn pnpm
+npm install -g --no-audit npm yarn pnpm
 
 args=(
   # Globals
@@ -29,9 +29,13 @@ args=(
   jq.node@latest
   local-web-server@latest
   netlify-cli@latest
-  node-notifier@latest
+  node-notifier-cli@latest
   ts-node@latest
   typescript@latest
+  np@latest
+  cpy-cli@latest
+  tmpin@latest
+  empty-trash-cli@latest
 
   # Linters
   prettier@latest
@@ -53,7 +57,7 @@ args=(
 
 #NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
 echo "☑️  Installing global pnpm packages..."
-NODE_ENV=production pnpm add -g "${args[@]}"
+NODE_ENV=production pnpm add --prefer-offline -g "${args[@]}"
 #yarn global add "${args[@]}"
 
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')

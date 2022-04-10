@@ -3,10 +3,16 @@
 # ===================================================
 # ⚡️ Helper
 # ===================================================
-function addPath {
+function prependPath {
   case ":$PATH:" in
     *":$1:"*) :;;           # already there
     *) PATH="$1:$PATH";;    # or PATH="$PATH:$1"
+  esac
+}
+function appendPath {
+  case ":$PATH:" in
+    *":$1:"*) :;;           # already there
+    *) PATH="$PATH:$1";;    # or PATH="$PATH:$1"
   esac
 }
 
@@ -62,6 +68,9 @@ export XDG_DATA_HOME=${XDG_DATA_HOME:=${HOME}/.local/share}
 # ===================================================
 export FNM_DIR="$XDG_DATA_HOME/.fnm"
 
+# export PNPM_HOME="$HOME/.local/share/pnpm"
+# export PATH="$PNPM_HOME:$PATH"
+
 # export ZDOTDIR=${ZDOTDIR:=${XDG_CONFIG_HOME}/zsh}
 # export DYLD_INSERT_LIBRARIES="/usr/local/lib/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
 
@@ -69,32 +78,31 @@ export FNM_DIR="$XDG_DATA_HOME/.fnm"
 # ⚡️ PATHS
 # ===================================================
 # Local node_modules takes presedence
-addPath "./node_modules/.bin"
+prependPath "./node_modules/.bin"
 #addPath "$HOME/.config/yarn/global/node_modules/.bin"
 #export NODE_PATH=$HOME/.config/yarn/global/node_modules
 export NODE_PATH=$XDG_DATA_HOME/yarn/global/node_modules
-export PATH=$DOTJITSU/bin:$PATH
-export PATH=$DOTJITSU/bin:$PATH
-export PATH=$PRIVATE/bin:$PATH
-export PATH=$HOME/bin:$PATH
 
-addPath "$HOME/.go/bin"
-addPath "$HOME/.repos/git-friendly"
-addPath "$HOME/bin/apache-maven-3.0.5/bin"
-addPath "/usr/local/opt/sqlite/bin"
-addPath "/usr/local/opt/python/libexec/bin"
-addPath "/usr/local/opt/gnu-sed/libexec/gnubin"
-addPath "/usr/local/opt/make/libexec/gnubin"
-addPath "/usr/local/opt/binutils/bin"
-addPath "/usr/local/opt/mozjpeg/bin"
-addPath "$HOME/Library/Python/3.8/bin"
-addPath "/usr/local/opt/openjdk@8/bin"
-addPath "$HOME/.cargo/bin"
-addPath "/usr/local/opt/util-linux/bin"
-addPath "/usr/local/opt/util-linux/sbin"
+prependPath $DOTJITSU/bin
+prependPath $PRIVATE/bin
+prependPath $HOME/bin
 
+appendPath "$HOME/.go/bin"
+appendPath "$HOME/.repos/git-friendly"
+appendPath "$HOME/bin/apache-maven-3.0.5/bin"
+appendPath "/usr/local/opt/sqlite/bin"
+appendPath "/usr/local/opt/python/libexec/bin"
+appendPath "/usr/local/opt/gnu-sed/libexec/gnubin"
+appendPath "/usr/local/opt/make/libexec/gnubin"
+appendPath "/usr/local/opt/binutils/bin"
+appendPath "/usr/local/opt/mozjpeg/bin"
+appendPath "$HOME/Library/Python/3.8/bin"
+appendPath "/usr/local/opt/openjdk@8/bin"
+appendPath "$HOME/.cargo/bin"
+appendPath "/usr/local/opt/util-linux/bin"
+appendPath "/usr/local/opt/util-linux/sbin"
 # Use core-utils directly
-addPath "/usr/local/opt/coreutils/libexec/gnubin"
+appendPath "/usr/local/opt/coreutils/libexec/gnubin"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export MANWIDTH=120
 
@@ -118,6 +126,8 @@ export GIT_EDITOR="code --wait --new-window"
 export JAVA_HOME=/usr/local/opt/openjdk@8
 export N_PREFIX="$HOME/.config/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 #export PAGER='fzf --ansi'
+#export GIT_PAGER=''
+export DELTA_PAGER='less -RF'
 export PAGER='bat'
 export VISUAL='code'
 

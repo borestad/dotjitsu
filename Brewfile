@@ -86,6 +86,7 @@ brew 'gdu',link: false              #
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'grc'                          # Colorize logfiles and command output
 brew 'grex'                         # Command-line tool for generating regular expressions
+brew 'handbrake'                    # Open-source video transcoder available for Linux, Mac, and Windows
 brew 'hashdeep'                     # Recursively compute digests on files/directories
 brew 'hh'                           # Bash and zsh history suggest box
 brew 'htop'                         # Improved top (interactive process viewer)
