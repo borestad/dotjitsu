@@ -63,10 +63,11 @@ alias cp='gcp -v'
 alias dfc='/usr/local/bin/dfc -Wdluh -q mount -t apfs'
 alias fd="fd --hidden --exclude '.git'"
 alias gdu='/usr/local/Cellar/gdu/*/bin/gdu -a'
+alias hb='HandBrakeCLI'
 alias killall="killall -v"
 alias less='/usr/local/bin/less --incsearch'
 alias mkdir='gmkdir -pv'
-alias mtr='/usr/local/bin/grc -es --colour=auto mtr'
+#alias mtr='/usr/local/bin/grc -es --colour=auto mtr'
 alias mv='gmv -vi'
 alias pgrep='pgrep -fli'
 alias pigz='pigz -v'
@@ -82,6 +83,21 @@ alias ws='ws -d'
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
 
 
+
+# =============================================================================
+# ✨ GIT
+# =============================================================================
+alias g='git'; #compdef g='git'
+alias gu='gitui'
+
+function clone {
+  url=$1;
+  reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
+  echo "Reponame: $reponame"
+  git clone $*;
+  cd $reponame;
+  echo "" && git log --oneline --graph --date=short -n 5 && echo ""
+}
 
 # =============================================================================
 # ✨ Shortcut & Utils
@@ -108,8 +124,6 @@ alias cgrep="grep --color=always"
 alias crontab='VISUAL=micro EDITOR=micro crontab'
 alias ctp="bat package.json | jq"
 alias ffind='noglob fd -g --no-ignore'
-alias g='git'; #compdef g='git'
-alias gu='gitui'
 alias h="history | fzf --reverse"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias n='ncdu -1'
@@ -126,14 +140,14 @@ alias serve='ws -f stats -d '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
-alias zup='rm ~/.ssh/control/git@github.com:22; zinit update -p -v; zr'
+alias zup='rm ~/.ssh/control/git@github.com:22 2&> /dev/null; zinit update -p -v; zr'
 cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null; }
 touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
 zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto ;}
 #alias ncdu="ncdu -x -1bre"
 #alias git=hub
 wherebat () { where "$1" | fzf --preview 'bat -p {}' ;}
-alias ytdl='youtube-dl --config-location ~/.config/youtube-dl/config'
+alias ytdl='yt-dlp --config-location ~/.config/youtube-dl/config'
 
 alias duf='duf -hide-fs devfs'
 
@@ -180,15 +194,6 @@ alias firefox="/Applications/Firefox.app/Contents/MacOS/firefox"
 
 wh () { which -a "$@" | bat ;}
 
-function clone {
-  url=$1;
-  reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
-  echo "Reponame: $reponame"
-  git clone $*;
-  cd $reponame;
-  echo "" && git log --oneline --graph --date=short -n 5 && echo ""
-}
-
 # Compare original and gzipped file size
 function gz() {
   local origsize=$(wc -c < "$1");
@@ -224,7 +229,7 @@ alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"
 alias work="cd $HOME/work"
 alias dj="code $HOME/.private/dotjitsu.code-workspace"
-alias djp='git-pull $HOME/.dotjitsu; git-pull $HOME/.private;'
+alias djp='pull $HOME/.dotjitsu; pull $HOME/.private;'
 
 alias gd="git diff -- :!package-lock.json :!yarn.lock"
 append() { grep -q -F $1 $2 || echo $1 >> $2 ;}

@@ -3,7 +3,12 @@
 cd "$(dirname $0)"/..
 
 echo ''; hr -
-echo "[Updating NODE MODULES]\n"
+echo "⚡️ Updating npm/pnpm"
+
+
+pnpm outdated -g
+
+pnpm up --global --latest
 
 # Updates global npm packages
 #npm update npm -g

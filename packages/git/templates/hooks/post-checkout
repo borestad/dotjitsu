@@ -5,6 +5,6 @@
 
 echo "✓ git hook: post-checkout"
 
-echo $0
-echo $1
+# echo "Current directory": $0
+# Status code: echo $1"
 
