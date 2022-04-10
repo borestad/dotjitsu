@@ -824,6 +824,56 @@ defaults write org.m0k.transmission RandomPort -bool true
 echo "☑️  Use <Ctrl> + <Cmd> + <Click> in any window to move"
 defaults write -g NSWindowShouldDragOnGesture -bool true
 
+
+echo "☑️ Performance: Xcode speed up"
+defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
+defaults write com.apple.dt.Xcode BuildSystemScheduleInherentlyParallelCommandsExclusively -bool NO
+defaults write com.apple.dt.xcodebuild PBXNumberOfParallelBuildSubtasks `sysctl -n hw.ncpu`
+defaults write com.apple.dt.xcodebuild IDEBuildOperationMaxNumberOfConcurrentCompileTasks `sysctl -n hw.ncpu`
+defaults write com.apple.dt.Xcode PBXNumberOfParallelBuildSubtasks `sysctl -n hw.ncpu`
+defaults write com.apple.dt.Xcode IDEBuildOperationMaxNumberOfConcurrentCompileTasks `sysctl -n hw.ncpu`
+
+
+echo "☑️ Performance: Disable OCSP"
+sudo defaults write /Library/Preferences/com.apple.security.revocation.plist OCSPStyle None
+sudo defaults write /Library/Preferences/com.apple.security.revocation.plist CRLStyle None
+sudo defaults write com.apple.security.revocation.plist OCSPStyle None
+sudo defaults write com.apple.security.revocation.plist CRLStyle None
+
+
+echo "☑️ Performance: Speedup Animations"
+defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
+defaults write -g NSWindowResizeTime -float 0.001
+defaults write -g NSToolbarFullScreenAnimationDuration -float 0
+defaults write -g NSToolbarTitleViewRolloverDelay -float 0
+defaults write -g NSDocumentRevisionsWindowTransformAnimation -bool false
+defaults write -g QLPanelAnimationDuration -float 0
+defaults write -g NSScrollAnimationEnabled -bool false
+defaults write -g NSBrowserColumnAnimationSpeedMultiplier -float 0
+defaults write -g NSScrollViewRubberbanding -bool false
+defaults write com.apple.CrashReporter DialogType none
+defaults write com.apple.finder DisableAllAnimations -bool true
+defaults write com.apple.finder AnimateInfoPanes -bool false
+defaults Write com.apple.finder AnimateSnapToGrid -bool false
+defaults write com.apple.finder FXEnableSlowAnimation -bool false
+defaults write com.apple.finder QLEnableSlowMotion -bool false
+defaults write com.apple.dock expose-animation-duration -float 0
+defaults write com.apple.dock workspaces-swoosh-animation-off -bool YES
+defaults write com.apple.dock launchanim -bool false
+defaults write com.apple.dock workspaces-edge-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock springboard-show-duration -float 0
+defaults write com.apple.dock springboard-hide-duration -float 0
+defaults write com.apple.dock springboard-page-duration -float 0
+defaults write com.apple.universalaccess reduceTransparency -bool true
+
+
+echo "☑️ Performance: Disable Remote Desktop Helper"
+sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
+
+
+
 ###############################################################################
 echo -e "\n\nKill affected applications" && hr
 ###############################################################################
