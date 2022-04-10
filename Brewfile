@@ -16,7 +16,6 @@ tap 'homebrew/cask-drivers'
 # ================================
 # DEPS / PROGRAMMING LANGUAGES
 # ================================
-#brew 'node@12'
 brew 'git'
 brew 'golang'
 brew 'python'                       # Interpreted, interactive, object-oriented programming language
