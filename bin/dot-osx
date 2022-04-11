@@ -842,35 +842,35 @@ sudo defaults write com.apple.security.revocation.plist CRLStyle None
 
 
 echo "☑️ Performance: Speedup Animations"
-defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
-defaults write -g NSWindowResizeTime -float 0.001
-defaults write -g NSToolbarFullScreenAnimationDuration -float 0
-defaults write -g NSToolbarTitleViewRolloverDelay -float 0
-defaults write -g NSDocumentRevisionsWindowTransformAnimation -bool false
-defaults write -g QLPanelAnimationDuration -float 0
-defaults write -g NSScrollAnimationEnabled -bool false
-defaults write -g NSBrowserColumnAnimationSpeedMultiplier -float 0
-defaults write -g NSScrollViewRubberbanding -bool false
-defaults write com.apple.CrashReporter DialogType none
-defaults write com.apple.finder DisableAllAnimations -bool true
-defaults write com.apple.finder AnimateInfoPanes -bool false
-defaults Write com.apple.finder AnimateSnapToGrid -bool false
-defaults write com.apple.finder FXEnableSlowAnimation -bool false
-defaults write com.apple.finder QLEnableSlowMotion -bool false
-defaults write com.apple.dock expose-animation-duration -float 0
-defaults write com.apple.dock workspaces-swoosh-animation-off -bool YES
-defaults write com.apple.dock launchanim -bool false
-defaults write com.apple.dock workspaces-edge-delay -float 0
-defaults write com.apple.dock autohide-time-modifier -float 0
-defaults write com.apple.dock autohide-delay -float 0
-defaults write com.apple.dock springboard-show-duration -float 0
-defaults write com.apple.dock springboard-hide-duration -float 0
-defaults write com.apple.dock springboard-page-duration -float 0
-defaults write com.apple.universalaccess reduceTransparency -bool true
+# defaults read -g NSAutomaticWindowAnimationsEnabled -bool false
+# defaults read -g NSWindowResizeTime -float 0.001
+# defaults read -g NSToolbarFullScreenAnimationDuration -float 0
+# defaults read -g NSToolbarTitleViewRolloverDelay -float 0
+# defaults read -g NSDocumentRevisionsWindowTransformAnimation -bool false
+# defaults read -g QLPanelAnimationDuration -float 0
+# defaults read -g NSScrollAnimationEnabled -bool false
+# defaults read -g NSBrowserColumnAnimationSpeedMultiplier -float 0
+# defaults read -g NSScrollViewRubberbanding -bool false
+# defaults read com.apple.CrashReporter DialogType none
+# defaults read com.apple.finder DisableAllAnimations -bool true
+# defaults read com.apple.finder AnimateInfoPanes -bool false
+# defaults read com.apple.finder AnimateSnapToGrid -bool false
+# defaults read com.apple.finder FXEnableSlowAnimation -bool false
+# defaults read com.apple.finder QLEnableSlowMotion -bool false
+# defaults read com.apple.dock expose-animation-duration -float 0
+# defaults read com.apple.dock workspaces-swoosh-animation-off -bool YES
+# defaults read com.apple.dock launchanim -bool false
+# defaults read com.apple.dock workspaces-edge-delay -float 0
+# defaults read com.apple.dock autohide-time-modifier -float 0
+# defaults read com.apple.dock autohide-delay -float 0
+# defaults read com.apple.dock springboard-show-duration -float 0
+# defaults read com.apple.dock springboard-hide-duration -float 0
+# defaults read com.apple.dock springboard-page-duration -float 0
+# defaults read com.apple.universalaccess reduceTransparency -bool true
 
 
-echo "☑️ Performance: Disable Remote Desktop Helper"
-sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
+#echo "☑️ Performance: Disable Remote Desktop Helper"
+#sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
 
 
 
