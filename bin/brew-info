@@ -2,6 +2,9 @@
 
 
 FZF_DEFAULT_OPT="--layout=reverse --border --inline-info --pointer=» --height=100"
+query=${1:-}
 
-cat ~/.config/cache/brew-formula.json | jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \
-| sd '"' '' | sd 'null' '' | column -t -s'|' | fzf --reverse -e --no-hscroll --height=100 +s --bind='ctrl-s:toggle-sort' -q $1
+# cat ~/.config/cache/brew-formula.json | jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \
+# | sd '"' '' | sd 'null' '' | column -t -s'|' | fzf --reverse -e --no-hscroll --height=100 +s --bind='ctrl-s:toggle-sort' -q "$query"
+
+cat ~/.config/cache/brew-formula.txt | fzf --reverse -e --no-hscroll --height=100 +s --bind='ctrl-s:toggle-sort' -q "$query"

@@ -11,12 +11,12 @@ remote=$(git config "branch.${branch}.remote" || echo "$default_remote")
 
 # Update our remote
 echo "⚡️  Fetching from $remote"
-echo "    • Pruning"
-echo "    • Updating tags"
-echo "    • Updating submodules"
-echo
-git fetch --tags -f --prune --recurse-submodules -j4 $remote
+git fetch --tags -f --prune --progress --recurse-submodules -j4 $remote
 
-#echo
-#git log --oneline --graph --date=short -n 1
-#echo
+# echo
+# git log --oneline --graph --date=short -n 1
+# echo
+
+echo "🦄  Done"
+exit 0
+
