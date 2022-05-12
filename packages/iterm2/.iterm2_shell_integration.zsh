@@ -18,7 +18,11 @@ if [[ -o interactive ]]; then
     ITERM2_SHOULD_DECORATE_PROMPT="1"
     # Indicates start of command output. Runs just before command executes.
     iterm2_before_cmd_executes() {
-      printf "\033]133;C;\007"
+      if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
+        printf "\033]133;C;\r\007"
+      else
+        printf "\033]133;C;\007"
+      fi
     }
 
     iterm2_set_user_var() {
@@ -119,6 +123,7 @@ if [[ -o interactive ]]; then
         PREFIX="%{$(iterm2_prompt_mark)%}"
       fi
       PS1="$PREFIX$PS1%{$(iterm2_prompt_end)%}"
+      ITERM2_DECORATED_PS1="$PS1"
     }
 
     iterm2_precmd() {
@@ -126,6 +131,10 @@ if [[ -o interactive ]]; then
       if [ -z "${ITERM2_SHOULD_DECORATE_PROMPT-}" ]; then
         # You pressed ^C while entering a command (iterm2_preexec did not run)
         iterm2_before_cmd_executes
+        if [ "$PS1" != "${ITERM2_DECORATED_PS1-}" ]; then
+          # PS1 changed, perhaps in another precmd. See issue 9938.
+          ITERM2_SHOULD_DECORATE_PROMPT="1"
+        fi
       fi
 
       iterm2_after_cmd_executes "$STATUS"
@@ -164,7 +173,7 @@ if [[ -o interactive ]]; then
     preexec_functions=($preexec_functions iterm2_preexec)
 
     iterm2_print_state_data
-    printf "\033]1337;ShellIntegrationVersion=12;shell=zsh\007"
+    printf "\033]1337;ShellIntegrationVersion=13;shell=zsh\007"
   fi
 fi
-alias imgcat=${ZDOTDIR}/.iterm2/imgcat;alias imgls=${ZDOTDIR}/.iterm2/imgls;alias it2api=${ZDOTDIR}/.iterm2/it2api;alias it2attention=${ZDOTDIR}/.iterm2/it2attention;alias it2check=${ZDOTDIR}/.iterm2/it2check;alias it2copy=${ZDOTDIR}/.iterm2/it2copy;alias it2dl=${ZDOTDIR}/.iterm2/it2dl;alias it2getvar=${ZDOTDIR}/.iterm2/it2getvar;alias it2git=${ZDOTDIR}/.iterm2/it2git;alias it2setcolor=${ZDOTDIR}/.iterm2/it2setcolor;alias it2setkeylabel=${ZDOTDIR}/.iterm2/it2setkeylabel;alias it2ul=${ZDOTDIR}/.iterm2/it2ul;alias it2universion=${ZDOTDIR}/.iterm2/it2universion
+alias imgcat=${HOME}/.iterm2/imgcat;alias imgls=${HOME}/.iterm2/imgls;alias it2api=${HOME}/.iterm2/it2api;alias it2attention=${HOME}/.iterm2/it2attention;alias it2check=${HOME}/.iterm2/it2check;alias it2copy=${HOME}/.iterm2/it2copy;alias it2dl=${HOME}/.iterm2/it2dl;alias it2getvar=${HOME}/.iterm2/it2getvar;alias it2git=${HOME}/.iterm2/it2git;alias it2setcolor=${HOME}/.iterm2/it2setcolor;alias it2setkeylabel=${HOME}/.iterm2/it2setkeylabel;alias it2tip=${HOME}/.iterm2/it2tip;alias it2ul=${HOME}/.iterm2/it2ul;alias it2universion=${HOME}/.iterm2/it2universion;alias it2profile=${HOME}/.iterm2/it2profile

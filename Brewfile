@@ -199,7 +199,7 @@ brew 'aws-keychain'
 # Custom taps
 # ================================
 # tap 'teamookla/speedtest'
-# brew 'teamookla/speedtest/speedtest' # Ookla Speedtest
+brew 'teamookla/speedtest/speedtest' # Ookla Speedtest
 tap 'cantino/mcfly'
 brew 'mcfly'
 

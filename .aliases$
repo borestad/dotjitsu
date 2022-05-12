@@ -77,7 +77,7 @@ alias rm='grm -v'
 alias sort="sort -S 50% --parallel=$NUM_CORES"
 alias sudo='nocorrect sudo '
 alias vnstat='/usr/local/bin/vnstat -i en0'
-alias wget='wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
+alias wget='/usr/local/bin/wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
 alias ws='ws -d'
 
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
@@ -150,6 +150,9 @@ wherebat () { where "$1" | fzf --preview 'bat -p {}' ;}
 alias ytdl='yt-dlp --config-location ~/.config/youtube-dl/config'
 
 alias duf='duf -hide-fs devfs'
+
+alias showcursor='tput cvvis'
+alias hidecursor='tput civis'
 
 # ⚡️ =============================================================================
 # ️️⚡️ Filters & Pipes
