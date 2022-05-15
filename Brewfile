@@ -36,6 +36,7 @@ brew 'packer-completion'
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 #brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 #brew 'pipx'                         #
+
 brew 'ack'                          # Search tool like grep, but optimized for programmer
 brew 'ag'                           # A code-searching tool similar to ack, but faster
 brew 'archey'                       # Graphical system information display for macOS
@@ -78,11 +79,12 @@ brew 'fnm'                          # Fast and simple Node.js version manager
 brew 'fping'                        # Scriptable ping program for checking if multiple hosts are up
 brew 'fselect'                      # Find files with SQL-like queries
 brew 'fswatch'                      # Monitor a directory for changes and run a shell command
+brew 'fx'                           # Terminal JSON viewer
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
+brew 'gdu',link: false              #
 brew 'gotop'                        # Terminal based graphical activity monitor inspired by gtop and vtop
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
-brew 'gdu',link: false              #
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'grc'                          # Colorize logfiles and command output
 brew 'grex'                         # Command-line tool for generating regular expressions
@@ -112,6 +114,7 @@ brew 'mackup'                       # Keep your Mac's application settings in sy
 brew 'mas'                          # Mac App Store command-line interface
 brew 'masscan'                      # TCP port scanner, scans entire Internet in under 5 minutes
 brew 'micro'                        # Modern and intuitive terminal-based text editor
+brew 'mist'                         # Mac command-line tool that automatically downloads macOS Installers / Firmwares
 brew 'mmv'                          # Move, copy, append, and link multiple files
 brew 'most'                         # Powerful paging program
 brew 'mozjpeg'                      # Improved JPEG encoder
@@ -127,7 +130,6 @@ brew 'nmap'                         # Port scanning utility for large networks
 brew 'noti'                         # Trigger notifications when a process completes
 brew 'nushell'                      # Modern shell for the GitHub era
 brew 'optipng'                      # PNG file optimizer
-brew 'mist'                         # Mac command-line tool that automatically downloads macOS Installers / Firmwares
 brew 'pbzip2'                       # Parallel bzip2
 brew 'pgrep'                        # OpenBSD and Darwin versions of pgrep, pkill, and pfind
 brew 'pidof'                        # Display the PID number for a given process name
