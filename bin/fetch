@@ -3,11 +3,9 @@
 #!/bin/bash
 # Remove merged git branches locally and on remote(s)
 
-
 branch=$(git branch --show-current) || exit $?
 default_remote="origin"
 remote=$(git config "branch.${branch}.remote" || echo "$default_remote")
-
 
 # Update our remote
 echo "⚡️  Fetching from $remote"
