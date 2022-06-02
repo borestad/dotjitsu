@@ -5,6 +5,7 @@ fnm install --lts
 fnm default lts-latest
 
 echo "☑️  Set global cache config..."
+touch ~/.npmrc
 npm config --global set cache ~/.cache/npm-cache
 npm config --global set fund false
 npm config --global set init-author-email "johan@borestad.com"
