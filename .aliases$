@@ -338,6 +338,7 @@ alias ssh.pubkey="pubkey"
 alias ssh.addkey="addkey"
 alias ssh.update-known-hosts='ssh-keygen -R'
 alias ssh.remove-tunnels='rm ~/.ssh/control/*'
+alias ssh.clean='rm -fv ~/.ssh/control/*'
 
 
 # =============================================================================
