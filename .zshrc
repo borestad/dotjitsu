@@ -195,6 +195,3 @@ eval $(thefuck --alias)
 
 # Run dotenv on login
 #dotenv
-
-export PNPM_HOME="/Users/johan/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"

@@ -82,6 +82,7 @@ brew 'fswatch'                      # Monitor a directory for changes and run a 
 brew 'fx'                           # Terminal JSON viewer
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
+brew 'geoip'                        #
 brew 'gdu',link: false              #
 brew 'gotop'                        # Terminal based graphical activity monitor inspired by gtop and vtop
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
