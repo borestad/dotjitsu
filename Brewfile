@@ -14,6 +14,11 @@ tap 'homebrew/cask-drivers'
 
 
 # ================================
+# TODO: Sort
+# ================================
+brew 'bitwise'
+
+# ================================
 # DEPS / PROGRAMMING LANGUAGES
 # ================================
 brew 'git'
@@ -43,6 +48,7 @@ brew 'archey'                       # Graphical system information display for m
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'autoconf'                     # Automatic configure script builder
 brew 'autojump'                     # Shell extension to jump to frequently used directories
+brew 'automake'                     # Tool for generating GNU Standards-compliant Makefiles
 brew 'axel'                         # Light UNIX download accelerator
 brew 'bandwhich'                    # Bourne-Again SHell, a UNIX command interpreter
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
@@ -161,6 +167,7 @@ brew 'starship'                     # Cross-shell prompt for astronauts
 brew 'stress'                       # Tool to impose load on and stress test a computer system
 brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
 brew 'svn'                          # Nodejs-based tool for optimizing SVG vector graphics files
+brew 'sponge'
 brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
 brew 'sysbench'                     # System performance benchmark tool
 brew 'tealdeer'                     # Very fast implementation of tldr in Rust

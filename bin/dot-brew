@@ -11,9 +11,7 @@ exec 2>&1
 
 cd "$(dirname $0)"/..
 
-t () {
-  date "+%F %H:%M:%S"
-}
+t () { date "+%F %H:%M:%S"; }
 
 # Update brew itself
 $HOME/.dotjitsu/bin/hr -

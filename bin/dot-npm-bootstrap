@@ -22,21 +22,23 @@ args=(
   # Globals
   @babel/core@latest
   @babel/node@latest
+  @microsoft/rush
   @types/node@
   bcat@latest
+  cpy-cli@latest
   diff-so-fancy@latest
+  empty-trash-cli@latest
   http-server@latest
   jase@latest
   jq.node@latest
   local-web-server@latest
   netlify-cli@latest
   node-notifier-cli@latest
+  np@latest
+  tmpin@latest
   ts-node@latest
   typescript@latest
-  np@latest
-  cpy-cli@latest
-  tmpin@latest
-  empty-trash-cli@latest
+  zx@latest
 
   # Linters
   prettier@latest

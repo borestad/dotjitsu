@@ -74,10 +74,13 @@ alias pigz='pigz -v'
 alias qmv='qmv -e "subl -w -n" -f destination-only'
 alias rg='rg --hidden'
 alias rm='grm -v'
+alias date='gdate'
 alias sort="sort -S 50% --parallel=$NUM_CORES"
 alias sudo='nocorrect sudo '
 alias vnstat='/usr/local/bin/vnstat -i en0'
-alias wget='/usr/local/bin/wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
+alias wget='/usr/local/bin/wget --no-check-certificate --compression auto --trust-server-names -nv -q --show-progress'
+alias curl='/usr/local/opt/curl/bin/curl'
+#alias wget='/usr/local/bin/wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
 alias ws='ws -d'
 
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
@@ -626,7 +629,8 @@ alias gsa='git submodule add'
 # WGET
 # =============================================================================
 crwl() {
-  wget --tries=inf --timestamping --recursive --level=inf --convert-links --page-requisites --no-parent --reject-regex '\?C=' "$@"
+  #/usr/local/bin/wget --tries=inf --timestamping --recursive --level=inf --convert-links --page-requisites --no-parent --html-extension --reject-regex '\?C=' "$@"
+  /usr/local/bin/wget --tries=inf --compression auto --timestamping --recursive --level=inf --convert-links --page-requisites --no-parent --html-extension --show-progress --no-check-certificate --trust-server-names -4 -q --reject-regex '\?C=' "$@"
 }
 
 alias mrsort="gawk -v RS=\"\" '{ gsub(\"\n\", \"###\"); print }' .mrconfig | sort -f | gawk -v ORS=\"\n\n\" '{ gsub(\"###\", \"\n\"); print }' > .mrconfig.tmp && mv .mrconfig.tmp .mrconfig"
