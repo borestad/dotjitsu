@@ -88,6 +88,7 @@
 
 [core]
     pager = delta
+	fsmonitor = true
 
 [interactive]
     diffFilter = delta --color-only
@@ -123,6 +124,7 @@
 [gc]
 	autoDetach = false
 	writeCommitGraph = true
+	auto = 0
 
 [commit]
 	gpgSign = false
@@ -203,3 +205,10 @@
 [credential]
 	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager-core
+
+[url "ssh://git@github.com"]
+	insteadOf = https://github.com
+[url "ssh://github.com/"]
+	pushInsteadOf = https://github.com/
+[url "ssh://gitlab.com/"]
+	pushInsteadOf = https://gitlab.com/

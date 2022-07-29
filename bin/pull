@@ -1,7 +1,7 @@
 
 
 TARGET=${1:-$PWD}
-GIT_CURL_VERBOSE=0
+GIT_CURL_VERBOSE=1
 
 if [[ -d "$TARGET" ]]; then
   #echo "PATH: $TARGET"

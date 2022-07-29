@@ -3,25 +3,32 @@
 cd "$(dirname $0)"
 
 
-echo -n "Hostname:    "
+echo "Hostname:"
 hostname
-
-echo -n "SSID:        "
-echo -n $(/Sy*/L*/Priv*/Apple8*/V*/C*/R*/airport -I | grep -w SSID | awk '{print $2}')
-echo -n " ($(/Sy*/L*/Priv*/Apple8*/V*/C*/R*/airport -I | grep -w lastTxRate | awk '{print $2}') Mbit/s)"
-
-echo;echo
-
-echo -n "Internal:    "
-./ip.internal
-
-echo -n "Public:      "
-./ip.public
-
 echo
 
-echo -n "Gateway:     "
-route -n get default | grep 'gateway' | awk '{print $2}'
+echo "Public:"
+./ip.public
+echo;echo
 
-echo -n "DNS:         "
+echo "Internal:"
+ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'
+echo
+
+echo "Gateway:"
+route -n get default | grep 'gateway' | awk '{print $2}'
+echo
+
+echo "DNS:         "
 scutil --dns | grep nameserver | sort -u | awk '{print $3}'
+echo
+
+echo "Interface:"
+route -n get default | grep 'interface' | awk '{print $2}'
+echo
+
+
+echo "SSID:"
+echo -n $(/Sy*/L*/Priv*/Apple8*/V*/C*/R*/airport -I | grep -w SSID | awk '{print $2}')
+echo -n " ($(/Sy*/L*/Priv*/Apple8*/V*/C*/R*/airport -I | grep -w lastTxRate | awk '{print $2}') Mbit/s)"
+echo;echo

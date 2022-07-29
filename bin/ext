@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 LOCATION=${1:-$(pwd)}
-tempfile=`mktemp /tmp/ext.XXXXXXXXXXXXXXXXXXXXXXX.txt`
+tempfile=`/usr/local/bin/gmktemp /tmp/ext.XXXXXXXXXXXXXXXXXXXXXXX.txt`
 
 echo "» Searching files in $LOCATION"
 # Optimize by writing to file in one huge chunk

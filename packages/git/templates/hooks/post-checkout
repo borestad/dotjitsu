@@ -4,7 +4,3 @@
 # A git hook that runs after "git checkout/clone/switch"
 
 echo "✓ git hook: post-checkout"
-
-# echo "Current directory": $0
-# Status code: echo $1"
-

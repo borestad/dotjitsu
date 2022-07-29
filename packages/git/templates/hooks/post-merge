@@ -3,8 +3,10 @@
 # https://git-scm.com/docs/githooks
 # A git hook that runs after "git pull"
 
-echo "✓ git hook: post-merge (pull)"
+echo "✓ git hook: post-merge (pull): [$0] [$1] [$2]"
 
-echo $0
-echo $1
+# echo $0
+# echo $1
+# echo $2
+
 
