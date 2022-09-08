@@ -94,7 +94,11 @@ brew 'gotop'                        # Terminal based graphical activity monitor 
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
 brew 'grc'                          # Colorize logfiles and command output
+brew 'git-sizer'                    #
 brew 'grex'                         # Command-line tool for generating regular expressions
+brew 'gron'                         #
+brew 'dasel'                        #
+brew 'brimdata/tap/zq'              #
 brew 'handbrake'                    # Open-source video transcoder available for Linux, Mac, and Windows
 brew 'hashdeep'                     # Recursively compute digests on files/directories
 brew 'hh'                           # Bash and zsh history suggest box

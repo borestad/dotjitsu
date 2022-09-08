@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+echo "✓ Add remote: bamse"
+lxc remote add bamse bamse --accept-certificate
+
+echo "✓ Set default remote: bamse"
+lxc remote switch bamse
