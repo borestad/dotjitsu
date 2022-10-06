@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 n=1
+
 for i in `grep -ho "base64,[A-Za-z0-9+/=]*" $@|sed -e "s:base64,::g"`; do
-  echo $i | base64 -d > file_$n
+  echo $i | base64 -di > file_$n
   n=`expr $n + 1`
 done
