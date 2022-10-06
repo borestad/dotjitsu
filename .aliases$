@@ -15,7 +15,7 @@ alias exa='exa --group-directories-first --color=always'
 alias ls='gls --color --group-directories-first'
 alias l='exa -Ga --icons'          # Lists in multi column, hidden files.
 # alias ll='exa --icons -Lah --no-permissions --no-user -T -L1'
-alias ll='exa --icons -la --no-permissions --no-user -T -L1 --no-time --git --icons'
+alias ll='exa --icons -la --no-permissions --no-user -T -L1 --no-time --icons'
 alias lll='exa --icons -la --no-permissions --no-user -T --no-time --git --icons -g -R --git-ignore -L2 -I "*.git"'
 #alias ll='exa -lah'      # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
@@ -78,7 +78,7 @@ alias date='gdate'
 alias sort="sort -S 50% --parallel=$NUM_CORES"
 alias sudo='nocorrect sudo '
 alias vnstat='/usr/local/bin/vnstat -i en0'
-alias wget='/usr/local/bin/wget --no-check-certificate --compression auto --trust-server-names -nv -q --show-progress'
+alias wget='/usr/local/bin/wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress'
 alias curl='/usr/local/opt/curl/bin/curl'
 #alias wget='/usr/local/bin/wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
 alias ws='ws -d'
@@ -143,7 +143,7 @@ alias serve='ws -f stats -d '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
-alias zup='rm ~/.ssh/control/git@github.com:22 2&> /dev/null; zinit update -p -v; zr'
+alias zup='rm -f ~/.ssh/control/git@github.com:22; zinit update -p -v; zr'
 cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null; }
 touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
 zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto ;}
