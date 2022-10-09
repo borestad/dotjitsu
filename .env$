@@ -82,7 +82,7 @@ prependPath "./node_modules/.bin"
 #addPath "$HOME/.config/yarn/global/node_modules/.bin"
 #export NODE_PATH=$HOME/.config/yarn/global/node_modules
 # export NODE_PATH=$XDG_DATA_HOME/yarn/global/node_modules
-export NODE_PATH=$XDG_DATA_HOME/pnpm/global/5/node_modules
+#export NODE_PATH=$XDG_DATA_HOME/pnpm/global/5/node_modules
 
 prependPath $DOTJITSU/bin
 prependPath $PRIVATE/bin

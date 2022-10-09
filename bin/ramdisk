@@ -1,0 +1,29 @@
+#!/usr/bin/env zx
+
+import {$, echo, argv} from 'zx'
+
+const args = Object.values(argv._)
+
+
+// https://gist.github.com/htr3n/344f06ba2bb20b1056d7d5570fe7f596
+
+const blocksize = 2048
+
+
+if (args.length != 2) {
+  echo`usage: ramdisk <gb> <name>`
+  process.exit(1)
+}
+
+const [size, name] = args
+const kbsize = size * blocksize * 1024
+
+echo`Size: ${size} gb (${kbsize})`
+echo`Name: ${name}`
+
+// await $`diskutil erasevolume HFS+ '${name}' hdiutil attach -nobrowse -nomount ram://${kbsize}'`
+await $`diskutil erasevolume HFS+ '${name}' $(hdiutil attach -nobrowse -nomount ram://${kbsize})`
+
+
+echo('')
+echo `/Volumes/${name} is ready to be used`
