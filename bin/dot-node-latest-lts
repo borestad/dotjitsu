@@ -2,7 +2,8 @@
 # set -x
 
 fnm install --lts
-
 fnm default lts-latest
 fnm use lts-latest
-
+corepack enable
+corepack prepare pnpm@latest --activate
+pnpm install -g typescript@latest
