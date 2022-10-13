@@ -1,14 +1,16 @@
 #!/usr/bin/env dash
 
+hr
+echo "✨ Adding files\n"
+git add . --verbose
 
-echo "⭐️ Adding files"
-git add .
 
+hr
+echo "✨ Commit files\n"
 stats=$(git diff --cached --shortstat)
-
-echo "⭐️ Commit files§"
+echo "  $stats"
 git commit -m "🔨 BUMP:$stats"
-#git push -v
 
-echo "⭐️ Push files"
+hr
+echo "✨ Push files\n"
 ~/.dotjitsu/bin/push
