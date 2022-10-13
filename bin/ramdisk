@@ -9,13 +9,14 @@ const args = Object.values(argv._)
 
 const blocksize = 2048
 
+console.log(args)
 
-if (args.length != 2) {
+if (args.length != 3) {
   echo`usage: ramdisk <gb> <name>`
   process.exit(1)
 }
 
-const [size, name] = args
+const [cwd, size, name] = args
 const kbsize = size * blocksize * 1024
 
 echo`Size: ${size} gb (${kbsize})`

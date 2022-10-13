@@ -61,7 +61,7 @@ args=(
 
 #NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
 echo "☑️  Installing global pnpm packages..."
-NODE_ENV=production pnpm add --prefer-offline -g "${args[@]}"
+NODE_ENV=production pnpm add -g "${args[@]}"
 #yarn global add "${args[@]}"
 
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
