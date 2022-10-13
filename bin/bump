@@ -8,7 +8,6 @@ git add . --verbose
 hr
 echo "✨ Commit files\n"
 stats=$(git diff --cached --shortstat)
-echo "  $stats"
 git commit -m "🔨 BUMP:$stats"
 
 hr
