@@ -119,7 +119,7 @@ alias sqlite='sqlite3'
 # ✨ Custom utils
 # =============================================================================
 #alias todo="ag --color-line-number '1;36' --color-path '1;36' --ignore-case  --silent '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))'"
-alias b='brew'
+alias b='bump'
 alias bat.preview='bat --list-themes | fzf --preview="bat --theme={} --color=always $HOME/.dotjitsu/package.json"'
 alias bif='brew info'
 alias cask='brew install --cask'
@@ -283,7 +283,8 @@ alias reload='zr'
 alias reloadshell='zr'
 
 
-brew.info () {
+alias brew.info='brew-info'
+brew.info2 () {
  grep desc $(brew --prefix)/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/*.rb  | perl -ne 'm{^.*/(.*?)\.rb.*?\"(.*)"$} and print "$1|$2\n"' | column -t -s '|' | fzf --reverse -e
 }
 
