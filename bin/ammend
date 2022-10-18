@@ -8,7 +8,7 @@ git add . --verbose
 hr
 echo "✨ Commit files\n"
 stats=$(git diff --cached --shortstat | sed -E 's/ (insertions|deletions)//g')
-git commit -m "🔨 BUMP:$stats"
+git commit --amend -m "🔨 BUMP:$stats"
 
 hr
 echo "✨ Push files\n"
