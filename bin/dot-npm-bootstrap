@@ -14,6 +14,7 @@ npm config --global set init-author-url "http://borestad.com/"
 npm config --global set init-version "0.0.1"
 npm config --global set pnpm-prefix ~/.local/share/pnpm
 npm config --global set store-dir ~/.local/share/.pnpm-store
+npm config --global set registry https://registry.npmjs.org/
 
 echo "☑️  Install/upgrade npm|yarn|pnpm"
 npm install -g --no-audit npm yarn pnpm

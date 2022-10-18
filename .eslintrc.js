@@ -9,8 +9,8 @@
 //
 // ======================================================================== */
 
-const js = ['.js', '.jsx']
-const ts = ['.ts', '.tsx']
+const js = ['.js', '.jsx', '*.mjs']
+const ts = ['.ts', '.tsx', '*.mjs']
 const extensions = { ts, all: [...js, ...ts] }
 const OFF = 'off'
 
@@ -33,8 +33,9 @@ const conf = {
     // parser: '@typescript-eslint/parser',
     const config = {}
     config.parserOptions = {
-      ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
+      ecmaVersion: 2022, // Allows for the parsing of modern ECMAScript features
       sourceType: 'module', // Allows for the use of imports
+      project: ["tsconfig.json"],
 
       // This setting is required if you want to use rules which require type information.
       // Slows down linting a bit
@@ -45,7 +46,7 @@ const conf = {
     config.settings = {
       'import/extensions': extensions.all,
       'import/parsers': {
-        '@typescript-eslint/parser': extensions.ts,
+        '@typescript-eslint/parser': extensions.all,
       },
       'import/resolver': {
         node: { extensions: extensions.all },
@@ -117,9 +118,9 @@ const conf = {
       },
       // Rules specifically for Javascript files
       {
-        files: ['*.js', '*.jsx'],
+        files: ['*.js', '*.jsx', '*.mjs'],
         rules: {
-          '@typescript-eslint/explicit-module-boundary-types': OFF,
+          '@typescript-eslint/explicit-module-boundary-types': ['error'],
         },
       },
       // Rules specifically for Test files
@@ -142,6 +143,8 @@ const conf = {
       ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
     */
     config.rules = {
+      "require-await": "off",
+      "@typescript-eslint/require-await": "error",
       // 'max-len': ['error', { code: 80 }],
       'complexity': ['error', 20],
       'camelcase': OFF,
@@ -234,7 +237,8 @@ const conf = {
        * ----------------------------------------------------
        */
       '@typescript-eslint/ban-types': OFF,
-      '@typescript-eslint/no-floating-promises': OFF, // TODO: https://github.com/typescript-eslint/typescript-eslint/issues/464
+      // '@typescript-eslint/no-floating-promises': OFF, // TODO: https://github.com/typescript-eslint/typescript-eslint/issues/464
+      "@typescript-eslint/no-floating-promises": "error",
       // '@typescript-eslint/camelcase': ['error', { properties: 'never' }],
       '@typescript-eslint/no-non-null-assertion': OFF,
       '@typescript-eslint/no-use-before-define': ['error', { functions: false, variables: false }],

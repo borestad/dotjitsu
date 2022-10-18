@@ -212,3 +212,9 @@
 	pushInsteadOf = https://github.com/
 [url "ssh://gitlab.com/"]
 	pushInsteadOf = https://gitlab.com/
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/local/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/local/bin/gh auth git-credential
