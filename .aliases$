@@ -79,9 +79,13 @@ alias sort="sort -S 50% --parallel=$NUM_CORES"
 alias sudo='nocorrect sudo '
 alias vnstat='/usr/local/bin/vnstat -i en0'
 alias wget='/usr/local/bin/wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress'
+alias wget2='/usr/local/bin/wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress --content-disposition'
 alias curl='/usr/local/opt/curl/bin/curl'
 #alias wget='/usr/local/bin/wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
 alias ws='ws -d'
+alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
+alias ts='/usr/local/Cellar/moreutils/*/bin/ts'
+
 
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
 
@@ -143,7 +147,8 @@ alias serve='ws -f stats -d '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
-alias zup='rm -f ~/.ssh/control/git@github.com:22; zinit update -p -v; zr'
+# alias zup='rm -f ~/.ssh/control/git@github.com:22; zinit update -p -v; zr'
+alias zup='zinit update -p -v; zr'
 cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null; }
 touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && /usr/local/bin/gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
 zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto ;}
@@ -230,7 +235,7 @@ function gthumbnails() {
 # GOTO aliases
 # =============================================================================
 alias -- -="cd -"
-alias dl="cd $HOME/Downloads"
+# alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
 alias c="cd $HOME/code"
 alias work="cd $HOME/work"

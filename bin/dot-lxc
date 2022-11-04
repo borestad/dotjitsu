@@ -2,6 +2,7 @@
 
 echo "✓ Add remote: bamse"
 lxc remote add bamse bamse --accept-certificate
+lxc remote add codeit codeit.se --accept-certificate
 
 echo "✓ Set default remote: bamse"
 lxc remote switch bamse

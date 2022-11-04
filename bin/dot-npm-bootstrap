@@ -12,23 +12,34 @@ npm config --global set init-author-email "johan@borestad.com"
 npm config --global set init-author-name "Johan Borestad"
 npm config --global set init-author-url "http://borestad.com/"
 npm config --global set init-version "0.0.1"
-npm config --global set pnpm-prefix ~/.local/share/pnpm
-npm config --global set store-dir ~/.local/share/.pnpm-store
-npm config --global set registry https://registry.npmjs.org/
+# npm config --global set pnpm-prefix ~/.local/share/pnpm
+# npm config --global set store-dir ~/.local/share/.pnpm-store
+npm config --global set registry http://registry.npmjs.org/
+
+
+# https://github.com/pnpm/pnpm/issues/3361
+# Run below command if the registry have changed
+# pnpm install -g
+
 
 echo "☑️  Install/upgrade npm|yarn|pnpm"
-npm install -g --no-audit npm yarn pnpm
+corepack enable
+corepack prepare pnpm@latest npm@latest yarn@1.x --activate
 
 args=(
   # Globals
+  @antfu/ni
   @babel/core@latest
   @babel/node@latest
   @microsoft/rush
   @types/node@
   bcat@latest
+  contentful-cli@latest
   cpy-cli@latest
   diff-so-fancy@latest
   empty-trash-cli@latest
+  fs-extra@latest
+  gnomon@latest
   http-server@latest
   jase@latest
   jq.node@latest
@@ -38,9 +49,9 @@ args=(
   np@latest
   tmpin@latest
   ts-node@latest
+  tsx@latest
   typescript@latest
   zx@latest
-  contentful-cli@latest
 
   # Linters
   prettier@latest

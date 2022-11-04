@@ -158,7 +158,7 @@ const conf = {
         },
       ],
       // indent: ['error', 4],
-
+      'dot-notation': OFF,
       'indent': ['error', 2, { VariableDeclarator: { var: 2, let: 2, const: 3 } }],
       'no-unused-expressions': OFF,
       'no-unused-vars': OFF,

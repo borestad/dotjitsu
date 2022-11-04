@@ -48,7 +48,6 @@ brew 'archey'                       # Graphical system information display for m
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'autoconf'                     # Automatic configure script builder
 brew 'autojump'                     # Shell extension to jump to frequently used directories
-brew 'bottom'                       #
 brew 'automake'                     # Tool for generating GNU Standards-compliant Makefiles
 brew 'axel'                         # Light UNIX download accelerator
 brew 'bandwhich'                    # Bourne-Again SHell, a UNIX command interpreter
@@ -56,15 +55,15 @@ brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
 brew 'bat'                          # Clone of cat(1) with syntax highlighting and Git integration
 brew 'bento4'                       # Full-featured MP4 format and MPEG DASH library and tools
-brew 'bmon'                         # Interface bandwidth monitor
 brew 'bkt'                          #
+brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
+brew 'bottom'                       #
 brew 'brimdata/tap/zq'              #
 brew 'broot'                        # New way to see and navigate directory trees
 brew 'caddy'                        # Powerful, enterprise-ready, open source web server with automatic HTTPS
 brew 'cliclick'                     # Tool for emulating mouse and keyboard events
 brew 'cloc'                         # Statistics utility to count lines of code
-brew 'rs/tap/curlie'                #
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'cv'                           # Progress: Coreutils Progress Viewer
 brew 'dasel'                        #
@@ -74,6 +73,7 @@ brew 'dialog'                       # Display user-friendly message boxes from s
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'docker-compose'               # Isolated development environments using Docker
 brew 'docker-machine'               # Create Docker hosts locally and on cloud providers
+brew 'dprint'                       #
 brew 'duf'                          # Disk Usage/Free Utility - a better 'df' alternative
 brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
@@ -82,8 +82,8 @@ brew 'exa'                          # Modern replacement for 'ls
 brew 'exercism'                     # Command-line tool to interact with exercism.io
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
-brew 'fastmod'                      #
 brew 'fasd'                         # CLI tool for quick access to files and directories
+brew 'fastmod'                      #
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
 brew 'fish'                         # User-friendly command-line shell for UNIX-like operating systems
@@ -96,8 +96,8 @@ brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
 brew 'gdu',link: false              #
 brew 'geoip'                        #
-brew 'just'                        #
 brew 'git-sizer'                    #
+brew 'glow'                         #
 brew 'gotop'                        # Terminal based graphical activity monitor inspired by gtop and vtop
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
@@ -107,6 +107,7 @@ brew 'gron'                         #
 brew 'handbrake'                    # Open-source video transcoder available for Linux, Mac, and Windows
 brew 'hashdeep'                     # Recursively compute digests on files/directories
 brew 'hh'                           # Bash and zsh history suggest box
+brew 'htmlq'                        #
 brew 'htop'                         # Improved top (interactive process viewer)
 brew 'httpie'                       # User-friendly cURL replacement (command-line HTTP client)
 brew 'httpry'                       # Packet sniffer for displaying and logging HTTP traffic
@@ -117,10 +118,11 @@ brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
 brew 'imageoptim-cli'               # CLI for ImageOptim, ImageAlpha and JPEGmini
 brew 'jid'                          # Json incremental digger
-brew 'htmlq'                        #
+brew 'jless'                        #
 brew 'jpeg'                         # Image manipulation library
 brew 'jpegoptim'                    # Utility to optimize JPEG files
 brew 'jq'                           # Lightweight and flexible command-line JSON processor
+brew 'just'                         #
 brew 'kondo'                        # Save disk space by cleaning non-essential files from software projects
 brew 'kubernetes-cli'               # Tool to report network interface bandwidth
 brew 'lazydocker'                   # The lazier way to manage everything docker
@@ -167,6 +169,7 @@ brew 'rename'                       # Perl-powered file rename script with many 
 brew 'renameutils'                  # Tools for file renaming
 brew 'ripgrep-all'                  # Wrapper around ripgrep that adds multiple rich file types
 brew 'ripgrep'                      # Search tool like grep and The Silver Searcher
+brew 'rs/tap/curlie'                #
 brew 'rsnapshot'                    # File system snapshot utility (based on rsync)
 brew 'rsync'                        # Utility that provides fast incremental file transfer
 brew 'sd'                           # Intuitive find & replace CLI
@@ -199,9 +202,14 @@ brew 'watchman'                     # Watch files and take action when they chan
 brew 'webkit2png'                   # Create screenshots of webpages from the terminal
 brew 'wget'                         # Internet file retriever
 brew 'whatmask'                     # Network settings helper
+brew 'xh'
 brew 'xidel'
+brew 'yank'                         #
+brew 'yj'                           #
 brew 'youtube-dl'                   # Download YouTube videos from the command-line
+brew 'yq'                           #
 brew 'zopfli'                       # New zlib (gzip, deflate) compatible compressor
+brew 'zoxide'                       #
 brew 'zoxide'                       # Shell extension to navigate your filesystem faster
 brew 'zsh-autosuggestions'
 brew 'zsh-completions'
@@ -242,11 +250,11 @@ brew 'git-extras'                   # Small git utilities
 brew 'git-filter-repo'              # Quickly rewrite git repository history
 brew 'git-lfs'                      # Git extension for versioning large files
 brew 'git-plus'                     # Git utilities: git multi, git relation, git old-branches, git recent
+brew 'git-quick-stats'              # Simple and efficient way to access statistics in gitp
 brew 'gitbatch'                     # Manage your git repositories in one place
 brew 'hub'                          # Add GitHub support to git on the command-line
 brew 'mr'                           # Multiple Repository management tool
 brew 'pygitup'                      # Nicer 'git pull'
-brew 'git-quick-stats'              # Simple and efficient way to access statistics in gitp
 
 
 #tap 'gitea/tap', 'https://gitea.com/gitea/homebrew-gitea'
@@ -255,6 +263,7 @@ brew 'git-quick-stats'              # Simple and efficient way to access statist
 # ================================
 # GNU TOOLS
 # ================================
+#brew 'moreutils'
 brew 'binutils'
 brew 'binwalk'
 brew 'cmake'
@@ -269,10 +278,9 @@ brew 'gnu-which'
 brew 'gnutls'
 brew 'grep'
 brew 'less'
-#brew 'moreutils'
-brew 'wdiff'
 brew 'parallel'
 brew 'util-linux'
+brew 'wdiff'
 
 
 # ================================
