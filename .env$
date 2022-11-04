@@ -92,6 +92,7 @@ prependPath "/usr/local/opt/gnu-sed/libexec/gnubin"
 prependPath "/usr/local/opt/binutils/bin"
 
 appendPath "$HOME/.go/bin"
+appendPath "$HOME/.local/bin"
 appendPath "$HOME/.repos/git-friendly"
 appendPath "$HOME/bin/apache-maven-3.0.5/bin"
 appendPath "/usr/local/opt/sqlite/bin"

@@ -1,7 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 function fzf-ssh () {
-  #HISTTIMEFORMAT= history 10 | cut -c8- | egrep '^ssh .*\d$' | uniq | tac
   local selected_host=$(grep "Host " ~/.ssh/config | grep -v '*' | cut -b 6- \
   | fzf --query "$LBUFFER" --prompt="SSH Remote > ")
 
@@ -15,4 +14,25 @@ function fzf-ssh () {
 
 zle -N fzf-ssh
 bindkey '^s' fzf-ssh
+
+
+function fzf-lxc () {
+  local lxclist=$(bkt -- lxc list)
+  local lxc_hosts=$(echo $lxclist | grep CONTAINER | sed 's/|//g' | sed 's/^[ \t]*//;s/[ \t]*$//' | cut -d ' ' -f1)
+
+
+  local selected_host=$(echo $lxc_hosts \
+  | fzf --query "$LBUFFER" --prompt="LXC Remote > ")
+
+  if [ -n "$selected_host" ]; then
+
+    BUFFER="ssh bamse -t 'lxc exec ${selected_host} -- sudo --login --user runner'"
+    zle accept-line
+    hr
+  fi
+  zle reset-prompt
+}
+
+zle -N fzf-lxc
+bindkey '^x' fzf-lxc
 

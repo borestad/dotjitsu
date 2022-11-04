@@ -8,11 +8,11 @@ mkdir -p $HOME/.repos
 cd $HOME
 
 hr
-mr status | sed '/^[[:space:]]*$/d' | sd "$HOME" '~'
+# mr status | sed '/^[[:space:]]*$/d' | sd "$HOME" '~'
 hr
 
 echo "Updating ZSH Frameworks ..."
-mr -j50 update
+mr -j4 update
 hr
 
 cd $HOME/.repos

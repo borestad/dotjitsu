@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-
+go env -w GO111MODULE=off
 
 go get -v github.com/fiatjaf/jiq/cmd/jiq
 go get -u github.com/h2non/bimg
+go get -u github.com/tomnomnom/fff
