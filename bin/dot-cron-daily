@@ -19,7 +19,7 @@ t () {
 hr && $HOME/.dotjitsu/bin/dot-node-latest-lts | bat -f
 hr && $HOME/.dotjitsu/bin/dot-brew | bat -f
 hr && $HOME/.dotjitsu/bin/dot-cask | bat -f
-hr && /usr/local/bin/brew upgrade --cask | bat -f
+hr && /opt/homebrew/bin/brew upgrade --cask | bat -f
 
 
 echo ""

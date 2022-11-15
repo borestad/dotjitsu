@@ -55,6 +55,7 @@ export HOMEBREW_AUTO_UPDATE_SECS=86400
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_BREWFILE=~/.dotjitsu/Brewfile
 
 # ===================================================
 # ⚡️ XDG
@@ -87,33 +88,33 @@ export NODE_PATH=$XDG_DATA_HOME/pnpm/global/5/node_modules
 prependPath $DOTJITSU/bin
 prependPath $PRIVATE/bin
 prependPath $HOME/bin
-prependPath "/usr/local/opt/coreutils/libexec/gnubin"
-prependPath "/usr/local/opt/gnu-sed/libexec/gnubin"
-prependPath "/usr/local/opt/binutils/bin"
+prependPath "/opt/homebrew/opt/coreutils/libexec/gnubin"
+prependPath "/opt/homebrew/opt/gnu-sed/libexec/gnubin"
+prependPath "/opt/homebrew/opt/binutils/bin"
 
 appendPath "$HOME/.go/bin"
 appendPath "$HOME/.local/bin"
 appendPath "$HOME/.repos/git-friendly"
 appendPath "$HOME/bin/apache-maven-3.0.5/bin"
-appendPath "/usr/local/opt/sqlite/bin"
-appendPath "/usr/local/opt/python/libexec/bin"
+appendPath "/opt/homebrew/opt/sqlite/bin"
+appendPath "/opt/homebrew/opt/python/libexec/bin"
 
-appendPath "/usr/local/opt/make/libexec/gnubin"
+appendPath "/opt/homebrew/opt/make/libexec/gnubin"
 
-appendPath "/usr/local/opt/mozjpeg/bin"
+appendPath "/opt/homebrew/opt/mozjpeg/bin"
 appendPath "$HOME/Library/Python/3.8/bin"
-appendPath "/usr/local/opt/openjdk@8/bin"
+appendPath "/opt/homebrew/opt/openjdk@8/bin"
 appendPath "$HOME/.cargo/bin"
-appendPath "/usr/local/opt/util-linux/bin"
-appendPath "/usr/local/opt/util-linux/sbin"
+appendPath "/opt/homebrew/opt/util-linux/bin"
+appendPath "/opt/homebrew/opt/util-linux/sbin"
 # Use core-utils directly
 
 
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:$MANPATH"
 export MANWIDTH=120
 
  # If you'd like to use existing homebrew v1 completions
- # export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
+ # export BASH_COMPLETION_COMPAT_DIR="/opt/homebrew/etc/bash_completion.d"
 
 
 # ===================================================
@@ -129,7 +130,7 @@ export BAT_CONFIG_PATH="$HOME/.dotjitsu/bat.conf"
 export BROWSER=chromium
 export EDITOR='code'
 export GIT_EDITOR="code --wait --new-window"
-export JAVA_HOME=/usr/local/opt/openjdk@8
+export JAVA_HOME=/opt/homebrew/opt/openjdk@8
 export N_PREFIX="$HOME/.config/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 #export PAGER='fzf --ansi'
 #export GIT_PAGER=''

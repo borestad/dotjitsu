@@ -13,7 +13,7 @@
 	<string>com.docker.machine.dev</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/docker-machine</string>
+		<string>/opt/homebrew/bin/docker-machine</string>
 		<string>start</string>
 		<string>dev</string>
 	</array>

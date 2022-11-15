@@ -2,7 +2,7 @@ export PS1="\[\033[33;1m\]\w\[\033[m\] ❯❯❯ "
 
 source ~/.dotjitsu/fzf.bash
 
-. "/usr/local/etc/profile.d/bash_completion.sh"
+. "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
 # fnm (Fast Node Manager)
 eval "$(fnm env)"      # Colourify common commands (unalias things that breaks)

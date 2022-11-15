@@ -14,7 +14,7 @@ fi
 
 FILE=$(mktemp)
 
-/usr/local/bin/gtime -o $FILE -f "
+/opt/homebrew/bin/gtime -o $FILE -f "
 
 ───────────────────────────────────────────────────────────────────────────────
 

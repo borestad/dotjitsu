@@ -204,7 +204,7 @@
 
 [credential]
 	helper =
-	helper = /usr/local/share/gcm-core/git-credential-manager-core
+	helper = /opt/homebrew/share/gcm-core/git-credential-manager-core
 
 [url "ssh://git@github.com"]
 	insteadOf = https://github.com
@@ -214,7 +214,7 @@
 	pushInsteadOf = https://gitlab.com/
 [credential "https://github.com"]
 	helper = 
-	helper = !/usr/local/bin/gh auth git-credential
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/usr/local/bin/gh auth git-credential
+	helper = !/opt/homebrew/bin/gh auth git-credential

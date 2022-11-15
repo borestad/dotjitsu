@@ -44,7 +44,6 @@ brew 'packer-completion'
 
 brew 'ack'                          # Search tool like grep, but optimized for programmer
 brew 'ag'                           # A code-searching tool similar to ack, but faster
-brew 'archey'                       # Graphical system information display for macOS
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'autoconf'                     # Automatic configure script builder
 brew 'autojump'                     # Shell extension to jump to frequently used directories
