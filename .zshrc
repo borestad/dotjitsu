@@ -58,7 +58,7 @@ zinit ice svn wait as=null lucid; zinit snippet PZTM::archive
 zinit snippet PZT::modules/terminal/init.zsh
 zinit snippet PZT::modules/editor/init.zsh
 zinit snippet PZT::modules/history/init.zsh
-zinit snippet PZT::modules/fasd/init.zsh
+#zinit ice svn wait as=null lucid; zinit snippet PZT::modules/fasd/init.zsh
 zinit snippet PZT::modules/directory/init.zsh
 zinit ice svn wait as=null lucid; zinit snippet PZTM::osx
 zinit snippet PZT::modules/rsync/init.zsh
@@ -80,7 +80,7 @@ zinit ice wait lucid
 zinit snippet ~/.dotjitsu/fzf.zsh
 
 # ■■■ fasd (z) with fzf
-zinit snippet ~/.dotjitsu/packages/zsh/fzf-fasd.plugin.zsh
+#zinit snippet ~/.dotjitsu/packages/zsh/fzf-fasd.plugin.zsh
 
 # ■■■ History substring searching
 bindkey -r '^[[A'; bindkey -r '^[[B'
@@ -115,15 +115,16 @@ zinit ice wait lucid
 zinit light unixorn/git-extra-commands
 
 zinit ice wait lucid
-zinit snippet /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
+zinit snippet /opt/homebrew/opt/git-extras/share/git-extras/git-extras-completion.zsh
 
 # ■■■ Snippets
+eval "$(/opt/homebrew/bin/brew shellenv)"
 zinit snippet ~/.dotjitsu/.env$
 zinit snippet ~/.dotjitsu/.hooks$
 zinit snippet ~/.dotjitsu/.aliases$
 zinit snippet ~/.dotjitsu/.keybindings$
 zinit snippet ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
-zinit snippet /usr/local/etc/grc.zsh
+zinit snippet /opt/homebrew/etc/grc.zsh
 # zinit snippet ~/.docker-aliases$
 
 
@@ -131,6 +132,7 @@ zinit snippet /usr/local/etc/grc.zsh
 eval "$(fnm env)"                     # fnm (Fast Node Manager)
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
 _evalcache thefuck --alias
+
 #_evalcache direnv hook zsh
 
 
@@ -184,6 +186,7 @@ zinit snippet ~/.p10k.zsh
 # ===================================================
 zicompinit
 zinit cdreplay
+_evalcache zoxide init zsh
 
 # disable-fzf-tab
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

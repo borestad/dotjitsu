@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-sudo chown root /usr/local/Cellar/mtr/*/sbin/mtr-packet
-sudo chmod 4755 /usr/local/Cellar/mtr/*/sbin/mtr-packet
+sudo chown root /opt/homebrew/Cellar/mtr/*/sbin/mtr-packet
+sudo chmod 4755 /opt/homebrew/Cellar/mtr/*/sbin/mtr-packet
 
-#ln -s /usr/local/Cellar/mtr/*/sbin/mtr /usr/local/bin/mtr
-#ln -s /usr/local/Cellar/mtr/*/sbin/mtr-packet /usr/local/bin/mtr-packet
+#ln -s /opt/homebrew/Cellar/mtr/*/sbin/mtr /opt/homebrew/bin/mtr
+#ln -s /opt/homebrew/Cellar/mtr/*/sbin/mtr-packet /opt/homebrew/bin/mtr-packet

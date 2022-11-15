@@ -17,25 +17,25 @@ t () { date "+%F %H:%M:%S"; }
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew update"
 echo
-/usr/local/bin/brew -v update
+/opt/homebrew/bin/brew -v update
 
 # Install Brewfile formulas
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew bundle (Brewfile)"
 echo
-/usr/local/bin/brew -v bundle --file=$HOME/.dotjitsu/Brewfile
+/opt/homebrew/bin/brew -v bundle --file=$HOME/.dotjitsu/Brewfile
 
 # Update installed bundles (even those not in Brew/Caskfile
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew upgrade"
 echo
-/usr/local/bin/brew -v upgrade
+/opt/homebrew/bin/brew -v upgrade
 
 
 # # Cleanup
 # $HOME/.dotjitsu/bin/hr -
 # echo "✨ brew cleanup"
-# /usr/local/bin/brew cleanup
+# /opt/homebrew/bin/brew cleanup
 
 # Cache API-reponses
 $HOME/.dotjitsu/bin/hr -
@@ -44,27 +44,27 @@ echo
 
 mkdir -p ~/.config/cache && cd "$_"
 
-/usr/local/bin/wget https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && mv brew-formula.json.tmp brew-formula.json
-/usr/local/bin/wget https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && mv brew-cask.json.tmp brew-cask.json
+/opt/homebrew/bin/wget https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && mv brew-formula.json.tmp brew-formula.json
+/opt/homebrew/bin/wget https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && mv brew-cask.json.tmp brew-cask.json
 
-cat brew-formula.json | /usr/local/bin/jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \
-| /usr/local/bin/sd '"' '' | /usr/local/bin/sd 'null' '' | column -t -s'|' > brew-formula.txt
+cat brew-formula.json | /opt/homebrew/bin/jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \
+| /opt/homebrew/bin/sd '"' '' | /opt/homebrew/bin/sd 'null' '' | column -t -s'|' > brew-formula.txt
 
-cat brew-cask.json | /usr/local/bin/jq '.[] | "\(.token) | \(.desc) | \(.homepage)"' \
-| /usr/local/bin/sd '"' '' | /usr/local/bin/sd 'null' '' | column -t -s'|' > brew-cask.txt
+cat brew-cask.json | /opt/homebrew/bin/jq '.[] | "\(.token) | \(.desc) | \(.homepage)"' \
+| /opt/homebrew/bin/sd '"' '' | /opt/homebrew/bin/sd 'null' '' | column -t -s'|' > brew-cask.txt
 
 # if [ -t 1 ] ; then
 #   # Install Caskfile formulas (only if interactive shell)
 #   $HOME/.dotjitsu/bin/hr -
 #   echo "✨ brew bundle (Caskfile)"
-#   /usr/local/bin/brew -v bundle --file=~/.dotjitsu/Caskfile
+#   /opt/homebrew/bin/brew -v bundle --file=~/.dotjitsu/Caskfile
 #  fi
 
 
 $HOME/.dotjitsu/bin/hr -
 
 
-rm -f /usr/local/share/zsh/site-functions/_git
+rm -f /opt/homebrew/share/zsh/site-functions/_git
 
 echo ""
 echo "All done! Enjoy a cold one! 🍺 "
