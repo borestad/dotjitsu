@@ -12,6 +12,8 @@ export ZSH_EVALCACHE_DIR=$HOME/.cache/zsh-evalcache
 if [[ -f /opt/homebrew/bin/brew ]]; then
     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
     export HOMEBREW_PREFIX="/opt/homebrew"
+else
+    export HOMEBREW_PREFIX="/usr/local"
 fi
 
 # If not running interactively, don't do anything
