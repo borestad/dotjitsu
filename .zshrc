@@ -2,6 +2,18 @@
 
 ulimit -n 10000
 
+# ===================================================
+# ⚡️ Plumbing
+# ===================================================
+# Bootstrap settings
+export ZSH_EVALCACHE_DIR=$HOME/.cache/zsh-evalcache
+
+# Fix for homebrew on M1 macs
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+    export HOMEBREW_PREFIX="/opt/homebrew"
+fi
+
 # If not running interactively, don't do anything
 [[ -o interactive ]] || return
 
@@ -42,7 +54,6 @@ declare -A ZINIT
 ZINIT[ZCOMPDUMP_PATH]=~/.cache/zcompdump-zinit
 ZINIT[HOME_DIR]=~/.cache/zinit
 source ~/.repos/zinit/bin/zinit.zsh
-eval "$(brew shellenv)"
 
 # ■■■ Zinit Plugins
 zinit light NICHOLAS85/z-a-eval
@@ -115,16 +126,14 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 zinit ice wait lucid
 zinit light unixorn/git-extra-commands
 
-zinit ice wait lucid
-zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-completion.zsh"
-
 # ■■■ Snippets
 zinit snippet ~/.dotjitsu/.env$
 zinit snippet ~/.dotjitsu/.hooks$
 zinit snippet ~/.dotjitsu/.aliases$
 zinit snippet ~/.dotjitsu/.keybindings$
 zinit snippet ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
-zinit snippet $HOMEBREW_PREFIX/etc/grc.zsh
+zinit snippet "$HOMEBREW_PREFIX/etc/grc.zsh"
+zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-completion.zsh"
 # zinit snippet ~/.docker-aliases$
 
 
@@ -132,6 +141,7 @@ zinit snippet $HOMEBREW_PREFIX/etc/grc.zsh
 eval "$(fnm env)"                     # fnm (Fast Node Manager)
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
 _evalcache thefuck --alias
+_evalcache zoxide init zsh
 
 #_evalcache direnv hook zsh
 
@@ -186,14 +196,9 @@ zinit snippet ~/.p10k.zsh
 # ===================================================
 zicompinit
 zinit cdreplay
-_evalcache zoxide init zsh
 
 # disable-fzf-tab
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-
-
-
-eval $(thefuck --alias)
 
 
 # Run dotenv on login

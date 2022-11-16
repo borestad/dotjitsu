@@ -3,13 +3,13 @@
 # ===================================================
 # ⚡️ Helper
 # ===================================================
-function prependPath {
+function prepend-path {
   case ":$PATH:" in
     *":$1:"*) :;;           # already there
     *) PATH="$1:$PATH";;    # or PATH="$PATH:$1"
   esac
 }
-function appendPath {
+function append-path {
   case ":$PATH:" in
     *":$1:"*) :;;           # already there
     *) PATH="$PATH:$1";;    # or PATH="$PATH:$1"
@@ -79,36 +79,34 @@ export PATH="$PNPM_HOME:$PATH"
 # ⚡️ PATHS
 # ===================================================
 # Local node_modules takes presedence
-prependPath "./node_modules/.bin"
+prepend-path "./node_modules/.bin"
 #addPath "$HOME/.config/yarn/global/node_modules/.bin"
 #export NODE_PATH=$HOME/.config/yarn/global/node_modules
 # export NODE_PATH=$XDG_DATA_HOME/yarn/global/node_modules
 export NODE_PATH=$XDG_DATA_HOME/pnpm/global/5/node_modules
 
-prependPath $DOTJITSU/bin
-prependPath $PRIVATE/bin
-prependPath $HOME/bin
-prependPath "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
-prependPath "$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin"
-prependPath "$HOMEBREW_PREFIX/opt/binutils/bin"
+prepend-path "$DOTJITSU/bin"
+prepend-path "$PRIVATE/bin"
+prepend-path "$HOME/bin"
+prepend-path "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
+prepend-path "$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin"
+prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
+prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
 
-appendPath "$HOME/.go/bin"
-appendPath "$HOME/.local/bin"
-appendPath "$HOME/.repos/git-friendly"
-appendPath "$HOME/bin/apache-maven-3.0.5/bin"
-appendPath "$HOMEBREW_PREFIX/opt/sqlite/bin"
-appendPath "$HOMEBREW_PREFIX/opt/python/libexec/bin"
-
-appendPath "$HOMEBREW_PREFIX/opt/make/libexec/gnubin"
-
-appendPath "$HOMEBREW_PREFIX/opt/mozjpeg/bin"
-appendPath "$HOME/Library/Python/3.8/bin"
-appendPath "$HOMEBREW_PREFIX/opt/openjdk@8/bin"
-appendPath "$HOME/.cargo/bin"
-appendPath "$HOMEBREW_PREFIX/opt/util-linux/bin"
-appendPath "$HOMEBREW_PREFIX/opt/util-linux/sbin"
+append-path "$HOME/.go/bin"
+append-path "$HOME/.local/bin"
+append-path "$HOME/.repos/git-friendly"
+append-path "$HOME/bin/apache-maven-3.0.5/bin"
+append-path "$HOMEBREW_PREFIX/opt/sqlite/bin"
+append-path "$HOMEBREW_PREFIX/opt/python/libexec/bin"
+append-path "$HOMEBREW_PREFIX/opt/make/libexec/gnubin"
+append-path "$HOMEBREW_PREFIX/opt/mozjpeg/bin"
+append-path "$HOME/Library/Python/3.8/bin"
+append-path "$HOMEBREW_PREFIX/opt/openjdk@8/bin"
+append-path "$HOME/.cargo/bin"
+append-path "$HOMEBREW_PREFIX/opt/util-linux/bin"
+append-path "$HOMEBREW_PREFIX/opt/util-linux/sbin"
 # Use core-utils directly
-
 
 export MANPATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 export MANWIDTH=120
@@ -155,9 +153,6 @@ export NODE_REPL_MODE='sloppy' 						# Use sloppy mode by default, matching web 
 
 # Starship
 export STARSHIP_CONFIG=$DOTFILES/starship.toml
-
-# evalcache
-export ZSH_EVALCACHE_DIR=$XDG_CACHE_HOME/zsh-evalcache
 
 # Remove duplicates in PATH & preserve order (should not be needed, but hey !?)
 # export PATH=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')

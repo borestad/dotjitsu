@@ -1,0 +1,19 @@
+#!/bin/bash
+set -Eeuo pipefail
+
+# Setup
+LOG_LOCATION="$HOME/logs/brew"
+TERM="xterm-256color"
+mkdir -p $LOG_LOCATION
+exec > >(tee -i $LOG_LOCATION/dot-brew-`date +%F--%H%M%S`.log)
+exec 2>&1
+
+
+cd "$(dirname $0)"/..
+
+$HOMEBREW_PREFIX/bin/brew -v update
+$HOME/.dotjitsu/bin/hr -
+$HOMEBREW_PREFIX/bin/brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core
+
+$HOME/.dotjitsu/bin/hr -
+$HOMEBREW_PREFIX/bin/brew -v upgrade
