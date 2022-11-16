@@ -3,8 +3,8 @@
 dir=${1:-.}
 cd $dir
 
-local dirs=`/opt/homebrew/bin/gls -d */ | wc -l`
-local files=`/opt/homebrew/bin/gls -p -A | grep -v / | wc -l`
+local dirs=`$HOMEBREW_PREFIX/bin/gls -d */ | wc -l`
+local files=`$HOMEBREW_PREFIX/bin/gls -p -A | grep -v / | wc -l`
 local total=$(( ${dirs} + ${files}))
 
 echo "$dirs dirs, $files files, $total total"

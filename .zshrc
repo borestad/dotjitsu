@@ -30,6 +30,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+
 source ~/.private/.zshrc
 
 # ===================================================
@@ -41,6 +42,7 @@ declare -A ZINIT
 ZINIT[ZCOMPDUMP_PATH]=~/.cache/zcompdump-zinit
 ZINIT[HOME_DIR]=~/.cache/zinit
 source ~/.repos/zinit/bin/zinit.zsh
+eval "$(brew shellenv)"
 
 # ■■■ Zinit Plugins
 zinit light NICHOLAS85/z-a-eval
@@ -48,7 +50,6 @@ zinit light zdharma-continuum/zinit-annex-submods
 zinit light mroth/evalcache
 
 # ■■■ Prezto modules - configured via ~/.zprestorc
-
 source ~/.dotjitsu/.zpreztorc
 
 # https://github.com/zdharma/zinit/issues/421
@@ -115,16 +116,15 @@ zinit ice wait lucid
 zinit light unixorn/git-extra-commands
 
 zinit ice wait lucid
-zinit snippet /opt/homebrew/opt/git-extras/share/git-extras/git-extras-completion.zsh
+zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-completion.zsh"
 
 # ■■■ Snippets
-eval "$(/opt/homebrew/bin/brew shellenv)"
 zinit snippet ~/.dotjitsu/.env$
 zinit snippet ~/.dotjitsu/.hooks$
 zinit snippet ~/.dotjitsu/.aliases$
 zinit snippet ~/.dotjitsu/.keybindings$
 zinit snippet ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
-zinit snippet /opt/homebrew/etc/grc.zsh
+zinit snippet $HOMEBREW_PREFIX/etc/grc.zsh
 # zinit snippet ~/.docker-aliases$
 
 
