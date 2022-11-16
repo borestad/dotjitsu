@@ -8,7 +8,7 @@ mkdir -p $LOG_LOCATION
 exec > >(tee -i $LOG_LOCATION/cron-hourly-`date +%F--%H%M%S`.log)
 exec 2>&1
 
-/opt/homebrew/bin/mr run fetch
+$HOMEBREW_PREFIX/bin/mr run fetch
 
 echo ""
 

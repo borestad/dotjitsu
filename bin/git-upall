@@ -9,7 +9,7 @@ CUR_DIR=$(pwd)
 tempfile=`mktemp /tmp/git.XXXXXXXXXXXXXXXXXXXXXXX.txt`
 
 IFS=''
-/opt/homebrew/bin/fd -a "\.git$" -uu -td --maxdepth 4 --prune | sd "/.git" "" | tee >( tac > $tempfile ) | cat &> /dev/null
+$HOMEBREW_PREFIX/bin/fd -a "\.git$" -uu -td --maxdepth 4 --prune | sd "/.git" "" | tee >( tac > $tempfile ) | cat &> /dev/null
 REPOS_NR=`cat $tempfile | wc -l`
 
 echo "Pulling in latest changes for $REPOS_NR repositories..."

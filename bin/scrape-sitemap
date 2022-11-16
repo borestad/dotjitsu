@@ -10,4 +10,4 @@ fi
 XML=`wget -O - --quiet $SITEMAP`
 URLS=`echo $XML | egrep -o "<loc>[^<>]*</loc>" | sed -e 's:</*loc>::g'`
 echo $URLS #| tr ' ' '\n'
-#echo $URLS | tr ' ' '\n' | /opt/homebrew/bin/wget --no-check-certificate --compression auto --trust-server-names -O /dev/null -i - --wait=0 -nv
+#echo $URLS | tr ' ' '\n' | $HOMEBREW_PREFIX/bin/wget --no-check-certificate --compression auto --trust-server-names -O /dev/null -i - --wait=0 -nv

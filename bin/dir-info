@@ -3,7 +3,7 @@
 dir=${1:-.}
 cd $dir
 
-result=`/opt/homebrew/bin/exa -laF --no-filesize --no-user --no-time --no-permissions --color=never -s none`
+result=`$HOMEBREW_PREFIX/bin/exa -laF --no-filesize --no-user --no-time --no-permissions --color=never -s none`
 total=`echo $result | wc -l`
 dirs=`echo $result | egrep '/$' | wc -l`
 files=$(( ${total} - ${dirs}))
