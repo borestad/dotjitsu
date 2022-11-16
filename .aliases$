@@ -85,7 +85,7 @@ alias curl='/opt/homebrew/opt/curl/bin/curl'
 alias ws='ws -d'
 alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
 alias ts='/opt/homebrew/Cellar/moreutils/*/bin/ts'
-
+alias j=just
 
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
 

@@ -4,3 +4,4 @@ cargo install --git https://github.com/darakian/ddh ddh
 cargo install organize-rt
 cargo install ytop
 cargo install verco
+cargo install checkexec
