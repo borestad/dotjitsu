@@ -4,7 +4,8 @@ ROOT=$(git rev-parse --show-toplevel)
 cd $ROOT
 
 brew install fnm ncdu gdu git tig hr htop binutils coreutils findutils sd mr gnu-sed bat exa fzf fd zsh svn grc fasd git-extras thefuck
-~/.dotjitsu/bin/dot-brew
+
+~/.dotjitsu/bin/dot-brew-core
 
 eval "$(fnm env)"
 fnm install --lts
