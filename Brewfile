@@ -203,17 +203,18 @@ brew 'wget'                         # Internet file retriever
 brew 'whatmask'                     # Network settings helper
 brew 'xh'
 brew 'xidel'
+brew 'mdbook'
 brew 'yank'                         #
 brew 'yj'                           #
 brew 'youtube-dl'                   # Download YouTube videos from the command-line
 brew 'yq'                           #
 brew 'zopfli'                       # New zlib (gzip, deflate) compatible compressor
-brew 'zoxide'                       #
 brew 'zoxide'                       # Shell extension to navigate your filesystem faster
 brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
+brew 'navi'
 
 
 # ================================
@@ -262,7 +263,7 @@ brew 'pygitup'                      # Nicer 'git pull'
 # ================================
 # GNU TOOLS
 # ================================
-#brew 'moreutils'
+brew 'moreutils', link: false
 brew 'binutils'
 brew 'binwalk'
 brew 'cmake'

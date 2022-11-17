@@ -97,6 +97,7 @@ cask 'vlc'
 cask 'webcatalog'
 cask 'xbar'
 cask 'xmind'
+cask 'marp'
 
 
 # ================================
