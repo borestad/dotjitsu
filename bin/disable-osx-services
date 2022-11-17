@@ -161,6 +161,7 @@ TODISABLE+=(\
 
 for daemon in "${TODISABLE[@]}"
 do
-    mv -v ./System/Library/LaunchDaemons/${daemon}.plist ./System/Library/LaunchDaemons/${daemon}.plist.bak
+    # mv -v ./System/Library/LaunchDaemons/${daemon}.plist ./System/Library/LaunchDaemons/${daemon}.plist.bak
+    ls -lah ~/Library/Preferences/${daemon}.plist
     echo "[OK] Daemon ${daemon} disabled"
 done

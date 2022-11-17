@@ -1,5 +1,22 @@
 #!/usr/bin/env zsh
 
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+    export HOMEBREW_PREFIX="/opt/homebrew"
+else
+    export HOMEBREW_PREFIX="/usr/local"
+fi
+
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=${HOME}/.config}
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:=${HOME}/.cache}
+export XDG_DATA_HOME=${XDG_DATA_HOME:=${HOME}/.local/share}
+export FNM_DIR="$XDG_DATA_HOME/.fnm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+
+
+eval $(fnm env)
+
 echo "☑️  Upgrade node LTS..."
 fnm install --lts
 fnm default lts-latest
@@ -24,7 +41,7 @@ npm config --global set registry http://registry.npmjs.org/
 
 echo "☑️  Install/upgrade npm|yarn|pnpm"
 corepack enable
-corepack prepare pnpm@latest npm@latest yarn@1.x --activate
+corepack prepare pnpm@latest npm@latest yarn@stable --activate
 
 args=(
   # Globals

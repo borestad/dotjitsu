@@ -7,44 +7,63 @@ tap 'homebrew/cask-fonts'
 tap 'homebrew/cask-versions'
 tap 'homebrew/cask-drivers'
 
+
 brew 'git'
 brew 'python3'
-brew 'bash-completion@2'             # Programmable completion for Bash 4.1+
-brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
-brew 'bat'                          # Clone of cat(1) with syntax highlighting and Git integration
-brew 'bkt'                          #
+brew 'bash-completion@2'
+brew 'bash'
+brew 'bat'
+brew 'bkt'
 brew 'debianutils'
-brew 'dfc'                          # Display graphs and colors of file system space/usage
-brew 'exa'                          # Modern replacement for 'ls
-brew 'fd'                           # Simple, fast and user-friendly alternative to find
-brew 'fnm'                          # Fast and simple Node.js version manager
-brew 'gdu',link: false              #
-brew 'grc'                          # Colorize logfiles and command output
-brew 'htop'                         # Improved top (interactive process viewer)
-brew 'jq'                           # Lightweight and flexible command-line JSON processor
-brew 'ncdu'                         # NCurses Disk Usage
-brew 'neofetch'                     # Fast, highly customisable system info script
-brew 'pygments'                     # Generic syntax highlighter
-brew 'ripgrep'                      # Search tool like grep and The Silver Searcher
-brew 'rsync'                        # Utility that provides fast incremental file transfer
-brew 'sd'                           # Intuitive find & replace CLI
-brew 'svn'                          # Nodejs-based tool for optimizing SVG vector graphics files
-brew 'sysbench'                     # System performance benchmark tool
-brew 'thefuck'                      # Programmatically correct mistyped console commands
-brew 'tig'                          # Text interface for Git repositories
-brew 'tmux'                         # Terminal multiplexer
-brew 'tokei'                        # Program that allows you to count code, quickly
-brew 'unar'                         # Command-line unarchiving tools supporting multiple formats
-brew 'wget'                         # Internet file retriever
-brew 'zoxide'                       # Shell extension to navigate your filesystem faster
+brew 'dfc'
+brew 'exa'
+brew 'fd'
+brew 'fnm'
+brew 'gdu',link: false
+brew 'grc'
+brew 'htop'
+brew 'jq'
+brew 'ncdu'
+brew 'neofetch'
+brew 'pygments'
+brew 'ripgrep'
+brew 'rsync'
+brew 'sd'
+brew 'svn'
+brew 'sysbench'
+brew 'thefuck'
+brew 'tig'
+brew 'tmux'
+brew 'tokei'
+brew 'unar'
+brew 'wget'
+brew 'zoxide'
 brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
-
-brew 'git-delta'                    # Syntax-highlighting pager for git and diff output
-brew 'hub'                          # Add GitHub support to git on the command-line
-brew 'mr'                           # Multiple Repository management tool
+brew 'micro'
+brew 'fzf'
+brew 'git-extras'
+brew 'git-delta'
+brew 'hub'
+brew 'mr'
+brew 'binutils'
+brew 'binwalk'
+brew 'coreutils'
+brew 'findutils'
+brew 'gawk'
+brew 'gnu-indent'
+brew 'gnu-sed'
+brew 'gnu-tar'
+brew 'gnu-time'
+brew 'gnu-which'
+brew 'gnutls'
+brew 'grep'
+brew 'less'
+brew 'parallel'
+brew 'util-linux'
+brew 'wdiff'
 
 brew 'make'
 brew 'nano'

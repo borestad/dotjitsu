@@ -5,8 +5,15 @@ cd "$(dirname $0)"
 # ⚡ CONSTANTS
 # =============================================================================
 ROOT=$(git rev-parse --show-toplevel)
-
 NODE_MODULES=$ROOT/node_modules
+
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+    export HOMEBREW_PREFIX="/opt/homebrew"
+else
+    export HOMEBREW_PREFIX="/usr/local"
+fi
+
 
 # =============================================================================
 # ⚡ GIT HELPERS

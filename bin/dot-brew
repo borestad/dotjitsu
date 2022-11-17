@@ -8,10 +8,7 @@ mkdir -p $LOG_LOCATION
 exec > >(tee -i $LOG_LOCATION/dot-brew-`date +%F--%H%M%S`.log)
 exec 2>&1
 
-
 cd "$(dirname $0)"/..
-
-t () { date "+%F %H:%M:%S"; }
 
 # Update brew itself
 $HOME/.dotjitsu/bin/hr -
@@ -31,12 +28,6 @@ echo "✨ brew upgrade"
 echo
 $HOMEBREW_PREFIX/bin/brew -v upgrade
 
-
-# # Cleanup
-# $HOME/.dotjitsu/bin/hr -
-# echo "✨ brew cleanup"
-# $HOMEBREW_PREFIX/bin/brew cleanup
-
 # Cache API-reponses
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew API"
@@ -52,16 +43,6 @@ cat brew-formula.json | $HOMEBREW_PREFIX/bin/jq '.[] | "\(.name) | \(.desc) | \(
 
 cat brew-cask.json | $HOMEBREW_PREFIX/bin/jq '.[] | "\(.token) | \(.desc) | \(.homepage)"' \
 | $HOMEBREW_PREFIX/bin/sd '"' '' | $HOMEBREW_PREFIX/bin/sd 'null' '' | column -t -s'|' > brew-cask.txt
-
-# if [ -t 1 ] ; then
-#   # Install Caskfile formulas (only if interactive shell)
-#   $HOME/.dotjitsu/bin/hr -
-#   echo "✨ brew bundle (Caskfile)"
-#   $HOMEBREW_PREFIX/bin/brew -v bundle --file=~/.dotjitsu/Caskfile
-#  fi
-
-
-$HOME/.dotjitsu/bin/hr -
 
 
 rm -f $HOMEBREW_PREFIX/share/zsh/site-functions/_git
