@@ -22,6 +22,8 @@ fnm default lts-latest
 ~/.dotjitsu/bin/pull $HOME/.private
 
 
+ln -sfv ~/.dotjitsu/.zshrc ~/
+. ~/.dotjitsu/.env$
 ~/.dotjitsu/bin/dot-symlink
 ~/.private/bin/dotp-symlink
 

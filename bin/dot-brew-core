@@ -9,6 +9,14 @@ exec > >(tee -i $LOG_LOCATION/dot-brew-`date +%F--%H%M%S`.log)
 exec 2>&1
 
 
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+    export HOMEBREW_PREFIX="/opt/homebrew"
+else
+    export HOMEBREW_PREFIX="/usr/local"
+fi
+
+
 cd "$(dirname $0)"/..
 
 $HOMEBREW_PREFIX/bin/brew -v update
