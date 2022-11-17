@@ -155,5 +155,8 @@ export NODE_REPL_MODE='sloppy' 						# Use sloppy mode by default, matching web 
 # Starship
 export STARSHIP_CONFIG=$DOTFILES/starship.toml
 
+# Bkt
+export BKT_TMPDIR=~/.cache/bkt
+
 # Remove duplicates in PATH & preserve order (should not be needed, but hey !?)
 # export PATH=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')

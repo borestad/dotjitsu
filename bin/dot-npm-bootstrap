@@ -1,4 +1,9 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+
+if command -v gnomon > /dev/null 2>&1; then
+  formatter="$(command -v gnomon) -t elapsed-total |"
+  exec > >($formatter) 2>&1
+fi
 
 if [[ -f /opt/homebrew/bin/brew ]]; then
     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
@@ -48,10 +53,12 @@ args=(
   @antfu/ni
   @babel/core@latest
   @babel/node@latest
+  @marp-team/marp-cli@latest
   @microsoft/rush
   @types/node@
   bcat@latest
   contentful-cli@latest
+  contentful-schema-diff@latest
   cpy-cli@latest
   diff-so-fancy@latest
   empty-trash-cli@latest
@@ -90,8 +97,6 @@ args=(
 
 #NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
 echo "☑️  Installing global pnpm packages..."
-NODE_ENV=production pnpm add -g "${args[@]}"
-#yarn global add "${args[@]}"
-
+NODE_ENV=production pnpm add -g --prefer-offline "${args[@]}"
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
 # npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm

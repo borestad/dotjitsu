@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -m
-LOG_LOCATION="$HOME/logs/hourly"
+
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+export TERM='xterm-256color'
+LOG_LOCATION="$HOME/logs/cron/hourly"
 TERM="xterm-256color"
 
 mkdir -p $LOG_LOCATION
@@ -10,10 +13,5 @@ exec 2>&1
 
 $HOMEBREW_PREFIX/bin/mr run fetch
 
-echo ""
-
-t () { date "+%F %H:%M:%S" }
 echo "All done! Enjoy a cold one! 🍺 "
-
-echo ""
-/Users/johan/.dotjitsu/bin/hr -
+/Users/johan/.dotjitsu/bin/hr
