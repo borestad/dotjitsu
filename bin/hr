@@ -29,15 +29,16 @@ fi
 
 hr() {
     local WORD="$1"
-    if [[ -n "$WORD" ]] ; then
-        local LINE=''
-        while (( ${#LINE} < COLS ))
-        do
-            LINE="$LINE$WORD"
-        done
+    local LINE=''
 
-        echo "$(tput setaf $COLOR)${LINE:0:$COLS}$(tput sgr0)"
+    if [[ -z "$WORD" ]] ; then
+        return;
     fi
+
+    printf -v LINE '%*s' "$COLS"
+    LINE="${LINE// /${WORD}}"
+    echo "$(tput setaf $COLOR)${LINE:0:$COLS}$(tput sgr0)"
+
 }
 
 hrs() {
