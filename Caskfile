@@ -38,9 +38,7 @@ tap 'buo/cask-upgrade'
 # cask 'transmission'
 # cask 'transmit'
 # cask 'vmware-fusion'
-#cask 'applepi-baker'
-#cask 'atom'
-#cask 'cakebrew'
+
 #cask 'docker-compose'
 #cask 'docker'
 #cask 'dropbox'
@@ -75,9 +73,8 @@ cask 'lepton'
 cask 'miro'
 cask 'monolingual'
 cask 'mountain-duck'
-cask 'notion'
 cask 'numi'
-cask 'obsidian'
+
 cask 'openemu-experimental'
 cask 'raycast'
 cask 'retroarch-metal'
@@ -98,6 +95,18 @@ cask 'webcatalog'
 cask 'xbar'
 cask 'xmind'
 cask 'marp'
+cask 'signal'
+
+
+# ================================
+# PKM (Personal Knowledge Management) & Task tools
+# ================================
+cask 'logseq'
+cask 'obsidian'
+cask 'linear-linear'
+cask 'joplin'
+cask 'notion'
+cask 'taskade'
 
 
 # ================================

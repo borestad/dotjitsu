@@ -56,7 +56,6 @@ args=(
   @marp-team/marp-cli@latest
   @microsoft/rush
   @types/node@
-  bcat@latest
   contentful-cli@latest
   contentful-schema-diff@latest
   cpy-cli@latest
@@ -98,5 +97,6 @@ args=(
 #NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
 echo "☑️  Installing global pnpm packages..."
 NODE_ENV=production pnpm add -g --prefer-offline "${args[@]}"
+
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
 # npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm

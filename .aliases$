@@ -58,16 +58,16 @@ alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --colo
 # =============================================================================
 
 alias ag='ag --hidden --stats'
-alias code='$HOMEBREW_PREFIX/bin/code -n'
+alias code="$HOMEBREW_PREFIX/bin/code -n"
 alias cp='gcp -v'
-alias dfc='$HOMEBREW_PREFIX/bin/dfc -Wdluh -q mount -t apfs'
+alias dfc="$HOMEBREW_PREFIX/bin/dfc -Wdluh -q mount -t apfs"
 alias fd="fd --hidden --exclude '.git'"
-alias gdu='$HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a'
+alias gdu="$HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a"
 alias hb='HandBrakeCLI'
 alias killall="killall -v"
-alias less='$HOMEBREW_PREFIX/bin/less --incsearch'
+alias less="$HOMEBREW_PREFIX/bin/less --incsearch"
 alias mkdir='gmkdir -pv'
-#alias mtr='$HOMEBREW_PREFIX/bin/grc -es --colour=auto mtr'
+#alias mtr="$HOMEBREW_PREFIX/bin/grc -es --colour=auto mtr"
 alias mv='gmv -vi'
 alias pgrep='pgrep -fli'
 alias pigz='pigz -v'
@@ -77,14 +77,14 @@ alias rm='grm -v'
 alias date='gdate'
 alias sort="sort -S 50% --parallel=$NUM_CORES"
 alias sudo='nocorrect sudo '
-alias vnstat='$HOMEBREW_PREFIX/bin/vnstat -i en0'
-alias wget='$HOMEBREW_PREFIX/bin/wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress'
-alias wget2='$HOMEBREW_PREFIX/bin/wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress --content-disposition'
-alias curl='$HOMEBREW_PREFIX/opt/curl/bin/curl'
-#alias wget='$HOMEBREW_PREFIX/bin/wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress'
+alias vnstat="$HOMEBREW_PREFIX/bin/vnstat -i en0"
+alias wget="$HOMEBREW_PREFIX/bin/wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress"
+alias wget2="$HOMEBREW_PREFIX/bin/wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress --content-disposition"
+alias curl="$HOMEBREW_PREFIX/opt/curl/bin/curl"
+#alias wget="$HOMEBREW_PREFIX/bin/wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress"
 alias ws='ws -d'
 alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
-alias ts='$HOMEBREW_PREFIX/Cellar/moreutils/*/bin/ts'
+alias ts="$HOMEBREW_PREFIX/Cellar/moreutils/*/bin/ts"
 alias j=just
 
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
@@ -116,7 +116,7 @@ alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 
-alias python='$HOMEBREW_PREFIX/bin/python3.7'
+alias python="$HOMEBREW_PREFIX/bin/python3.7"
 alias sqlite='sqlite3'
 
 # =============================================================================
@@ -138,7 +138,7 @@ alias nano='micro'
 alias ncdu="gdu"
 alias ncdu2="$HOMEBREW_PREFIX/bin/ncdu"
 alias neofetch='neofetch --config ~/.dotjitsu/neofetch.conf'
-alias macchina='$HOMEBREW_PREFIX/bin/macchina --config ~/.dotjitsu/macchina.toml'
+alias macchina="$HOMEBREW_PREFIX/bin/macchina --config ~/.dotjitsu/macchina.toml"
 alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
 alias retroarch="~/Applications/RetroArch.app/Contents/MacOS/RetroArch -vf"
@@ -249,10 +249,10 @@ append() { grep -q -F $1 $2 || echo $1 >> $2 ;}
 # =============================================================================
 # Gnu utils (to enforce presedence)
 # =============================================================================
-alias xargs='$HOMEBREW_PREFIX/bin/gxargs'
-alias find='$HOMEBREW_PREFIX/bin/gfind'
-alias locate='$HOMEBREW_PREFIX/bin/glocate'
-alias updatedb='$HOMEBREW_PREFIX/bin/gupdatedb'
+alias xargs="$HOMEBREW_PREFIX/bin/gxargs"
+alias find="$HOMEBREW_PREFIX/bin/gfind"
+alias locate="$HOMEBREW_PREFIX/bin/glocate"
+alias updatedb="$HOMEBREW_PREFIX/bin/gupdatedb"
 
 
 # =============================================================================
@@ -643,6 +643,6 @@ crwl() {
 alias mrsort="gawk -v RS=\"\" '{ gsub(\"\n\", \"###\"); print }' .mrconfig | sort -f | gawk -v ORS=\"\n\n\" '{ gsub(\"###\", \"\n\"); print }' > .mrconfig.tmp && mv .mrconfig.tmp .mrconfig"
 
 #alias make='grc --colour=auto $HOMEBREW_PREFIX/opt/make/libexec/gnubin/make '
-alias make='$HOMEBREW_PREFIX/opt/make/libexec/gnubin/make '
+alias make="$HOMEBREW_PREFIX/opt/make/libexec/gnubin/make "
 # make() {}
   # grc --colour=auto /usr/bin/make $*

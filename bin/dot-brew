@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+. ~/.dotjitsu/.env$
+
 # Setup
 LOG_LOCATION="$HOME/logs/brew"
 TERM="xterm-256color"

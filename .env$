@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+HOME=~
+
 # ===================================================
 # ⚡️ Helper
 # ===================================================
@@ -24,10 +26,10 @@ export LANG='en_US.UTF-8'
 # ===================================================
 # ⚡️ Dotfiles
 # ===================================================
-export DOTFILES="$HOME/.dotjitsu"
+export DOTFILES=~/.dotjitsu
 export DOTJITSU_FRAMEWORK="prezto"
-export DOTJITSU="$HOME/.dotjitsu"
-export PRIVATE="$HOME/.private"
+export DOTJITSU=~/.dotjitsu
+export PRIVATE=~/.private
 export KEYTIMEOUT=1
 
 # ===================================================
@@ -42,7 +44,7 @@ export _FZF_DEFAULT_OPTS_NO_PREVIEW='--height 90% --border --layout=reverse --in
 export _FZF_DEFAULT_OPTS_PREVIEW="--bind 'ctrl-j:ignore,ctrl-k:ignore' --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 export FZF_DEFAULT_OPTS="$_FZF_DEFAULT_OPTS_NO_PREVIEW"
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color=hl:#eb4034,hl+:#ff0000"
-export FZF_ALT_C_COMMAND='fd . code work --base-directory $HOME -td'
+export FZF_ALT_C_COMMAND="fd . code work --base-directory $HOME -td"
 
 export GEM_HOME="$HOME/.gem"
 export GOPATH="$HOME/.go"
@@ -51,6 +53,13 @@ export GREP_OPTIONS="--color=auto"
 # ===================================================
 # ⚡️ HOMEBREW
 # ===================================================
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+    export HOMEBREW_PREFIX="/opt/homebrew"
+else
+    export HOMEBREW_PREFIX="/usr/local"
+fi
+
 export HOMEBREW_AUTO_UPDATE_SECS=86400
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export HOMEBREW_NO_AUTO_UPDATE=1
