@@ -38,7 +38,6 @@ hr() {
     printf -v LINE '%*s' "$COLS"
     LINE="${LINE// /${WORD}}"
     echo "$(tput setaf $COLOR)${LINE:0:$COLS}$(tput sgr0)"
-
 }
 
 hrs() {

@@ -61,6 +61,7 @@ brew 'bottom'                       #
 brew 'brimdata/tap/zq'              #
 brew 'broot'                        # New way to see and navigate directory trees
 brew 'caddy'                        # Powerful, enterprise-ready, open source web server with automatic HTTPS
+brew 'curl'                         #
 brew 'cliclick'                     # Tool for emulating mouse and keyboard events
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
@@ -186,6 +187,7 @@ brew 'sysbench'                     # System performance benchmark tool
 brew 'tealdeer'                     # Very fast implementation of tldr in Rust
 brew 'thefuck'                      # Programmatically correct mistyped console commands
 brew 'tig'                          # Text interface for Git repositories
+brew 'lxc'                          #
 brew 'tmux'                         # Terminal multiplexer
 brew 'tokei'                        # Program that allows you to count code, quickly
 brew 'trash'                        # CLI tool that moves files or folder to the trash
