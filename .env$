@@ -50,15 +50,15 @@ export GEM_HOME="$HOME/.gem"
 export GOPATH="$HOME/.go"
 export GREP_OPTIONS="--color=auto"
 
-# ===================================================
-# ⚡️ HOMEBREW
-# ===================================================
-if [[ -f /opt/homebrew/bin/brew ]]; then
-    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
-    export HOMEBREW_PREFIX="/opt/homebrew"
-else
-    export HOMEBREW_PREFIX="/usr/local"
-fi
+# # ===================================================
+# # ⚡️ HOMEBREW
+# # ===================================================
+# if [[ -f /opt/homebrew/bin/brew ]]; then
+#     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+#     export HOMEBREW_PREFIX="/opt/homebrew"
+# else
+#     export HOMEBREW_PREFIX="/usr/local"
+# fi
 
 export HOMEBREW_AUTO_UPDATE_SECS=86400
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"

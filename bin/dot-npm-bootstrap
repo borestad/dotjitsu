@@ -36,7 +36,7 @@ npm config --global set init-author-url "http://borestad.com/"
 npm config --global set init-version "0.0.1"
 # npm config --global set pnpm-prefix ~/.local/share/pnpm
 # npm config --global set store-dir ~/.local/share/.pnpm-store
-npm config --global set registry http://registry.npmjs.org/
+npm config --global set registry https://registry.npmjs.org/
 
 
 # https://github.com/pnpm/pnpm/issues/3361
@@ -70,6 +70,7 @@ args=(
   netlify-cli@latest
   node-notifier-cli@latest
   np@latest
+  serverless@latest
   tmpin@latest
   ts-node@latest
   tsx@latest

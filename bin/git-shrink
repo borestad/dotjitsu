@@ -11,7 +11,7 @@ echo '⭐️ Remove all tags:'
 git tag -l | xargs git tag -d
 
 echo '⭐️ Clear the reflog:'
-git reflog expire --expire=now --all --verbose
+git reflog expire --expire=now --expire-unreachable=all --all --verbose
 
 echo '⭐️ Delete all dangling objects'
 git gc --prune=now

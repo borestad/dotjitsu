@@ -31,6 +31,7 @@ brew 'xhyve', args: ['--HEAD']      # xhyve, lightweight macOS virtualization so
 #brew 'nvm'                        	# Manage multiple Node.js versions
 #brew 'sen'
 brew 'ack'                          # Search tool like grep, but optimized for programmers
+brew 'ag'                           # A code-searching tool similar to ack, but faster
 brew 'aircrack-ng'                  # Next-generation aircrack with lots of new features
 brew 'awscli'                       # Official Amazon AWS command-line interface
 brew 'cmatrix'                      # Console Matrix
