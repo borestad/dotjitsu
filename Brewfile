@@ -42,8 +42,6 @@ brew 'packer-completion'
 #brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 #brew 'pipx'                         #
 
-brew 'ack'                          # Search tool like grep, but optimized for programmer
-brew 'ag'                           # A code-searching tool similar to ack, but faster
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'autoconf'                     # Automatic configure script builder
 brew 'autojump'                     # Shell extension to jump to frequently used directories
@@ -96,6 +94,7 @@ brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
 brew 'gdu',link: false              #
 brew 'geoip'                        #
+brew 'gitui'                        #
 brew 'git-sizer'                    #
 brew 'glow'                         #
 brew 'gotop'                        # Terminal based graphical activity monitor inspired by gtop and vtop
@@ -136,6 +135,7 @@ brew 'micro'                        # Modern and intuitive terminal-based text e
 brew 'mist'                         # Mac command-line tool that automatically downloads macOS Installers / Firmwares
 brew 'mmv'                          # Move, copy, append, and link multiple files
 brew 'most'                         # Powerful paging program
+brew 'mosh'                         #
 brew 'mozjpeg'                      # Improved JPEG encoder
 brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
 brew 'multitail'                    # Tail multiple files in one terminal simultaneously
@@ -176,12 +176,13 @@ brew 'sd'                           # Intuitive find & replace CLI
 brew 'shallow-backup'
 brew 'sk'                           # Fuzzy Finder in rust!
 brew 'sponge'
+brew 'serf'
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 brew 'starship'                     # Cross-shell prompt for astronauts
 brew 'stress'                       # Tool to impose load on and stress test a computer system
 brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
-brew 'svn'                          # Nodejs-based tool for optimizing SVG vector graphics files
+brew 'svn'                          #
 brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
 brew 'sysbench'                     # System performance benchmark tool
 brew 'tealdeer'                     # Very fast implementation of tldr in Rust
@@ -192,6 +193,7 @@ brew 'tmux'                         # Terminal multiplexer
 brew 'tokei'                        # Program that allows you to count code, quickly
 brew 'trash'                        # CLI tool that moves files or folder to the trash
 brew 'tree'                         # Display directories as trees (with optional color/HTML output)
+brew 'rclone'                       #
 brew 'unar'                         # Command-line unarchiving tools supporting multiple formats
 brew 'unison'                       # File synchronization tool for OSX
 brew 'vbindiff'                     # Visual Binary Diff
@@ -217,6 +219,7 @@ brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
 brew 'navi'
+brew 'wrk'
 
 
 # ================================

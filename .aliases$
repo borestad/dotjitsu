@@ -646,3 +646,10 @@ alias mrsort="gawk -v RS=\"\" '{ gsub(\"\n\", \"###\"); print }' .mrconfig | sor
 alias make="$HOMEBREW_PREFIX/opt/make/libexec/gnubin/make "
 # make() {}
   # grc --colour=auto /usr/bin/make $*
+
+
+fixaudio () {
+  sudo rm /Library/Preferences/Audio/com.apple.audio.DeviceSettings.plist
+  sudo rm /Library/Preferences/Audio/com.apple.audio.SystemSettings.plist
+  sudo killall coreaudiod
+}

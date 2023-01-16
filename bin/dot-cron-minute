@@ -3,7 +3,7 @@ set -m
 
 source ~/.dotjitsu/.env$
 export TERM='xterm-256color'
-LOG_LOCATION="~/logs/cron/minute/`date +%F`"
+LOG_LOCATION=~/logs/cron/minute/`date +%F`
 TERM="xterm-256color"
 
 mkdir -p $LOG_LOCATION

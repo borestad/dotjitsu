@@ -7,7 +7,7 @@
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
 	<key>AllowClipboardAccess</key>
-	<false/>
+	<true/>
 	<key>AlternateMouseScroll</key>
 	<true/>
 	<key>AnimateDimming</key>
@@ -15,7 +15,7 @@
 	<key>AutoCommandHistory</key>
 	<false/>
 	<key>AutoHideTmuxClientSession</key>
-	<false/>
+	<true/>
 	<key>BadgeRightMargin</key>
 	<integer>100</integer>
 	<key>BootstrapDaemon</key>
