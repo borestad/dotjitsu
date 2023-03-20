@@ -116,7 +116,7 @@ alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 
-alias python="python3.7"
+alias python="/opt/homebrew/opt/python/libexec/bin/python"
 alias sqlite='sqlite3'
 
 # =============================================================================
