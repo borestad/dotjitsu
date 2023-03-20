@@ -88,6 +88,7 @@ while IFS= read -r fname; do
 done \
   <"$tmpfile"
 
+wait
 #sudo gfind / -type d -regextype posix-egrep -regex '.*(ar|ca|cs|da|de|el|en_AU|es|es_419|fi|fr|fr_CA|he|hi|hr|hu|id|it|ja|ko|ms|nl|no|pl|pt|pt_PT|ro|ru|sk|th|tr|uk|vi|zh_CN|zh_HK|zh_TW|German|French|Japanese|Italian|Spanish|Dutch)\.lproj$' -delete
 
 # sudo gfind / -type d -regextype posix-egrep -regex $REGEX -print0 | while read -d $'\0' file; do

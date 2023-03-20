@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# Squashes history between two commits
+
+MSG=${1:-'Initial commit'}
+
+echo "✔ Squash all commits"
+git reset $(git commit-tree HEAD^{tree} -m "$MSG");
+
+echo '✔ Remove all tags'
+git tag -l | xargs git tag -d
+
+echo
+echo '✔ Clear the reflog:'
+git reflog expire --expire=now --expire-unreachable=all --all --verbose
+
+echo
+echo '✔ List all unreachable objects:'
+#git fsck --unreachable
+
+echo
+echo '✔ Delete all dangling objects'
+git gc --prune=now
+
+
+echo
+echo '...done!'
+echo
+echo "(💡 Don't forget to git push)"
+

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# set -Eeuo pipefail
+
+source ~/.dotjitsu/.env\$
+
+# Setup
+LOG_LOCATION="$HOME/logs/brew"
+TERM="xterm-256color"
+mkdir -p $LOG_LOCATION
+
+formatter=""
+if command -v gnomon > /dev/null 2>&1; then
+  formatter="$(command -v gnomon) -t elapsed-total |"
+fi
+
+exec > >($formatter tee -i $LOG_LOCATION/dot-brew-`date +%F--%H%M%S`.log)
+exec 2>&1
+
+mkdir -p ~/.config/cache && cd "$_"
+
+echo 'Fetch https://formulae.brew.sh/api/formula.json'
+wget https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && \
+  mv brew-formula.json.tmp brew-formula.json
+
+echo 'Fetch https://formulae.brew.sh/api/cask.json'
+wget https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && \
+  mv brew-cask.json.tmp brew-cask.json
+
+cat brew-formula.json | jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \
+| sd '"' '' | sd 'null' '' | column -t -s'|' >| brew-formula.txt
+
+cat brew-cask.json | jq '.[] | "\(.token) | \(.desc) | \(.homepage)"' \
+| sd '"' '' | sd 'null' '' | column -t -s'|' >| brew-cask.txt

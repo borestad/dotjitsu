@@ -9,7 +9,7 @@
 
 # #execute find and do the converting
 # gfind $PATH -maxdepth 1 -type f -iname $glob \
-#   -exec sh -c 'x="{}"; $HOMEBREW_PREFIX/bin/ffmpeg -i "{}" '\
+#   -exec sh -c 'x="{}"; ffmpeg -i "{}" '\
 #   $ffmpegSettings' \
 #   -f mov "${x%.mov}.h265.mov" && touch -r "{}" "${x%.mov}.h265.mov" && rm "{}"' \;
 
@@ -23,4 +23,4 @@ findString="*.MOV"
 
 #execute find and do the converting
 find $filePath -type f -iname $findString \
-  -exec sh -c 'x="{}"; $HOMEBREW_PREFIX/bin/ffmpeg -i "{}" '$ffmpegSettings' -f mov "${x%.MOV}.h265.mov" && touch -r "{}" "${x%.MOV}.h265.mov" && rm "{}"' \;
+  -exec sh -c 'x="{}"; ffmpeg -i "{}" '$ffmpegSettings' -f mov "${x%.MOV}.h265.mov" && touch -r "{}" "${x%.MOV}.h265.mov" && rm "{}"' \;

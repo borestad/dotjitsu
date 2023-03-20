@@ -198,14 +198,9 @@
 
 [protocol]
 	version = 2
-
-[credential "https://dev.azure.com"]
-	useHttpPath = true
-
 [credential]
-	helper =
 	helper = $HOMEBREW_PREFIX/share/gcm-core/git-credential-manager-core
-	helper = 
+	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager
 
 [url "ssh://git@github.com"]
@@ -216,7 +211,14 @@
 	pushInsteadOf = https://gitlab.com/
 [credential "https://github.com"]
 	helper =
-	helper = !$HOMEBREW_PREFIX/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
 	helper =
-	helper = !$HOMEBREW_PREFIX/bin/gh auth git-credential
+	helper = !gh auth git-credential
+[user]
+	name = Johan Borestad
+	email = johan@borestad.com
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[remote "origin"]
+	tagopt = "--tags -f"
