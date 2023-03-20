@@ -91,7 +91,7 @@ zinit light romkatv/powerlevel10k
 
 # ■■■ fzf (autocomplete, keybindings)
 zinit ice wait lucid
-zinit snippet ~/.dotjitsu/fzf.zsh
+zinit snippet ~/.dotjitsu/etc/fzf.zsh
 
 # ■■■ fasd (z) with fzf
 #zinit snippet ~/.dotjitsu/packages/zsh/fzf-fasd.plugin.zsh
