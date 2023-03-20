@@ -15,7 +15,7 @@ exec 2>&1
 hr && $HOME/.dotjitsu/bin/dot-node-latest-lts | bat -f
 hr && $HOME/.dotjitsu/bin/dot-brew | bat -f
 hr && $HOME/.dotjitsu/bin/dot-cask | bat -f
-hr && $HOMEBREW_PREFIX/bin/brew upgrade --cask | bat -f
+hr && brew upgrade --cask | bat -f
 
 
 echo "All done! Enjoy a cold one! 🍺 "

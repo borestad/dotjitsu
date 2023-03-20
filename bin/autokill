@@ -1,4 +1,4 @@
-#!$HOMEBREW_PREFIX/bin/node
+#!node
 
 const util = require('util')
 const exec = util.promisify(require('child_process').exec)
@@ -28,9 +28,9 @@ async function notify(title, text) {
 async function main() {
   const { stdout, stderr } = await exec('ps -e | grep ncdu')
 
-  // 15009 ??         0:08.13 timeout -s SIGINT 3600s $HOMEBREW_PREFIX/bin/ncdu
-  // 15010 ??        22:59.65 $HOMEBREW_PREFIX/bin/ncdu
-  // 77570 ttys005    0:00.03 $HOMEBREW_PREFIX/bin/ncdu
+  // 15009 ??         0:08.13 timeout -s SIGINT 3600s ncdu
+  // 15010 ??        22:59.65 ncdu
+  // 77570 ttys005    0:00.03 ncdu
 
   if (stderr) {
     console.error(`error: ${stderr}`)

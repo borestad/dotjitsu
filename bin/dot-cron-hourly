@@ -11,7 +11,7 @@ mkdir -p $LOG_LOCATION
 exec > >(tee -i $LOG_LOCATION/cron-hourly-`date +%F--%H%M%S`.log)
 exec 2>&1
 
-$HOMEBREW_PREFIX/bin/mr run fetch
+mr run fetch
 
 echo "All done! Enjoy a cold one! 🍺 "
 /Users/johan/.dotjitsu/bin/hr

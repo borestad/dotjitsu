@@ -19,9 +19,9 @@ fi
 
 cd "$(dirname $0)"/..
 
-$HOMEBREW_PREFIX/bin/brew -v update
+brew -v update
 $HOME/.dotjitsu/bin/hr -
-$HOMEBREW_PREFIX/bin/brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core
+brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core
 
 $HOME/.dotjitsu/bin/hr -
-$HOMEBREW_PREFIX/bin/brew -v upgrade
+brew -v upgrade

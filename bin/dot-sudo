@@ -3,5 +3,5 @@
 sudo chown root $HOMEBREW_PREFIX/Cellar/mtr/*/sbin/mtr-packet
 sudo chmod 4755 $HOMEBREW_PREFIX/Cellar/mtr/*/sbin/mtr-packet
 
-#ln -s $HOMEBREW_PREFIX/Cellar/mtr/*/sbin/mtr $HOMEBREW_PREFIX/bin/mtr
-#ln -s $HOMEBREW_PREFIX/Cellar/mtr/*/sbin/mtr-packet $HOMEBREW_PREFIX/bin/mtr-packet
+#ln -s $HOMEBREW_PREFIX/Cellar/mtr/*/sbin/mtr mtr
+#ln -s $HOMEBREW_PREFIX/Cellar/mtr/*/sbin/mtr-packet mtr-packet

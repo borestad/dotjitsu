@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # set -Eeuo pipefail
 
-. ~/.dotjitsu/.env$
+source ~/.dotjitsu/.env\$
 
 # Setup
 LOG_LOCATION="$HOME/logs/brew"
@@ -22,36 +22,19 @@ cd "$(dirname $0)"/..
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew update"
 echo
-$HOMEBREW_PREFIX/bin/brew -v update
+brew -v update
 
 # Install Brewfile formulas
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew bundle (Brewfile)"
 echo
-$HOMEBREW_PREFIX/bin/brew -v bundle --file=$HOME/.dotjitsu/Brewfile
+brew -v bundle --file=$HOME/.dotjitsu/Brewfile
 
 # Update installed bundles (even those not in Brew/Caskfile
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew upgrade"
 echo
-$HOMEBREW_PREFIX/bin/brew -v upgrade
-
-# Cache API-reponses
-$HOME/.dotjitsu/bin/hr -
-echo "✨ brew API"
-echo
-
-mkdir -p ~/.config/cache && cd "$_"
-
-$HOMEBREW_PREFIX/bin/wget https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && mv brew-formula.json.tmp brew-formula.json
-$HOMEBREW_PREFIX/bin/wget https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && mv brew-cask.json.tmp brew-cask.json
-
-cat brew-formula.json | $HOMEBREW_PREFIX/bin/jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \
-| $HOMEBREW_PREFIX/bin/sd '"' '' | $HOMEBREW_PREFIX/bin/sd 'null' '' | column -t -s'|' > brew-formula.txt
-
-cat brew-cask.json | $HOMEBREW_PREFIX/bin/jq '.[] | "\(.token) | \(.desc) | \(.homepage)"' \
-| $HOMEBREW_PREFIX/bin/sd '"' '' | $HOMEBREW_PREFIX/bin/sd 'null' '' | column -t -s'|' > brew-cask.txt
-
+brew -v upgrade
 
 rm -f $HOMEBREW_PREFIX/share/zsh/site-functions/_git
 

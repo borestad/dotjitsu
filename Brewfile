@@ -41,7 +41,7 @@ brew 'packer-completion'
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 #brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 #brew 'pipx'                         #
-
+brew 'asdf'
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'autoconf'                     # Automatic configure script builder
 brew 'autojump'                     # Shell extension to jump to frequently used directories
@@ -69,6 +69,7 @@ brew 'debianutils'
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
+brew 'dolt'                         # Git for Data
 brew 'docker-compose'               # Isolated development environments using Docker
 brew 'docker-machine'               # Create Docker hosts locally and on cloud providers
 brew 'dprint'                       #
@@ -220,6 +221,8 @@ brew 'zsh-syntax-highlighting'
 brew 'zsh'
 brew 'navi'
 brew 'wrk'
+brew 'viddy'
+brew 'streamlink'
 
 
 # ================================

@@ -14,7 +14,7 @@ fi
 
 FILE=$(mktemp)
 
-$HOMEBREW_PREFIX/bin/gtime -o $FILE -f "
+gtime -o $FILE -f "
 
 ───────────────────────────────────────────────────────────────────────────────
 
