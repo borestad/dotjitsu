@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-go env -w GO111MODULE=off
+go env -w GO111MODULE=on
 
-go get -v github.com/fiatjaf/jiq/cmd/jiq
-go get -u github.com/h2non/bimg
+go install github.com/fiatjaf/jiq/cmd/jiq@latest
 go get -u github.com/tomnomnom/fff
-go install github.com/projectdiscovery/katana/cmd/katana@latest
+go install github.com/rs/dnstrace@latest

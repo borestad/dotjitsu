@@ -41,6 +41,14 @@ brew 'packer-completion'
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 #brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 #brew 'pipx'                         #
+brew 'ouch'
+brew 'aha'
+brew 'erdtree'
+brew 'jc'
+brew 'gojq'
+brew 'deno'
+brew 'atuin'
+brew 'jplot'
 brew 'asdf'
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'autoconf'                     # Automatic configure script builder

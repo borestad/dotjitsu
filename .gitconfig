@@ -4,7 +4,7 @@
 
 [include]
 	path = ~/.private/.gitconfig-user
-	path = ~/.dotjitsu/.gitconfig-alias$
+	path = ~/.dotjitsu/.gitconfig-alias
 
 [includeIf "gitdir:~/work/"]
     path = ~/.private/.gitconfig-work
@@ -222,3 +222,5 @@
 	useHttpPath = true
 [remote "origin"]
 	tagopt = "--tags -f"
+[credential "http://git.home.arpa"]
+	provider = generic

@@ -11,7 +11,10 @@ mkdir -p $LOG_LOCATION
 exec > >(tee -i $LOG_LOCATION/cron-minute-`date +%F--%H%M%S`.log)
 exec 2>&1
 
+echo -e "\n■■■ PATH"
+echo $PATH
+
+echo -e "\n■■■ dot-rsync"
 dot-rsync
 
-echo $PATH
 echo "All done! Enjoy a cold one! 🍺 "

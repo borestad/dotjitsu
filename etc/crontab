@@ -1,0 +1,6 @@
+MAILTO=""
+
+* * * * *  . /etc/profile;  /Users/johan/.dotjitsu/bin/dot-cron-minute  &> /dev/null &
+0 * * * *  . /etc/profile;  /Users/johan/.dotjitsu/bin/dot-brew &> /dev/null &
+0 20 * * * . /etc/profile;  /Users/johan/.dotjitsu/bin/dot-cron-daily  &> /dev/null &
+10 * * * * . /etc/profile;  /Users/johan/.dotjitsu/bin/dot-cron-hourly &> /dev/null &

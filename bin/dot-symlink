@@ -34,3 +34,7 @@ for (const file of dotfiles) {
 // Manual adding files/folders
 exec(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
 exec(`ln -sfv ${DOTJITSU}/packages/youtube-dl ${HOME}/.config/`)
+exec(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Sync/OpenEmu" "${HOME}/Library/Application Support/"`)
+exec(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Sync" "${HOME}/"`)
+exec(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs" "${HOME}/iCloud"`)
+// console.log(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Sync/OpenEmu" "${HOME}/Library/Application Support/"`)
