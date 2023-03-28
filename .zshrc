@@ -138,7 +138,6 @@ zinit snippet "$HOMEBREW_PREFIX/etc/grc.zsh"
 zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-completion.zsh"
 # zinit snippet ~/.docker-aliases$
 
-
 # ■■■ Evals
 eval "$(fnm env)"                     # fnm (Fast Node Manager)
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
@@ -199,9 +198,16 @@ zinit snippet ~/.p10k.zsh
 zicompinit
 zinit cdreplay
 
+eval "$(atuin init zsh --disable-up-arrow)"
+# eval "$(atuin init zsh)"
+
 # disable-fzf-tab
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
 
 # Run dotenv on login
 #dotenv
+
+# Wasmer
+export WASMER_DIR="/Users/johan/.config/wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"

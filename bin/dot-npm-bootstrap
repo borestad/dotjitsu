@@ -52,6 +52,7 @@ args=(
   # Globals
   @antfu/ni
   @babel/core@latest
+  assemblyscript@latest
   @babel/node@latest
   @marp-team/marp-cli@latest
   @microsoft/rush
@@ -76,6 +77,7 @@ args=(
   tsx@latest
   typescript@latest
   zx@latest
+  sharp-cli@latest
 
   # Linters
   prettier@latest

@@ -1,0 +1,167 @@
+#!/bin/zsh
+# https://gist.githubusercontent.com/akorn/51ee2fe7d36fa139723c851d87e56096/raw/7b51c43a1eadb47bcce2a4f3413a1e7f0c7da2cd/runcached
+#
+# Purpose: run specified command with specified arguments and cache result. If cache is fresh enough, don't run command again but return cached output.
+# Also cache exit status and stderr.
+# Copyright (c) 2019-2023 András Korn; License: GPLv3
+
+# Use silly long variable names to avoid clashing with whatever the invoked program might use
+RUNCACHED_MAX_AGE=${RUNCACHED_MAX_AGE:-300}
+RUNCACHED_IGNORE_ENV=${RUNCACHED_IGNORE_ENV:-0}
+RUNCACHED_IGNORE_PWD=${RUNCACHED_IGNORE_PWD:-0}
+[[ -n "$HOME" ]] && RUNCACHED_CACHE_DIR=${RUNCACHED_CACHE_DIR:-$HOME/.runcached}
+RUNCACHED_CACHE_DIR=${RUNCACHED_CACHE_DIR:-/var/cache/runcached}
+
+function usage() {
+	echo "Usage: runcached [--ttl <max cache age>] [--cache-dir <cache directory>]"
+	echo "		 [--ignore-env] [--ignore-pwd] [--help] [--prune-cache]"
+	echo "		 [--] command [arg1 [arg2 ...]]"
+	echo
+	echo "Run 'command' with the specified args and cache stdout, stderr and exit"
+	echo "status. If you run the same command again and the cache is fresh, cached"
+	echo "data is returned and the command is not actually run."
+	echo
+	echo "Normally, all exported environment variables as well as the current working"
+	echo "directory are included in the cache key. The --ignore options disable this."
+	echo "The OLDPWD variable is always ignored."
+	echo
+	echo "--prune-cache deletes all cache entries older than the maximum age. There is"
+	echo "no other mechanism to prevent the cache growing without bounds."
+	echo
+	echo "The default cache directory is ${RUNCACHED_CACHE_DIR}."
+	echo "Maximum cache age defaults to ${RUNCACHED_MAX_AGE}."
+	echo
+	echo "CAVEATS:"
+	echo
+	echo "Side effects of 'command' are obviously not cached."
+	echo
+	echo "There is no cache invalidation logic except cache age (specified in seconds)."
+	echo
+	echo "If the cache can't be created, the command is run uncached."
+	echo
+	echo "This script is always silent; any output comes from the invoked command. You"
+	echo "may thus not notice errors creating the cache and such."
+	echo
+	echo "stdout and stderr streams are saved separately. When both are written to a"
+	echo "terminal from cache, they will almost certainly be interleaved differently"
+	echo "than originally. Ordering of messages within the two streams is preserved."
+	echo
+	echo "It's not safe to prune the cache while another instance of runcached is"
+	echo "using it AND it's possible for jobs to run longer than"
+	echo "$RUNCACHED_MAX_AGE seconds."
+	exit 0
+}
+
+function use_cache_if_cache_fresh() { # Must be called with a lock on $RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.lock held. Doesn't return if the cache is fresh.
+	local RUNCACHED_CACHE_FRESH=1
+	local i
+	for i in $RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.{stdout,stderr,exitstatus}; do
+		if [[ -f $i ]] && [[ $[EPOCHSECONDS-$(zstat +mtime $RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.stdout)] -ge $RUNCACHED_MAX_AGE ]]; then
+			# if the cache file exists, but is old, we make a note to ourselves:
+			RUNCACHED_CACHE_FRESH=0
+		elif ! [[ -f $i ]]; then
+			# if the cache file is missing, we also make a note to ourselves:
+			RUNCACHED_CACHE_FRESH=0
+		fi
+	done
+
+	# Since we hold a lock, no other instance is able to obtain a write
+	# lock and remove or overwrite our cache files; if the files were
+	# there before, they are still there (except if the cache is being
+	# pruned, but that's future work)
+	if ((RUNCACHED_CACHE_FRESH)); then
+		cat $RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.stdout &
+		cat $RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.stderr >&2 &
+		wait
+		exit $(<$RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.exitstatus)
+	fi
+}
+
+while [[ -n "$1" ]]; do
+	case "$1" in
+		--ttl)		RUNCACHED_MAX_AGE="$2"; shift 2;;
+		--cache-dir)	RUNCACHED_CACHE_DIR="$2"; shift 2;;
+		--ignore-env)	RUNCACHED_IGNORE_ENV=1; shift;;
+		--ignore-pwd)	RUNCACHED_IGNORE_PWD=1; shift;;
+		--prune-cache)	RUNCACHED_PRUNE=1; shift;;
+		--help)		usage;;
+		--)		shift; break;;
+		*)		break;;
+	esac
+done
+
+zmodload zsh/datetime
+zmodload zsh/stat
+zmodload zsh/system
+zmodload zsh/files
+
+# the built-in mv doesn't fall back to copy if renaming fails due to EXDEV;
+# since the cache directory is likely on a different fs than the tmp
+# directory, this is an important limitation, so we use /bin/mv instead
+disable mv
+
+mkdir -p "$RUNCACHED_CACHE_DIR" >/dev/null 2>/dev/null
+
+# TODO: it would be possible to make pruning safe for concurrent execution
+# by not relying on find -delete; instead, we could iterate over the cache
+# contents, obtain write locks on all entries, then remove them if they're
+# stale. This could then also be started as a background job, and maybe we
+# could make it so roughly every nth invocation automatically performs a
+# prune.
+((RUNCACHED_PRUNE)) && find "$RUNCACHED_CACHE_DIR/." -type f \! -newermt @$[EPOCHSECONDS-RUNCACHED_MAX_AGE] -delete 2>/dev/null
+
+[[ -n "$@" ]] || exit 0	# if no command specified, exit silently
+
+(
+	# Almost(?) nothing uses OLDPWD, but taking it into account potentially reduces cache efficency.
+	# Thus, we ignore it for the purpose of coming up with a cache key.
+	unset OLDPWD
+	((RUNCACHED_IGNORE_PWD)) && unset PWD
+	((RUNCACHED_IGNORE_ENV)) || env
+	echo -E "$@"
+) | md5sum | read RUNCACHED_CACHE_KEY RUNCACHED__crap__
+# make the cache dir hashed unless a cache file already exists (created by a previous version that didn't use hashed dirs)
+if ! [[ -f $RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.exitstatus ]]; then
+	RUNCACHED_CACHE_KEY=$RUNCACHED_CACHE_KEY[1,2]/$RUNCACHED_CACHE_KEY[3,4]/$RUNCACHED_CACHE_KEY[5,$]
+	mkdir -p "$RUNCACHED_CACHE_DIR/${RUNCACHED_CACHE_KEY:h}" >/dev/null 2>/dev/null
+fi
+
+# If we can't obtain a lock, we want to run uncached; otherwise
+# 'runcached' wouldn't be transparent because it would prevent
+# parallel execution of several instances of the same command.
+# Locking is necessary to avoid races between the mv(1) command
+# below replacing stderr with a newer version and another instance
+# of runcached using a newer stdout with the older stderr.
+: >>$RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.lock 2>/dev/null
+
+# We don't need an exclusive lock if the cache is fresh; multiple instances
+# can read it simultaneously.
+if zsystem flock -t 0 -r $RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.lock 2>/dev/null; then # Get a read lock, if possible.
+	use_cache_if_cache_fresh
+fi
+
+# Either we couldn't obtain a read lock (which means another instance had a write lock), or the cache wasn't fresh.
+if zsystem flock -t 0 $RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.lock 2>/dev/null; then	# Get a write lock, if possible.
+	# If we couldn't get a read lock before but can get a write lock
+	# now, the instance that held the write lock earlier may have
+	# exited, so it's possible we now have a fresh cache; if so, let's
+	# use it.
+	use_cache_if_cache_fresh
+	# If the function returned, the cache wasn't fresh; remove any stale cache files:
+	rm -f $RUNCACHED_CACHE_DIR/$RUNCACHED_CACHE_KEY.{stdout,stderr,exitstatus} 2>/dev/null
+	# run the command and update the cache:
+	if [[ -d $RUNCACHED_CACHE_DIR/. ]]; then
+		RUNCACHED_tempdir=$(mktemp -d 2>/dev/null)
+		if [[ -d $RUNCACHED_tempdir/. ]]; then
+			$@ >&1 >$RUNCACHED_tempdir/${RUNCACHED_CACHE_KEY:t}.stdout 2>&2 2>$RUNCACHED_tempdir/${RUNCACHED_CACHE_KEY:t}.stderr
+			RUNCACHED_ret=$?
+			echo $RUNCACHED_ret >$RUNCACHED_tempdir/${RUNCACHED_CACHE_KEY:t}.exitstatus 2>/dev/null
+			mv $RUNCACHED_tempdir/${RUNCACHED_CACHE_KEY:t}.{stdout,stderr,exitstatus} $RUNCACHED_CACHE_DIR/${RUNCACHED_CACHE_KEY:h} 2>/dev/null
+			rmdir $RUNCACHED_tempdir 2>/dev/null
+			exit $RUNCACHED_ret
+		fi
+	fi
+fi
+
+# only reached if cache not created successfully or lock couldn't be obtained
+exec $@
