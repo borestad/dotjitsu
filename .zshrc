@@ -139,10 +139,10 @@ zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-compl
 # zinit snippet ~/.docker-aliases$
 
 # ■■■ Evals
-eval "$(fnm env)"                     # fnm (Fast Node Manager)
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
 _evalcache thefuck --alias
 _evalcache zoxide init zsh
+eval "$(fnm env)"                     # fnm (Fast Node Manager)
 
 #_evalcache direnv hook zsh
 
@@ -191,6 +191,11 @@ typeset -U path                 # ignore doules in path
 
 zinit snippet ~/.p10k.zsh
 
+
+fpath=(
+  $HOMEBREW_PREFIX/share/zsh/site-functions
+  $fpath
+)
 
 # ===================================================
 # ⚡️ LOAD

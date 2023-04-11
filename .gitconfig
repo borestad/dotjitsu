@@ -224,3 +224,5 @@
 	tagopt = "--tags -f"
 [credential "http://git.home.arpa"]
 	provider = generic
+[credential "https://diva.teliacompany.net"]
+	provider = generic
