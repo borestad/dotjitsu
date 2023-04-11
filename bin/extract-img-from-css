@@ -1,8 +1,33 @@
 #!/usr/bin/env bash
 
-n=1
-for i in `grep -ho "base64,[A-Za-z0-9+/=]*" $@|sed -e "s:base64,::g"`; do
+set -o errexit -o pipefail
+
+if [ "$#" -eq 0 ]
+then
+  echo "usage: rs PATTERN REPLACEMENT [PATH...]" > /dev/stderr
+  exit 1
+fi
+
+pattern="base64,[A-Za-z0-9+/=]*"
+shift 1
+
+paths=("$@")
+COUNTER=0
+
+rg --only-matching --no-line-number "$pattern" "${paths[@]}" | sed -e "s:base64,::g" | while IFS=$'\n' read -r file; do
+  let COUNTER=COUNTER+1
+  echo $COUNTER
   mkdir -p images
-  echo $i | base64 -d > images/file_$n.png
-  n=`expr $n + 1`
+  echo $file
+  # echo "$file" | base64 -d > images/file_$COUNTER.png
 done
+
+
+
+
+# n=1
+# for i in `grep -ho "base64,[A-Za-z0-9+/=]*" $@ | sed -e "s:base64,::g"`; do
+#   mkdir -p images
+#   echo $i | base64 -d > images/file_$n.png
+#   n=`expr $n + 1`
+# done

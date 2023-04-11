@@ -176,6 +176,8 @@ find-sum () {
    gfind $DIR -type f -iname "*$EXT" -printf '%s\n' | gawk -M '{t+=$1}END{print t}'
 }
 
+cpw () { cp -v $(command -v $1) $2;  }
+
 #
 # fasd
 #

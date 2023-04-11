@@ -41,6 +41,7 @@ brew 'packer-completion'
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 #brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 #brew 'pipx'                         #
+brew 'jc'
 brew 'ouch'
 brew 'aha'
 brew 'erdtree'

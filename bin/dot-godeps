@@ -2,5 +2,6 @@
 go env -w GO111MODULE=on
 
 go install github.com/fiatjaf/jiq/cmd/jiq@latest
-go get -u github.com/tomnomnom/fff
+go install github.com/tomnomnom/fff@latest
 go install github.com/rs/dnstrace@latest
+go install github.com/zmwangx/ets@latest
