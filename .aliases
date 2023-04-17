@@ -87,6 +87,9 @@ alias ws='ws -d'
 alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
 alias ts="$HOMEBREW_PREFIX/Cellar/moreutils/*/bin/ts"
 alias j=just
+alias ping='grc --colour=auto ping'
+alias dig='grc --colour=auto dig'
+alias env='grc --colour=auto env'
 
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
 

@@ -134,7 +134,7 @@ zinit snippet ~/.dotjitsu/.hooks
 zinit snippet ~/.dotjitsu/.aliases
 zinit snippet ~/.dotjitsu/.keybindings
 zinit snippet ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
-zinit snippet "$HOMEBREW_PREFIX/etc/grc.zsh"
+zinit snippet "/opt/homebrew/etc/grc.zsh"
 zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-completion.zsh"
 # zinit snippet ~/.docker-aliases$
 

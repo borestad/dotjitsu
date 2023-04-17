@@ -52,11 +52,11 @@ args=(
   # Globals
   @antfu/ni
   @babel/core@latest
-  assemblyscript@latest
   @babel/node@latest
   @marp-team/marp-cli@latest
   @microsoft/rush
   @types/node@
+  assemblyscript@latest
   contentful-cli@latest
   contentful-schema-diff@latest
   cpy-cli@latest
@@ -72,12 +72,13 @@ args=(
   node-notifier-cli@latest
   np@latest
   serverless@latest
+  sharp-cli@latest
   tmpin@latest
   ts-node@latest
   tsx@latest
   typescript@latest
   zx@latest
-  sharp-cli@latest
+  wrangler@latest
 
   # Linters
   prettier@latest

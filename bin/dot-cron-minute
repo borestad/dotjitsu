@@ -15,6 +15,6 @@ echo -e "\n■■■ PATH"
 echo $PATH
 
 echo -e "\n■■■ dot-rsync"
-dot-rsync
+# dot-rsync
 
 echo "All done! Enjoy a cold one! 🍺 "
