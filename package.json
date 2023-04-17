@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "blend-promise-utils": "^1.29.0",
     "debug": "^4.3.4",
