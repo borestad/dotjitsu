@@ -200,7 +200,7 @@
 	version = 2
 [credential]
 	helper = $HOMEBREW_PREFIX/share/gcm-core/git-credential-manager-core
-	helper =
+	helper = 
 	helper = /usr/local/share/gcm-core/git-credential-manager
 
 [url "ssh://git@github.com"]
@@ -210,19 +210,19 @@
 [url "ssh://gitlab.com/"]
 	pushInsteadOf = https://gitlab.com/
 [credential "https://github.com"]
-	helper =
-	helper = !gh auth git-credential
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper =
-	helper = !gh auth git-credential
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [user]
 	name = Johan Borestad
 	email = johan@borestad.com
-[credential "https://dev.azure.com"]
-	useHttpPath = true
 [remote "origin"]
 	tagopt = "--tags -f"
 [credential "http://git.home.arpa"]
 	provider = generic
 [credential "https://diva.teliacompany.net"]
 	provider = generic
+[credential "https://dev.azure.com"]
+	useHttpPath = true

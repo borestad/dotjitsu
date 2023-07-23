@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -o errexit -o pipefail
+
+if [ "$#" -eq 0 ]
+then
+  echo "usage: extract-png-from-assets [PATH...]" > /dev/stderr
+  exit 1
+fi
+
+pattern="base64,[A-Za-z0-9+/=]*"
+shift 1
+
+paths=("$@")
+COUNTER=0
+
+TEMPFILE=$(mktemp)
+
+rg --count-matches $pattern
+
+# Find all patterns
+rg --only-matching --no-filename --no-line-number $pattern "${paths[@]}" \
+| sed -e "s:base64,::g"  > $TEMPFILE
+
+# Remove all empty lines (if any)
+rg -N "\S" $TEMPFILE | sponge $TEMPFILE
+
+mkdir -p images
+
+# Extract files
+cat $TEMPFILE | while IFS=$'\n' read -r file; do
+  let COUNTER=COUNTER+1
+  filename=images/file_$COUNTER.png
+  echo $filename
+  echo "$file" | base64 -d > $filename
+done

@@ -1563,7 +1563,7 @@
   # }
 
   function prompt_dirfiles() {
-    local text=`~/.dotjitsu/bin/dir-info`
+    local text=`bkt -- ~/.dotjitsu/bin/dir-info $PWD`
     p10k segment -f 248 -t "$text"
   }
 

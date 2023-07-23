@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+url="https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=de&ssl=all&anonymity=all"
+# data=$(bkt --ttl=1h -- curl -sS $url)
+# echo $data
+
+bkt --ttl=1h -- curl -sS $url
+# echo $data | jq .
+
+# echo "Use ip: $ip"
+# http_proxy=$ip curl -v "$@"
