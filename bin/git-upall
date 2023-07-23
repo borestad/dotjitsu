@@ -15,7 +15,7 @@ REPOS_NR=`cat $tempfile | wc -l`
 echo "Pulling in latest changes for $REPOS_NR repositories..."
 echo
 
-cat $tempfile | parallel -I{} -j 100 '
+cat $tempfile | parallel -I{} -j 2 '
     SYMBOL_SUCCESS="$(tput setaf 46)❯$(tput sgr0)"
     SYMBOL_ERROR="$(tput setaf 196)𐄂$(tput sgr0)"
     start=`date +%s.%N`

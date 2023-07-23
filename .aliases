@@ -93,8 +93,16 @@ alias env='grc --colour=auto env'
 
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
 
+alias ets='~/.go/bin/ets -s -f "%s.%Ls ┃ "'
 
+function cd {
+  builtin cd "$@"
 
+  # Update iTerm2's tab title
+  if [[ $TERM_PROGRAM == "iTerm.app" ]]; then
+    echo -ne "\033]0;$(pwd | sed -e "s#/Users/$(whoami)#~#" -e 's#~/git/##')\007"
+  fi
+}
 # =============================================================================
 # ✨ GIT
 # =============================================================================
@@ -104,8 +112,11 @@ alias gu='gitui'
 function clone {
   url=$1;
   reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
-  echo "Reponame: $reponame"
-  git clone $*;
+  echo "🦄 Reponame: $reponame"
+  echo
+  # git clone $*;
+  gh repo clone $*
+
   cd $reponame;
   echo "" && git log --oneline --graph --date=short -n 5 && echo ""
 }

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+PWD=$(pwd)
+URL=$1
+BASENAME=$(basename $URL | sd '\?.*' '')
+OUTPUT=${2:-$BASENAME}
+TEMPFILE=$(mktemp)
+
+
+# TODO: use --max-time ?
+
+echo "🚀 Downloading: $OUTPUT ..."
+# ets -s -f '%s.%Ls ┃  ' \
+    curl \
+    --silent \
+    --location \
+    --keepalive \
+    --connect-timeout 5 \
+    --retry 1 \
+    --fail \
+    --insecure \
+    --compressed \
+    --progress-bar \
+    -o "$TEMPFILE" \
+    "${URL}"
+
+mv ${TEMPFILE} $PWD/$OUTPUT
+
+SIZE=$(du -h $PWD/$OUTPUT | xargs | cut -d ' ' -f1)
+echo
+echo "Size: $SIZE"

@@ -1,10 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Sun Dec  8 20:24:58 GMT 2013
-# Wrappers /usr/bin/time.
 # Inspired from this blog article : http://www.thegeekstuff.com/2013/10/time-command-format/
 
-# Darren Evans
+if [[ ! -z "${CI}" ]]; then
+  # Github Actions color works in mysterious ways ...
+  BAR="[37m[47m_[49m[39m"
+else
+  BAR="[37m[47m [49m[39m"
+fi
 
 if [ $# -eq 0 ]; then
   echo "Usage: $0 command <argv>..."
@@ -14,47 +17,12 @@ fi
 
 FILE=$(mktemp)
 
-gtime -o $FILE -f "
+time=$(command -v gtime || command -v /usr/bin/time)
+grep=$(command -v ggrep || command -v /usr/bin/grep)
 
-───────────────────────────────────────────────────────────────────────────────
-
-Time
-\t%E\tElapsed real time (in [hours:]minutes:seconds).
-\t%e\tElapsed real time (in seconds).
-\t%S\tTotal number of CPU-seconds that the process spent in kernel mode.
-\t%U\tTotal number of CPU-seconds that the process spent in user mode.
-\t%P\tPercentage of the CPU that this job got, computed as (%U + %S) / %E.
-
-Memory
-\t%M\tMaximum resident set size of the process during its lifetime, in Kbytes.
-\t%t\tAverage resident set size of the process, in Kbytes.
-\t%K\tAverage total (data+stack+text) memory use of the process, in Kbytes.
-\t%D\tAverage size of the process's shared data area, in Kbytes.
-\t%p\tAverage size of the process's shared stack space, in Kbytes.
-\t%X\tAverage size of the process's shared text space, in Kbytes.
-\t%Z\tSystem's page size, in bytes.  This is a per-system constant, but varies between systems.
-\t%F\tNumber of major page faults that occurred while the process was running.  These are faults where the page has
-\t\tto be read in from disk.
-\t%R\tNumber of minor, or recoverable, page faults.  These are faults for pages that are not valid but  which  have
-\t\tnot  yet been claimed by other virtual pages.  Thus the data in the page is still valid but the system tables
-\t\tmust be updated.
-\t%W\tNumber of times the process was swapped out of main memory.
-\t%c\tNumber of times the process was context-switched involuntarily (because the time slice expired).
-\t%w\tNumber of waits: times that the program was context-switched voluntarily, for instance while waiting  for  an
-\t\tI/O operation to complete.
-
-I/O
-\t%I\tNumber of file system inputs by the process.
-\t%O\tNumber of file system outputs by the process.
-\t%r\tNumber of socket messages received by the process.
-\t%s\tNumber of socket messages sent by the process.
-\t%k\tNumber of signals delivered to the process.
-
-\t%x\tExit Status
-
-" "$@"
-
+$time -o $FILE -f "       Total $BAR %es  [%P  %MK  %I/%O]" ets -s -f "%Mm  %S.%Ls $BAR" -- "$@"
 code=$?
-cat $FILE | rg --passthru '(\d+.*\t)'
 
+echo "             $BAR"
+cat $FILE
 exit $code

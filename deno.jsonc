@@ -1,0 +1,20 @@
+{
+  "imports": {
+    "std/": "https://deno.land/std@0.182.0/",
+    "dax/": "https://deno.land/x/dax@0.31.0/",
+    "fmt/": "https://deno.land/std@0.182.0/fmt/",
+    "promise-utils/": "https://cdn.jsdelivr.net/gh/blend/promise-utils/src/",
+    "deno/": "https://cdn.jsdelivr.net/gh/blend/promise-utils/src/"
+  },
+  "fmt": {
+    "options": {
+      "semiColons": false,
+      "singleQuote": true
+    }
+  },
+  "tasks": {
+    "dev": "deno run -A --watch bin/job1.ts",
+    "job1": "deno run -A bin/job1.ts",
+    "update:lockfile": "fd .ts ./bin -tf --threads=1 -X deno cache --import-map=deno.jsonc --unstable --lock=deno.lock --lock-write"
+  }
+}

@@ -10,6 +10,6 @@ echo "✨ Commit files\n"
 stats=$(git diff --cached --shortstat | sed -E 's/ (insertion|insertions|deletion|deletions)//g')
 git commit -m "🔨 BUMP:$stats"
 
-hr
-echo "✨ Push files\n"
-~/.dotjitsu/bin/push
+# hr
+# echo "✨ Push files\n"
+# ~/.dotjitsu/bin/push

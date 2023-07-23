@@ -2,6 +2,10 @@
 
 ulimit -n 10000
 
+if [[ $TERM_PROGRAM == "iTerm.app" ]]; then
+  echo -ne "\033]0;$(pwd | sed -e "s#/Users/$(whoami)#~#" -e 's#~/git/##')\007"
+fi
+
 # ===================================================
 # ⚡️ Plumbing
 # ===================================================
@@ -144,7 +148,7 @@ _evalcache thefuck --alias
 _evalcache zoxide init zsh
 eval "$(fnm env)"                     # fnm (Fast Node Manager)
 
-#_evalcache direnv hook zsh
+#_evalcache direnv hook  zsh
 
 
 # ===================================================
@@ -203,7 +207,7 @@ fpath=(
 zicompinit
 zinit cdreplay
 
-eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(bkt -- atuin init zsh --disable-up-arrow)"
 # eval "$(atuin init zsh)"
 
 # disable-fzf-tab

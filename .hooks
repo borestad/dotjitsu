@@ -13,12 +13,17 @@ auto-cd () {
   # echo
   # echo
   exa -a --group-directories-first --icons
-  [ -f "package.json" ] && cs package.json
+  # [ -f "package.json" ] && cs package.json
 
   #echo
-  [ -d ".git" ] && git recent | sed 's/^[[:space:]]*//'
+  [ -d ".git" ] && echo && git recent | sed 's/^[[:space:]]*//'
   # hr
   # echo
+  # Update iTerm2's tab title
+  if [[ $TERM_PROGRAM == "iTerm.app" ]]; then
+    echo -ne "\033]0;$(pwd | sed -e "s#/Users/$(whoami)#~#" -e 's#~/git/##')\007"
+  fi
+
 }
 
-# chpwd_functions=( auto-cd $chpwd_functions )
+chpwd_functions=( auto-cd $chpwd_functions )
