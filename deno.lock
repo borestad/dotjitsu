@@ -73,5 +73,38 @@
     "https://deno.land/x/dir@1.5.1/data_local_dir/mod.ts": "91eb1c4bfadfbeda30171007bac6d85aadacd43224a5ed721bbe56bc64e9eb66",
     "https://deno.land/x/outdent@v0.8.0/src/index.ts": "6dc3df4108d5d6fedcdb974844d321037ca81eaaa16be6073235ff3268841a22",
     "https://deno.land/x/which@0.3.0/mod.ts": "3e10d07953c14e4ddc809742a3447cef14202cdfe9be6678a1dfc8769c4487e6"
+  },
+  "npm": {
+    "specifiers": {
+      "fdir": "fdir@6.1.0",
+      "path": "path@0.12.7"
+    },
+    "packages": {
+      "fdir@6.1.0": {
+        "integrity": "sha512-274qhz5PxNnA/fybOu6apTCUnM0GnO3QazB6VH+oag/7DQskdYq8lm07ZSm90kEQuWYH5GvjAxGruuHrEr0bcg==",
+        "dependencies": {}
+      },
+      "inherits@2.0.3": {
+        "integrity": "sha512-x00IRNXNy63jwGkJmzPigoySHbaqpNuzKbBOmzK+g2OdZpQ9w+sxCN+VSB3ja7IAge2OP2qpfxTjeNcyjmW1uw==",
+        "dependencies": {}
+      },
+      "path@0.12.7": {
+        "integrity": "sha512-aXXC6s+1w7otVF9UletFkFcDsJeO7lSZBPUQhtb5O0xJe8LtYhj/GxldoL09bBj9+ZmE2hNoHqQSFMN5fikh4Q==",
+        "dependencies": {
+          "process": "process@0.11.10",
+          "util": "util@0.10.4"
+        }
+      },
+      "process@0.11.10": {
+        "integrity": "sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==",
+        "dependencies": {}
+      },
+      "util@0.10.4": {
+        "integrity": "sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==",
+        "dependencies": {
+          "inherits": "inherits@2.0.3"
+        }
+      }
+    }
   }
 }

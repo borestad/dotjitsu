@@ -328,12 +328,14 @@ cask 'font-fira-mono'
 cask 'font-fira-sans'
 cask 'font-firago'
 cask 'font-hack-nerd-font'
-cask 'font-inconsolata'
 cask 'font-inconsolata-g'
+cask 'font-inconsolata'
+cask 'font-jetbrains-mono-nerd-font'
 cask 'font-lato'
-cask 'font-victor-mono-nerd-font'
-cask 'font-victor-mono'
 cask 'font-meslo-lg-nerd-font'
+cask 'font-ubuntu-mono-nerd-font'
+cask 'font-victor-mono-nerd-font'
+
 
 # NERD FONTS
 # ~/Library/Fonts
