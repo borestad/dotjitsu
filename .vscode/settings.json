@@ -26,6 +26,5 @@
     "typescriptreact",
     "yaml"
   ],
-  "prettier.enable": false,
-  "workbench.colorTheme": "Nord"
+  "prettier.enable": false
 }

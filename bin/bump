@@ -1,12 +1,24 @@
 #!/usr/bin/env dash
 
 hr
-echo "✨ Adding files\n"
-git add . --verbose
+echo "🦄 Bump files"
+# Show stat
 
 
-hr
-echo "✨ Commit files\n"
+# If we've already have staged files, use them.
+if [ $(git diff --staged --stat | wc -l) -gt 0 ]; then
+  echo "🦄 Found already staged files"
+  echo
+  git diff --staged --stat
+else
+  git add . --verbose
+fi
+
+
+
+echo
+echo "🦄 Commit files"
+echo
 
 filename=''
 stats=$(git diff --cached --shortstat | sed -E 's/ (insertions?|deletions?|changed?)//g' | sed 's/,//g' | xargs)
