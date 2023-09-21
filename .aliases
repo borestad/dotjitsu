@@ -63,7 +63,7 @@ alias cp='gcp -v'
 alias cpr='rsync -aAHXv --info=progress2 --human-readable'
 alias dfc="dfc -Wdluh -q mount -t apfs"
 alias fd="fd --hidden --exclude '.git'"
-alias gdu="$HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a"
+alias gdu="timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a || (stty sane &> /dev/null; tput reset &> /dev/null; clear;)";
 alias hb='HandBrakeCLI'
 alias killall="killall -v"
 alias less="less --incsearch"

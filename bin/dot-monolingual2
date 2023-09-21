@@ -1,9 +1,10 @@
-#!/usr/bin/env node
+#!/usr/bin/env -S deno run -A
 
 // https://stackoverflow.com/questions/3040677/locale-codes-for-iphone-lproj-folders
 
-const path = require('path')
-const { fdir } = require('fdir')
+import path from 'npm:path'
+import {fdir} from 'npm:fdir'
+
 
 const REGEX = /.*(am|ar|ca|cs|bn|bg|cy|da|de|el|eu|et|en_AU|en_JP|en_CN|en_SG|en_IN|en_CA|es|es|fa|fi|fr|fil|fr|gu|gre|he|hi|hr|hu|id|it|is|ja|ko|kn|ku|lv|lt|ms|ml|mr|nl|nb|no|mai|pa|pl|pt|pt|ro|ru|sk|sr|sl|sw|ta|te|th|tr|uk|vi|zh|zh|yue|German|French|Japanese|Italian|Spanish|Dutch|latin|Latn|valencia)([_-]\w+)?\.lproj$/i
 
@@ -20,6 +21,7 @@ const api = new fdir()
 
 // or asynchronously
 api.withPromise().then((files) => {
+  console.log(files)
   // do something with the result here.
   // console.log(files.length)
   // for (let i = 0; i < 100; i++) {

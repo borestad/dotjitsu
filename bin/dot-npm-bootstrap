@@ -22,12 +22,16 @@ export PATH="$PNPM_HOME:$PATH"
 
 eval $(fnm env)
 
+hr
 echo "☑️  Upgrade node LTS..."
 fnm install --lts
 fnm default lts-latest
 
+hr
 echo "☑️  Set global cache config..."
+# $HOME/.local/share/.fnm/node-versions/v**/installation/etc/npmrc
 touch ~/.npmrc
+
 npm config --global set cache ~/.cache/npm-cache
 npm config --global set fund false
 npm config --global set init-author-email "johan@borestad.com"
@@ -38,12 +42,14 @@ npm config --global set init-version "0.0.1"
 # npm config --global set store-dir ~/.local/share/.pnpm-store
 npm config --global set registry https://registry.npmjs.org/
 
+pnpm config --global set auto-install-peers true
+
 
 # https://github.com/pnpm/pnpm/issues/3361
 # Run below command if the registry have changed
 # pnpm install -g
 
-
+hr
 echo "☑️  Install/upgrade npm|yarn|pnpm"
 corepack enable
 corepack prepare pnpm@latest npm@latest yarn@stable --activate
@@ -79,6 +85,7 @@ args=(
   typescript@latest
   zx@latest
   wrangler@latest
+  puppeteer@latest
 
   # Linters
   prettier@latest
@@ -100,7 +107,7 @@ args=(
 
 #NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
 echo "☑️  Installing global pnpm packages..."
-NODE_ENV=production pnpm add -g --prefer-offline "${args[@]}"
+pnpm add -g "${args[@]}"
 
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
 # npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm

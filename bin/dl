@@ -1,33 +1,113 @@
 #!/usr/bin/env bash
 
-set -o errexit
+# set -o errexit
+# set -e
 
-PWD=$(pwd)
+echo 'begin1'
+#
+# Argument parsing
+#
 URL=$1
-BASENAME=$(basename $URL | sd '\?.*' '')
-OUTPUT=${2:-$BASENAME}
-TEMPFILE=$(mktemp)
+shift 1
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -o) OUTPUT="$2"; shift 2;;
+    -ttl) TTL="$2"; shift 2;;
+    -ci) CI="true"; shift 1;;
+
+    --output=*) OUTPUT="${1#*=}"; shift 1;;
+    --ttl=*) TTL="${1#*=}"; shift 1;;
+    --ci=*) CI="${1#*=}"; shift 1;;
+    --output|--ttl|--ci) echo "$1 requires an argument" >&2; exit 1;;
+
+    -*) echo "unknown option: $1" >&2; exit 1;;
+    # *) echo "$1"; shift 1;;
+    *) shift 1;;
+  esac
+done
 
 
-# TODO: use --max-time ?
+#
+# Helpers
+#
 
-echo "🚀 Downloading: $OUTPUT ..."
-# ets -s -f '%s.%Ls ┃  ' \
-    curl \
+time-now() {
+  date +%s.%N
+}
+
+benchmark() {
+  local start=$1
+  local end=${2:-$(time-now)}
+  printf %.2f $(echo "$end - $start" | bc -l)
+}
+
+touch2() {
+  mkdir -p "$(dirname "$1")" && touch "$1" ;
+}
+
+
+#
+# Main
+#
+
+DIR=$(pwd)
+BASENAME=$(basename $URL | sed 's/?.*//g')
+OUTPUT=${OUTPUT:-$BASENAME}
+TEMPDIR=$(mktemp -d)
+TEMPLOG=$(mktemp)
+
+# Precreate some fancy path (i.e a/b/c/100.zip)
+touch2 $TEMPDIR/$OUTPUT
+cd $TEMPDIR
+
+echo 'begin2  '
+if [[ "$CI" == "true" ]]; then
+  echo "Downloading to $OUTPUT"
+
+  curl \
     --silent \
+    --disable \
+    --show-error \
     --location \
     --keepalive \
-    --connect-timeout 5 \
+    --connect-timeout 10 \
     --retry 1 \
-    --fail \
-    --insecure \
+    --http2 \
+    --fail-with-body \
     --compressed \
-    --progress-bar \
-    -o "$TEMPFILE" \
-    "${URL}"
+    -o $OUTPUT \
+    ${URL} 2>&1
 
-mv ${TEMPFILE} $PWD/$OUTPUT
+  code=$?
+else
+  http \
+    -p b \
+    --download \
+    --compress \
+    --follow \
+    --timeout 10 \
+    --check-status \
+    --output $OUTPUT \
+    ${URL} 2>&1
 
-SIZE=$(du -h $PWD/$OUTPUT | xargs | cut -d ' ' -f1)
-echo
-echo "Size: $SIZE"
+  code=$?
+fi
+
+# cat $TEMPLOG
+
+if [ $code -ne 0 ]; then
+  echo "[$code] $URL"
+  exit $code
+fi
+
+cd $DIR
+touch2 $OUTPUT
+mv $TEMPDIR/$OUTPUT $OUTPUT
+
+if [[ "$CI" == "true" ]]; then
+  SIZE=$(du -bh $OUTPUT | xargs | cut -d ' ' -f1)
+  echo "Done. $SIZE"
+fi
+# APATH=$(readlink -f $OUTPUT)
+# echo "🚀 $OUTPUT"

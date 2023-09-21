@@ -12,10 +12,10 @@ exec > >(tee -i $LOG_LOCATION/cron-hourly-`date +%F--%H%M%S`.log)
 exec 2>&1
 
 
-hr && $HOME/.dotjitsu/bin/dot-node-latest-lts | bat -f
-hr && $HOME/.dotjitsu/bin/dot-brew | bat -f
-hr && $HOME/.dotjitsu/bin/dot-cask | bat -f
-hr && brew upgrade --cask | bat -f
+hr && $HOME/.dotjitsu/bin/dot-node-latest-lts | bat
+hr && $HOME/.dotjitsu/bin/dot-brew | bat
+hr && $HOME/.dotjitsu/bin/dot-cask | bat
+hr && brew upgrade --cask | bat
 
 
 echo "All done! Enjoy a cold one! 🍺 "
