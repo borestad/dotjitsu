@@ -16,7 +16,7 @@ auto-cd () {
   # [ -f "package.json" ] && cs package.json
 
   #echo
-  [ -d ".git" ] && echo && git recent | sed 's/^[[:space:]]*//'
+  # [ -d ".git" ] && echo && git recent | sed 's/^[[:space:]]*//'
   # hr
   # echo
   # Update iTerm2's tab title

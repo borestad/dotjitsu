@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+# set -o errexit
+
+
+###
+#
+# Usage example:
+# memo --ttl=60s -- wget http://speedtest.tele2.net/1MB.zip
+#
+###
+
+#
+# Helpers
+#
+
+TTL=60s
+DIR=$(pwd)
+CACHE_DIR=${BKT_CACHE_DIR:-"$HOME/.cache/bkt"}
+mkdir -p $CACHE_DIR
+
+# https://konsolebox.io/blog/2022/05/14/general-command-line-parsing-solution-without-using-getopt-s.html
+function get_opt_arg {
+    if [[ $1 == *=* ]]; then
+        __=${1#*=}
+        return 1
+    elif [[ ${2+.} ]]; then
+        __=$2
+        return 0 # Tells that shift is needed
+    else
+        echo "No argument provided to option '$1'." >&2
+        exit 1
+    fi
+}
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+    --ttl=*)
+        get_opt_arg "$@" && shift
+        TTL=$__
+        ;;
+    --)
+        CMD="${@:2 }"
+        break
+        ;;
+    esac
+    shift
+done
+
+time-now() {
+  date +%s.%N
+}
+benchmark() {
+  local start=$1
+  local end=${2:-$(time-now)}
+  printf %.2f $(echo "$end - $start" | bc -l)
+}
+
+#
+# Main
+#
+
+TEMPDIR=$(mktemp -d)
+B64KEY=$(echo "$CMD" | base64)
+SHAKEY=$(echo "$B64KEY" | shasum | cut -d ' ' -f1)
+SCOPE="memo.$SHAKEY"
+
+# Check if command is already cached
+cd $TEMPDIR
+TIME=$(bkt --cache-dir $CACHE_DIR --scope="$SCOPE" --ttl $TTL -- bash -c "date +%s.%N; echo \"$CMD\" > \"$B64KEY.ttl\"") #&> /dev/null
+
+# If not cached - run command again
+if [[ -f "$B64KEY.ttl" ]]; then
+  cd $DIR
+  eval "$CMD"
+  code=$?
+
+  # If exit code > 0 - delete the cache key (emulate behavior of `bkt --discard-failures`)
+  if [ $code -ne 0 ]; then
+    cd $CACHE_DIR || (echo 'Cache dir does not exist'; exit 1)
+    rm -f $(realpath ./bkt*-cache/keys/$SCOPE*)
+    rm -f ./bkt*-cache/keys/$SCOPE*
+
+    exit $code
+  fi
+
+else
+  # Else, command is cached. Print some stats
+  TTL_SINCE=$(printf %.1f $(benchmark $TIME))
+  echo "CACHED: $TTL_SINCE / $TTL | $CMD"
+fi

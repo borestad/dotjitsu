@@ -155,6 +155,32 @@ paused.conf
 # History
 .*_history
 
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z*
+*.dmg*
+*.gz*
+*.iso*
+*.jar*
+*.rar*
+*.tar*
+*.zip*
+
+
+# Packages #
+############
+
 https://github.com/borestad/dotjitsu/compare/GitHub
 
 .zsh_sessions
+
+# Crap
+/foo
+/apa
+/test
+/1
+/2
+/3
+

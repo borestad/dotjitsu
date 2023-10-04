@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+if [[ $# < 1 ]]; then
+    echo "Not enough arguments"
+    echo "usage: $(basename "$0") <filename>"
+		exit 1
+fi
+
+filename=$1
+
+if [ ! -f $filename ]; then
+  touch $filename
+  chmod +x $filename
+  echo "#!/usr/bin/env bash" >> $filename
+  echo "" >> $filename
+  echo "" >> $filename
+  code --goto "$filename:3"
+else
+  echo "file already exists"
+  code --goto "$filename:3"
+fi
+
+
+
+
+

@@ -1,15 +1,3 @@
-#!/usr/bin/env dash
+#!/usr/bin/env bash
 
-hr
-echo "✨ Adding files\n"
-git add . --verbose
-
-
-hr
-echo "✨ Commit files\n"
-stats=$(git diff --cached --shortstat | sed -E 's/ (insertions|deletions)//g')
-git commit --amend -m "🔨 BUMP:$stats"
-
-hr
-echo "✨ Push files\n"
-~/.dotjitsu/bin/push
+git commit --amend "$@"
