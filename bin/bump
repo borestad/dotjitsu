@@ -4,10 +4,12 @@ hr
 echo "🦄 Bump files"
 # Show stat
 
+args="$@"
 
 # If we've already have staged files, use them.
-if [ $(git diff --staged --stat | wc -l) -gt 0 ]; then
-  echo "🦄 Found already staged files"
+NUM_STAGED=$(git diff --staged --name-only | wc -l)
+if [ $NUM_STAGED -gt 0 ]; then
+  echo "🦄 Found ($NUM_STAGED) already staged files"
   echo
   git diff --staged --stat
 else
@@ -29,9 +31,9 @@ if [ $(git diff --cached --numstat | wc -l) -eq 1 ]; then
    filename=$(basename $(git diff --cached --numstat --name-only))
    stats=$(echo $stats | sed 's/1 file//g' | xargs)
 
-   git commit -m "\`️️⚡️ BUMP ⚡️\`  \`$filename $stats\`" -a || true
+   git commit -m "\`️️⚡️ BUMP ⚡️\`  \`$filename $stats\`" $args || true
 else
-  git commit -m "\`️️⚡️ BUMP ⚡️\`  \`$stats\`" -a || true
+  git commit -m "\`️️⚡️ BUMP ⚡️\`  \`$stats\`" -a $args || true
   echo
 fi
 

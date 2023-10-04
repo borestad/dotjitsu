@@ -58262,7 +58262,7 @@
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
-			<integer>1</integer>
+			<integer>0</integer>
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
@@ -58649,7 +58649,11 @@
 			<key>Minimum Contrast</key>
 			<real>0.18424011968150622</real>
 			<key>Mouse Reporting</key>
-			<true/>
+			<false/>
+			<key>Mouse Reporting allow clicks and drags</key>
+			<false/>
+			<key>Mouse Reporting allow mouse wheel</key>
+			<false/>
 			<key>Name</key>
 			<string>johan</string>
 			<key>Non Ascii Font</key>

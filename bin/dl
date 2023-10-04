@@ -3,12 +3,10 @@
 # set -o errexit
 # set -e
 
-echo 'begin1'
 #
 # Argument parsing
 #
-URL=$1
-shift 1
+CI=false
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -22,11 +20,17 @@ while [ "$#" -gt 0 ]; do
     --output|--ttl|--ci) echo "$1 requires an argument" >&2; exit 1;;
 
     -*) echo "unknown option: $1" >&2; exit 1;;
-    # *) echo "$1"; shift 1;;
-    *) shift 1;;
+    *) URL="$1"; shift 1;;
   esac
 done
 
+function exists() {
+    builtin command -V "$1" >/dev/null 2>&1
+}
+
+if ! exists xh; then
+  CI=true
+fi
 
 #
 # Helpers
@@ -46,7 +50,6 @@ touch2() {
   mkdir -p "$(dirname "$1")" && touch "$1" ;
 }
 
-
 #
 # Main
 #
@@ -61,12 +64,21 @@ TEMPLOG=$(mktemp)
 touch2 $TEMPDIR/$OUTPUT
 cd $TEMPDIR
 
-echo 'begin2  '
-if [[ "$CI" == "true" ]]; then
-  echo "Downloading to $OUTPUT"
 
-  curl \
-    --silent \
+if [[ "$CI" == "true" ]]; then
+  args='--no-progress-meter --silent'
+else
+  args='--progress-bar'
+fi
+
+start=$(time-now)
+
+if [[ "$CI" == "true" ]]; then
+  echo "Downloading $OUTPUT from $URL"
+
+  args='--no-progress-meter --silent'
+  COLUMNS=80 curl \
+    $args \
     --disable \
     --show-error \
     --location \
@@ -76,28 +88,23 @@ if [[ "$CI" == "true" ]]; then
     --http2 \
     --fail-with-body \
     --compressed \
-    -o $OUTPUT \
+    -o "$OUTPUT" \
     ${URL} 2>&1
-
-  code=$?
 else
-  http \
-    -p b \
-    --download \
-    --compress \
-    --follow \
-    --timeout 10 \
+  COLUMNS=80 xh \
+    -p bB \
     --check-status \
-    --output $OUTPUT \
+    --download \
+    --output "$OUTPUT" \
     ${URL} 2>&1
-
-  code=$?
 fi
+
+code=$?
 
 # cat $TEMPLOG
 
 if [ $code -ne 0 ]; then
-  echo "[$code] $URL"
+  echo "❌ [Error: $code] $URL"
   exit $code
 fi
 
@@ -105,9 +112,9 @@ cd $DIR
 touch2 $OUTPUT
 mv $TEMPDIR/$OUTPUT $OUTPUT
 
+stop=$(benchmark $start)
+
 if [[ "$CI" == "true" ]]; then
   SIZE=$(du -bh $OUTPUT | xargs | cut -d ' ' -f1)
-  echo "Done. $SIZE"
+  echo "DONE ... in ${stop}s. $SIZE"
 fi
-# APATH=$(readlink -f $OUTPUT)
-# echo "🚀 $OUTPUT"

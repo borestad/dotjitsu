@@ -232,7 +232,7 @@ brew 'navi'
 brew 'wrk'
 brew 'viddy'
 brew 'streamlink'
-
+brew 'liujianping/tap/job'
 
 # ================================
 # AWS
