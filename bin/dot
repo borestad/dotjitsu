@@ -23,7 +23,7 @@ fnm default lts-latest
 
 
 ln -sfv ~/.dotjitsu/.zshrc ~/
-. ~/.dotjitsu/.env
+. ~/.dotjitsu/.env$
 ~/.dotjitsu/bin/dot-symlink
 ~/.private/bin/dotp-symlink
 

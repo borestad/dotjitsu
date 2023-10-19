@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+const fs = require('fs')
+const path = require('path')
+const HOME = require('os').homedir()
+const { execSync: exec } = require('child_process')
+
+const DOTJITSU = path.join(__dirname, '..')
+
+process.chdir(DOTJITSU)
+
+console.log('Symlinking files:\n')
+
+const dotfiles = fs.readdirSync('.').filter((f) => {
+  return (
+    f.startsWith('.') &&
+    !f.startsWith('.DS_Store') &&
+    !f.endsWith('$') &&
+    (fs.statSync(f).isFile() || fs.statSync(f).isSymbolicLink())
+  )
+})
+
+for (const file of dotfiles) {
+  const target = path.join(HOME, file)
+
+  try {
+    fs.unlinkSync(target)
+  } catch (error) {}
+
+  fs.symlinkSync(path.join(DOTJITSU, file), target)
+  console.log(target)
+}
+
+// Manual adding files/folders
+exec(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
+exec(`ln -sfv ${DOTJITSU}/packages/youtube-dl ${HOME}/.config/`)
+exec(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Sync/OpenEmu" "${HOME}/Library/Application Support/"`)
+exec(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Sync" "${HOME}/"`)
+exec(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs" "${HOME}/iCloud"`)
+// console.log(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Sync/OpenEmu" "${HOME}/Library/Application Support/"`)

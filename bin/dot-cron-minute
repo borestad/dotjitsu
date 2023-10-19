@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -m
 
-source ~/.dotjitsu/.env
+source ~/.dotjitsu/.env$
 export TERM='xterm-256color'
 LOG_LOCATION=~/logs/cron/minute/`date +%F`
 TERM="xterm-256color"

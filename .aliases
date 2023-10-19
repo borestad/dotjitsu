@@ -11,13 +11,14 @@ NUM_CORES=`getconf _NPROCESSORS_ONLN`
 # List aliases
 # =============================================================================
 alias gls='gls --color=auto --group-directories-first'
-alias exa='exa --group-directories-first --color=always'
+alias exa='eza --group-directories-first --color=always'
+alias eza='eza --group-directories-first --color=always'
 alias ls='gls --color --group-directories-first'
-alias l='exa -Ga --icons'          # Lists in multi column, hidden files.
-# alias ll='exa --icons -Lah --no-permissions --no-user -T -L1'
-alias ll='exa --icons -la --no-permissions --no-user -T -L1 --no-time --icons'
-alias lll='exa --icons -la --no-permissions --no-user -T --no-time --git --icons -g -R --git-ignore -L2 -I "*.git"'
-#alias ll='exa -lah'      # Lists in one column, hidden files.
+alias l='eza -Ga --icons'          # Lists in multi column, hidden files.
+# alias ll='eza --icons -Lah --no-permissions --no-user -T -L1'
+alias ll='eza --icons -la --no-permissions --no-user -T -L1 --no-time --icons'
+alias lll='eza --icons -la --no-permissions --no-user -T --no-time --git --icons -g -R --git-ignore -L2 -I "*.git"'
+#alias ll='eza -lah'      # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
 alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.

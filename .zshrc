@@ -133,7 +133,7 @@ zinit ice wait lucid
 zinit light unixorn/git-extra-commands
 
 # ■■■ Snippets
-zinit snippet ~/.dotjitsu/.env
+zinit snippet ~/.dotjitsu/.env$
 zinit snippet ~/.dotjitsu/.hooks
 zinit snippet ~/.dotjitsu/.aliases
 zinit snippet ~/.dotjitsu/.keybindings
@@ -207,7 +207,7 @@ fpath=(
 zicompinit
 zinit cdreplay
 
-eval "$(bkt -- atuin init zsh --disable-up-arrow)"
+# eval "$(bkt -- atuin init zsh --disable-up-arrow)"
 # eval "$(atuin init zsh)"
 
 # disable-fzf-tab

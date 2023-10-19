@@ -86,11 +86,11 @@ brew 'duf'                          # Disk Usage/Free Utility - a better 'df' al
 brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
 brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
-brew 'exa'                          # Modern replacement for 'ls
+brew 'eza'                          # Modern replacement for 'ls
 brew 'exercism'                     # Command-line tool to interact with exercism.io
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
-brew 'fasd'                         # CLI tool for quick access to files and directories
+#brew 'fasd'                         # CLI tool for quick access to files and directories
 brew 'fastmod'                      #
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video

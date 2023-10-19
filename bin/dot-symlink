@@ -1,40 +1,60 @@
-#!/usr/bin/env node
+#!/usr/bin/env bash
 
-const fs = require('fs')
-const path = require('path')
-const HOME = require('os').homedir()
-const { execSync: exec } = require('child_process')
+cd "$(dirname $0)"
 
-const DOTJITSU = path.join(__dirname, '..')
+GITROOT=$(git rev-parse --show-toplevel)
+DOTJITSU=$GITROOT
 
-process.chdir(DOTJITSU)
+echo ''; hr -
+echo 'Symlink ...'
 
-console.log('Symlinking files:\n')
 
-const dotfiles = fs.readdirSync('.').filter((f) => {
-  return (
-    f.startsWith('.') &&
-    !f.startsWith('.DS_Store') &&
-    !f.endsWith('$') &&
-    (fs.statSync(f).isFile() || fs.statSync(f).isSymbolicLink())
-  )
-})
+BASEFILES=(
+  # ssh
+  # crontab
+)
 
-for (const file of dotfiles) {
-  const target = path.join(HOME, file)
+cd $HOME
 
-  try {
-    fs.unlinkSync(target)
-  } catch (error) {}
+ln -sfv $DOTJITSU/.ackrc
+ln -sfv $DOTJITSU/.agignore
+ln -sfv $DOTJITSU/.aliases
+ln -sfv $DOTJITSU/.bash_profile
+ln -sfv $DOTJITSU/.bashrc
+ln -sfv $DOTJITSU/.curlrc
+ln -sfv $DOTJITSU/.docker-aliases
+ln -sfv $DOTJITSU/.editorconfig
+ln -sfv $DOTJITSU/.env$ $HOME/.env
+ln -sfv $DOTJITSU/.eslintrc
+ln -sfv $DOTJITSU/.eslintrc.js
+ln -sfv $DOTJITSU/.gitattributes
+ln -sfv $DOTJITSU/.gitconfig
+ln -sfv $DOTJITSU/.gitignore
+ln -sfv $DOTJITSU/.goaccessrc
 
-  fs.symlinkSync(path.join(DOTJITSU, file), target)
-  console.log(target)
-}
-
-// Manual adding files/folders
-exec(`ln -sfv ${DOTJITSU}/packages/.hammerspoon ${HOME}/`)
-exec(`ln -sfv ${DOTJITSU}/packages/youtube-dl ${HOME}/.config/`)
-exec(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Sync/OpenEmu" "${HOME}/Library/Application Support/"`)
-exec(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Sync" "${HOME}/"`)
-exec(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs" "${HOME}/iCloud"`)
-// console.log(`ln -sfv "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Sync/OpenEmu" "${HOME}/Library/Application Support/"`)
+#.htoprc
+ln -sfv $DOTJITSU/.hushlogin
+ln -sfv $DOTJITSU/.ignore
+#.iterm2
+#.iterm2_shell_integration.zsh
+#.keybindings
+#.mackup.cfg
+ln -sfv $DOTJITSU/.nanorc
+#.oh-my-zsh
+ln -sfv $DOTJITSU/.p10k.zsh
+#.prettierrc.js
+ln -sfv $DOTJITSU/.psqlrc
+ln -sfv $DOTJITSU/.shell
+ln -sfv $DOTJITSU/.tigrc
+ln -sfv $DOTJITSU/.tmux.conf
+ln -sfv $DOTJITSU/.tmux.conf.local
+ln -sfv $DOTJITSU/.vnstatrc
+ln -sfv $DOTJITSU/.wgetrc
+ln -sfv $DOTJITSU/.zshrc
+ln -sfv $DOTJITSU/.zlogin
+ln -sfv $DOTJITSU/.zlogout
+ln -sfv $DOTJITSU/.zplugins
+ln -sfv $DOTJITSU/.zpreztorc
+ln -sfv $DOTJITSU/.zprofile
+ln -sfv $DOTJITSU/.zshenv
+ln -sfv $DOTJITSU/.zshrc

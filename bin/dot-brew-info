@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # set -Eeuo pipefail
 
-source ~/.dotjitsu/.env
+source ~/.dotjitsu/.env$
 
 # Setup
 LOG_LOCATION="$HOME/logs/brew"
