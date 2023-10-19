@@ -19,11 +19,11 @@ exec 2>&1
 mkdir -p ~/.config/cache && cd "$_"
 
 echo 'Fetch https://formulae.brew.sh/api/formula.json'
-wget https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && \
+wget --compression=auto https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && \
   mv brew-formula.json.tmp brew-formula.json
 
 echo 'Fetch https://formulae.brew.sh/api/cask.json'
-wget https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && \
+wget --compression=auto https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && \
   mv brew-cask.json.tmp brew-cask.json
 
 cat brew-formula.json | jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \

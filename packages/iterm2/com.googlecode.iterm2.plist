@@ -58262,7 +58262,7 @@
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>

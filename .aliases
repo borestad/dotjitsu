@@ -67,7 +67,7 @@ alias fd="fd --ignore-case --hidden --exclude '.git'"
 #alias gdu="timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a || (stty sane &> /dev/null; tput reset &> /dev/null; clear;)";
 
 function gdu() {
-  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
+  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -a "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
 }
 
 alias hb='HandBrakeCLI'
