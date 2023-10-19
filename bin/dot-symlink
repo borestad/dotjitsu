@@ -31,6 +31,7 @@ ln -sfv $DOTJITSU/.gitattributes
 ln -sfv $DOTJITSU/.gitconfig
 ln -sfv $DOTJITSU/.gitignore
 ln -sfv $DOTJITSU/.goaccessrc
+ln -sfv $DOTJITSU/.eget.toml
 
 #.htoprc
 ln -sfv $DOTJITSU/.hushlogin

@@ -218,5 +218,5 @@ zinit cdreplay
 #dotenv
 
 # Wasmer
-export WASMER_DIR="/Users/johan/.config/wasmer"
+export WASMER_DIR="$HOME/.config/wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
