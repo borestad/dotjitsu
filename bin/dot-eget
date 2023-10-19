@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
 
-eget projectdiscovery/katana
-eget probablykasper/cpc
+mkdir -p ~/.local/bin
+
+if ! command -v eget > /dev/null 2>&1; then brew install eget; fi
+if ! command -v bkt > /dev/null 2>&1; then brew install bkt; fi
+
+function dl() {
+  bkt --ttl 60min -- eget "$1"
+}
+
+dl projectdiscovery/katana
+dl probablykasper/cpc
+dl natesales/q
+dl denoland/deno
+dl Schniz/fnm
+dl toumorokoshi/tome

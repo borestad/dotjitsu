@@ -87,6 +87,7 @@ brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
 brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
 brew 'eza'                          # Modern replacement for 'ls
+brew 'eget'                         # Easily install prebuilt binaries from GitHub
 brew 'exercism'                     # Command-line tool to interact with exercism.io
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
@@ -232,6 +233,8 @@ brew 'navi'
 brew 'wrk'
 brew 'viddy'
 brew 'streamlink'
+brew 'qemu'
+brew 'macpine'
 brew 'liujianping/tap/job'
 
 # ================================
@@ -328,7 +331,6 @@ cask 'font-fira-mono'
 cask 'font-fira-sans'
 cask 'font-firago'
 cask 'font-hack-nerd-font'
-cask 'font-inconsolata-g'
 cask 'font-inconsolata'
 cask 'font-jetbrains-mono-nerd-font'
 cask 'font-lato'
