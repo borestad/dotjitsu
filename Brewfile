@@ -10,7 +10,6 @@ tap 'homebrew/homebrew-core'
 tap 'homebrew/services'
 tap 'homebrew/cask-fonts'
 tap 'homebrew/cask-versions'
-tap 'homebrew/cask-drivers'
 
 
 # ================================
@@ -26,6 +25,7 @@ brew 'golang'
 brew 'python'                       # Interpreted, interactive, object-oriented programming language
 brew 'python3'                      # Interpreted, interactive, object-oriented programming language
 brew 'rust'                         # Safe, concurrent, practical language
+brew 'deno'                         # Secure runtime for JavaScript and TypeScript
 
 # ================================
 # Virtual Machine stuff
