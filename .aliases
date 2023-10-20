@@ -76,6 +76,7 @@ alias less="less --incsearch"
 alias mkdir='gmkdir -pv'
 #alias mtr="grc -es --colour=auto mtr"
 alias mv='gmv -vi'
+alias grep="$HOMEBREW_PREFIX/bin/ggrep -i"
 alias pgrep='pgrep -fli'
 alias pigz='pigz -v'
 alias qmv='qmv -e "subl -w -n" -f destination-only'
