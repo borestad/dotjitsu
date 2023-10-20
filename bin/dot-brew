@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
-set -Eeuo pipefail
+# set -Eeuo pipefail
 
-source ~/.dotjitsu/.env$
+cd "$(dirname $0)"
+ROOT=$(git rev-parse --show-toplevel)
+HOMEBREW_PREFIX=$(brew --prefix)
+
+source $ROOT/.env$
+
 
 # Setup
 LOG_LOCATION="$HOME/logs/brew"
