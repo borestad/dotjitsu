@@ -15,7 +15,7 @@ fi
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=${HOME}/.config}
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:=${HOME}/.cache}
 export XDG_DATA_HOME=${XDG_DATA_HOME:=${HOME}/.local/share}
-export FNM_DIR="$XDG_DATA_HOME/.fnm"
+export FNM_DIR="$XDG_DATA_HOME/fnm"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
@@ -32,7 +32,7 @@ echo "☑️  Set global cache config..."
 # $HOME/.local/share/.fnm/node-versions/v**/installation/etc/npmrc
 touch ~/.npmrc
 
-npm config --global set cache ~/.cache/npm-cache
+#npm config --global set cache ~/.cache/npm-cache
 npm config --global set fund false
 npm config --global set init-author-email "johan@borestad.com"
 npm config --global set init-author-name "Johan Borestad"
@@ -42,7 +42,7 @@ npm config --global set init-version "0.0.1"
 # npm config --global set store-dir ~/.local/share/.pnpm-store
 npm config --global set registry https://registry.npmjs.org/
 
-pnpm config --global set auto-install-peers true
+pnpm config --global set auto-install-peers false
 
 
 # https://github.com/pnpm/pnpm/issues/3361
@@ -74,7 +74,6 @@ args=(
   jase@latest
   jq.node@latest
   local-web-server@latest
-  netlify-cli@latest
   node-notifier-cli@latest
   np@latest
   serverless@latest

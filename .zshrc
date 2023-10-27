@@ -146,7 +146,7 @@ zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-compl
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
 _evalcache thefuck --alias
 _evalcache zoxide init zsh
-eval "$(fnm env)"                     # fnm (Fast Node Manager)
+eval "$(fnm env --use-on-cd --version-file-strategy recursive)"
 
 #_evalcache direnv hook  zsh
 
