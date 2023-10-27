@@ -76,7 +76,7 @@ export XDG_DATA_HOME=${XDG_DATA_HOME:=${HOME}/.local/share}
 # ===================================================
 # ⚡️ FNM
 # ===================================================
-export FNM_DIR="$XDG_DATA_HOME/.fnm"
+export FNM_DIR="$XDG_DATA_HOME/fnm"
 
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # ~/.macos — https://mths.be/macos
+# https://macos-defaults.com/misc/applekeyboardfnstate.html
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
@@ -30,14 +31,14 @@ echo "☑️  Disable the sound effects in UI"
 defaults write NSGlobalDomain com.apple.sound.beep.volume -int 0
 defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0
 
-echo "☑️  Enable volume change feedback"
-defaults write NSGlobalDomain com.apple.sound.beep.feedback -bool true
+#echo "☑️  Enable volume change feedback"
+#defaults write NSGlobalDomain com.apple.sound.beep.feedback -bool true
 
-echo "☑️  Disable transparency in the menu bar and elsewhere on Yosemite"
+# echo "☑️  Disable transparency in the menu bar and elsewhere on Yosemite"
 # defaults write com.apple.universalaccess reduceTransparency -bool true
 
-echo "☑️  Set highlight color to green"
-defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
+#echo "☑️  Set highlight color to green"
+#defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
 
 echo "☑️  Set sidebar icon size to medium"
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
@@ -46,8 +47,8 @@ echo "☑️  Show scrollbars setting"
 defaults write NSGlobalDomain AppleShowScrollBars -string "Automatic"
 # Possible values: 'WhenScrolling', 'Automatic' and 'Always'
 
-echo "☑️  Disable the over-the-top focus ring animation"
-defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
+#echo "☑️  Disable the over-the-top focus ring animation"
+#defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
 
 echo "☑️  Adjust toolbar title rollover delay"
 defaults write NSGlobalDomain NSToolbarTitleViewRolloverDelay -float 0
@@ -132,28 +133,28 @@ echo -e "\n\nTrackpad, mouse, keyboard, Bluetooth accessories, and input" && hr
 ###############################################################################
 
 echo "☑️  Trackpad: enable tap to click for this user and for the login screen"
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+#defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+#defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
-echo "☑️  Trackpad: map bottom right corner to right-click"
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
+#echo "☑️  Trackpad: map bottom right corner to right-click"
+#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
+#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+#defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
+#defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 
 echo "☑️  Disable “natural” (Lion-style) scrolling"
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 echo "☑️  Increase sound quality for Bluetooth headphones/headsets"
 #defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Max (editable)" 80
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" 80
-defaults write com.apple.BluetoothAudioAgent "Apple Initial Bitpool (editable)" 80
-defaults write com.apple.BluetoothAudioAgent "Apple Initial Bitpool Min (editable)" 80
-defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool" 80
-defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool Max" 80
-defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool Min" 80
+#defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Max (editable)" 80
+#defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" 80
+#defaults write com.apple.BluetoothAudioAgent "Apple Initial Bitpool (editable)" 80
+#defaults write com.apple.BluetoothAudioAgent "Apple Initial Bitpool Min (editable)" 80
+#defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool" 80
+#defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool Max" 80
+#defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool Min" 80
 
 echo "☑️  Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
@@ -162,7 +163,7 @@ defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 # defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 # defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
 
-echo "☑️  Follow the keyboard focus while zoomed in"
+# echo "☑️  Follow the keyboard focus while zoomed in"
 # defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
 echo "☑️  Disable press-and-hold for keys in favor of key repeat"
@@ -236,9 +237,9 @@ sudo pmset -a hibernatemode 0
 echo -e "\n\nScreen" && hr
 ###############################################################################
 
-echo "☑️  Require password immediately after sleep or screen saver begins"
-defaults write com.apple.screensaver askForPassword -int 1
-defaults write com.apple.screensaver askForPasswordDelay -int 0
+#echo "☑️  Require password immediately after sleep or screen saver begins"
+#defaults write com.apple.screensaver askForPassword -int 1
+#defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 echo "☑️  Save screenshots to the desktop"
 mkdir -p ${HOME}/Desktop/screenshots
@@ -264,8 +265,8 @@ echo -e "\n\nFinder" && hr
 echo "☑️  Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons"
 defaults write com.apple.finder QuitMenuItem -bool true
 
-echo "☑️  Finder: disable window animations and Get Info animations"
-defaults write com.apple.finder DisableAllAnimations -bool true
+echo "☑️  Finder: Show Titlebar icon"
+defaults write com.apple.universalaccess "showWindowTitlebarIcons" -bool "true"
 
 echo "☑️  Set Desktop as the default location for new Finder windows"
 # For other paths, use 'PfLo' and 'file:///full/path/here/'
@@ -401,45 +402,39 @@ defaults write com.apple.dock show-process-indicators -bool true
 # Show only open applications in the Dock
 #defaults write com.apple.dock static-only -bool true
 
-echo "☑️  Don’t animate opening applications from the Dock"
-defaults write com.apple.dock launchanim -bool false
+#echo "☑️  Don’t animate opening applications from the Dock"
+#defaults write com.apple.dock launchanim -bool false
 
 echo "☑️  Speed up Mission Control animations"
 defaults write com.apple.dock expose-animation-duration -float 0.1
 
-echo "☑️  Don’t group windows by application in Mission Control"
+#echo "☑️  Don’t group windows by application in Mission Control"
 # (i.e. use the old Exposé behavior instead)
-defaults write com.apple.dock expose-group-by-app -bool false
+#defaults write com.apple.dock expose-group-by-app -bool false
 
-echo "☑️  Disable Dashboard"
-defaults write com.apple.dashboard mcx-disabled -bool true
+#echo "☑️  Don’t automatically rearrange Spaces based on most recent use"
+#defaults write com.apple.dock mru-spaces -bool false
 
-echo "☑️  Don’t show Dashboard as a Space"
-defaults write com.apple.dock dashboard-in-overlay -bool true
+echo "☑️  Set the auto-hiding Dock delay"
+defaults write com.apple.dock autohide-delay -float 0.5
 
-echo "☑️  Don’t automatically rearrange Spaces based on most recent use"
-defaults write com.apple.dock mru-spaces -bool false
-
-echo "☑️  Remove the auto-hiding Dock delay"
-defaults write com.apple.dock autohide-delay -float 0
-
-echo "☑️  Remove the animation when hiding/showing the Dock"
-defaults write com.apple.dock autohide-time-modifier -float 0
+#echo "☑️  Remove the animation when hiding/showing the Dock"
+#defaults write com.apple.dock autohide-time-modifier -float 0
 
 echo "☑️  Automatically hide and show the Dock"
-defaults write com.apple.dock autohide -bool false
+defaults write com.apple.dock autohide -bool true
 
 echo "☑️  Make Dock icons of hidden applications translucent"
 defaults write com.apple.dock showhidden -bool true
 
-echo "☑️  Don’t show recent applications in Dock"
-defaults write com.apple.dock show-recents -bool false
+#echo "☑️  Don’t show recent applications in Dock"
+#defaults write com.apple.dock show-recents -bool false
 
 #echo "☑️  Disable the Launchpad gesture (pinch with thumb and three fingers)"
 #defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
 
-echo "☑️  Reset Launchpad, but keep the desktop wallpaper intact"
-find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+#echo "☑️  Reset Launchpad, but keep the desktop wallpaper intact"
+#find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
 
 echo "☑️  Add iOS & Watch Simulator to Launchpad"
 sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
@@ -488,8 +483,8 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 echo "☑️  Show the full URL in the address bar (note: this still hides the scheme)"
 defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 
-echo "☑️  Set Safari’s home page to 'about:blank' for faster loading"
-defaults write com.apple.Safari HomePage -string "about:blank"
+#echo "☑️  Set Safari’s home page to 'about:blank' for faster loading"
+#defaults write com.apple.Safari HomePage -string "about:blank"
 
 echo "☑️  Prevent Safari from opening ‘safe’ files automatically after downloading"
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
@@ -631,7 +626,7 @@ echo -e "\n\nSpotlight" && hr
 # Load new settings before rebuilding the index
 # killall mds > /dev/null 2>&1
 # Make sure indexing is enabled for the main volume
-sudo mdutil -i on / > /dev/null
+# sudo mdutil -i on / > /dev/null
 # Rebuild the index from scratch
 #sudo mdutil -E / > /dev/null
 
@@ -689,11 +684,11 @@ echo -e "\n\nAddress Book, Dashboard, iCal, TextEdit, and Disk Utility" && hr
 echo "☑️  Enable the debug menu in Address Book"
 defaults write com.apple.addressbook ABShowDebugMenu -bool true
 
-echo "☑️  Enable Dashboard dev mode (allows keeping widgets on the desktop)"
-defaults write com.apple.dashboard devmode -bool true
+#echo "☑️  Enable Dashboard dev mode (allows keeping widgets on the desktop)"
+#defaults write com.apple.dashboard devmode -bool true
 
-echo "☑️  Enable the debug menu in iCal (pre-10.8)"
-defaults write com.apple.iCal IncludeDebugMenu -bool true
+#echo "☑️  Enable the debug menu in iCal (pre-10.8)"
+#defaults write com.apple.iCal IncludeDebugMenu -bool true
 
 echo "☑️  Use plain text mode for new TextEdit documents"
 defaults write com.apple.TextEdit RichText -int 0
@@ -714,11 +709,11 @@ defaults write com.apple.QuickTimePlayerX MGPlayMovieOnOpen -bool true
 echo -e "\n\nMac App Store"  && hr
 ###############################################################################
 
-echo "☑️  Enable the WebKit Developer Tools in the Mac App Store"
-defaults write com.apple.appstore WebKitDeveloperExtras -bool true
+#echo "☑️  Enable the WebKit Developer Tools in the Mac App Store"
+#defaults write com.apple.appstore WebKitDeveloperExtras -bool true
 
-echo "☑️  Enable Debug Menu in the Mac App Store"
-defaults write com.apple.appstore ShowDebugMenu -bool true
+#echo "☑️  Enable Debug Menu in the Mac App Store"
+#defaults write com.apple.appstore ShowDebugMenu -bool true
 
 echo "☑️  Enable the automatic update check"
 defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
@@ -732,8 +727,8 @@ defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
 echo "☑️  Install System data files & security updates"
 defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 
-echo "☑️  Automatically download apps purchased on other Macs"
-defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1
+#echo "☑️  Automatically download apps purchased on other Macs"
+#defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1
 
 echo "☑️  Turn on app auto-update"
 defaults write com.apple.commerce AutoUpdate -bool true
@@ -745,8 +740,8 @@ defaults write com.apple.commerce AutoUpdateRestartRequired -bool false
 echo -e "\n\nPhotos" && hr
 ###############################################################################
 
-echo "☑️  Prevent Photos from opening automatically when devices are plugged in"
-defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+#echo "☑️  Prevent Photos from opening automatically when devices are plugged in"
+#defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
 ###############################################################################
 echo -e "\n\nMessages" && hr

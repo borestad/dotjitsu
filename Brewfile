@@ -85,7 +85,7 @@ brew 'dprint'                       #
 brew 'duf'                          # Disk Usage/Free Utility - a better 'df' alternative
 brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
-brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
+#brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
 brew 'eza'                          # Modern replacement for 'ls
 brew 'eget'                         # Easily install prebuilt binaries from GitHub
 brew 'exercism'                     # Command-line tool to interact with exercism.io
@@ -100,7 +100,7 @@ brew 'fnm'                          # Fast and simple Node.js version manager
 brew 'fping'                        # Scriptable ping program for checking if multiple hosts are up
 brew 'fselect'                      # Find files with SQL-like queries
 brew 'fswatch'                      # Monitor a directory for changes and run a shell command
-brew 'fx'                           # Terminal JSON viewer
+#brew 'fx'                           # Terminal JSON viewer
 brew 'fzf'                          # Command-line fuzzy finder written in Go
 brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
 brew 'gdu',link: false              #
@@ -192,7 +192,7 @@ brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 brew 'starship'                     # Cross-shell prompt for astronauts
 brew 'stress'                       # Tool to impose load on and stress test a computer system
-brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
+#brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
 brew 'svn'                          #
 brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
 brew 'sysbench'                     # System performance benchmark tool
