@@ -103,6 +103,7 @@ prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
 prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
 prepend-path "$HOMEBREW_PREFIX/opt/gnu-which/libexec/gnubin"
 
+append-path "$HOME/.deno/bin:$PATH"
 append-path "$HOME/.go/bin"
 append-path "$HOME/.local/bin"
 append-path "$HOME/.repos/git-friendly"

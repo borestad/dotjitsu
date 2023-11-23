@@ -54,6 +54,9 @@ rm -f $HOMEBREW_PREFIX/share/zsh/site-functions/_git
 # fi
 # time cd /opt/homebrew/bin/ && find . -maxdepth 1 -type l -print0 | xargs -P 16 -0 -I {} bash -c 'sudo ln -sf /opt/homebrew/bin/"$(basename {})" /usr/local/bin'
 
+# Fixes for self updating binaries
+chmod 711 $(command -v deno)
+
 echo ""
 echo "All done! Enjoy a cold one! 🍺 "
 echo ""

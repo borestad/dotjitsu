@@ -47,9 +47,8 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-time-now() {
-  date +%s.%N
-}
+time-now() { date +%s.%N; }
+
 benchmark() {
   local start=$1
   local end=${2:-$(time-now)}
@@ -59,10 +58,16 @@ benchmark() {
 #
 # Main
 #
-
 TEMPDIR=$(mktemp -d)
-B64KEY=$(echo "$CMD" | base64)
-SHAKEY=$(echo "$B64KEY" | shasum | cut -d ' ' -f1)
+B64KEY=$(echo "$CMD" | base64 -w0)
+SHAKEY=$(echo "$B64KEY" | sha1sum | cut -d ' ' -f1)
+SHAKEY2=$(echo "$CMD" | sha1sum)
+
+echo '------'
+echo $B64KEY
+echo $SHAKEY
+echo $SHAKEY2
+echo '------'
 SCOPE="memo.$SHAKEY"
 
 # Check if command is already cached

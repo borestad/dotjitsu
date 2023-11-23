@@ -97,9 +97,6 @@ zinit light romkatv/powerlevel10k
 zinit ice wait lucid
 zinit snippet ~/.dotjitsu/etc/fzf.zsh
 
-# ■■■ fasd (z) with fzf
-#zinit snippet ~/.dotjitsu/packages/zsh/fzf-fasd.plugin.zsh
-
 # ■■■ History substring searching
 bindkey -r '^[[A'; bindkey -r '^[[B'
 function __bind_history_keys() {

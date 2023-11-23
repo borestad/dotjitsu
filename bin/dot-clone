@@ -12,7 +12,7 @@ hr
 hr
 
 echo "Updating ZSH Frameworks ..."
-mr -j4 update
+mr -j4 -s update
 hr
 
 cd $HOME/.repos

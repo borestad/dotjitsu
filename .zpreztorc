@@ -35,7 +35,6 @@ zstyle ':prezto:load' zfunction 'zargs' 'zmv'
 #   'terminal' \
 #   'editor' \
 #   'history' \
-#   'fasd' \
 #   'directory' \
 #   'osx' \
 #   'completion' \

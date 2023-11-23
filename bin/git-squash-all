@@ -2,7 +2,12 @@
 #
 # Squashes history between two commits
 
-MSG=${1:-'Initial commit'}
+
+DATE=$(date '+%Y/%m/%d %H:%M')
+LABEL="SQUASHED"
+TEXT="\`️️⚡️ $LABEL ⚡️\` \`$DATE\`"
+
+MSG=${1:-$TEXT}
 
 echo "✔ Squash all commits"
 git reset $(git commit-tree HEAD^{tree} -m "$MSG");

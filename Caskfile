@@ -144,6 +144,8 @@ cask 'sonos-s1-controller'
 mas 'Wifi Explorer', id: 494803304
 mas 'Tailscale', id: 1475387142
 mas 'Craft', id: 1487937127
+mas 'CotEditor', id: 1024640650
+
 # mas 'Outlook', id: 420212497
 # mas 'Giphy Capture', id: 668208984
 # mas 'Keynote', id: 409183694
