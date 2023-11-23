@@ -1,16 +1,15 @@
 #!/usr/bin/env zsh
 
-ROOT=$(git rev-parse --show-toplevel)
-cd $ROOT
+#ROOT=$(git rev-parse --show-toplevel)
+#cd $ROOT
 
 brew install \
   bat \
-  bkt \
   binutils \
+  bkt \
   coreutils \
   deno\
   eza \
-  fasd \
   fd \
   findutils \
   fnm \
@@ -28,11 +27,12 @@ brew install \
   svn \
   thefuck \
   tig \
-  zsh \
+  zsh
 
 ~/.dotjitsu/bin/dot-brew-core
 
 eval "$(fnm env)"
+
 fnm install --lts
 fnm default lts-latest
 
@@ -46,9 +46,9 @@ fnm default lts-latest
 ~/.dotjitsu/bin/pull $HOME/.dotjitsu
 ~/.dotjitsu/bin/pull $HOME/.private
 
-
 ln -sfv ~/.dotjitsu/.zshrc ~/
 . ~/.dotjitsu/.env$
+
 ~/.dotjitsu/bin/dot-symlink
 ~/.private/bin/dotp-symlink
 

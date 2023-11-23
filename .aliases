@@ -10,6 +10,7 @@ NUM_CORES=`getconf _NPROCESSORS_ONLN`
 # =============================================================================
 # List aliases
 # =============================================================================
+alias dot='ets ~/.dotjitsu/bin/dot'
 alias gls='gls --color=auto --group-directories-first'
 alias exa='eza --group-directories-first --color=always'
 alias eza='eza --group-directories-first --color=always'
@@ -39,7 +40,7 @@ ff () {
   echo -e $result | wc -l
 }
 
-alias fff='ag -G "\.(js?x|ts?x|json)$" '
+#alias fff='ag -G "\.(js?x|ts?x|json)$" '
 alias fic='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp"  | xargs grep --color  -e '
 alias fih='find $( pwd )  -follow -name "*.h" | xargs grep --color -e '
 alias fis='find $( pwd )  -follow  -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.h"  | xargs grep --color  -e '
@@ -170,14 +171,14 @@ alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 # alias zup='rm -f ~/.ssh/control/git@github.com:22; zinit update -p -v; zr'
-alias zup='zinit update -p -v; zr'
+alias zup='zinit update --all -p -v; zr'
 cs () { bat "$@" | jq '.scripts' | tr -d '{}' | sed 's/^[[:space:]]*//' | column -t -s':' 2>/dev/null; }
 touch2() { [[ ! -f "$1" ]] && mkdir -pv "$(dirname "$1")" && gtouch "$1" && echo "gtouch: created file $1"; open -a "Sublime Text" "$1"; }
 zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto ;}
 #alias ncdu="ncdu -x -1bre"
 #alias git=hub
 wherebat () { where "$1" | fzf --preview 'bat -p {}' ;}
-alias ytdl='yt-dlp --config-location ~/.config/youtube-dl/config'
+alias ytdl='yt-dlp --config-location ~/.dotjitsu/packages/youtube-dl/config'
 
 alias duf='duf -hide-fs devfs'
 
@@ -187,7 +188,6 @@ alias hidecursor='tput civis'
 # ⚡️ =============================================================================
 # ️️⚡️ Filters & Pipes
 # ⚡️ =============================================================================
-# alias z='fasd_cd -d'
 alias string-trim-leading-whitespace="sed -e 's/^[[:space:]]*//'"
 alias string-trime-all-whitespace="tr -d '[:space:]')"
 
@@ -198,18 +198,6 @@ find-sum () {
 }
 
 cpw () { cp -v $(command -v $1) $2;  }
-
-#
-# fasd
-#
-# alias a='fasd -a'        # any
-# alias d='fasd -d'        # directory
-# alias f='fasd -f'        # file
-# alias s='fasd -si'       # show / search / select
-# #alias sd='fasd -sid'     # interactive directory selection
-# alias sf='fasd -sif'     # interactive file selection
-# alias z='fasd_cd -d'     # cd, same functionality as j in autojump
-# alias zz='fasd_cd -d -i' # cd with interactive selection
 
 # Intuitive map function
 # For example, to list all directories that contain a certain file:

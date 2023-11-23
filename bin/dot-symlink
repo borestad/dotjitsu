@@ -23,6 +23,7 @@ ln -sfv $DOTJITSU/.bash_profile
 ln -sfv $DOTJITSU/.bashrc
 ln -sfv $DOTJITSU/.curlrc
 ln -sfv $DOTJITSU/.docker-aliases
+ln -sfv $DOTJITSU/dprint.json
 ln -sfv $DOTJITSU/.editorconfig
 ln -sfv $DOTJITSU/.env$ $HOME/.env
 ln -sfv $DOTJITSU/.eslintrc

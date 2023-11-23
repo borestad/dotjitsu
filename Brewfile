@@ -12,6 +12,7 @@ tap 'homebrew/cask-fonts'
 tap 'homebrew/cask-versions'
 
 
+
 # ================================
 # TODO: Sort
 # ================================
@@ -24,7 +25,7 @@ brew 'git'
 brew 'golang'
 brew 'python'                       # Interpreted, interactive, object-oriented programming language
 brew 'python3'                      # Interpreted, interactive, object-oriented programming language
-brew 'rust'                         # Safe, concurrent, practical language
+brew 'rustup'                       #
 brew 'deno'                         # Secure runtime for JavaScript and TypeScript
 
 # ================================
@@ -41,6 +42,10 @@ brew 'packer-completion'
 #brew 'stow'                        # Organize software neatly under a single directory tree (e.g. /usr/local)
 #brew 'goaccess'                     # Log analyzer and interactive viewer for the Apache Webserver
 #brew 'pipx'                         #
+# tap 'mergestat/mergestat'
+# brew 'mergestat'
+
+brew 'ast-grep'
 brew 'jc'
 brew 'ouch'
 brew 'aha'
@@ -68,6 +73,7 @@ brew 'bottom'                       #
 brew 'brimdata/tap/zq'              #
 brew 'broot'                        # New way to see and navigate directory trees
 brew 'caddy'                        # Powerful, enterprise-ready, open source web server with automatic HTTPS
+brew 'clipboard'                    #
 brew 'curl'                         #
 brew 'cliclick'                     # Tool for emulating mouse and keyboard events
 brew 'cloc'                         # Statistics utility to count lines of code
@@ -91,7 +97,6 @@ brew 'eget'                         # Easily install prebuilt binaries from GitH
 brew 'exercism'                     # Command-line tool to interact with exercism.io
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
-#brew 'fasd'                         # CLI tool for quick access to files and directories
 brew 'fastmod'                      #
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
 brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
@@ -144,6 +149,7 @@ brew 'mas'                          # Mac App Store command-line interface
 brew 'masscan'                      # TCP port scanner, scans entire Internet in under 5 minutes
 brew 'micro'                        # Modern and intuitive terminal-based text editor
 brew 'mist'                         # Mac command-line tool that automatically downloads macOS Installers / Firmwares
+brew 'miller'                       #
 brew 'mmv'                          # Move, copy, append, and link multiple files
 brew 'most'                         # Powerful paging program
 brew 'mosh'                         #
@@ -235,6 +241,8 @@ brew 'viddy'
 brew 'streamlink'
 brew 'qemu'
 brew 'macpine'
+brew 'yt-dlp'
+
 brew 'liujianping/tap/job'
 
 # ================================
