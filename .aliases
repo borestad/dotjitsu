@@ -68,7 +68,7 @@ alias fd="fd --ignore-case --hidden --exclude '.git'"
 #alias gdu="timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a || (stty sane &> /dev/null; tput reset &> /dev/null; clear;)";
 
 function gdu() {
-  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -a "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
+  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -x -a -i "$HOME/Library/Mobile Documents" "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
 }
 
 alias hb='HandBrakeCLI'
@@ -192,12 +192,13 @@ alias string-trim-leading-whitespace="sed -e 's/^[[:space:]]*//'"
 alias string-trime-all-whitespace="tr -d '[:space:]')"
 
 find-sum () {
-  DIR='.'; EXT=$1
+  local DIR='.'; local EXT=$1
   # find $DIR -type f -name "*.$EXT" -printf "%s\n" | gawk -M '{t+=$1}END{print t}'
-   gfind $DIR -type f -iname "*$EXT" -printf '%s\n' | gawk -M '{t+=$1}END{print t}'
+  #  gfind $DIR -type f -iname "*$EXT" -printf '%s\n' | gawk -M '{t+=$1}END{print t}'
+  fd --no-ignore-vcs --hidden --glob "$EXT" --print0 $DIR | xargs -0 stat -c "%s" | gawk -M '{t+=$1}END{print t}'
 }
 
-cpw () { cp -v $(command -v $1) $2;  }
+cpw () { cp -v $(command -v $1) $2; }
 
 # Intuitive map function
 # For example, to list all directories that contain a certain file:
@@ -464,7 +465,7 @@ file.size () { wc -c < $1; }
 # Monitor IO in real-time (open files etc).
 files.open () { sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'; }
 # Files used, anywhere on the filesystem
-alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
+alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep';
 # Files being opened (OSX Only)
 # alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
 # Files in use in the Users directory
