@@ -3,6 +3,8 @@
 #ROOT=$(git rev-parse --show-toplevel)
 #cd $ROOT
 
+. ~/.dotjitsu/.env$
+
 brew install \
   bat \
   binutils \
