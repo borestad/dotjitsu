@@ -13,4 +13,4 @@ if [ -n "$1" ]; then
     cat "$1"
 else
     cat
-fi | rg --pcre2 --only-matching "${IS_CIDR6}"
+fi | rg --pcre2 --only-matching "${IS_CIDR6}" | grep -E -v ':$'
