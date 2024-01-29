@@ -53,12 +53,14 @@ export GREP_OPTIONS="--color=auto"
 # # ===================================================
 # # ⚡️ HOMEBREW
 # # ===================================================
-# if [[ -f /opt/homebrew/bin/brew ]]; then
-#     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
-#     export HOMEBREW_PREFIX="/opt/homebrew"
-# else
-#     export HOMEBREW_PREFIX="/usr/local"
-# fi
+if [ -z $HOMEBREW_PREFIX ]; then
+  if [[ -f /opt/homebrew/bin/brew ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+    export HOMEBREW_PREFIX="/opt/homebrew"
+  else
+    export HOMEBREW_PREFIX="/usr/local"
+  fi
+fi
 
 export HOMEBREW_AUTO_UPDATE_SECS=86400
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
@@ -103,7 +105,7 @@ prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
 prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
 prepend-path "$HOMEBREW_PREFIX/opt/gnu-which/libexec/gnubin"
 
-append-path "$HOME/.deno/bin:$PATH"
+append-path "$HOME/.deno/bin"
 append-path "$HOME/.go/bin"
 append-path "$HOME/.local/bin"
 append-path "$HOME/.repos/git-friendly"
@@ -155,8 +157,6 @@ export HH_CONFIG=hicolor        # get more colors
 
 export VAGRANT_DEFAULT_PROVIDER=vmware_fusion
 
-# GPG / Fix for signed commits
-export GPG_TTY=$(tty)
 export NODE_REPL_HISTORY=~/.cache/node_repl_history 	# Enable persistent REPL history for `node`.
 export NODE_REPL_HISTORY_SIZE='32768'               # Allow 32³ entries; the default is 1000.
 export NODE_REPL_MODE='sloppy' 						# Use sloppy mode by default, matching web browsers.

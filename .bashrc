@@ -13,3 +13,4 @@ alias l='exa -Ga'        # Lists in multi column, hidden files.
 alias ll='exa -lah'      # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
+. "$HOME/.cargo/env"

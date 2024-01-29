@@ -5,7 +5,7 @@ GIT_CURL_VERBOSE=1
 
 if [[ -d "$TARGET" ]]; then
   #echo "PATH: $TARGET"
-  cd $TARGET
+  cd "$TARGET"
   ~/.dotjitsu/bin/fetch >/dev/null
   ~/.repos/git-friendly/pull
   #git rebase --abort &> /dev/null

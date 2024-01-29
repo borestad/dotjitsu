@@ -39,6 +39,10 @@ while [[ $# -gt 0 ]]; do
         get_opt_arg "$@" && shift
         TTL=$__
         ;;
+    --cache-dir=*)
+        get_opt_arg "$@" && shift
+        CACHE_DIR=$__
+        ;;
     --)
         CMD="${@:2 }"
         break
@@ -60,14 +64,8 @@ benchmark() {
 #
 TEMPDIR=$(mktemp -d)
 B64KEY=$(echo "$CMD" | base64 -w0)
-SHAKEY=$(echo "$B64KEY" | sha1sum | cut -d ' ' -f1)
-SHAKEY2=$(echo "$CMD" | sha1sum)
+SHAKEY=$(echo "$B64KEY" | sha1sum | awk '{print $1}')
 
-echo '------'
-echo $B64KEY
-echo $SHAKEY
-echo $SHAKEY2
-echo '------'
 SCOPE="memo.$SHAKEY"
 
 # Check if command is already cached
@@ -92,5 +90,6 @@ if [[ -f "$B64KEY.ttl" ]]; then
 else
   # Else, command is cached. Print some stats
   TTL_SINCE=$(printf %.1f $(benchmark $TIME))
-  echo "CACHED: $TTL_SINCE / $TTL | $CMD"
+  printf "ℹ memo: ${TTL_SINCE}s of $TTL\n"
+  printf "❯ $CMD\n"
 fi

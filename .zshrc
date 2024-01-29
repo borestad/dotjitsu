@@ -217,3 +217,5 @@ zinit cdreplay
 # Wasmer
 export WASMER_DIR="$HOME/.config/wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+
+export GPG_TTY=$(tty)

@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 
 echo "✨ brew bundle (Caskfile)"
 
@@ -9,5 +9,5 @@ if [ -t 1 ] ; then
   brew cu
   ~/.dotjitsu/bin/hr -
   brew -v bundle --file=~/.dotjitsu/Caskfile
-  ~/.dotjitsu/bin/dot-monolingual ~/Applications
+  # ~/.dotjitsu/bin/dot-monolingual ~/Applications
 fi

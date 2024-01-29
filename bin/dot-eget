@@ -2,16 +2,23 @@
 
 mkdir -p ~/.local/bin
 
-if ! command -v eget > /dev/null 2>&1; then brew install eget; fi
-if ! command -v bkt > /dev/null 2>&1; then brew install bkt; fi
+function brew-assert-exist() {
+  if ! command -v $1 > /dev/null 2>&1; then brew install $1; fi
+}
+
+brew-assert-exist eget
+brew-assert-exist bkt
 
 function dl() {
   bkt --ttl 60min -- eget "$1"
 }
 
+dl aaronriekenberg/rust-parallel
 dl projectdiscovery/katana
 dl probablykasper/cpc
 dl natesales/q
 dl toumorokoshi/tome
 dl darakian/ddh
 dl mergestat/mergestat-lite
+dl s0rg/crawley
+

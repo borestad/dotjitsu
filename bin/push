@@ -7,7 +7,7 @@ GIT_CURL_VERBOSE=0
 
 if [[ -d "$TARGET" ]]; then
   #echo "PATH: $TARGET"
-  cd $TARGET
+  cd "$TARGET"
   ~/.repos/git-friendly/push
   #git rebase --abort &> /dev/null
   #git fetch --recurse-submodules --verbose

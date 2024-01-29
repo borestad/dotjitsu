@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 
 echo "Updating Brew\n"
 

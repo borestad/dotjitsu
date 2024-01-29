@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 
 DISKSPACE_BEFORE=$(($(stat -f --format="%a*%S" .)))
 DISKSPACE_BEFORE_GB=`expr $DISKSPACE_BEFORE / 1000000000`

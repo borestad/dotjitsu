@@ -17,8 +17,8 @@ while [ "$#" -gt 0 ]; do
     --output=*) OUTPUT="${1#*=}"; shift 1;;
     --ttl=*) TTL="${1#*=}"; shift 1;;
     --ci=*) CI="${1#*=}"; shift 1;;
-    --output|--ttl|--ci) echo "$1 requires an argument" >&2; exit 1;;
 
+    --output|--ttl|--ci) echo "$1 requires an argument" >&2; exit 1;;
     -*) echo "unknown option: $1" >&2; exit 1;;
     *) URL="$1"; shift 1;;
   esac
@@ -35,6 +35,9 @@ fi
 #
 # Helpers
 #
+function urldecode() {
+  echo -ne $(echo -n "$1" | sed -E "s/%/\\\\x/g")
+}
 
 time-now() {
   date +%s.%N
@@ -55,13 +58,14 @@ touch2() {
 #
 
 DIR=$(pwd)
-BASENAME=$(basename $URL | sed 's/?.*//g')
-OUTPUT=${OUTPUT:-$BASENAME}
+BASENAME=$(basename "$URL" | sed 's/?.*//g')
+OUTPUT=${OUTPUT:-"$BASENAME"}
+OUTPUT=$(urldecode "$OUTPUT")
 TEMPDIR=$(mktemp -d)
 TEMPLOG=$(mktemp)
 
 # Precreate some fancy path (i.e a/b/c/100.zip)
-touch2 $TEMPDIR/$OUTPUT
+touch2 "$TEMPDIR/$OUTPUT"
 cd $TEMPDIR
 
 
@@ -89,14 +93,15 @@ if [[ "$CI" == "true" ]]; then
     --fail-with-body \
     --compressed \
     -o "$OUTPUT" \
-    ${URL} 2>&1
+    "${URL}" 2>&1
 else
   COLUMNS=80 xh \
     -p bB \
+    --https \
     --check-status \
     --download \
     --output "$OUTPUT" \
-    ${URL} 2>&1
+    "${URL}" 2>&1
 fi
 
 code=$?
@@ -108,13 +113,13 @@ if [ $code -ne 0 ]; then
   exit $code
 fi
 
-cd $DIR
-touch2 $OUTPUT
-mv $TEMPDIR/$OUTPUT $OUTPUT
+cd "$DIR"
+touch2 "$OUTPUT"
+mv -f "$TEMPDIR/$OUTPUT" "$OUTPUT"
 
 stop=$(benchmark $start)
 
 if [[ "$CI" == "true" ]]; then
-  SIZE=$(du -bh $OUTPUT | xargs | cut -d ' ' -f1)
+  SIZE=$(du -bh "$OUTPUT" | xargs | cut -d ' ' -f1)
   echo "DONE ... in ${stop}s. $SIZE"
 fi
