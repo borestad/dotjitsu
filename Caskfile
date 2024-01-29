@@ -1,6 +1,6 @@
 cask_args appdir: '~/Applications'
 
-tap 'homebrew/cask'
+#tap 'homebrew/cask'
 tap 'homebrew/cask-fonts'
 tap 'homebrew/cask-versions'
 tap 'microsoft/git'
@@ -16,7 +16,6 @@ tap 'buo/cask-upgrade'
 # ================================
 # FORMULAS FOR DEVS
 # ================================
-
 
 # cask 'alfred'
 # cask 'amethyst'
@@ -58,15 +57,15 @@ cask 'authy'
 cask 'balenaetcher'
 cask 'console'
 cask 'cyberduck'
-cask 'docker'
-cask 'ferdium'
+#cask 'docker'
+#cask 'ferdium'
 cask 'fork'
 cask 'find-any-file'
 cask 'firefox'
 cask 'fluid'
 cask 'git-credential-manager-core'
 cask 'gitup'
-cask 'google-chrome'
+#cask 'google-chrome'
 cask 'iina'
 cask 'imagealpha'
 cask 'imageoptim'
@@ -75,9 +74,9 @@ cask 'istat-menus'
 cask 'iterm2'
 cask 'kap'
 cask 'keka'
+cask 'kekaexternalhelper'
 cask 'lepton'
 cask 'marp'
-cask 'miro'
 cask 'monolingual'
 cask 'mountain-duck'
 cask 'numi'
@@ -91,7 +90,7 @@ cask 'signal'
 cask 'simplistic'
 cask 'slack'
 cask 'spotify'
-cask 'steam'
+#cask 'steam'
 cask 'sublime-merge'
 cask 'sublime-text'
 cask 'tablecruncher'
@@ -152,7 +151,8 @@ mas 'CotEditor', id: 1024640650
 # mas 'Numbers', id: 409203825
 # mas 'Spark', id: 1176895641
 # mas 'Speedtest', id: 1153157709
-# mas 'Things', id: 904280696
+mas 'Things', id: 904280696
+mas 'Bear', id: 1091189122
 # mas 'Tweetbot', id: 1384080005
 
 

@@ -5,7 +5,7 @@
 START=`date +%s.%N`
 
 # TODO: Use 'mr list'
-CUR_DIR=$(pwd)
+CUR_DIR="$(pwd)"
 tempfile=`mktemp /tmp/git.XXXXXXXXXXXXXXXXXXXXXXX.txt`
 
 IFS=''

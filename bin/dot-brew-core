@@ -17,7 +17,7 @@ else
 fi
 
 
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 
 brew -v update
 $HOME/.dotjitsu/bin/hr -

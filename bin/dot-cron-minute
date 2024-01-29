@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 set -m
 
+echo "TERM=$TERM"
 source ~/.dotjitsu/.env$
-export TERM='xterm-256color'
-LOG_LOCATION=~/logs/cron/minute/`date +%F`
-TERM="xterm-256color"
 
+LOG_LOCATION=~/logs/cron/minute/`date +%F`
 mkdir -p $LOG_LOCATION
 
 exec > >(tee -i $LOG_LOCATION/cron-minute-`date +%F--%H%M%S`.log)
 exec 2>&1
 
-echo -e "\n■■■ PATH"
-echo $PATH
+# echo -e "\n■■■ PATH"
+# echo $PATH
 
-echo -e "\n■■■ dot-rsync"
+# echo -e "\n■■■ dot-rsync"
 # dot-rsync
+
+/opt/homebrew/bin/fd . ~/logs/ --change-older-than 7days -x rm -rfv
 
 echo "All done! Enjoy a cold one! 🍺 "

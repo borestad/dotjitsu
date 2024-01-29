@@ -14,10 +14,10 @@ if [ ! -f $filename ]; then
   echo "#!/usr/bin/env bash" >> $filename
   echo "" >> $filename
   echo "" >> $filename
-  code --goto "$filename:3"
+  code --new-window --goto "$filename:3"
 else
   echo "file already exists"
-  code --goto "$filename:3"
+  code --new-window --goto "$filename:3"
 fi
 
 

@@ -3,11 +3,11 @@ set -m
 
 # https://github.com/namnamir/threat-hunting/commit/78987d446fc011327cd6bc4a1edb0e887cd7dd3d#diff-fd603caf46ce6d4ce932043cc7a5a58a5131fe449a14cdae68fb6296c0222798R29
 
-export IS_PRIVATE="(#|0|10\.|100\.|172\.16|127\.|192\.168|100\.64|224\.0|169\.254|255\.|240\.)"
+#export IS_PRIVATE="(#|0|10\.|100\.|172\.16|127\.|192\.168|100\.64|224\.0|169\.254|255\.|240\.)"
 export IS_IP6='(?i)(?:[\da-f]{0,4}:){1,7}(?:(?<ipv4>(?:(?:25[0-5]|2[0-4]\d|1?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|1?\d\d?))|[\da-f]{0,4})'
 export IS_CIDR6="$IS_IP6(?:\/\d{1,2})?"
 
-NOT_ENDS_WITH='.*[^\.]'
+# NOT_ENDS_WITH='.*[^\.]'
 
 if [ -n "$1" ]; then
     cat "$1"

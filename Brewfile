@@ -88,6 +88,7 @@ brew 'dolt'                         # Git for Data
 brew 'docker-compose'               # Isolated development environments using Docker
 brew 'docker-machine'               # Create Docker hosts locally and on cloud providers
 brew 'dprint'                       #
+brew 'duti'                         #
 brew 'duf'                          # Disk Usage/Free Utility - a better 'df' alternative
 brew 'dust'                         # More intuitive version of du in rust
 brew 'entr'                         # Run arbitrary commands when files change
@@ -131,7 +132,7 @@ brew 'hyperfine'                    # Command-line benchmarking tool
 brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
-brew 'imageoptim-cli'               # CLI for ImageOptim, ImageAlpha and JPEGmini
+# brew 'imageoptim-cli'               # CLI for ImageOptim, ImageAlpha and JPEGmini
 brew 'jid'                          # Json incremental digger
 brew 'jless'                        #
 brew 'jpeg'                         # Image manipulation library
@@ -143,6 +144,7 @@ brew 'kubernetes-cli'               # Tool to report network interface bandwidth
 brew 'lazydocker'                   # The lazier way to manage everything docker
 brew 'lf'                           #
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
+brew 'lazygit'                      #
 brew 'm-cli'                        # Swiss Army Knife for macOS
 brew 'mackup'                       # Keep your Mac's application settings in sync
 brew 'mas'                          # Mac App Store command-line interface
@@ -242,6 +244,7 @@ brew 'streamlink'
 brew 'qemu'
 brew 'macpine'
 brew 'yt-dlp'
+brew 'upx'
 
 brew 'liujianping/tap/job'
 

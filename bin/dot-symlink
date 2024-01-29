@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd "$(dirname $0)"
+cd "$(dirname "$0")"
 
 GITROOT=$(git rev-parse --show-toplevel)
 DOTJITSU=$GITROOT
@@ -15,6 +15,10 @@ BASEFILES=(
 )
 
 cd $HOME
+
+$HOME/.private/bin/dotp-symlink
+
+hr;
 
 ln -sfv $DOTJITSU/.ackrc
 ln -sfv $DOTJITSU/.agignore
