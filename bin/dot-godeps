@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
+
+echo -e "\n⚡️ Install/Update rust packages"; echo
+
 go env -w GO111MODULE=on
 
-go install github.com/fiatjaf/jiq/cmd/jiq@latest
-go install github.com/tomnomnom/fff@latest
-go install github.com/rs/dnstrace@latest
-go install github.com/zmwangx/ets@latest
+if command -v gnomon > /dev/null 2>&1; then
+  formatter="$(command -v gnomon) -t elapsed-total |"
+  exec > >($formatter) 2>&1
+fi
+
+hr; go install github.com/fiatjaf/jiq/cmd/jiq@latest
+hr; go install github.com/tomnomnom/fff@latest
+hr; go install github.com/rs/dnstrace@latest
+hr; go install github.com/zmwangx/ets@latest

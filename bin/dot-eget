@@ -2,6 +2,11 @@
 
 mkdir -p ~/.local/bin
 
+ip=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}')
+echo $ip | grep '10.0.100.' > /dev/null || { echo "Sorry, WIFI is required" && exit 1; }
+
+
+
 function brew-assert-exist() {
   if ! command -v $1 > /dev/null 2>&1; then brew install $1; fi
 }
@@ -10,15 +15,62 @@ brew-assert-exist eget
 brew-assert-exist bkt
 
 function dl() {
-  bkt --ttl 60min -- eget "$1"
+  local ttl=$1
+  local url=$2
+
+  echo "🚀 Installing $2"
+  memo --discard-failures --ttl="$ttl" -- timeout --foreground -s SIGTERM 30s eget --asset='^.sig' "$url" -- "$@" 2> >(grep -iv Downloading)
+  echo
 }
 
-dl aaronriekenberg/rust-parallel
-dl projectdiscovery/katana
-dl probablykasper/cpc
-dl natesales/q
-dl toumorokoshi/tome
-dl darakian/ddh
-dl mergestat/mergestat-lite
-dl s0rg/crawley
+dl 1w https://github.com/aaronriekenberg/rust-parallel --to=rp
+dl 1w https://github.com/projectdiscovery/katana
+dl 1w https://github.com/probablykasper/cpc
+dl 1w https://github.com/natesales/q
+dl 1w https://github.com/toumorokoshi/tome
+dl 1w https://github.com/darakian/ddh
+dl 1w https://github.com/mergestat/mergestat-lite
+dl 1d https://github.com/s0rg/crawley
+dl 1d https://github.com/dimo414/bkt
+dl 1w https://github.com/Inlyne-Project/inlyne            # a GPU powered yet browserless tool to help you quickly view markdown files in the blink of an eye.
+dl 1w https://github.com/kurtbuilds/checkexec             # Conditionally run a command in a CLI (like Make, as a standalone tool)
+dl 1d https://github.com/dundee/gdu --to=gdu
+dl 1w https://github.com/ismaelgv/rnr
+dl 1w https://github.com/casey/just
+dl 1w https://github.com/jqlang/jq
+dl 1w https://github.com/TomWright/dasel -a=dasel_darwin_arm64.gz
 
+# Clone of cat(1) with syntax highlighting and Git integration
+dl 1w https://github.com/sharkdp/bat
+
+# Powerful, enterprise-ready, open source web server with automatic HTTPS
+dl 1w https://github.com/caddyserver/caddy -a=mac_arm64.tar.gz
+dl 1d https://github.com/denoland/deno -a='deno-'
+dl 1d https://github.com/denoland/deno -a='denort-'
+dl 1w https://github.com/ouch-org/ouch
+dl 1w https://github.com/kellyjonbrazil/jc
+dl 1w https://github.com/itchyny/gojq
+dl 1w https://github.com/dprint/dprint
+dl 1w https://github.com/junegunn/fzf
+dl 1w https://github.com/extrawurst/gitui
+dl 1w https://github.com/mgdm/htmlq
+dl 1w https://github.com/sharkdp/hyperfine
+
+# A command-line tool to select default applications for document types and URL schemes on Mac OS X
+dl 1w https://github.com/moretension/duti
+
+# Disk Usage/Free Utility - a better 'df' alternative
+dl 1w https://github.com/muesli/duf
+
+# More intuitive version of du in rust
+dl 1w https://github.com/bootandy/dust
+
+dl 1w $(bkt --ttl=24h -- crawley -silent https://evermeet.cx/pub/ffmpeg/ | grep .zip$ | head -1)
+dl 1w $(bkt --ttl=24h -- crawley -silent https://evermeet.cx/pub/ffprobe/ | grep .zip$ | head -1)
+
+# wait
+
+# Rename binaries to proper names
+# rnr -rf '_darwin.*' '' ~/.local/bin/
+# rm -f ~/.local/bin/rnr-*
+# rm -f ~/.local/bin/

@@ -3,6 +3,9 @@
 # Automatically list directory contents on `cd`.
 auto-cd () {
 
+  # Volumes are slow
+  if [[ "$PWD" =~ .*"Volumes".* ]] && return
+
   # If not running interactively, don't do anything
   [[ -o interactive ]] || return
 
@@ -12,7 +15,7 @@ auto-cd () {
   # dir-info
   # echo
   # echo
-  exa -a --group-directories-first --icons
+  eza -a --group-directories-first --icons
   # [ -f "package.json" ] && cs package.json
 
   #echo

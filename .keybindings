@@ -17,7 +17,7 @@ bindkey '^s' fzf-ssh
 
 
 function fzf-lxc () {
-  local lxclist=$(bkt --discard-failures -- lxc list)
+  local lxclist=$(bkt --ttl=1min --discard-failures -- lxc list)
   local lxc_hosts=$(echo $lxclist | grep CONTAINER | sed 's/|//g' | sed 's/^[ \t]*//;s/[ \t]*$//' | cut -d ' ' -f1)
 
 

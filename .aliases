@@ -12,7 +12,6 @@ NUM_CORES=`getconf _NPROCESSORS_ONLN`
 # =============================================================================
 alias dot='ets ~/.dotjitsu/bin/dot'
 alias gls='gls --color=auto --group-directories-first'
-alias exa='eza --group-directories-first --color=always'
 alias eza='eza --group-directories-first --color=always'
 alias ls='gls --color --group-directories-first'
 alias l='eza -Ga --icons'          # Lists in multi column, hidden files.
@@ -65,6 +64,7 @@ alias cp='gcp -v'
 alias cpr='rsync -aAHXv --info=progress2 --human-readable'
 alias dfc="dfc -Wdluh -q mount -t apfs"
 alias fd="fd --ignore-case --hidden --exclude '.git'"
+alias cat='\bat --paging=never --style="plain" --decorations=auto'
 #alias gdu="timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a || (stty sane &> /dev/null; tput reset &> /dev/null; clear;)";
 
 function gdu() {
@@ -88,7 +88,7 @@ alias sort="sort -S 50% --parallel=$NUM_CORES"
 alias sudo='nocorrect sudo '
 alias vnstat="vnstat -i en0"
 alias wget="wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress"
-alias wget2="wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress --content-disposition"
+#alias wget2="wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress --content-disposition"
 alias curl="$HOMEBREW_PREFIX/opt/curl/bin/curl"
 #alias wget="wget --no-check-certificate --compression auto --content-disposition --trust-server-names -nv -q --show-progress"
 alias ws='ws -d'
@@ -100,6 +100,21 @@ alias dig='grc --colour=auto dig'
 alias env='grc --colour=auto env'
 
 alias speedtest.tele2='wget -O /dev/null http://speedtest.tele2.net/10GB.zip'
+
+function speedtest.ookla() {
+  local size=${1:-"1000"}
+  local bytes="$(printf "$size" | numfmt --from-unit=Mi)";
+  local url="https://ook-sto-x1.puregig.net.prod.hosts.ooklaserver.net:8080/download?nocache=$RANDOM$RANDOM$RANDOM$RANDOM=&size=$bytes";
+  xh \
+    -p bB \
+    --https \
+    --check-status \
+    --download \
+    --output /dev/null \
+    "${url}" 2>&1
+
+  # dl -o /dev/null "https://ook-sto-x1.puregig.net.prod.hosts.ooklaserver.net:8080/download?nocache=$RANDOM$RANDOM$RANDOM$RANDOM=&size=$bytes";
+}
 
 alias ets='~/.go/bin/ets -s -f "%s.%Ls ┃ "'
 
@@ -172,6 +187,7 @@ alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 # alias zup='rm -f ~/.ssh/control/git@github.com:22; zinit update -p -v; zr'
 alias zup='zinit update --all -p -v; zr'
+alias rp='rust-parallel'
 
 #alias imageoptim='ets ~/Applications/ImageOptim.app/Contents/MacOS/ImageOptim'
 
@@ -253,12 +269,14 @@ function gthumbnails() {
 alias -- -="cd -"
 # alias dl="cd $HOME/Downloads"
 alias dt="cd $HOME/Desktop"
-alias c="cd $HOME/code"
+# alias c="cd $HOME/code"
 alias work="cd $HOME/work"
 alias dj="code $HOME/.private/dotjitsu.code-workspace"
 alias djp='pull $HOME/.dotjitsu; pull $HOME/.private;'
 
-alias gd="git diff -- :!package-lock.json :!yarn.lock"
+alias gd="git diff -- :!package-lock.json :!yarn.lock :!pnpm-lock.yaml"
+alias gda="git diff HEAD -- :!package-lock.json :!yarn.lock :!pnpm-lock.yaml"
+alias gds="git diff --cached -- :!package-lock.json :!yarn.lock :!pnpm-lock.yaml"
 append() { grep -q -F $1 $2 || echo $1 >> $2 ;}
 
 
@@ -382,7 +400,7 @@ alias ssh.clean='rm -fv ~/.ssh/control/*'
 
 git.co() {
   result=($(git branch -a --color=always | grep -v '/HEAD\s' | sort |
-    fzf --height 50% --border --ansi --tac --preview-window right:70% \
+    fzf --height 80% --border --ansi --tac --preview-window right:70% \
       --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
     sed 's/^..//' | cut -d' ' -f1))
 

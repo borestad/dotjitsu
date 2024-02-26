@@ -21,6 +21,7 @@ fi
 echo
 echo "🦄 Commit files"
 echo
+hr
 
 filename=''
 stats=$(git diff --cached --shortstat | sed -E 's/ (insertions?|deletions?|changed?)//g' | sed 's/,//g' | xargs)
@@ -30,13 +31,16 @@ if [ $(git diff --cached --numstat | wc -l) -eq 1 ]; then
   # Only one file changed
    filename=$(basename $(git diff --cached --numstat --name-only))
    stats=$(echo $stats | sed 's/1 file//g' | xargs)
-
-   git commit -m "\`️️⚡️ BUMP ⚡️\`  \`$filename $stats\`" $args || true
+   msg="\`️️⚡️ BUMP ⚡️\`  \`$filename $stats\`"
+   echo $msg
+   git commit -m "$msg" $args || true
 else
-  git commit -m "\`️️⚡️ BUMP ⚡️\`  \`$stats\`" -a $args || true
+  msg="\`️️⚡️ BUMP ⚡️\`  \`$stats\`"
+  git commit -m "$msg" -a $args || true
   echo
 fi
 
+echo
 echo $filename
 echo $stats
 

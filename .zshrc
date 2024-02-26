@@ -118,7 +118,7 @@ zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'dir-info ${realpath//\\ / }; echo; exa --group-directories-first --icons -la --no-permissions --no-user -L1 --no-time --icons --git-ignore -I "*.git" "${realpath//\\ / }"'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'dir-info ${realpath//\\ / }; echo; eza --group-directories-first --icons -la --no-permissions --no-user -L1 --no-time --icons --git-ignore -I "*.git" "${realpath//\\ / }"'
 zstyle ':fzf-tab:*' switch-group ',' '.'
 
 # zinit ice wait lucid
