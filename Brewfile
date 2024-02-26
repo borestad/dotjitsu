@@ -1,7 +1,7 @@
 cask_args appdir: '~/Applications'
 
 tap 'homebrew/bundle'
-tap 'homebrew/homebrew-core'
+#tap 'homebrew/homebrew-core'
 #tap 'homebrew/dupes'
 #tap 'homebrew/games'
 #tap 'homebrew/versions'
@@ -26,7 +26,6 @@ brew 'golang'
 brew 'python'                       # Interpreted, interactive, object-oriented programming language
 brew 'python3'                      # Interpreted, interactive, object-oriented programming language
 brew 'rustup'                       #
-brew 'deno'                         # Secure runtime for JavaScript and TypeScript
 
 # ================================
 # Virtual Machine stuff
@@ -46,13 +45,9 @@ brew 'packer-completion'
 # brew 'mergestat'
 
 brew 'ast-grep'
-brew 'jc'
-brew 'ouch'
 brew 'aha'
 brew 'erdtree'
 brew 'choose-rust'
-brew 'jc'
-brew 'gojq'
 brew 'atuin'
 brew 'jplot'
 brew 'asdf'
@@ -64,54 +59,43 @@ brew 'axel'                         # Light UNIX download accelerator
 brew 'bandwhich'                    # Bourne-Again SHell, a UNIX command interpreter
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
-brew 'bat'                          # Clone of cat(1) with syntax highlighting and Git integration
 brew 'bento4'                       # Full-featured MP4 format and MPEG DASH library and tools
-brew 'bkt'                          #
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'bottom'                       #
 brew 'brimdata/tap/zq'              #
 brew 'broot'                        # New way to see and navigate directory trees
-brew 'caddy'                        # Powerful, enterprise-ready, open source web server with automatic HTTPS
 brew 'clipboard'                    #
 brew 'curl'                         #
 brew 'cliclick'                     # Tool for emulating mouse and keyboard events
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
-brew 'cv'                           # Progress: Coreutils Progress Viewer
-brew 'dasel'                        #
+brew 'cv'                           # Progress: Coreutils Progress Viewer                      #
 brew 'debianutils'
+brew 'eza'
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'dolt'                         # Git for Data
 brew 'docker-compose'               # Isolated development environments using Docker
 brew 'docker-machine'               # Create Docker hosts locally and on cloud providers
-brew 'dprint'                       #
-brew 'duti'                         #
-brew 'duf'                          # Disk Usage/Free Utility - a better 'df' alternative
 brew 'dust'                         # More intuitive version of du in rust
+brew 'duti'                         # A command-line tool to select default applications for document types and URL schemes on Mac OS X
 brew 'entr'                         # Run arbitrary commands when files change
-#brew 'eth-p/software/bat-extras'    # Bash scripts that integrate bat with various command-line tools
-brew 'eza'                          # Modern replacement for 'ls
-brew 'eget'                         # Easily install prebuilt binaries from GitHub
+#brew 'eth-p/software/bat-extras'   # Bash scripts that integrate bat with various command-line tools
 brew 'exercism'                     # Command-line tool to interact with exercism.io
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
 brew 'fastmod'                      #
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
-brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
+# brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
 brew 'fish'                         # User-friendly command-line shell for UNIX-like operating systems
 brew 'fnm'                          # Fast and simple Node.js version manager
 brew 'fping'                        # Scriptable ping program for checking if multiple hosts are up
 brew 'fselect'                      # Find files with SQL-like queries
 brew 'fswatch'                      # Monitor a directory for changes and run a shell command
 #brew 'fx'                           # Terminal JSON viewer
-brew 'fzf'                          # Command-line fuzzy finder written in Go
-brew 'fzy'                          # Fast, simple fuzzy text selector with an advanced scoring algorithm.
-brew 'gdu',link: false              #
 brew 'geoip'                        #
-brew 'gitui'                        #
 brew 'git-sizer'                    #
 brew 'glow'                         #
 brew 'gotop'                        # Terminal based graphical activity monitor inspired by gtop and vtop
@@ -123,11 +107,9 @@ brew 'gron'                         #
 brew 'handbrake'                    # Open-source video transcoder available for Linux, Mac, and Windows
 brew 'hashdeep'                     # Recursively compute digests on files/directories
 brew 'hh'                           # Bash and zsh history suggest box
-brew 'htmlq'                        #
 brew 'htop'                         # Improved top (interactive process viewer)
 brew 'httpie'                       # User-friendly cURL replacement (command-line HTTP client)
 brew 'httpry'                       # Packet sniffer for displaying and logging HTTP traffic
-brew 'hugo'                         # Configurable static site generator
 brew 'hyperfine'                    # Command-line benchmarking tool
 brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
@@ -137,8 +119,6 @@ brew 'jid'                          # Json incremental digger
 brew 'jless'                        #
 brew 'jpeg'                         # Image manipulation library
 brew 'jpegoptim'                    # Utility to optimize JPEG files
-brew 'jq'                           # Lightweight and flexible command-line JSON processor
-brew 'just'                         #
 brew 'kondo'                        # Save disk space by cleaning non-essential files from software projects
 brew 'kubernetes-cli'               # Tool to report network interface bandwidth
 brew 'lazydocker'                   # The lazier way to manage everything docker
@@ -223,13 +203,13 @@ brew 'watch'                        # Executes a program periodically, showing o
 brew 'watchman'                     # Watch files and take action when they change
 brew 'webkit2png'                   # Create screenshots of webpages from the terminal
 brew 'wget'                         # Internet file retriever
+brew 'wget2'                        # Successor of GNU Wget, a file and recursive website downloader
 brew 'whatmask'                     # Network settings helper
 brew 'xh'
 brew 'xidel'
 brew 'mdbook'
 brew 'yank'                         #
 brew 'yj'                           #
-brew 'youtube-dl'                   # Download YouTube videos from the command-line
 brew 'yq'                           #
 brew 'zopfli'                       # New zlib (gzip, deflate) compatible compressor
 brew 'zoxide'                       # Shell extension to navigate your filesystem faster
@@ -245,6 +225,7 @@ brew 'qemu'
 brew 'macpine'
 brew 'yt-dlp'
 brew 'upx'
+brew 'rnr'
 
 brew 'liujianping/tap/job'
 

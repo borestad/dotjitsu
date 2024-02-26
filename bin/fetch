@@ -6,15 +6,16 @@
 branch=$(git branch --show-current) || exit $?
 default_remote="origin"
 remote=$(git config "branch.${branch}.remote" || echo "$default_remote")
+url=$(git config "remote.origin.url" || echo '')
 
 # Update our remote
-echo "⚡️  Fetching from $remote"
+echo "⚡️ Fetching '$remote' from '$url'"
 git fetch --tags -f --prune --progress --recurse-submodules -j4 $remote
 
 # echo
 # git log --oneline --graph --date=short -n 1
 # echo
 
-echo "🦄  Done"
+echo "🦄 Done"
 exit 0
 

@@ -1,47 +1,25 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
-cd "$(dirname "$0")"/..
+echo -e "\n⚡️ Install/Update python packages"; echo
 
-echo ''; hr -
-echo "[Updating Python PIP's]\n"
+# if command -v gnomon > /dev/null 2>&1; then
+#   formatter="$(command -v gnomon) -t elapsed-total |"
+#   exec > >($formatter) 2>&1
+# fi
 
-brew install python3
+# brew install python3
 #brew install python
 #brew unlink python && brew link --overwrite python # make sure python links to python2
 
 # upgrade to latest pip3
 # python -m pip3 install --upgrade pip3
-hr
-pip3 install --upgrade setuptools
-hr
-pip3 install --upgrade wheel
-#pip install --upgrade pip
-#pip install --upgrade setuptools
-#pip install --upgrade wheel
-
-
-# User install
-# python -m pip install --upgrade --user tsrc
-
-# Colors
-#pip3 install --upgrade pygments
-
-# sudo easy_install Pygments
-
-# Sen
-#pip3 install --upgrade urwid
-#pip3 install --upgrade sen
-
-# Utils
-#pip3 install --upgrade ffind
-
-hr
-pip3 install google_images_download
-hr
-hr
-pip3 install pillow
-hr
-pip3 install imgp
-hr
-pip3 install 'httpx[cli]'
-pip3 install 'httpx[http2]'
+PIP='pip3.11'
+PYTHON='python3.11'
+hr; $PYTHON -m pip install --upgrade pip
+hr; $PIP install --upgrade setuptools
+hr; $PIP install --upgrade wheel
+hr; $PIP install google_images_download
+hr; $PIP install pillow
+# hr; $PIP install imgp
+hr; $PIP install 'httpx[cli]'
+hr; $PIP install 'httpx[http2]'

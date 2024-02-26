@@ -1,9 +1,12 @@
 #!/bin/zsh
 
-dir=${1:-.}
-cd $dir
+if [[ "$PWD" =~ .*"Volumes".* ]]; then
+  return
+fi
 
-result=`exa -laF --no-filesize --no-user --no-time --no-permissions --color=never -s none`
+dir=${1:-.}
+
+result=`eza -laF --no-filesize --no-user --no-time --no-permissions --color=never -s none "$dir"`
 total=`echo $result | grep -Ev "^$" | wc -l`
 dirs=`echo $result | egrep '/$' | wc -l`
 files=$(( ${total} - ${dirs}))

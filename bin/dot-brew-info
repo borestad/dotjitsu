@@ -2,20 +2,6 @@
 # set -Eeuo pipefail
 
 source ~/.dotjitsu/.env$
-
-# Setup
-LOG_LOCATION="$HOME/logs/brew"
-TERM="xterm-256color"
-mkdir -p $LOG_LOCATION
-
-formatter=""
-if command -v gnomon > /dev/null 2>&1; then
-  formatter="$(command -v gnomon) -t elapsed-total |"
-fi
-
-exec > >($formatter tee -i $LOG_LOCATION/dot-brew-`date +%F--%H%M%S`.log)
-exec 2>&1
-
 mkdir -p ~/.config/cache && cd "$_"
 
 echo 'Fetch https://formulae.brew.sh/api/formula.json'

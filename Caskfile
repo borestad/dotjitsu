@@ -101,6 +101,8 @@ cask 'warp'
 #cask 'webcatalog'
 cask 'xbar'
 cask 'xmind'
+cask 'jdownloader'
+cask 'free-download-manager'
 
 
 # ================================
