@@ -55,6 +55,7 @@ dl 1w https://github.com/junegunn/fzf
 dl 1w https://github.com/extrawurst/gitui
 dl 1w https://github.com/mgdm/htmlq
 dl 1w https://github.com/sharkdp/hyperfine
+dl 1w https://github.com/sibprogrammer/xq
 
 # A command-line tool to select default applications for document types and URL schemes on Mac OS X
 dl 1w https://github.com/moretension/duti
@@ -67,6 +68,9 @@ dl 1w https://github.com/bootandy/dust
 
 dl 1w $(bkt --ttl=24h -- crawley -silent https://evermeet.cx/pub/ffmpeg/ | grep .zip$ | head -1)
 dl 1w $(bkt --ttl=24h -- crawley -silent https://evermeet.cx/pub/ffprobe/ | grep .zip$ | head -1)
+
+# Completions
+bkt --ttl=2d -- just --completions zsh >| /opt/homebrew/share/zsh/site-functions/_just
 
 # wait
 

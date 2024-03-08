@@ -13,13 +13,10 @@ echo -e "\n⚡️ Install/Update python packages"; echo
 
 # upgrade to latest pip3
 # python -m pip3 install --upgrade pip3
-PIP='pip3.11'
-PYTHON='python3.11'
-hr; $PYTHON -m pip install --upgrade pip
-hr; $PIP install --upgrade setuptools
-hr; $PIP install --upgrade wheel
-hr; $PIP install google_images_download
-hr; $PIP install pillow
+PIP='pip3.12'
+PYTHON='python3.12'
+hr; $PYTHON -m pip3 install --break-system-packages --upgrade pip
+hr; $PIP install --upgrade --break-system-packages setuptools
+hr; $PIP install --upgrade --break-system-packages wheel
+hr; $PIP install --break-system-packages pillow
 # hr; $PIP install imgp
-hr; $PIP install 'httpx[cli]'
-hr; $PIP install 'httpx[http2]'

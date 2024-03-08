@@ -9,7 +9,13 @@ if command -v gnomon > /dev/null 2>&1; then
   exec > >($formatter) 2>&1
 fi
 
-hr; go install github.com/fiatjaf/jiq/cmd/jiq@latest
-hr; go install github.com/tomnomnom/fff@latest
-hr; go install github.com/rs/dnstrace@latest
-hr; go install github.com/zmwangx/ets@latest
+function install() {
+  hr; echo "⚡️ $@"
+  go install "$@"
+}
+
+install github.com/fiatjaf/jiq/cmd/jiq@latest
+install github.com/tomnomnom/fff@latest
+install github.com/rs/dnstrace@latest
+install github.com/zmwangx/ets@latest
+install github.com/hahwul/gee@latest

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Runs `git pull` on every directory within the current directory
+
+START=`date +%s.%N`
+dir=${1:-"$PWD"}
+
+echo "⚡️ git-fetchall: $dir"
+echo
+
+cd "$dir" || { echo "$dir is not a valid directory" && exit 1; }
+
+# TODO: Use 'mr list'
+CURDIR="$(pwd)"
+# \fd --threads=2 --no-ignore --hidden "\.git$" -td --max-depth=2 -x sh -c 'cd {}/..; echo "🚀 git fetch $PWD"; git -C $PWD fetch --prune'
+\fd --threads=3 --no-ignore --hidden "\.git$" -td --max-depth=2 -x sh -c 'cd {}/..; echo "🚀 git fetch $PWD"; fetch; echo " "'
