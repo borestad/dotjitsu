@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+
+
+# Example
+#
+# fd -tf --threads=1 .mp4 /Volumes/mounts/cronitor/svt-rip/klassen --exclude='*converted*' --exclude='*TEMP*' -x ./convert.sh
+
+# cd $(mktemp -d)
+# echo $PWD
+# mkdir -p tmp/"$(date +%s)" && cd $_
+
+RESOLUTION=600
+BITRATE='400k'
+INPUT=$(readlink -m $1)
+PRESET=medium
+OUTPUT="$(echo $INPUT | sed 's/\.mp4//g')-converted-${RESOLUTION}p-$BITRATE-$PRESET.mp4"
+OUTPUT_TEMP="$(echo $INPUT | sed 's/\.mp4//g')-TEMP-${RESOLUTION}p-$BITRATE-$PRESET.mp4"
+
+[ -f "$OUTPUT" ] && echo "$OUTPUT exists." && exit 0
+[ -f "$OUTPUT_TEMP" ] && echo "$OUTPUT_TEMP exists." && exit 0
+
+cd "$(dirname "$0")"
+
+echo "==========================================================="
+echo " "
+echo "Input:      $INPUT"
+echo "Output:     $OUTPUT"
+echo "PWD:        $PWD"
+echo "RESOLUTION: $RESOLUTION"
+echo "BITRATE:    $BITRATE"
+echo "PRESET:     $PRESET"
+echo " "
+echo "==========================================================="
+
+
+# ~/.local/bin/ffmpeg
+$HOME/.local/bin/ffmpeg -t 10 -y -i $INPUT -c:v libx265 -preset "$PRESET" -vtag hvc1 -b:v "$BITRATE" -an -x265-params pass=1 -f mp4 /dev/null
+~/.local/bin/ffmpeg -t 10 -y -i $INPUT -c:v libx265 -preset "$PRESET" -vtag hvc1 -b:v "$BITRATE" -vf scale=-2:$RESOLUTION:flags=lanczos -x265-params pass=2 -c:a aac -b:a 64k -movflags +faststart $OUTPUT_TEMP && \
+mv "$OUTPUT_TEMP" "$OUTPUT"

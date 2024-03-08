@@ -96,31 +96,35 @@ prepend-path "./node_modules/.bin"
 # export NODE_PATH=$XDG_DATA_HOME/yarn/global/node_modules
 export NODE_PATH=$XDG_DATA_HOME/pnpm/global/5/node_modules
 
+prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
+prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
 prepend-path "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
 prepend-path "$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin"
-prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
-prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
 prepend-path "$HOMEBREW_PREFIX/opt/gnu-which/libexec/gnubin"
-
-append-path "$HOME/.deno/bin"
-append-path "$HOME/.go/bin"
-append-path "$HOME/.local/bin"
-append-path "$HOME/.repos/git-friendly"
-append-path "$HOMEBREW_PREFIX/opt/sqlite/bin"
-append-path "$HOMEBREW_PREFIX/opt/python/libexec/bin"
-append-path "$HOMEBREW_PREFIX/opt/make/libexec/gnubin"
-
-append-path "$HOMEBREW_PREFIX/opt/mozjpeg/bin"
-append-path "$HOME/Library/Python/3.8/bin"
-append-path "$HOMEBREW_PREFIX/opt/openjdk@8/bin"
-append-path "$HOME/.cargo/bin"
-append-path "$HOMEBREW_PREFIX/opt/util-linux/bin"
-append-path "$HOMEBREW_PREFIX/opt/util-linux/sbin"
-# Use core-utils directly
-
+prepend-path "$HOMEBREW_PREFIX/opt/gnu-getopt/bin"
+prepend-path "$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin"
+prepend-path "$HOMEBREW_PREFIX/opt/gnu-indent/libexec/gnubin"
+prepend-path "$HOMEBREW_PREFIX/opt/gnu-time/libexec/gnubin"
+prepend-path "$HOMEBREW_PREFIX/opt/util-linux/bin"
+prepend-path "$HOMEBREW_PREFIX/opt/util-linux/sbin"
+prepend-path "$HOME/.local/bin"
 prepend-path "$DOTJITSU/bin"
 prepend-path "$PRIVATE/bin"
 prepend-path "$HOME/bin"
+
+append-path "$HOME/.deno/bin"
+append-path "$HOME/.go/bin"
+append-path "$HOME/.cargo/bin"
+append-path "$HOME/.repos/git-friendly"
+
+append-path "$HOMEBREW_PREFIX/opt/sqlite/bin"
+append-path "$HOMEBREW_PREFIX/opt/python/libexec/bin"
+append-path "$HOMEBREW_PREFIX/opt/make/libexec/gnubin"
+append-path "$HOMEBREW_PREFIX/opt/mozjpeg/bin"
+append-path "$HOMEBREW_PREFIX/opt/openjdk@8/bin"
+append-path "$HOME/.cargo/bin"
+# Use core-utils directly
+
 
 
 export MANPATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"

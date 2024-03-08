@@ -29,5 +29,5 @@ echo "==========================================================="
 
 
 ~/.local/bin/ffmpeg -y -i $INPUT -c:v libx265 -preset "$PRESET" -vtag hvc1 -b:v ${BITRATE}k -an -x265-params pass=1 -f mp4 /dev/null && \
-~/.local/bin/ffmpeg -y -i $INPUT -c:v libx265 -preset "$PRESET" -vtag hvc1 -b:v ${BITRATE}k -vf scale=-2:$RESOLUTION:flags=lanczos -c:a aac -b:a 64k -pass 2 -movflags +faststart $OUTPUT_TEMP && \
+~/.local/bin/ffmpeg -y -i $INPUT -c:v libx265 -preset "$PRESET" -vtag hvc1 -b:v ${BITRATE}k -vf scale=-2:$RESOLUTION:flags=lanczos -x265-params pass=2 -c:a aac -b:a 64k -pass 2 -movflags +faststart $OUTPUT_TEMP && \
 mv "$OUTPUT_TEMP" "$OUTPUT"

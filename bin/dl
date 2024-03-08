@@ -95,13 +95,20 @@ if [[ "$CI" == "true" ]]; then
     -o "$OUTPUT" \
     "${URL}" 2>&1
 else
-  COLUMNS=80 xh \
-    -p bB \
-    --https \
-    --check-status \
-    --download \
-    --output "$OUTPUT" \
+  COLUMNS=80 wget2 \
+    --compression='br,xz,zstd,gzip' \
+    --http-keep-alive \
+    --user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36' \
+    -O "$OUTPUT" \
     "${URL}" 2>&1
+
+  # COLUMNS=80 xh \
+  #   -p bB \
+  #   --https \
+  #   --check-status \
+  #   --download \
+  #   --output "$OUTPUT" \
+  #   "${URL}" 2>&1
 fi
 
 code=$?

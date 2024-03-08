@@ -27,7 +27,7 @@
 	<key>CommandSelection</key>
 	<true/>
 	<key>CompactMinimalTabBarHeight</key>
-	<real>26</real>
+	<real>38</real>
 	<key>Control</key>
 	<integer>1</integer>
 	<key>CopyLastNewline</key>
@@ -57852,11 +57852,11 @@
 		</dict>
 	</dict>
 	<key>CustomTabBarFontSize</key>
-	<real>10</real>
+	<real>12</real>
 	<key>Default Bookmark Guid</key>
 	<string>89A7486A-2F6E-41A2-9114-14C20D8EFA4F</string>
 	<key>DefaultTabBarHeight</key>
-	<real>26</real>
+	<real>30</real>
 	<key>DimBackgroundWindows</key>
 	<false/>
 	<key>DimInactiveSplitPanes</key>
@@ -58015,6 +58015,8 @@
 	<false/>
 	<key>HideTabNumber</key>
 	<true/>
+	<key>HighVisibility</key>
+	<false/>
 	<key>HighlightTabLabels</key>
 	<true/>
 	<key>HotKeyBookmark</key>
@@ -58045,6 +58047,14 @@
 	<integer>2</integer>
 	<key>MaxVertically</key>
 	<true/>
+	<key>MinimalSplitPaneDividerProminence</key>
+	<real>0.05000000074505806</real>
+	<key>MinimalTabStyleBackgroundColorDifference</key>
+	<real>0.05000000074505806</real>
+	<key>MinimalTabStyleOutlineStrength</key>
+	<real>0.20000000298023224</real>
+	<key>MinimalTabStyleTreatLeftInsetAsPartOfFirstTab</key>
+	<false/>
 	<key>MinimumWeightDifferenceForBoldFont</key>
 	<integer>4</integer>
 	<key>NeverWarnAboutShortLivedSessions_89A7486A-2F6E-41A2-9114-14C20D8EFA4F</key>
@@ -59962,7 +59972,7 @@
 	<key>TabStyle</key>
 	<integer>1</integer>
 	<key>TabStyleWithAutomaticOption</key>
-	<integer>6</integer>
+	<integer>5</integer>
 	<key>TabViewType</key>
 	<integer>1</integer>
 	<key>TabsHaveCloseButton</key>
@@ -59993,6 +60003,8 @@
 	<true/>
 	<key>UseLionStyleFullscreen</key>
 	<true/>
+	<key>UseUnevenTabs</key>
+	<false/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WindowNumber</key>

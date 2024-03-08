@@ -16,8 +16,9 @@ alias eza='eza --group-directories-first --color=always'
 alias ls='gls --color --group-directories-first'
 alias l='eza -Ga --icons'          # Lists in multi column, hidden files.
 # alias ll='eza --icons -Lah --no-permissions --no-user -T -L1'
-alias ll='eza --icons -la --no-permissions --no-user -T -L1 --no-time --icons'
-alias lll='eza --icons -la --no-permissions --no-user -T --no-time --git --icons -g -R --git-ignore -L2 -I "*.git"'
+alias ll='eza --icons -la --no-permissions --no-user -T -L1 --no-time'
+alias lll='eza --icons -la --no-permissions --no-user -T --no-time --git -g -R --git-ignore -L2 -I "*.git"'
+alias llll='eza --icons -la --no-permissions --no-user -T --no-time --git -g -R --git-ignore -L3 -I "*.git"'
 #alias ll='eza -lah'      # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
@@ -84,7 +85,7 @@ alias qmv='qmv -e "subl -w -n" -f destination-only'
 alias rg='rg --hidden --smart-case'
 alias rm='grm -v'
 alias date='gdate'
-alias sort="sort -S 50% --parallel=$NUM_CORES"
+alias sort="LC_ALL=C sort -S 50% --parallel=$NUM_CORES"
 alias sudo='nocorrect sudo '
 alias vnstat="vnstat -i en0"
 alias wget="wget --no-check-certificate --compression auto --trust-server-names -nv --show-progress"

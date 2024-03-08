@@ -64,6 +64,9 @@
 	useSparse = true
 	writeReverseIndex = true
 
+[branch]
+	autosetuprebase = always
+
 [apply]
 	whitespace = nowarn
 
@@ -135,6 +138,7 @@
 [pull]
 	rebase = true
 	prune = true
+	twohead = ort
 
 [tig]
 	line-graphics = yes # Disable graphics characters
