@@ -45,8 +45,8 @@ dl 1w https://github.com/sharkdp/bat
 
 # Powerful, enterprise-ready, open source web server with automatic HTTPS
 dl 1w https://github.com/caddyserver/caddy -a=mac_arm64.tar.gz
-dl 1d https://github.com/denoland/deno -a='deno-'
-dl 1d https://github.com/denoland/deno -a='denort-'
+dl 1d https://github.com/denoland/deno -a='deno-aarch64-apple-darwin.zip'
+dl 1d https://github.com/denoland/deno -a='denort-aarch64-apple-darwin.zip'
 dl 1w https://github.com/ouch-org/ouch
 dl 1w https://github.com/kellyjonbrazil/jc
 dl 1w https://github.com/itchyny/gojq
