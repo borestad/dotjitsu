@@ -57873,6 +57873,8 @@
 	<true/>
 	<key>DoubleClickPerformsSmartSelection</key>
 	<true/>
+	<key>DoubleReportScrollWheel</key>
+	<false/>
 	<key>DrawBottomLineForHorizontalTabBar</key>
 	<false/>
 	<key>DrawOutlineAroundCursor</key>
@@ -58659,11 +58661,11 @@
 			<key>Minimum Contrast</key>
 			<real>0.18424011968150622</real>
 			<key>Mouse Reporting</key>
-			<false/>
+			<true/>
 			<key>Mouse Reporting allow clicks and drags</key>
-			<false/>
+			<true/>
 			<key>Mouse Reporting allow mouse wheel</key>
-			<false/>
+			<true/>
 			<key>Name</key>
 			<string>johan</string>
 			<key>Non Ascii Font</key>
