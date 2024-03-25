@@ -178,9 +178,10 @@ https://github.com/borestad/dotjitsu/compare/GitHub
 
 # Crap
 /foo
+/bar
+/baz
 /apa
-/test
 /1
 /2
 /3
-
+.trash

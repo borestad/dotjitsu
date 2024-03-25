@@ -6,17 +6,19 @@
 #
 # Argument parsing
 #
-CI=false
+CURL=false
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
     -o) OUTPUT="$2"; shift 2;;
     -ttl) TTL="$2"; shift 2;;
-    -ci) CI="true"; shift 1;;
+    -ci) CI="true"; CURL="true"; shift 1;;
+    -curl) CURL="true"; shift 1;;
 
     --output=*) OUTPUT="${1#*=}"; shift 1;;
     --ttl=*) TTL="${1#*=}"; shift 1;;
     --ci=*) CI="${1#*=}"; shift 1;;
+    --curl=*) CURL="${1#*=}"; shift 1;;
 
     --output|--ttl|--ci) echo "$1 requires an argument" >&2; exit 1;;
     -*) echo "unknown option: $1" >&2; exit 1;;
@@ -29,7 +31,7 @@ function exists() {
 }
 
 if ! exists xh; then
-  CI=true
+  CURL=true
 fi
 
 #
@@ -70,19 +72,17 @@ cd $TEMPDIR
 
 
 if [[ "$CI" == "true" ]]; then
-  args='--no-progress-meter --silent'
+  start=$(time-now)
+  curl_args='--no-progress-meter --silent'
 else
-  args='--progress-bar'
+  curl_args='--progress-bar'
 fi
 
-start=$(time-now)
-
-if [[ "$CI" == "true" ]]; then
+if [[ "$CURL" == "true" ]]; then
   echo "Downloading $OUTPUT from $URL"
 
-  args='--no-progress-meter --silent'
   COLUMNS=80 curl \
-    $args \
+    $curl_args \
     --disable \
     --show-error \
     --location \
@@ -95,20 +95,21 @@ if [[ "$CI" == "true" ]]; then
     -o "$OUTPUT" \
     "${URL}" 2>&1
 else
-  COLUMNS=80 wget2 \
-    --compression='br,xz,zstd,gzip' \
-    --http-keep-alive \
-    --user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36' \
-    -O "$OUTPUT" \
-    "${URL}" 2>&1
-
-  # COLUMNS=80 xh \
-  #   -p bB \
-  #   --https \
-  #   --check-status \
-  #   --download \
-  #   --output "$OUTPUT" \
+  # COLUMNS=80 wget2 \
+  #   --compression='br,xz,zstd,gzip' \
+  #   --http-keep-alive \
+  #   --user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36' \
+  #   -O "$OUTPUT" \
   #   "${URL}" 2>&1
+
+  COLUMNS=80 /opt/homebrew/bin/xh \
+    -4 \
+    -I \
+    --https \
+    --check-status \
+    --download \
+    --output "$OUTPUT" \
+    "${URL}" 2>&1
 fi
 
 code=$?
@@ -124,9 +125,8 @@ cd "$DIR"
 touch2 "$OUTPUT"
 mv -f "$TEMPDIR/$OUTPUT" "$OUTPUT"
 
-stop=$(benchmark $start)
-
 if [[ "$CI" == "true" ]]; then
+  stop=$(benchmark $start)
   SIZE=$(du -bh "$OUTPUT" | xargs | cut -d ' ' -f1)
   echo "DONE ... in ${stop}s. $SIZE"
 fi
