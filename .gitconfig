@@ -99,19 +99,35 @@
     diffFilter = delta --color-only
 
 [delta]
-    features = side-by-side
+	features = side-by-side line-numbers decorations omit-code-fragment
+	true-color = always
     whitespace-error-style = 22 reverse
-    #line-numbers = true
-    #zero-style = dim syntax
+    line-numbers = true
+	paging = never
+	navigate = true
+    hyperlinks = true
+    hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+    zero-style = dim syntax
+	theme = 1337
 
 [delta "decorations"]
     commit-decoration-style = bold yellow box ul
     file-style = bold yellow ul
     file-decoration-style = none
 
+    # hunk-header-style = line-number omit-code-fragment
+	# hunk-header-decoration-style = none
+    # hunk-header-file-style = red
+    # hunk-header-line-number-style = "#067a00"
+    # hunk-header-style = none
+
 [diff]
 	colorMoved = default
     tool = smartsynchronize
+	context = 1
+
+[merge]
+    conflictstyle = diff3
 
 [difftool]
 	prompt = false
@@ -232,3 +248,5 @@
 	provider = generic
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[alias]
+	trash = !mkdir -p .trash && git ls-files --others --exclude-standard | xargs mv -f -t .trash

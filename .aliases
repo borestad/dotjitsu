@@ -64,12 +64,12 @@ alias code="code -n"
 alias cp='gcp -v'
 alias cpr='rsync -aAHXv --info=progress2 --human-readable'
 alias dfc="dfc -Wdluh -q mount -t apfs"
-alias fd="fd --ignore-case --hidden --exclude '.git'"
+alias fd="fd --ignore-case --hidden --exclude '.git' --ignore-file=$HOME/.dotjitsu/.rgignore"
 alias cat='\bat --paging=never --style="plain" --decorations=auto'
 #alias gdu="timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a || (stty sane &> /dev/null; tput reset &> /dev/null; clear;)";
 
 function gdu() {
-  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -x -a -i "$HOME/Library/Mobile Documents" "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
+  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -x -a -I "$HOME/Library/Containers,$HOME/.local/share/pnpm,$HOME/.local/share/fnm" "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
 }
 
 alias hb='HandBrakeCLI'
@@ -209,7 +209,7 @@ alias hidecursor='tput civis'
 # ️️⚡️ Filters & Pipes
 # ⚡️ =============================================================================
 alias string-trim-leading-whitespace="sed -e 's/^[[:space:]]*//'"
-alias string-trime-all-whitespace="tr -d '[:space:]')"
+alias string-trim-all-whitespace="tr -d '[:space:]'"
 
 find-sum () {
   local DIR='.'; local EXT=$1
@@ -275,7 +275,9 @@ alias work="cd $HOME/work"
 alias dj="code $HOME/.private/dotjitsu.code-workspace"
 alias djp='pull $HOME/.dotjitsu; pull $HOME/.private;'
 
-alias gd="git diff -- :!package-lock.json :!yarn.lock :!pnpm-lock.yaml"
+gd() { git st; hr; git diff -- :!package-lock.json :!yarn.lock :!pnpm-lock.yaml; }
+gdc() { git st; hr; git diff --cached -- :!package-lock.json :!yarn.lock :!pnpm-lock.yaml; }
+
 alias gda="git diff HEAD -- :!package-lock.json :!yarn.lock :!pnpm-lock.yaml"
 alias gds="git diff --cached -- :!package-lock.json :!yarn.lock :!pnpm-lock.yaml"
 append() { grep -q -F $1 $2 || echo $1 >> $2 ;}

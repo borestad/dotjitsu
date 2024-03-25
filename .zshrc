@@ -196,6 +196,7 @@ zinit snippet ~/.p10k.zsh
 
 fpath=(
   $HOMEBREW_PREFIX/share/zsh/site-functions
+  $HOME/.local/share/zsh/site-functions
   $fpath
 )
 
