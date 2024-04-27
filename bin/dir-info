@@ -6,9 +6,9 @@ fi
 
 dir=${1:-.}
 
-result=`eza -laF --no-filesize --no-user --no-time --no-permissions --color=never -s none "$dir"`
-total=`echo $result | grep -Ev "^$" | wc -l`
-dirs=`echo $result | grep -E '/$' | wc -l`
+result=`eza -laF always --no-filesize --no-user --no-time --no-permissions --color=never -s none "$dir"`
+total=`echo "$result" | grep -Ev "^$" | wc -l`
+dirs=`echo "$result" | grep -E '/$' | wc -l`
 files=$(( ${total} - ${dirs}))
 
 echo " $dirs  $files"
