@@ -1,0 +1,5 @@
+#!/usr/bin/env dash
+
+[ ! -f "$1" ] && \
+  \mkdir -p "$(dirname "$1")" \
+  && \touch "$1" || true

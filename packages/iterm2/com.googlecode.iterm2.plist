@@ -58663,7 +58663,7 @@
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Mouse Reporting allow clicks and drags</key>
-			<true/>
+			<false/>
 			<key>Mouse Reporting allow mouse wheel</key>
 			<true/>
 			<key>Name</key>
@@ -59042,6 +59042,8 @@
 			<key>Use Canonical Parser</key>
 			<false/>
 			<key>Use Cursor Guide</key>
+			<false/>
+			<key>Use Custom Tab Title</key>
 			<false/>
 			<key>Use HFS Plus Mapping</key>
 			<false/>
@@ -59946,7 +59948,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>ShowPaneTitles</key>

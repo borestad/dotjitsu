@@ -17,8 +17,8 @@ if command -v gnomon > /dev/null 2>&1; then
   formatter="$(command -v gnomon) -t elapsed-total |"
 fi
 
-exec > >($formatter tee -i $LOG_LOCATION/dot-brew-`date +%F--%H%M%S`.log)
-exec 2>&1
+#exec > >($formatter tee -i $LOG_LOCATION/dot-brew-`date +%F--%H%M%S`.log)
+#exec 2>&1
 
 # cd "$(dirname "$0")"/..
 
@@ -29,19 +29,19 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew update"
 echo
-memo --ttl=60min -- brew -v update
+ets -s -f "%s.%Ls ┃ " memo --ttl=60min -- brew -v update
 
 # Install Brewfile formulas
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew bundle (Brewfile)"
 echo
-brew -v bundle --file=$HOME/.dotjitsu/Brewfile
+ets -s -f "%s.%Ls ┃ " zsh -c "brew -v bundle --file=$HOME/.dotjitsu/Brewfile | rg 'upgrading|Skipping' --color=always --passthrough"
 
 # Update installed bundles (even those not in Brew/Caskfile
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew upgrade"
 echo
-brew -v upgrade
+ets -s -f "%s.%Ls ┃ " zsh -c "brew -v upgrade | rg 'skipping|upgrading' --color=always --passthrough"
 
 rm -f $HOMEBREW_PREFIX/share/zsh/site-functions/_git
 

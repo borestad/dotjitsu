@@ -222,7 +222,7 @@
 	version = 2
 [credential]
 	helper = $HOMEBREW_PREFIX/share/gcm-core/git-credential-manager-core
-	helper =
+	helper = 
 	helper = /usr/local/share/gcm-core/git-credential-manager
 
 # [url "ssh://git@github.com"]
@@ -246,7 +246,7 @@
 	provider = generic
 [credential "https://diva.teliacompany.net"]
 	provider = generic
-[credential "https://dev.azure.com"]
-	useHttpPath = true
 [alias]
 	trash = !mkdir -p .trash && git ls-files --others --exclude-standard | xargs mv -f -t .trash
+[credential "https://dev.azure.com"]
+	useHttpPath = true
