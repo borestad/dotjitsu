@@ -261,7 +261,6 @@ tap 'isacikgoz/taps'
 brew 'bfg'                          # Remove large files or passwords from Git history like git-filter-branch
 brew 'gh'                           # GitHub command-line tool
 brew 'ghq'                          # Remote repository management made easy
-brew 'git-delta'                    # Syntax-highlighting pager for git and diff output
 brew 'git-extras'                   # Small git utilities
 brew 'git-filter-repo'              # Quickly rewrite git repository history
 brew 'git-lfs'                      # Git extension for versioning large files

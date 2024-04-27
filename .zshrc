@@ -191,7 +191,8 @@ setopt dotglob                  # Allow dotfiles in globs
 typeset -U path                 # ignore doules in path
 
 
-zinit snippet ~/.p10k.zsh
+#zinit snippet ~/.p10k.zsh
+source ~/.p10k.zsh
 
 
 fpath=(
@@ -221,3 +222,7 @@ export WASMER_DIR="$HOME/.config/wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
 
 export GPG_TTY=$(tty)
+tere() {
+    local result=$(command tere "$@")
+    [ -n "$result" ] && cd -- "$result"
+}

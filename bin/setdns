@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+. /opt/ci-utils/lib/bash-colors.sh
+
+dnsip="${@:-Empty}"
+
+log.ok
+if [ $# -eq 0 ]; then
+  echo "setdns: dhcp"
+else
+  echo "setdns: $dnsip"
+fi
+
+sudo networksetup -setdnsservers Wi-Fi "$dnsip"
+sleep 0.1
+echo
+scutil --dns | grep nameserver | sort -u | awk '{print $3}'

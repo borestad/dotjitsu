@@ -1,45 +1,27 @@
 #!/usr/bin/env bash
 
 LOCATION=${1:-$(pwd)}
-tempfile=`gmktemp /tmp/ext.XXXXXXXXXXXXXXXXXXXXXXX.txt`
+TMPFILE=`mktemp /tmp/ext.XXXXXXXXXXXXXXXXXXXXXXX.txt`
 
-echo "» Searching files in $LOCATION"
+echo "» Searching files"
+echo
+echo "Location: $LOCATION"
+echo "Tempfile: $TMPFILE"
+echo
 # Optimize by writing to file in one huge chunk
-fd -i --type f --no-ignore --hidden  --one-file-system -E '.git' -E 'node_modules' -E '**cache**' -E '**Cache**' \
-  | tee >( tac > $tempfile ) | cat &> /dev/null
+fd --ignore-file=$HOME/.dotjitsu/.rgignore . --type f --no-ignore --hidden --one-file-system -E '.git' -E 'node_modules' -E '**cache**' -E '**Cache**' \
+  | sponge $TMPFILE &> /dev/null
 
-files=`wc -l < $tempfile`
+files=`wc -l < $TMPFILE`
 echo " .... found $files files"
 
-
-# sed -r 's/(^[^\.]*$)/\1.<NO_EXTENSION>/' |
-echo $tempfile
-echo -e "\n» Processing data \n"
-
-# ( rg -N -I '^(.*/)([^/]+)$' -r '$2' |                     # Remove all paths (keep filenames only)
-#   rg -N -I '^[^\.]*$' -r '$0.<NO_EXTENSION>' --passthru | # Normalize files with no extension
-#   rg '.<NO_EXTENSION>' -r '' |
-#   rg -N -I '.*(\.[^\.]+)$' -r '$1' |                      # Strip filenames (but keep extension)
-#   sort | uniq -c | sort -nr | tac | bat -P -l=bash        # Sort / Uniq / Output / Prettify
-# ) < "$tempfile"
-
-
-# echo -e "\n» Processing data \n"
-# (
-#   sed -r 's/.*\/([^\/]+)/\1/' \
-# | rg -N -I '^.*/([^/]+)$' -r '$1'  \
-# | sed -r 's/.*(\.[^\.]+)$/\1/' \
-# | sort | uniq -c | sort -nr | tac | bat -P -l=bash
-# ) < "$tempfile"
-
-
-(
+{
   rg -N -I '^(.*/)([^/]+)$' -r '$2' \
 | sed 's/^[^\.]*$/<NO_EXTENSION>/' \
 | sed -r 's/.*(\.[^\.]+)$/\1/' \
-| sort | uniq -c | sort -nr | tac | bat -P -l=bash
-) < "$tempfile"
+| LC_ALL=C sort | uniq -c | LC_ALL=C sort -nr | tac | bat -P -l=bash
+} < "$TMPFILE"
 
-echo -e "\nTotal `wc -l < $tempfile` files"
+echo -e "\nTotal `wc -l < $TMPFILE` files"
 echo
-#rm $tempfile
+rm $TMPFILE
