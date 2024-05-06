@@ -71,14 +71,13 @@ source ~/.dotjitsu/.zpreztorc
 
 # https://github.com/zdharma/zinit/issues/421
 zinit snippet PZT::modules/environment/init.zsh
-zinit ice svn wait as=null lucid; zinit snippet PZTM::utility
-zinit ice svn wait as=null lucid; zinit snippet PZTM::archive
+# zinit ice svn wait as=null lucid; zinit snippet PZTM::utility
+# zinit ice svn wait as=null lucid; zinit snippet PZTM::archive
 zinit snippet PZT::modules/terminal/init.zsh
 zinit snippet PZT::modules/editor/init.zsh
 zinit snippet PZT::modules/history/init.zsh
-#zinit ice svn wait as=null lucid; zinit snippet PZT::modules/fasd/init.zsh
 zinit snippet PZT::modules/directory/init.zsh
-zinit ice svn wait as=null lucid; zinit snippet PZTM::osx
+# zinit ice svn wait as=null lucid; zinit snippet PZTM::osx
 zinit snippet PZT::modules/rsync/init.zsh
 zinit snippet PZT::modules/completion/init.zsh # Loaded last
 
@@ -118,7 +117,7 @@ zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'dir-info ${realpath//\\ / }; echo; eza --group-directories-first --icons -la --no-permissions --no-user -L1 --no-time --icons --git-ignore -I "*.git" "${realpath//\\ / }"'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'dir-info ${realpath//\\ / }; echo; eza --colour=always --group-directories-first --icons -la --no-permissions --no-user -L1 --no-time --icons --git-ignore -I "*.git" "${realpath//\\ / }"'
 zstyle ':fzf-tab:*' switch-group ',' '.'
 
 # zinit ice wait lucid

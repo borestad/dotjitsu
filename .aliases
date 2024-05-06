@@ -69,7 +69,7 @@ alias cat='\bat --paging=never --style="plain" --decorations=auto'
 #alias gdu="timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a || (stty sane &> /dev/null; tput reset &> /dev/null; clear;)";
 
 function gdu() {
-  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -x -a -I "$HOME/Library/Containers,$HOME/.local/share/pnpm,$HOME/.local/share/fnm" "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
+  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -x -a -C -I "$HOME/Library/Containers,$HOME/.local/share/pnpm,$HOME/.local/share/fnm" "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
 }
 
 alias hb='HandBrakeCLI'
