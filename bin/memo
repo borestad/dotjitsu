@@ -56,7 +56,7 @@ time-now() { date +%s.%N; }
 benchmark() {
   local start=$1
   local end=${2:-$(time-now)}
-  printf %.2f $(echo "$end - $start" | bc -l)
+  echo "$end $start" | awk '{print $1 - $2}'
 }
 
 #
