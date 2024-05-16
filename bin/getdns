@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+#networksetup -getdnsservers Wi-Fi
+scutil --dns | grep nameserver | sort -u | awk '{print $3}'
