@@ -17,7 +17,7 @@
 TTL=60s
 DIR=$(pwd)
 CACHE_DIR=${BKT_CACHE_DIR:-"$HOME/.cache/bkt"}
-mkdir -p $CACHE_DIR
+test -d $CACHE_DIR || mkdir -p $CACHE_DIR
 
 # https://konsolebox.io/blog/2022/05/14/general-command-line-parsing-solution-without-using-getopt-s.html
 function get_opt_arg {
@@ -67,6 +67,7 @@ B64KEY=$(echo "$CMD" | base64 -w0)
 SHAKEY=$(echo "$B64KEY" | sha1sum | awk '{print $1}')
 
 SCOPE="memo.$SHAKEY"
+
 
 # Check if command is already cached
 cd $TEMPDIR

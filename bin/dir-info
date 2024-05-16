@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if [[ "$PWD" =~ .*"Volumes".* ]]; then
   exit 0
