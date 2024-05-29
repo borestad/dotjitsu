@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+c() { [ $# == 0 ] && printf "\e[0m" || printf "$1" | sed 's/\(.\)/\1;/g;s/\([SDIUFNHT]\)/2\1/g;s/\([KRGYBMCW]\)/3\1/g;s/\([krgybmcw]\)/4\1/g;y/SDIUFNHTsdiufnhtKRGYBMCWkrgybmcw/12345789123457890123456701234567/;s/^\(.*\);$/\\e[\1m/g'; }
+cecho() { echo -e "$(c $1)${2}\e[0m"; }
+
+echo
+upload() {
+  if [ $# = 1 -o $# = 2 ]; then
+    if [ -f "$1" ]; then
+      if [ $# = 1 ]; then
+        echo "   🚀 Uploading $1 ..."
+        result=$(curl -sF "file=@$1" https://file.io/)
+      else
+        if [[ "$2" =~ "^[1-9] [wmy]$" ]]; then
+          result=$(curl -F "file=@$1" https://file.io/?expires=$2)
+        else
+          echo $'Wrong expiration format.neg. 1(w/m/y), etc.'
+        fi
+      fi
+    else
+      echo "file doesn't exist"
+      exit 1
+    fi
+  else
+    echo $'usage: upload file_name.ext [expiration]nexpiration format: 1-9(w/m/y) # (w)eeks, m(onths), (y)ear'
+    exit 1
+  fi
+
+  echo $result | jq .
+  link="$(echo $result | jq -r '.link')"
+  printf "      "
+  cecho Bu "$link"
+  echo
+}
+
+upload "$@"
