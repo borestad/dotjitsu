@@ -1,0 +1,68 @@
+#!/usr/bin/env zsh
+
+#ROOT=$(git rev-parse --show-toplevel)
+#cd $ROOT
+
+. ~/.dotjitsu/.env$
+
+brew install \
+  bat \
+  binutils \
+  bkt \
+  coreutils \
+  deno\
+  eza \
+  fd \
+  findutils \
+  fnm \
+  fzf \
+  gdu \
+  git \
+  git-extras \
+  gnu-sed \
+  grc \
+  hr \
+  htop \
+  mr \
+  ncdu \
+  sd \
+  svn \
+  thefuck \
+  tig \
+  zsh
+
+~/.dotjitsu/bin/dot-brew-core
+
+eval "$(fnm env)"
+
+fnm install --lts
+fnm default lts-latest
+
+
+# if [ ! type "brew" &> /dev/null ]; then
+# 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# fi
+
+~/.dotjitsu/bin/dot-clone
+
+~/.dotjitsu/bin/pull $HOME/.dotjitsu
+~/.dotjitsu/bin/pull $HOME/.private
+
+ln -sfv ~/.dotjitsu/.zshrc ~/
+. ~/.dotjitsu/.env$
+
+~/.dotjitsu/bin/dot-symlink
+~/.private/bin/dotp-symlink
+
+~/.private/bin/dot-crontab
+~/.dotjitsu/bin/dot-npm-bootstrap
+
+# https://superuser.com/questions/273756/how-to-change-default-app-for-all-files-of-particular-file-type-through-terminal
+duti -s org.videolan.vlc .mp4 all
+duti -s org.videolan.vlc .avi all
+
+#brew link git-annex
+#brew link git-lfs
+
+
+

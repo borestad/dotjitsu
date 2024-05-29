@@ -27,7 +27,7 @@ filename=''
 stats=$(git diff --cached --shortstat | sed -E 's/ (insertions?|deletions?|changed?)//g' | sed 's/,//g' | xargs)
 DATE=$(date '+%Y-%m-%d %H:%M:%S')
 
-if [ $(git diff --cached --numstat | wc -l) -eq 1 ]; then
+if [ $(git diff --no-pager --cached --numstat | wc -l) -eq 1 ]; then
   # Only one file changed
    filename=$(basename $(git diff --cached --numstat --name-only))
    stats=$(echo $stats | sed 's/1 file//g' | xargs)
