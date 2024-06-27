@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 export LC_ALL=C
 NUM_CORES=`getconf _NPROCESSORS_ONLN`
