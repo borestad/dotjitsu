@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+export LC_ALL=C
+NUM_CORES=`getconf _NPROCESSORS_ONLN`
+
+function _sort() {
+  sort -S 10% --parallel=$NUM_CORES
+}
+
+cat - | _sort | uniq -c | _sort -n
+
