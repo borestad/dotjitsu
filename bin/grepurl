@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+export IS_URL='https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)'
+
+if [ -n "$1" ]; then
+    cat "$1"
+else
+    cat
+fi | rg --pcre2 --only-matching "${IS_URL}"
