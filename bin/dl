@@ -6,21 +6,19 @@
 #
 # Argument parsing
 #
-CURL=false
+CI=false
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
     -o) OUTPUT="$2"; shift 2;;
     -ttl) TTL="$2"; shift 2;;
-    -ci) CI="true"; CURL="true"; shift 1;;
-    -curl) CURL="true"; shift 1;;
+    -ci) CI="true"; shift 1;;
 
     --output=*) OUTPUT="${1#*=}"; shift 1;;
     --ttl=*) TTL="${1#*=}"; shift 1;;
     --ci=*) CI="${1#*=}"; shift 1;;
-    --curl=*) CURL="${1#*=}"; shift 1;;
-
     --output|--ttl|--ci) echo "$1 requires an argument" >&2; exit 1;;
+
     -*) echo "unknown option: $1" >&2; exit 1;;
     *) URL="$1"; shift 1;;
   esac
@@ -31,15 +29,12 @@ function exists() {
 }
 
 if ! exists xh; then
-  CURL=true
+  CI=true
 fi
 
 #
 # Helpers
 #
-function urldecode() {
-  echo -ne $(echo -n "$1" | sed -E "s/%/\\\\x/g")
-}
 
 time-now() {
   date +%s.%N
@@ -60,9 +55,8 @@ touch2() {
 #
 
 DIR=$(pwd)
-BASENAME=$(basename "$URL" | sed 's/?.*//g')
-OUTPUT=${OUTPUT:-"$BASENAME"}
-OUTPUT=$(urldecode "$OUTPUT")
+BASENAME=$(basename $URL | sed 's/?.*//g')
+OUTPUT=${OUTPUT:-$BASENAME}
 TEMPDIR=$(mktemp -d)
 TEMPLOG=$(mktemp)
 
@@ -72,61 +66,46 @@ cd $TEMPDIR
 
 
 if [[ "$CI" == "true" ]]; then
-  start=$(time-now)
-  curl_args='--no-progress-meter --silent'
+  args='--no-progress-meter --silent'
 else
-  curl_args='--progress-bar'
+  args='--progress-bar'
 fi
 
-if [[ "$CURL" == "true" ]]; then
-  echo "Downloading $OUTPUT from $URL"
+start=$(time-now)
 
-  COLUMNS=80 curl \
-    $curl_args \
-    --disable \
-    --show-error \
-    --location \
-    --keepalive \
-    --connect-timeout 10 \
-    --retry 1 \
-    --http2 \
-    --fail-with-body \
-    --compressed \
-    -o "$OUTPUT" \
-    "${URL}" 2>&1
-else
-  # COLUMNS=80 wget2 \
-  #   --compression='br,xz,zstd,gzip' \
-  #   --http-keep-alive \
-  #   --user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36' \
-  #   -O "$OUTPUT" \
-  #   "${URL}" 2>&1
+echo "Downloading ${OUTPUT} from ${URL}"
 
-  COLUMNS=80 /opt/homebrew/bin/xh \
-    -p bB \
-    -4 \
-    --https \
-    --check-status \
-    --download \
-    --output "$OUTPUT" \
-    "${URL}" 2>&1
-fi
+curl \
+  $args \
+  --disable \
+  --show-error \
+  --location \
+  --keepalive \
+  --connect-timeout 10 \
+  --retry 2 \
+  --http2 \
+  --fail-with-body \
+  --compressed \
+  -o "${OUTPUT}" \
+  ${URL} 2>&1
 
 code=$?
 
 # cat $TEMPLOG
 
 if [ $code -ne 0 ]; then
-  echo "❌ [Error: $code] $URL"
+  echo "❌ $URL"
   exit $code
 fi
 
-cd "$DIR"
-touch2 "$OUTPUT"
-mv -f "$TEMPDIR/$OUTPUT" "$OUTPUT"
+cd $DIR
+touch2 $OUTPUT
+mv $TEMPDIR/$OUTPUT $OUTPUT
 
-if [[ "$CI" == "true" ]]; then
-  stop=$(benchmark $start)
-  SIZE=$(du -bh "$OUTPUT" | xargs | cut -d ' ' -f1)
-  echo "DONE ... in ${stop}s. $SIZE"
-fi
+# stop=$(benchmark $start)
+
+# if [[ "$CI" == "true" ]]; then
+#   # SIZE=$(du -bh $OUTPUT | xargs | cut -d ' ' -f1)
+#   # echo "DONE ... in ${stop}s. $SIZE"
+#   echo "DONE ... in ${stop}s."
+# fi

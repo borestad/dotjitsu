@@ -1,0 +1,3 @@
+-o "%(extractor)s/%(title)s [%(resolution)s] [%(id)s].%(ext)s"
+--external-downloader aria2c
+--external-downloader-args "-c -j 8 -x 8 -s 1 -k 1000M"

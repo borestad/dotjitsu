@@ -132,6 +132,7 @@ function cd {
 # =============================================================================
 alias g='git'; #compdef g='git'
 alias gu='gitui'
+alias bp='bump; push'
 
 function clone {
   url=$1;
@@ -199,6 +200,7 @@ zclearcache () { rm -rfv .repos/zplug/cache; rm -rfv ~/.cache/prezto ;}
 #alias git=hub
 wherebat () { where "$1" | fzf --preview 'bat -p {}' ;}
 alias ytdl='yt-dlp --config-location ~/.dotjitsu/packages/youtube-dl/config'
+alias ytdl2='yt-dlp --config-location ~/.dotjitsu/packages/youtube-dl/config2'
 
 alias duf='duf -hide-fs devfs'
 
@@ -386,6 +388,7 @@ alias ssh.addkey="addkey"
 alias ssh.update-known-hosts='ssh-keygen -R'
 alias ssh.remove-tunnels='rm ~/.ssh/control/*'
 alias ssh.clean='rm -fv ~/.ssh/control/*'
+sshc() { ssh -t $1 "lxc-attach $2; bash -i; exit 0"; }
 
 
 # =============================================================================

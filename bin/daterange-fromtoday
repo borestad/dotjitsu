@@ -1,0 +1,36 @@
+#!/usr/bin/env bash --norc
+
+echo "$1"
+echo "$2"
+
+exit 0
+if [ $# -eq 0 ]; then
+	echo "ERROR: no arguments specified" 1>&2
+	exit 1
+fi
+
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -now|--now) now="$2"; shift ;;
+        -enddate|--enddate) enddate="$2"; shift ;;
+        -t|--test) test=1 ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+
+echo "now: $now"
+echo "enddate: $enddate"
+echo "test: $test"
+
+exit 0
+
+function date-range() {
+  local DAYS=$(expr $1 - 1)
+  for i in $(seq 0 $DAYS); do
+    date "+%Y-%m-%d" -d "$(date) - $i days"
+  done
+}
+
+date-range "$1"

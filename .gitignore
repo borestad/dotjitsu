@@ -177,6 +177,7 @@ https://github.com/borestad/dotjitsu/compare/GitHub
 .zsh_sessions
 
 # Crap
+CACHEDIR.tag
 /foo
 /bar
 /baz
