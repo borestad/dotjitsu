@@ -93,8 +93,10 @@ zinit ice depth=1
 zinit light romkatv/powerlevel10k
 
 # ■■■ fzf (autocomplete, keybindings)
-zinit ice wait lucid
-zinit snippet ~/.dotjitsu/etc/fzf.zsh
+# . ~/.dotjitsu/etc/fzf.zsh
+# zinit ice wait lucid
+zinit snippet /opt/homebrew/opt/fzf/shell/completion.zsh
+zinit snippet /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 
 # ■■■ History substring searching
 bindkey -r '^[[A'; bindkey -r '^[[B'
@@ -141,8 +143,9 @@ zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-compl
 
 # ■■■ Evals
 eval $(gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
-_evalcache thefuck --alias
-_evalcache zoxide init zsh
+unalias zi
+eval "$(thefuck --alias)"
+eval "$(zoxide init zsh)"
 eval "$(fnm env --use-on-cd --version-file-strategy recursive)"
 
 #_evalcache direnv hook  zsh

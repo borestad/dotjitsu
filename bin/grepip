@@ -11,4 +11,4 @@ if [ -n "$1" ]; then
     cat "$1"
 else
     cat
-fi | rg --pcre2 --only-matching "${IS_CIDR4}"
+fi | rg --pcre2 --only-matching "${IS_CIDR4}" | iprange

@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+
+# set -o errexit
+# set -e
+
+#
+# Argument parsing
+#
+CURL=false
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -o) OUTPUT="$2"; shift 2;;
+    -ttl) TTL="$2"; shift 2;;
+    -ci) CI="true"; CURL="true"; shift 1;;
+    -curl) CURL="true"; shift 1;;
+
+    --output=*) OUTPUT="${1#*=}"; shift 1;;
+    --ttl=*) TTL="${1#*=}"; shift 1;;
+    --ci=*) CI="${1#*=}"; shift 1;;
+    --curl=*) CURL="${1#*=}"; shift 1;;
+
+    --output|--ttl|--ci) echo "$1 requires an argument" >&2; exit 1;;
+    -*) echo "unknown option: $1" >&2; exit 1;;
+    *) URL="$1"; shift 1;;
+  esac
+done
+
+function exists() {
+    builtin command -V "$1" >/dev/null 2>&1
+}
+
+if ! exists xh; then
+  CURL=true
+fi
+
+#
+# Helpers
+#
+function urldecode() {
+  echo -ne $(echo -n "$1" | sed -E "s/%/\\\\x/g")
+}
+
+time-now() {
+  date +%s.%N
+}
+
+benchmark() {
+  local start=$1
+  local end=${2:-$(time-now)}
+  printf %.2f $(echo "$end - $start" | bc -l)
+}
+
+touch2() {
+  mkdir -p "$(dirname "$1")" && touch "$1" ;
+}
+
+#
+# Main
+#
+
+DIR=$(pwd)
+BASENAME=$(basename "$URL" | sed 's/?.*//g')
+OUTPUT=${OUTPUT:-"$BASENAME"}
+OUTPUT=$(urldecode "$OUTPUT")
+TEMPDIR=$(mktemp -d)
+TEMPLOG=$(mktemp)
+
+# Precreate some fancy path (i.e a/b/c/100.zip)
+touch2 "$TEMPDIR/$OUTPUT"
+cd $TEMPDIR
+
+
+if [[ "$CI" == "true" ]]; then
+  start=$(time-now)
+  curl_args='--no-progress-meter --silent'
+else
+  curl_args='--progress-bar'
+fi
+
+if [[ "$CURL" == "true" ]]; then
+  echo "Downloading $OUTPUT from $URL"
+
+  COLUMNS=80 curl \
+    $curl_args \
+    --disable \
+    --show-error \
+    --location \
+    --keepalive \
+    --connect-timeout 10 \
+    --retry 1 \
+    --http2 \
+    --fail-with-body \
+    --compressed \
+    -o "$OUTPUT" \
+    "${URL}" 2>&1
+else
+  # COLUMNS=80 wget2 \
+  #   --compression='br,xz,zstd,gzip' \
+  #   --http-keep-alive \
+  #   --user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36' \
+  #   -O "$OUTPUT" \
+  #   "${URL}" 2>&1
+
+  COLUMNS=80 /opt/homebrew/bin/xh \
+    -p bB \
+    -4 \
+    --https \
+    --check-status \
+    --download \
+    --output "$OUTPUT" \
+    "${URL}" 2>&1
+fi
+
+code=$?
+
+# cat $TEMPLOG
+
+if [ $code -ne 0 ]; then
+  echo "❌ [Error: $code] $URL"
+  exit $code
+fi
+
+cd "$DIR"
+touch2 "$OUTPUT"
+mv -f "$TEMPDIR/$OUTPUT" "$OUTPUT"
+
+if [[ "$CI" == "true" ]]; then
+  stop=$(benchmark $start)
+  SIZE=$(du -bh "$OUTPUT" | xargs | cut -d ' ' -f1)
+  echo "DONE ... in ${stop}s. $SIZE"
+fi

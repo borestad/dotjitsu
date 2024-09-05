@@ -1,0 +1,19 @@
+#!/usr/bin/env bash --norc
+
+if [ $# -eq 0 ]; then
+	echo "ERROR: no arguments specified" 1>&2
+	exit 1
+fi
+
+KEY=${1}
+
+DATE1=$(date +%s%N | cut -b1-13);
+DATE2=$(bkt --ttl=5s -- bash -c """printf $KEY > /dev/null; date +%s%N | cut -b1-13""")
+
+[[ $(( $DATE2 - $DATE1 )) -gt 0 ]]
+CODE=$?
+
+echo "$(( $DATE2 - $DATE1 ))"
+echo "$(( $DATE1 - $DATE2 ))"
+echo $CODE
+exit $CODE

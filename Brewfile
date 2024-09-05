@@ -44,14 +44,16 @@ brew 'packer-completion'
 # tap 'mergestat/mergestat'
 # brew 'mergestat'
 
-brew 'ast-grep'
+# brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
+# brew 'imageoptim-cli'               # CLI for ImageOptim, ImageAlpha and JPEGmini
+#brew 'eth-p/software/bat-extras'   # Bash scripts that integrate bat with various command-line tools
+#brew 'fx'                           # Terminal JSON viewer
+#brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
 brew 'aha'
-brew 'erdtree'
-brew 'choose-rust'
-brew 'atuin'
-brew 'jplot'
-brew 'asdf'
 brew 'aria2'                        # Download with resuming and segmented downloading
+brew 'asdf'
+brew 'ast-grep'
+brew 'atuin'
 brew 'autoconf'                     # Automatic configure script builder
 brew 'autojump'                     # Shell extension to jump to frequently used directories
 brew 'automake'                     # Tool for generating GNU Standards-compliant Makefiles
@@ -60,44 +62,54 @@ brew 'bandwhich'                    # Bourne-Again SHell, a UNIX command interpr
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
 brew 'bento4'                       # Full-featured MP4 format and MPEG DASH library and tools
+brew 'bkt'
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
 brew 'bottom'                       #
-brew 'brimdata/tap/zq'              #
 brew 'broot'                        # New way to see and navigate directory trees
-brew 'clipboard'                    #
-brew 'curl'                         #
+brew 'choose-rust'
 brew 'cliclick'                     # Tool for emulating mouse and keyboard events
+brew 'clipboard'                    #
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
+brew 'croc'
+brew 'curl'                         #
+brew 'curlie'                       #
 brew 'cv'                           # Progress: Coreutils Progress Viewer                      #
+brew 'ddh'
 brew 'debianutils'
-brew 'eza'
+brew 'delta'
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
-brew 'dolt'                         # Git for Data
 brew 'docker-compose'               # Isolated development environments using Docker
 brew 'docker-machine'               # Create Docker hosts locally and on cloud providers
+brew 'dolt'                         # Git for Data
+brew 'dprint'
+brew 'duf'
+brew 'dust'
 brew 'dust'                         # More intuitive version of du in rust
+brew 'duti'
 brew 'duti'                         # A command-line tool to select default applications for document types and URL schemes on Mac OS X
 brew 'entr'                         # Run arbitrary commands when files change
-#brew 'eth-p/software/bat-extras'   # Bash scripts that integrate bat with various command-line tools
+brew 'erdtree'
 brew 'exercism'                     # Command-line tool to interact with exercism.io
 brew 'exiftool'                     # Perl lib for reading and writing EXIF metadata
+brew 'eza'
 brew 'faas-cli'                     # CLI for templating and/or deploying FaaS functions
 brew 'fastmod'                      #
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
-# brew 'ffmpeg'                       # Play, record, convert, and stream audio and video
+brew 'fdupes'
 brew 'fish'                         # User-friendly command-line shell for UNIX-like operating systems
 brew 'fnm'                          # Fast and simple Node.js version manager
 brew 'fping'                        # Scriptable ping program for checking if multiple hosts are up
 brew 'fselect'                      # Find files with SQL-like queries
 brew 'fswatch'                      # Monitor a directory for changes and run a shell command
-#brew 'fx'                           # Terminal JSON viewer
 brew 'geoip'                        #
 brew 'git-sizer'                    #
+brew 'gitui'
 brew 'glow'                         #
+brew 'gojq'
 brew 'gotop'                        # Terminal based graphical activity monitor inspired by gtop and vtop
 brew 'gpg'                          # GNU Pretty Good Privacy (PGP) package
 brew 'graphviz'                     # Graph visualization software from AT&T and Bell Labs
@@ -107,6 +119,7 @@ brew 'gron'                         #
 brew 'handbrake'                    # Open-source video transcoder available for Linux, Mac, and Windows
 brew 'hashdeep'                     # Recursively compute digests on files/directories
 brew 'hh'                           # Bash and zsh history suggest box
+brew 'htmlq'
 brew 'htop'                         # Improved top (interactive process viewer)
 brew 'httpie'                       # User-friendly cURL replacement (command-line HTTP client)
 brew 'httpry'                       # Packet sniffer for displaying and logging HTTP traffic
@@ -114,30 +127,39 @@ brew 'hyperfine'                    # Command-line benchmarking tool
 brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
-# brew 'imageoptim-cli'               # CLI for ImageOptim, ImageAlpha and JPEGmini
+brew 'inlyne'
+brew 'jc'
 brew 'jid'                          # Json incremental digger
 brew 'jless'                        #
 brew 'jpeg'                         # Image manipulation library
 brew 'jpegoptim'                    # Utility to optimize JPEG files
+brew 'jplot'
+brew 'just'
+brew 'katana'
 brew 'kondo'                        # Save disk space by cleaning non-essential files from software projects
 brew 'kubernetes-cli'               # Tool to report network interface bandwidth
 brew 'lazydocker'                   # The lazier way to manage everything docker
-brew 'lf'                           #
-brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
 brew 'lazygit'                      #
+brew 'lf'                           #
+brew 'libeatmydata'
+brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
+brew 'lxc'                          #
 brew 'm-cli'                        # Swiss Army Knife for macOS
 brew 'mackup'                       # Keep your Mac's application settings in sync
+brew 'macpine'
 brew 'mas'                          # Mac App Store command-line interface
 brew 'masscan'                      # TCP port scanner, scans entire Internet in under 5 minutes
+brew 'mdbook'
 brew 'micro'                        # Modern and intuitive terminal-based text editor
-brew 'mist'                         # Mac command-line tool that automatically downloads macOS Installers / Firmwares
 brew 'miller'                       #
+brew 'mist'                         # Mac command-line tool that automatically downloads macOS Installers / Firmwares
 brew 'mmv'                          # Move, copy, append, and link multiple files
-brew 'most'                         # Powerful paging program
 brew 'mosh'                         #
+brew 'most'                         # Powerful paging program
 brew 'mozjpeg'                      # Improved JPEG encoder
 brew 'mtr'                          # 'traceroute' and 'ping' in a single tool
 brew 'multitail'                    # Tail multiple files in one terminal simultaneously
+brew 'navi'
 brew 'ncdu'                         # NCurses Disk Usage
 brew 'neofetch'                     # Fast, highly customisable system info script
 brew 'nethogs'                      # Net top tool grouping bandwidth per process
@@ -148,6 +170,7 @@ brew 'nmap'                         # Port scanning utility for large networks
 brew 'noti'                         # Trigger notifications when a process completes
 brew 'nushell'                      # Modern shell for the GitHub era
 brew 'optipng'                      # PNG file optimizer
+brew 'ouch'
 brew 'pbzip2'                       # Parallel bzip2
 brew 'pgrep'                        # OpenBSD and Darwin versions of pgrep, pkill, and pfind
 brew 'pidof'                        # Display the PID number for a given process name
@@ -162,74 +185,70 @@ brew 'psgrep'                       # Shortcut for the 'ps aux | grep' idiom
 brew 'pup'                          #
 brew 'pv'                           # Monitor data's progress through a pipe
 brew 'pygments'                     # Generic syntax highlighter
+brew 'qemu'
 brew 'rargs'                        # Util like xargs + awk with pattern matching support
+brew 'rclone'                       #
 brew 'rdiff-backup'                 # Reverse differential backup tool, over a network or locally
 brew 'rename'                       # Perl-powered file rename script with many helpful built-ins
 brew 'renameutils'                  # Tools for file renaming
 brew 'ripgrep-all'                  # Wrapper around ripgrep that adds multiple rich file types
 brew 'ripgrep'                      # Search tool like grep and The Silver Searcher
-brew 'rs/tap/curlie'                #
+brew 'rnr'
 brew 'rsnapshot'                    # File system snapshot utility (based on rsync)
 brew 'rsync'                        # Utility that provides fast incremental file transfer
+brew 'rust-parallel'
 brew 'sd'                           # Intuitive find & replace CLI
+brew 'serf'
 brew 'shallow-backup'
 brew 'sk'                           # Fuzzy Finder in rust!
 brew 'sponge'
-brew 'serf'
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 brew 'starship'                     # Cross-shell prompt for astronauts
+brew 'streamlink'
 brew 'stress'                       # Tool to impose load on and stress test a computer system
-#brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
 brew 'svn'                          #
 brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
 brew 'sysbench'                     # System performance benchmark tool
 brew 'tealdeer'                     # Very fast implementation of tldr in Rust
 brew 'thefuck'                      # Programmatically correct mistyped console commands
 brew 'tig'                          # Text interface for Git repositories
-brew 'lxc'                          #
 brew 'tmux'                         # Terminal multiplexer
 brew 'tokei'                        # Program that allows you to count code, quickly
 brew 'trash'                        # CLI tool that moves files or folder to the trash
 brew 'tree'                         # Display directories as trees (with optional color/HTML output)
-brew 'rclone'                       #
 brew 'unar'                         # Command-line unarchiving tools supporting multiple formats
 brew 'unison'                       # File synchronization tool for OSX
+brew 'upx'
 brew 'vbindiff'                     # Visual Binary Diff
 brew 'vcsh'                         # Config manager based on git
+brew 'vegeta'
+brew 'viddy'
 brew 'vips'                         # Image processing library
 brew 'vnstat'                       # Console-based network traffic monitor
 brew 'watch'                        # Executes a program periodically, showing output fullscreen
 brew 'watchman'                     # Watch files and take action when they change
+brew 'wcurl'
 brew 'webkit2png'                   # Create screenshots of webpages from the terminal
 brew 'wget'                         # Internet file retriever
 brew 'wget2'                        # Successor of GNU Wget, a file and recursive website downloader
 brew 'whatmask'                     # Network settings helper
+brew 'wrk'
 brew 'xh'
 brew 'xidel'
-brew 'mdbook'
+brew 'xq'
 brew 'yank'                         #
 brew 'yj'                           #
 brew 'yq'                           #
+brew 'yt-dlp'
 brew 'zopfli'                       # New zlib (gzip, deflate) compatible compressor
 brew 'zoxide'                       # Shell extension to navigate your filesystem faster
+brew 'zq'                           #
 brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 brew 'zsh'
-brew 'navi'
-brew 'wrk'
-brew 'viddy'
-brew 'streamlink'
-brew 'qemu'
-brew 'macpine'
-brew 'yt-dlp'
-brew 'upx'
-brew 'rnr'
-brew 'vegeta'
-brew 'fdupes'
-brew 'libeatmydata'
-brew 'croc'
+
 
 brew 'liujianping/tap/job'
 
