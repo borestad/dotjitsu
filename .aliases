@@ -34,10 +34,7 @@ alias sl='ls'            # I often screw this up.
 # Find aliases
 # =============================================================================
 ff () {
-  IFS=""
-  local result=`fd $1`
-  echo -e $result
-  echo -e $result | wc -l
+  fd $1 | fzf
 }
 
 #alias fff='ag -G "\.(js?x|ts?x|json)$" '

@@ -90,7 +90,6 @@ RetroArch
 node-versions
 #share/
 #/Application\ Support/Google/
-*-*-*-*-*
 Chrome/
 dist/
 retroarch/**/*.cfg
