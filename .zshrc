@@ -209,6 +209,8 @@ fpath=(
 zicompinit
 zinit cdreplay
 
+#source <(fzf --zsh)
+
 # eval "$(bkt -- atuin init zsh --disable-up-arrow)"
 # eval "$(atuin init zsh)"
 
