@@ -10,7 +10,15 @@ TEXT="\`️️⚡️ $LABEL ⚡️\` \`$DATE\`"
 MSG=${1:-$TEXT}
 
 echo "✔ Squash all commits"
-git reset $(git commit-tree HEAD^{tree} -m "$MSG");
+git checkout --orphan new-main main
+git commit -m "$MSG"
+
+# Overwrite the old master branch reference with the new one
+git branch -M new-main main
+# rm -rf .git/objects/pack
+
+# echo "✔ Squash all commits"
+# git reset $(git commit-tree HEAD^{tree} -m "$MSG");
 
 echo '✔ Remove all tags'
 git tag -l | xargs git tag -d
