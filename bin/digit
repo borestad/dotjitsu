@@ -1,0 +1,16 @@
+#!/usr/bin/env bash --norc
+
+if [ "$#" -eq 1 ]; then
+    DOMAIN="$1"
+elif [ "$#" -eq 2 ]; then
+    DNSSERVER="$1"
+    DOMAIN="$2"
+else
+  echo "Usage: digit [@dnsserver] [domain]"
+  exit 1
+fi
+
+DOMAIN=$(echo "$DOMAIN" | sed -e 's|^[^/]*//||' -e 's|/.*$||')
+
+bkt --ttl=1d --stale=1s --discard-failures -- sh -c \
+  "dig +time=15 +tries=2 +short ${DNSSERVER} ${DOMAIN}"
