@@ -63,7 +63,7 @@ benchmark() {
 # Main
 #
 TEMPDIR=$(mktemp -d)
-B64KEY=$(echo "$CMD" | base64 -w0)
+B64KEY=$(echo "$CMD" | gbase64 -w0)
 SHAKEY=$(echo "$B64KEY" | sha1sum | awk '{print $1}')
 
 SCOPE="memo.$SHAKEY"

@@ -1,97 +1,67 @@
-#!/usr/bin/env bash --norc
-
-# set -o errexit
-
+#!/usr/bin/env bash
 
 ###
+#
+# bkt helper for taking any arbritary input using a cache key.
+# This enables bkt to be used even with vanilla bash functions
 #
 # Usage example:
-# memo --ttl=60s -- wget http://speedtest.tele2.net/1MB.zip
+# memo --ttl=60s mycachekey || wget http://speedtest.tele2.net/1MB.zip
 #
 ###
 
-#
-# Helpers
-#
+# Default values
+ttl="60s"
+scope="memo2"
 
-TTL=60s
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --ttl=*)
+        ttl="${1#*=}"
+        shift
+        ;;
+        --scope=*)
+        scope="${1#*=}"
+        shift
+        ;;
+        --)
+        shift # Skip '--' and stop further argument parsing
+        break
+        ;;
+        *)
+        key="$1"
+        shift
+        ;;
+    esac
+done
 
-# # https://konsolebox.io/blog/2022/05/14/general-command-line-parsing-solution-without-using-getopt-s.html
-# function get_opt_arg {
-#     if [[ $1 == *=* ]]; then
-#         __=${1#*=}
-#         return 1
-#     elif [[ ${2+.} ]]; then
-#         __=$2
-#         return 0 # Tells that shift is needed
-#     else
-#         echo "No argument provided to option '$1'." >&2
-#         exit 1
-#     fi
-# }
-
-# while [[ $# -gt 0 ]]; do
-#     case $1 in
-#     --ttl=*)
-#         get_opt_arg "$@" && shift
-#         TTL=$__
-#         ;;
-#     --)
-#         CMD="${@:2 }"
-#         break
-#         ;;
-#     esac
-#     shift
-# done
-
-
-time-now() { date +%s.%N; }
-
-benchmark() {
-  local start=$1
-  local end=${2:-$(time-now)}
-  echo "$end $start" | awk '{print $1 - $2}'
-}
-
-
-CMD="$1"
-
-#
-# Main
-#
-B64KEY=$(echo "$CMD" | base64 -w0)
-SHAKEY=$(sha1sum <<< "$B64KEY" | awk '{print $1}')
-OUTPUT=$(BKT_TTL=60s bkt -- bash --norc -c """echo >| /tmp/memo2.${SHAKEY}.txt; eval $CMD""")
-
-# echo /tmp/memo2.${B64KEY}.txt
-# echo $B64KEY
-if test -f /tmp/memo2.$SHAKEY.txt; then
-  echo 'not cached'
-else
-  echo 'cached'
+# Collect all remaining arguments as the third (mandatory) argument
+if [ -z "$key" ] && [ -n "$1" ]; then
+    key="$@"
 fi
 
-#rm -f /tmp/memo2.${SHAKEY}.txt
-
-exit 0
-# If not cached - run command again
-if [[ -f "$B64KEY.ttl" ]]; then
-  cd $DIR
-  eval "$CMD"
-  code=$?
-
-  # If exit code > 0 - delete the cache key (emulate behavior of `bkt --discard-failures`)
-  if [ $code -ne 0 ]; then
-    cd $CACHE_DIR || (echo 'Cache dir does not exist'; exit 1)
-    rm -f $(realpath ./bkt*-cache/keys/$SCOPE*)
-    rm -f ./bkt*-cache/keys/$SCOPE*
-
-    exit $code
-  fi
-
-else
-  # Else, command is cached. Print some stats
-  TTL_SINCE=$(printf %.1f $(benchmark $TIME))
-  printf "ℹ memo: ${TTL_SINCE}s of $TTL\n"
-  printf "❯ $CMD\n"
+# Check if the mandatory argument is provided
+if [ -z "$key" ]; then
+    echo "Error: key is required."
+    echo "Usage: $0 [--ttl=value] [--scope=value] -- key(s)"
+    exit 1
 fi
+
+# Output values
+# echo "TTL: $ttl"
+# echo "Scope: $scope"
+# echo "Key: ${key}"
+
+TMP=$(mktemp -d) && cd $TMP
+
+bkt --ttl=$ttl --scope=$scope -- touch tmp.txt
+
+test ! -f tmp.txt
+exitcode=$?
+
+rm -rf $TMP || true
+exit $exitcode
+
+
+
