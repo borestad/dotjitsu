@@ -290,6 +290,7 @@ alias find="gfind"
 alias locate="glocate"
 alias updatedb="gupdatedb"
 alias tar="gtar"
+alias which='which -a'
 
 
 # =============================================================================

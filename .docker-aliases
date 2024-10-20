@@ -6,6 +6,7 @@
 
 alias dk='docker'
 alias dkc='docker-compose'
+alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 
 docker.stop-remove-all() {
   docker stop $(docker ps -qa);
