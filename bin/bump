@@ -16,17 +16,12 @@ else
   git add . --verbose
 fi
 
-
-
-
 echo
 echo "🦄 Commit files"
 echo
 hr
 
 filename=''
-
-
 stats=$(git diff --cached --shortstat | \
   sed -E 's/ (insertions?|deletions?|changed?)//g' | \
   sed 's/,//g' | sed -E 's/([0-9]+)\(\+\)/\↑\1/' | \
