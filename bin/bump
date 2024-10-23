@@ -39,7 +39,7 @@ if [ $(git --no-pager diff --cached --numstat | wc -l) -eq 1 ]; then
   # Only one file changed
    filename=$(basename $(git diff --cached --numstat --name-only))
    stats=$(echo $stats | sed 's/1 file//g' | xargs)
-   msg="\`️️⚡️ BUMP ⚡️\`  \`$filename $stats\`"
+   msg="\`️️	⚡️ BUMP ⚡️	\`  \`$filename $stats\`"
    echo $msg
    git commit -m "$msg" $args || true
 else
