@@ -34,11 +34,11 @@ DATE=$(date '+%Y-%m-%d %H:%M:%S')
 if [ $(git --no-pager diff --cached --numstat | wc -l) -eq 1 ]; then
   # Only one file changed
    filename=$(basename $(git diff --cached --numstat --name-only))
-   msg="\`️️️️ㅤ⚡️ BUMP ⚡️ㅤ\`ㅤ\`ㅤ$filename $statsㅤ\`"
+   msg="\`️️️️ㅤ⚡️ BUMP ⚡️ㅤ\` \`ㅤ$filename $statsㅤ\`"
    echo $msg
    git commit -m "$msg" $args || true
 else
-  msg="\`️️️️ㅤ⚡️ BUMP ⚡️ㅤ\`ㅤ\`ㅤ$statsㅤ\`"
+  msg="\`️️️️ㅤ⚡️ BUMP ⚡️ㅤ\` \`ㅤ$statsㅤ\`"
   git commit -m "$msg" -a $args || true
   echo
 fi
