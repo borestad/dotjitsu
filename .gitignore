@@ -186,3 +186,5 @@ CACHEDIR.tag
 /2
 /3
 .trash
+.zcompcache
+.zcompdump

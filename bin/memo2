@@ -48,19 +48,12 @@ if [ -z "$key" ]; then
     exit 1
 fi
 
-# Output values
-# echo "TTL: $ttl"
-# echo "Scope: $scope"
-# echo "Key: ${key}"
-
 TMP=$(mktemp -d) && cd $TMP
-
-bkt --ttl=$ttl --scope=$scope -- touch tmp.txt
-
+bkt --ttl="$ttl" --scope="$scope" -- touch tmp.txt
 test ! -f tmp.txt
 exitcode=$?
-
 rm -rf $TMP || true
+
 exit $exitcode
 
 

@@ -386,8 +386,17 @@ alias ssh.addkey="addkey"
 alias ssh.update-known-hosts='ssh-keygen -R'
 alias ssh.remove-tunnels='rm ~/.ssh/control/*'
 alias ssh.clean='rm -fv ~/.ssh/control/*'
-sshc() { ssh -t $1 "lxc-attach $2; bash -i; exit 0"; }
-
+sshc() {
+  if [[ -z "$2" ]]; then
+    ssh -t $1 "pct-ls $2; echo 'Bye bye!'";
+    #id=$(bkt --ttl=600s -- pct list | fzf | awk '{ print $1 }'); lxc-attach --clear-env $id
+  else
+    ssh -t $1 "lxc-attach $2; echo 'Bye bye!'";
+  fi
+}
+sshc2() {
+  ssh -t $1 "lxc-attach $2; bash -i; sleep 1; echo hello";
+}
 
 # =============================================================================
 #  ✨ GIT

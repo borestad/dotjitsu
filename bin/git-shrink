@@ -7,14 +7,17 @@ echo 'BEFORE'
 git count-objects -vH
 hr -
 
-echo '⭐️ Remove all tags:'
+echo '🚀 Remove all tags:'
 git tag -l | xargs git tag -d
 
-echo '⭐️ Clear the reflog:'
-git reflog expire --expire=now --expire-unreachable=all --all --verbose
+echo '🚀 Clear the reflog:'
+git rerere forget .
 
-echo '⭐️ Delete all dangling objects'
-git gc --prune=now
+echo '🚀 Clear the reflog:'
+git reflog expire --expire=now --expire-unreachable=now --all --verbose
+
+echo '🚀 Delete all dangling objects'
+git gc --prune=now --aggressive
 
 hr -
 echo 'AFTER'
