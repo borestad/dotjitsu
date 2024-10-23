@@ -18,13 +18,21 @@ fi
 
 
 
+
 echo
 echo "🦄 Commit files"
 echo
 hr
 
 filename=''
-stats=$(git diff --cached --shortstat | sed -E 's/ (insertions?|deletions?|changed?)//g' | sed 's/,//g' | xargs)
+
+
+stats=$(git diff --cached --shortstat | \
+  sed -E 's/ (insertions?|deletions?|changed?)//g' | \
+  sed 's/,//g' | sed -E 's/([0-9]+)\(\+\)/\↑\1/' | \
+  sed -E 's/([0-9]+)\(\-\)/\↓\1/' | \
+  xargs
+)
 DATE=$(date '+%Y-%m-%d %H:%M:%S')
 
 if [ $(git --no-pager diff --cached --numstat | wc -l) -eq 1 ]; then
@@ -43,10 +51,3 @@ fi
 echo
 echo $filename
 echo $stats
-
-# git commit -m "🦄 \`$DATE\`  \`$stats\`" -a || true
-# git commit -m "\`️️⚡️ BUMP ⚡️\`  \`$stats\`" -a || true
-
-# hr
-# echo "✨ Push files\n"
-# ~/.dotjitsu/bin/push
