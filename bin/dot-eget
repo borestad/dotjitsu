@@ -15,11 +15,11 @@ brew-assert-exist eget
 brew-assert-exist bkt
 
 function dl() {
-  local ttl="10s"
+  local ttl="$1"
   local url=$2
 
   echo "🚀 Installing $2"
-  memo --discard-failures --ttl="$ttl" -- timeout --foreground -s SIGTERM 30s eget --asset='^.sig' "$url" -- "$@" 2> >(grep -iv Downloading)
+  memo --discard-failures --ttl="$ttl" -- timeout --foreground -s SIGTERM 30s eget --asset='^.sig' --asset='^.md5' "$url" -- "$@" 2> >(grep -iv Downloading)
   echo
 }
 
@@ -37,6 +37,7 @@ dl 1w https://github.com/kurtbuilds/checkexec             # Conditionally run a 
 # dl 1d https://github.com/dundee/gdu --to=gdu
 # dl 1w https://github.com/ismaelgv/rnr
 dl 1w https://github.com/casey/just
+dl 1w https://github.com/shenwei356/rush
 # dl 1w https://github.com/jqlang/jq
 #dl 1w https://github.com/TomWright/dasel -a=dasel_darwin_arm64.gz
 
@@ -75,6 +76,10 @@ dl 1w $(bkt --ttl=24h -- crawley -silent https://evermeet.cx/pub/ffprobe/ | grep
 # Completions
 bkt --ttl=2d -- just --completions zsh >| $HOME/.local/share/zsh/site-functions/_just
 bkt --ttl=2d -- netbird completion zsh >| $HOME/.local/share/zsh/site-functions/_netbird
+
+
+# Renaming
+test -f ~/.local/bin/rush && mv -fv ~/.local/bin/rush ~/.local/bin/rushp
 
 # wait
 

@@ -128,7 +128,9 @@ brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
 brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
 brew 'inlyne'
+brew 'plow'
 brew 'jc'
+brew 'mise'                         # Polyglot runtime manager (asdf rust clone)
 brew 'jid'                          # Json incremental digger
 brew 'jless'                        #
 brew 'jpeg'                         # Image manipulation library
