@@ -9,8 +9,9 @@ fi
 # ===================================================
 # ⚡️ Plumbing
 # ===================================================
+
 # Bootstrap settings
-export ZSH_EVALCACHE_DIR=$HOME/.cache/zsh-evalcache
+export ZSH_EVALCACHE_DIR="$HOME/.cache/zsh-evalcache"
 
 # Fix for homebrew on M1 macs
 if [[ -f /opt/homebrew/bin/brew ]]; then
@@ -45,11 +46,10 @@ export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  . "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-
-source ~/.private/.zshrc
+. ~/.private/.zshrc
 
 # ===================================================
 # ⚡️ Plugins
@@ -59,7 +59,7 @@ source ~/.private/.zshrc
 declare -A ZINIT
 ZINIT[ZCOMPDUMP_PATH]=~/.cache/zcompdump-zinit
 ZINIT[HOME_DIR]=~/.cache/zinit
-source ~/.repos/zinit/bin/zinit.zsh
+. ~/.repos/zinit/bin/zinit.zsh
 
 # ■■■ Zinit Plugins
 zinit light NICHOLAS85/z-a-eval
@@ -67,7 +67,7 @@ zinit light zdharma-continuum/zinit-annex-submods
 zinit light mroth/evalcache
 
 # ■■■ Prezto modules - configured via ~/.zprestorc
-source ~/.dotjitsu/.zpreztorc
+. ~/.dotjitsu/.zpreztorc
 
 # https://github.com/zdharma/zinit/issues/421
 zinit snippet PZT::modules/environment/init.zsh
@@ -106,6 +106,7 @@ function __bind_history_keys() {
   bindkey -M vicmd 'k' history-substring-search-up
   bindkey -M vicmd 'j' history-substring-search-down
 }
+
 zinit ice wait"0b" lucid atload'__bind_history_keys'
 zinit load zsh-users/zsh-history-substring-search
 
@@ -131,21 +132,23 @@ zinit ice wait lucid
 zinit light unixorn/git-extra-commands
 
 # ■■■ Snippets
-zinit snippet ~/.dotjitsu/.env$
-zinit snippet ~/.dotjitsu/.hooks
-zinit snippet ~/.dotjitsu/.aliases
-zinit snippet ~/.dotjitsu/.keybindings
-zinit snippet ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
+. ~/.dotjitsu/.env$
+. ~/.dotjitsu/.hooks
+. ~/.dotjitsu/.aliases
+. ~/.dotjitsu/.keybindings
+. ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
+. ~/.dotjitsu/.docker-aliases
+
 # zinit snippet ~/.dotjitsu/packages/iterm2/_iterm2.zsh
 zinit snippet "/opt/homebrew/etc/grc.zsh"
 zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-completion.zsh"
-source ~/.dotjitsu/.docker-aliases
+
 
 # ■■■ Evals
-eval $(gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
+eval $(bkt --ttl=1d -- gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
 unalias zi
-eval "$(thefuck --alias)"
-eval "$(zoxide init zsh)"
+eval "$(bkt --ttl=1d -- thefuck --alias)"
+eval "$(bkt --ttl=1d -- zoxide init zsh)"
 eval "$(fnm env --use-on-cd --version-file-strategy recursive)"
 
 #_evalcache direnv hook  zsh
@@ -194,8 +197,7 @@ typeset -U path                 # ignore doules in path
 
 
 #zinit snippet ~/.p10k.zsh
-source ~/.p10k.zsh
-
+. ~/.p10k.zsh
 
 fpath=(
   $HOMEBREW_PREFIX/share/zsh/site-functions
@@ -206,10 +208,11 @@ fpath=(
 # ===================================================
 # ⚡️ LOAD
 # ===================================================
+
 zicompinit
 zinit cdreplay
 
-#source <(fzf --zsh)
+#. <(fzf --zsh)
 
 # eval "$(bkt -- atuin init zsh --disable-up-arrow)"
 # eval "$(atuin init zsh)"
@@ -223,7 +226,7 @@ zinit cdreplay
 
 # Wasmer
 export WASMER_DIR="$HOME/.config/wasmer"
-[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+[ -s "$WASMER_DIR/wasmer.sh" ] && . "$WASMER_DIR/wasmer.sh"
 
 export GPG_TTY=$(tty)
 tere() {

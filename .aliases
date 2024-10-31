@@ -187,6 +187,7 @@ alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simu
 # alias zup='rm -f ~/.ssh/control/git@github.com:22; zinit update -p -v; zr'
 alias zup='zinit update --all -p -v; zr'
 alias rp='rust-parallel'
+alias x='xargs -I%'
 
 #alias imageoptim='ets ~/Applications/ImageOptim.app/Contents/MacOS/ImageOptim'
 
