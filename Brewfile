@@ -49,6 +49,8 @@ brew 'packer-completion'
 #brew 'eth-p/software/bat-extras'   # Bash scripts that integrate bat with various command-line tools
 #brew 'fx'                           # Terminal JSON viewer
 #brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
+brew 'ipinfo-cli'
+brew 'jordanbaird-ice'
 brew 'aha'
 brew 'aria2'                        # Download with resuming and segmented downloading
 brew 'asdf'

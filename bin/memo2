@@ -49,10 +49,10 @@ if [ -z "$key" ]; then
 fi
 
 TMP=$(mktemp -d) && cd $TMP
-bkt --ttl="$ttl" --scope="$scope" -- touch tmp.txt
+bkt --ttl="$ttl" --scope="${scope}.${key}" -- touch tmp.txt
 test ! -f tmp.txt
 exitcode=$?
-rm -rf $TMP || true
+rm -rf "$TMP" || true
 
 exit $exitcode
 

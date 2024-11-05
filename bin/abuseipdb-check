@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+if [ -z "$ABUSEIPDB_TOKEN" ]; then
+  echo "Error: ABUSEIPDB_TOKEN is not set."
+  exit 1
+fi
+
+if [ -z "$1" ]; then
+  echo "Error: No IP or subnet provided."
+  exit 1
+fi
+
+# Strip whitespace and unwanted characters from the first argument
+IP=$(echo "$1" | sed 's/[^0-9./]//g')
+
+function check-block() {
+  local SUBNET="$1"
+  bkt --ttl=1d -- \
+    curl -sG https://api.abuseipdb.com/api/v2/check-block \
+    --data-urlencode "network=$SUBNET" \
+    -d maxAgeInDays=7 \
+    -H "Key: $ABUSEIPDB_TOKEN" \
+    -H "Accept: application/json" | \
+    jq '.data.reportedAddress'
+}
+
+function check() {
+  local IP="$1"
+  bkt --ttl=1d -- curl -sG https://api.abuseipdb.com/api/v2/check \
+    --data-urlencode "ipAddress=$IP" \
+    -d maxAgeInDays=7 \
+    -d verbose \
+    -H "Key: $ABUSEIPDB_TOKEN" \
+    -H "Accept: application/json" | \
+    jq 'del(.data.reports) .data'
+}
+
+if [[ "$IP" == *"/"* ]]; then
+  check-block "$IP"
+else
+  check "$IP"
+fi
