@@ -1,31 +1,62 @@
-#!/usr/bin/env bash --norc
+#!/usr/bin/env bash
 
-if [ $# -eq 0 ]; then
-	echo "ERROR: no arguments specified" 1>&2
-	exit 1
-fi
+# =============================================================================
+# daterange:                  Print dates for the past N days
+# version:                    1.0.0
+#
+# Usage:                      $ daterange <days> [--from <date>] [--separator <string>] [--format <format>]
+#   <days>:                   Number of past days to print dates for, including today
+#   --from <date>:            Optional start date in YYYY-MM-DD format
+#   --separator <string>:     Optional string to separate the dates with
+#   --format <format>:        Optional format for the start date (default: %Y-%m-%d)
+#
+# Author:                     Johan Borestad (https://borestad.com)
+# License:                    MIT
+# =============================================================================
 
-while [[ "$#" -gt 0 ]]; do
+NUM_CORES=$(getconf _NPROCESSORS_ONLN)
+
+#
+DAYS=""
+START_DATE="$(date +%Y-%m-%d)"
+SEPARATOR=""
+DATE_FORMAT="%Y-%m-%d"
+#
+
+function parse-args() {
+  if [ -z "$1" ]; then
+    echo "Usage: $(basename $0) <days> [--from <date>] [--separator <string>] [--format <format>]"
+    exit 1
+  fi
+
+  DAYS=$1
+  shift
+
+  while [[ "$#" -gt 0 ]]; do
     case $1 in
-        -now|--now) now="$2"; shift ;;
-        -enddate|--enddate) enddate="$2"; shift ;;
-        -t|--test) test=1 ;;
-        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+      -from|--from)             START_DATE="$2"; shift ;;
+      -separator|--separator)   SEPARATOR="$2"; shift ;;
+      -format|--format)         DATE_FORMAT="$2"; shift ;;
+      *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
-done
-
-
-echo "now: $now"
-echo "enddate: $enddate"
-echo "test: $test"
-
-exit 0
-function date-range() {
-  local DAYS=$(expr $1 - 1)
-  for i in $(seq 0 $DAYS); do
-    date "+%Y-%m-%d" -d "$(date) - $i days"
   done
 }
 
-date-range "$1"
+function date-range() {
+  parse-args "$@"
+
+  # Generate dates for the past N days and format them.
+  # Add some parallelism with xargs due to days/gdate being slow.
+  for (( i=0; i<$DAYS; i++ )); do
+    echo "$START_DATE - $i days"
+  done | xargs -P $NUM_CORES -I {} date -d "{}" "+${DATE_FORMAT}" | sort -nr | {
+    if [ -n "$SEPARATOR" ]; then
+      xargs | sed "s/ /${SEPARATOR}/g"
+    else
+      cat
+    fi
+  }
+}
+
+date-range "$@"

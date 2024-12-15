@@ -16,7 +16,8 @@ alias eza='eza --group-directories-first --color=always'
 alias ls='gls --color --group-directories-first'
 alias l='eza -Ga --icons'          # Lists in multi column, hidden files.
 # alias ll='eza --icons -Lah --no-permissions --no-user -T -L1'
-alias ll='eza --icons -la --no-permissions --no-user -T -L1 --no-time'
+#alias ll='eza --icons -la --no-permissions --no-user -T -L1 --no-time'
+ll() { git rev-parse --git-dir &> /dev/null || { ARGS='--no-time' }; eza --icons -la --no-permissions --no-user -T -L1 ${ARGS}; }
 alias lll='eza --icons -la --no-permissions --no-user -T --no-time --git -g -R --git-ignore -L2 -I "*.git"'
 alias llll='eza --icons -la --no-permissions --no-user -T --no-time --git -g -R --git-ignore -L3 -I "*.git"'
 #alias ll='eza -lah'      # Lists in one column, hidden files.
@@ -69,6 +70,7 @@ function gdu() {
   timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -x -a -C -I "$HOME/Library/Containers,$HOME/.local/share/pnpm,$HOME/.local/share/fnm" "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
 }
 
+alias fork='fork status'
 alias hb='HandBrakeCLI'
 alias killall="killall -v"
 alias less="less --incsearch"
