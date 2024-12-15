@@ -58,7 +58,6 @@ DIR=$(pwd)
 BASENAME=$(basename $URL | sed 's/?.*//g')
 OUTPUT=${OUTPUT:-$BASENAME}
 TEMPDIR=$(mktemp -d)
-TEMPLOG=$(mktemp)
 
 # Precreate some fancy path (i.e a/b/c/100.zip)
 touch2 "$TEMPDIR/$OUTPUT"
@@ -101,6 +100,9 @@ fi
 cd $DIR
 touch2 $OUTPUT
 mv $TEMPDIR/$OUTPUT $OUTPUT
+
+# Cleanup
+rm -rf $TEMPDIR &> /dev/null
 
 # stop=$(benchmark $start)
 

@@ -151,7 +151,8 @@ eval "$(bkt --ttl=1d -- thefuck --alias)"
 eval "$(bkt --ttl=1d -- zoxide init zsh)"
 eval "$(fnm env --use-on-cd --version-file-strategy recursive)"
 bkt --ttl=1d -- sh -c "mise completion zsh >| $HOME/.local/share/zsh/site-functions/_mise"
-eval "$(/opt/homebrew/bin/mise activate zsh)"
+eval "$(/opt/homebrew/bin/mise activate zsh --shims)"
+
 
 #_evalcache direnv hook  zsh
 

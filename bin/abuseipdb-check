@@ -21,13 +21,21 @@ IP=$(echo "$IP" | sed 's/[^0-9./]//g')
 
 function check-block() {
   local SUBNET="$1"
+  # Optimization - Normalize API requests for /24 subnets
+  # Convert IP subnet to base address, i.e 1.1.1.8/24 => 1.1.1.0/24
+  if [[ "$SUBNET" == */24 ]]; then
+    SUBNET=$(echo "$SUBNET" | sed -E 's|([0-9]+\.[0-9]+\.[0-9]+)\.[0-9]+(/24)|\1.0\2|')
+  fi
+
   bkt --ttl=1d -- \
     curl -sG https://api.abuseipdb.com/api/v2/check-block \
     --data-urlencode "network=$SUBNET" \
     -d maxAgeInDays=30 \
     -H "Key: $ABUSEIPDB_TOKEN" \
     -H "Accept: application/json" | \
-    jq '.data.reportedAddress'
+    jq '.data.reportedAddress' | \
+    jq 'select(length > 0)' | \
+    jq -c '.[]'
 }
 
 function check() {
@@ -38,7 +46,8 @@ function check() {
     -d verbose \
     -H "Key: $ABUSEIPDB_TOKEN" \
     -H "Accept: application/json" | \
-    jq 'del(.data.reports) .data'
+    jq 'del(.data.reports) .data' | \
+    jq 'select(length > 0)'
 }
 
 if [[ "$IP" == *"/"* ]]; then

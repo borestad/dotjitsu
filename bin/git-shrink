@@ -10,7 +10,7 @@ hr -
 echo '🚀 Remove all tags:'
 git tag -l | xargs git tag -d
 
-echo '🚀 Clear the reflog:'
+echo '🚀 Clean rerere:'
 git rerere forget .
 
 echo '🚀 Clear the reflog:'
@@ -18,6 +18,13 @@ git reflog expire --expire=now --expire-unreachable=now --all --verbose
 
 echo '🚀 Delete all dangling objects'
 git gc --prune=now --aggressive
+# git \
+#     -c gc.reflogExpire=0 \
+#     -c gc.reflogExpireUnreachable=0 \
+#     -c gc.rerereresolved=0 \
+#     -c gc.rerereunresolved=0 \
+#     -c gc.pruneExpire=now \
+#     gc
 
 hr -
 echo 'AFTER'

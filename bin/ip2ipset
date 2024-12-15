@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+#
+# Generates ipset commands from a list of IPs
+# Usage: ip2ipset <setname>
+#
+
+if [ -z "$1" ]; then
+  echo "Usage: $(basename $0) <setname>"
+  exit 1
+fi
+
+SETNAME="$1"
+
+echo "flush ${SETNAME}-tmp -exist"
+echo "destroy ${SETNAME}-tmp -exist"
+echo "create ${SETNAME} -exist hash:net family inet hashsize 16384 maxelem 16777216"
+echo "create ${SETNAME}-tmp -exist hash:net family inet hashsize 16384 maxelem 16777216"
+
+# 1. Read from stdin
+# 2. Remove comments and empty lines
+# 3. Prefix 'add <setname>-tmp' to each line
+cat - | \
+  sed -e 's/#.*//' -e '/^\s*$/d' -e 's/^[ \t]*//;s/[ \t]*$//' | \
+  sed "s/^/add ${SETNAME}-tmp /"
+
+# To avoid getting an error about the set being in use,
+# we need to swap the tmp-set with the original set.
+echo "swap $SETNAME $SETNAME-tmp"
+echo "destroy $SETNAME-tmp"
