@@ -6,8 +6,8 @@ echo ''; hr -
 echo "⚡️ Updating npm/pnpm"
 
 
+# pnpm self-update
 pnpm outdated -g
-
 pnpm up --global --latest
 
 # Updates global npm packages
