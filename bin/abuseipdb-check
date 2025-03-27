@@ -19,6 +19,10 @@ fi
 # Strip whitespace and unwanted characters
 IP=$(echo "$IP" | sed 's/[^0-9./]//g')
 
+function minify() {
+  sed 's/ipAddress/ip/; s/numReports/nr/ ; s/mostRecentReport/date/ ; s/abuseConfidenceScore/score/ ; s/countryCode/cc/; s/+00:00//'
+}
+
 function check-block() {
   local SUBNET="$1"
   # Optimization - Normalize API requests for /24 subnets
@@ -35,6 +39,7 @@ function check-block() {
     -H "Accept: application/json" | \
     jq '.data.reportedAddress' | \
     jq 'select(length > 0)' | \
+    minify | \
     jq -c '.[]'
 }
 

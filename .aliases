@@ -60,7 +60,7 @@ alias qfip='find $( pwd )  -follow  -name "*.py" 2>/dev/null | xargs grep --colo
 alias ag='ag --hidden --stats'
 alias code="code -n"
 alias cp='gcp -v'
-alias cpr='rsync -aAHXv --info=progress2 --human-readable'
+alias cpr='rsync -aAHXv --info=progress2 --human-readable --stats --exclude="._*"'
 alias dfc="dfc -Wdluh -q mount -t apfs"
 alias fd="fd --ignore-case --hidden --exclude '.git' --ignore-file=$HOME/.dotjitsu/.rgignore"
 alias cat='\bat --paging=never --style="plain" --decorations=auto'
@@ -163,6 +163,7 @@ alias sqlite='sqlite3'
 # =============================================================================
 #alias todo="ag --color-line-number '1;36' --color-path '1;36' --ignore-case  --silent '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))'"
 alias b='bump'
+alias bat='bat --style="numbers,changes,changes,snip"'
 alias bat.preview='bat --list-themes | fzf --preview="bat --theme={} --color=always $HOME/.dotjitsu/package.json"'
 alias bif='brew info'
 alias cask='brew install --cask'

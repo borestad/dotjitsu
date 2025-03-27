@@ -75,6 +75,7 @@ brew 'clipboard'                    #
 brew 'cloc'                         # Statistics utility to count lines of code
 brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'croc'
+brew 'ctop'
 brew 'curl'                         #
 brew 'curlie'                       #
 brew 'cv'                           # Progress: Coreutils Progress Viewer                      #
@@ -89,7 +90,6 @@ brew 'docker-machine'               # Create Docker hosts locally and on cloud p
 brew 'dolt'                         # Git for Data
 brew 'dprint'
 brew 'duf'
-brew 'dust'
 brew 'dust'                         # More intuitive version of du in rust
 brew 'duti'
 brew 'duti'                         # A command-line tool to select default applications for document types and URL schemes on Mac OS X

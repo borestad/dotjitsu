@@ -181,5 +181,9 @@ export STARSHIP_CONFIG=$DOTFILES/starship.toml
 # Bkt
 export BKT_TMPDIR=~/.cache/bkt
 
+# Docker / Colima
+export COLIMA_HOME=$HOME/.colima
+export DOCKER_HOST="unix://${COLIMA_HOME}/default/docker.sock"
+
 # Remove duplicates in PATH & preserve order (should not be needed, but hey !?)
 # export PATH=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')
