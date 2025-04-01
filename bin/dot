@@ -5,33 +5,8 @@
 
 . ~/.dotjitsu/.env$
 
-brew install \
-  bat \
-  binutils \
-  bkt \
-  coreutils \
-  deno\
-  eza \
-  fd \
-  findutils \
-  fnm \
-  fzf \
-  gdu \
-  git \
-  git-extras \
-  gnu-sed \
-  grc \
-  hr \
-  htop \
-  mr \
-  ncdu \
-  sd \
-  svn \
-  thefuck \
-  tig \
-  zsh
+brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core
 
-~/.dotjitsu/bin/dot-brew-core
 
 eval "$(fnm env)"
 

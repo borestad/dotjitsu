@@ -2,8 +2,8 @@
 
 mkdir -p ~/.local/bin
 
-ip=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}')
-echo $ip | egrep '^10\.0\.' > /dev/null || { echo "Sorry, WIFI is required" && exit 1; }
+#ip=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}')
+#echo $ip | egrep '^10\.0\.' > /dev/null || { echo "Sorry, WIFI is required" && exit 1; }
 
 
 

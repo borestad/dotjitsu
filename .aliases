@@ -116,7 +116,7 @@ function speedtest.ookla() {
   # dl -o /dev/null "https://ook-sto-x1.puregig.net.prod.hosts.ooklaserver.net:8080/download?nocache=$RANDOM$RANDOM$RANDOM$RANDOM=&size=$bytes";
 }
 
-alias ets='~/.go/bin/ets -s -f "%s.%Ls ┃ "'
+alias ets='/opt/homebrew/bin/ets -s -f "%s.%Ls ┃ "'
 
 function cd {
   builtin cd "$@"

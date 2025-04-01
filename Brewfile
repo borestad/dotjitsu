@@ -1,22 +1,22 @@
 cask_args appdir: '~/Applications'
 
-tap 'homebrew/bundle'
+#tap 'homebrew/bundle'
 #tap 'homebrew/homebrew-core'
 #tap 'homebrew/dupes'
 #tap 'homebrew/games'
 #tap 'homebrew/versions'
 #tap 'homebrew/science'
 #tap 'homebrew/completions'
-tap 'homebrew/services'
-tap 'homebrew/cask-fonts'
-tap 'homebrew/cask-versions'
+#tap 'homebrew/services'
+# tap 'homebrew/cask-fonts'
+# tap 'homebrew/cask-versions'
 
 
 
 # ================================
 # TODO: Sort
 # ================================
-brew 'bitwise'
+# brew 'bitwise'
 
 # ================================
 # DEPS / PROGRAMMING LANGUAGES
@@ -30,8 +30,8 @@ brew 'rustup'                       #
 # ================================
 # Virtual Machine stuff
 # ================================
-brew 'packer'
-brew 'packer-completion'
+# brew 'packer'
+# brew 'packer-completion'
 
 # ================================
 # CLI stuff
@@ -51,24 +51,24 @@ brew 'packer-completion'
 #brew 'svgo'                         # Nodejs-based tool for optimizing SVG vector graphics files
 brew 'ipinfo-cli'
 brew 'jordanbaird-ice'
-brew 'aha'
-brew 'aria2'                        # Download with resuming and segmented downloading
-brew 'asdf'
-brew 'ast-grep'
-brew 'atuin'
+# brew 'aha'
+# brew 'aria2'                        # Download with resuming and segmented downloading
+# brew 'asdf'
+# brew 'ast-grep'
+# brew 'atuin'
 brew 'autoconf'                     # Automatic configure script builder
 brew 'autojump'                     # Shell extension to jump to frequently used directories
 brew 'automake'                     # Tool for generating GNU Standards-compliant Makefiles
-brew 'axel'                         # Light UNIX download accelerator
+# brew 'axel'                         # Light UNIX download accelerator
 brew 'bandwhich'                    # Bourne-Again SHell, a UNIX command interpreter
 brew 'bash-completion2'             # Programmable completion for Bash 4.1+
 brew 'bash'                         # Bourne-Again SHell, a UNIX command interpreter
-brew 'bento4'                       # Full-featured MP4 format and MPEG DASH library and tools
+# brew 'bento4'                       # Full-featured MP4 format and MPEG DASH library and tools
 brew 'bkt'
 brew 'bmon'                         # Interface bandwidth monitor
 brew 'borgbackup'                   # Deduplicating archiver with compression and authenticated encryption
-brew 'bottom'                       #
-brew 'broot'                        # New way to see and navigate directory trees
+# brew 'bottom'                       #
+# brew 'broot'                        # New way to see and navigate directory trees
 brew 'choose-rust'
 brew 'cliclick'                     # Tool for emulating mouse and keyboard events
 brew 'clipboard'                    #
@@ -77,7 +77,7 @@ brew 'colordiff'                    # Color-highlighted diff(1) output
 brew 'croc'
 brew 'ctop'
 brew 'curl'                         #
-brew 'curlie'                       #
+# brew 'curlie'                       #
 brew 'cv'                           # Progress: Coreutils Progress Viewer                      #
 brew 'ddh'
 brew 'debianutils'
@@ -128,8 +128,8 @@ brew 'httpry'                       # Packet sniffer for displaying and logging 
 brew 'hyperfine'                    # Command-line benchmarking tool
 brew 'ifstat'                       # Tool to report network interface bandwidth
 brew 'iftop'                        # Display an interface's bandwidth usage
-brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
-brew 'inlyne'
+# brew 'imagemagick'                  # Tools and libraries to manipulate images in many formats
+# brew 'inlyne'
 brew 'plow'
 brew 'jc'
 brew 'mise'                         # Polyglot runtime manager (asdf rust clone)
@@ -137,9 +137,9 @@ brew 'jid'                          # Json incremental digger
 brew 'jless'                        #
 brew 'jpeg'                         # Image manipulation library
 brew 'jpegoptim'                    # Utility to optimize JPEG files
-brew 'jplot'
+# brew 'jplot'
 brew 'just'
-brew 'katana'
+# brew 'katana'
 brew 'kondo'                        # Save disk space by cleaning non-essential files from software projects
 brew 'kubernetes-cli'               # Tool to report network interface bandwidth
 brew 'lazydocker'                   # The lazier way to manage everything docker
@@ -152,7 +152,7 @@ brew 'm-cli'                        # Swiss Army Knife for macOS
 brew 'mackup'                       # Keep your Mac's application settings in sync
 brew 'macpine'
 brew 'mas'                          # Mac App Store command-line interface
-brew 'masscan'                      # TCP port scanner, scans entire Internet in under 5 minutes
+# brew 'masscan'                      # TCP port scanner, scans entire Internet in under 5 minutes
 brew 'mdbook'
 brew 'micro'                        # Modern and intuitive terminal-based text editor
 brew 'miller'                       #
@@ -172,7 +172,7 @@ brew 'ngrep'                        # Network grep
 brew 'nload'                        # Realtime console network usage monitor
 brew 'nmap'                         # Port scanning utility for large networks
 brew 'noti'                         # Trigger notifications when a process completes
-brew 'nushell'                      # Modern shell for the GitHub era
+# brew 'nushell'                      # Modern shell for the GitHub era
 brew 'optipng'                      # PNG file optimizer
 brew 'ouch'
 brew 'pbzip2'                       # Parallel bzip2
@@ -208,7 +208,7 @@ brew 'sk'                           # Fuzzy Finder in rust!
 brew 'sponge'
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
-brew 'starship'                     # Cross-shell prompt for astronauts
+# brew 'starship'                     # Cross-shell prompt for astronauts
 brew 'streamlink'
 brew 'stress'                       # Tool to impose load on and stress test a computer system
 brew 'svn'                          #
