@@ -7,4 +7,10 @@ query=${1:-}
 # cat ~/.config/cache/brew-formula.json | jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \
 # | sd '"' '' | sd 'null' '' | column -t -s'|' | fzf --reverse -e --no-hscroll --height=100 +s --bind='ctrl-s:toggle-sort' -q "$query"
 
+if [[ ! -f ~/.config/cache/brew-formula.txt ]]; then
+  memo --ttl=1s dot-brew-info || dot-brew-info
+fi
+
+memo --ttl=1d dot-brew-info || dot-brew-info
+
 cat ~/.config/cache/brew-formula.txt | fzf --reverse -e --no-hscroll --height=100 +s --bind='ctrl-s:toggle-sort' -q "$query"

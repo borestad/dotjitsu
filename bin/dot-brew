@@ -29,6 +29,7 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew update"
 echo
+#ets -s -f "%s.%Ls ┃ " memo --ttl=60min -- brew -v update --auto-update
 ets -s -f "%s.%Ls ┃ " memo --ttl=60min -- brew -v update
 
 # Install Brewfile formulas
