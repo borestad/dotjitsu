@@ -4,14 +4,15 @@
 #cd $ROOT
 
 . ~/.dotjitsu/.env$
+mkdir -p $HOME/.local/share/zsh/site-functions
 
 brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core
 
 
 eval "$(fnm env)"
 
-fnm install --lts
-fnm default lts-latest
+/opt/homebrew/bin/fnm install --lts
+/opt/homebrew/bin/fnm default lts-latest
 
 
 # if [ ! type "brew" &> /dev/null ]; then
