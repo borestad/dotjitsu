@@ -130,6 +130,7 @@ append-path "$HOMEBREW_PREFIX/opt/python/libexec/bin"
 append-path "$HOMEBREW_PREFIX/opt/mozjpeg/bin"
 append-path "$HOMEBREW_PREFIX/opt/openjdk@8/bin"
 append-path "$HOME/.cargo/bin"
+append-path "/opt/homebrew/opt/dotnet@8/bin"
 # Use core-utils directly
 
 

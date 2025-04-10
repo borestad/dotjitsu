@@ -8,13 +8,7 @@ mkdir -p $HOME/.local/share/zsh/site-functions
 
 brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core
 
-
-eval "$(fnm env)"
-
-/opt/homebrew/bin/fnm install --lts
-/opt/homebrew/bin/fnm default lts-latest
-
-
+mise use --global node@lts
 # if [ ! type "brew" &> /dev/null ]; then
 # 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 # fi

@@ -25,6 +25,7 @@ brew 'git'
 brew 'golang'
 brew 'python'                       # Interpreted, interactive, object-oriented programming language
 brew 'python3'                      # Interpreted, interactive, object-oriented programming language
+brew 'python-setuptools'
 brew 'rustup'                       #
 
 # ================================
@@ -82,6 +83,7 @@ brew 'cv'                           # Progress: Coreutils Progress Viewer       
 brew 'ddh'
 brew 'debianutils'
 brew 'delta'
+brew 'dssim'                        #
 brew 'dfc'                          # Display graphs and colors of file system space/usage
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
@@ -103,7 +105,7 @@ brew 'fastmod'                      #
 brew 'fd'                           # Simple, fast and user-friendly alternative to find
 brew 'fdupes'
 brew 'fish'                         # User-friendly command-line shell for UNIX-like operating systems
-brew 'fnm'                          # Fast and simple Node.js version manager
+# brew 'fnm'                          # Fast and simple Node.js version manager
 brew 'fping'                        # Scriptable ping program for checking if multiple hosts are up
 brew 'fselect'                      # Find files with SQL-like queries
 brew 'fswatch'                      # Monitor a directory for changes and run a shell command
@@ -206,6 +208,7 @@ brew 'serf'
 brew 'shallow-backup'
 brew 'sk'                           # Fuzzy Finder in rust!
 brew 'sponge'
+brew 'static-web-server'
 brew 'sqlite'                       # Command-line interface for SQLite
 brew 'sshuttle'                     # Proxy server that works as a poor man's VPN
 # brew 'starship'                     # Cross-shell prompt for astronauts
