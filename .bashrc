@@ -5,7 +5,8 @@ source ~/.dotjitsu/etc/fzf.bash
 . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 
 # fnm (Fast Node Manager)
-eval "$(fnm env)"      # Colourify common commands (unalias things that breaks)
+# eval "$(fnm env)"      # Colourify common commands (unalias things that breaks)
+eval "$(mise completion bash)"
 
 alias eza='eza --group-directories-first'
 alias ls='gls --color --group-directories-first'

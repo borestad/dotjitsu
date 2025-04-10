@@ -72,7 +72,7 @@ function gdu() {
 
 alias fork='fork status'
 alias hb='HandBrakeCLI'
-alias killall="killall -v"
+alias killall="killall -v -9"
 alias less="less --incsearch"
 alias mkdir='gmkdir -pv'
 #alias mtr="grc -es --colour=auto mtr"
@@ -184,6 +184,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias retroarch="~/Applications/RetroArch.app/Contents/MacOS/RetroArch -vf"
 alias rmf='grm -rfv'
 alias serve='ws -f stats -d '
+alias serve2='static-web-server -d . -p 8000 -g info -z '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"

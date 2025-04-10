@@ -20,12 +20,16 @@ export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
 
-eval $(fnm env)
+#eval $(fnm env)
+mise use --global node@lts
+npm install --global corepack@latest
+corepack enable pnpm
+corepack use pnpm@latest
 
 hr
 echo "☑️  Upgrade node LTS..."
-fnm install --lts
-fnm default lts-latest
+#fnm install --lts
+#fnm default lts-latest
 
 hr
 echo "☑️  Set global cache config..."
@@ -51,8 +55,8 @@ pnpm config --global set auto-install-peers false
 
 hr
 echo "☑️  Install/upgrade npm|yarn|pnpm"
-corepack enable
-corepack prepare pnpm@latest npm@latest yarn@stable --activate
+bkt --ttl=2h -- corepack enable
+bkt --ttl=2h -- corepack prepare pnpm@latest npm@latest yarn@stable --activate
 
 args=(
   # Globals
@@ -106,7 +110,10 @@ args=(
 
 #NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
 echo "☑️  Installing global pnpm packages..."
-pnpm add -g "${args[@]}"
+for pkg in "${args[@]}"; do
+  pnpm add -g "$pkg"
+done
+# pnpm add -g "${args[@]}"
 
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
 # npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm
