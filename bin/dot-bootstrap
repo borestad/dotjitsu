@@ -19,13 +19,12 @@ cd $ROOT
 
 
 brew install \
-	htop ncdu tig git hr mr zplug coreutils binutils findutils mr \
-	Schniz/tap/fnm
+	htop ncdu tig git hr mr zplug coreutils binutils findutils mr mise
 
-eval "$(fnm env)"
+# eval "$(fnm env)"
 
-fnm install --lts
-fnm use lts-latest
+# fnm install --lts
+# fnm use lts-latest
 
 compaudit | xargs chmod g-w 2&> /dev/null
 
