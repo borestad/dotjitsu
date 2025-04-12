@@ -20,12 +20,6 @@
 	defaultBranch = main
 
 [pager]
-	# insanely beautiful diffs ==> npm install -g diff-so-fancy
-	#diff = diff-so-fancy# | less --tabs=4 -RFX
-	#show = diff-so-fancy# | less --tabs=4 -RFX
-
-# [interactive]
-# 	diffFilter = diff-so-fancy
 
 [color "branch"]
 	current = yellow reverse

@@ -7,11 +7,11 @@ mkdir -p ~/.config/cache && cd "$_"
 # brew update --auto-update
 
 echo 'Fetch https://formulae.brew.sh/api/formula.json'
-wget --compression=auto https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && \
+wget --no-check-certificate --compression=auto https://formulae.brew.sh/api/formula.json -O brew-formula.json.tmp -t 3 -q && \
   mv brew-formula.json.tmp brew-formula.json &
 
 echo 'Fetch https://formulae.brew.sh/api/cask.json'
-wget --compression=auto https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && \
+wget --no-check-certificate --compression=auto https://formulae.brew.sh/api/cask.json -O brew-cask.json.tmp -t 3 -q && \
   mv brew-cask.json.tmp brew-cask.json &
 
 wait

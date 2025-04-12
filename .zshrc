@@ -59,7 +59,7 @@ fi
 declare -A ZINIT
 ZINIT[ZCOMPDUMP_PATH]=~/.cache/zcompdump-zinit
 ZINIT[HOME_DIR]=~/.cache/zinit
-. ~/.repos/zinit/bin/zinit.zsh
+. /opt/homebrew/opt/zinit/zinit.zsh
 
 # ■■■ Zinit Plugins
 zinit light NICHOLAS85/z-a-eval
