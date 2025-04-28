@@ -267,6 +267,27 @@ function gthumbnails() {
   done
 }
 
+p () {
+  if [[ -f bun.lock ]]; then
+    echo 'bun'
+    command bun "$@"
+  elif [[ -f pnpm-lock.yaml ]]; then
+    echo 'pnpm'
+    command pnpm "$@"
+  elif [[ -f yarn.lock ]]; then
+    echo 'yarn'
+    command yarn "$@"
+  elif [[ -f package-lock.json ]]; then
+    echo 'npm'
+    command npm "$@"
+  else
+    echo 'pnpm'
+    command pnpm "$@"
+  fi
+}
+
+alias i='p install'
+
 
 # =============================================================================
 # GOTO aliases

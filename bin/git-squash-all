@@ -4,7 +4,7 @@
 
 
 DATE=$(date '+%Y/%m/%d %H:%M')
-LABEL="SQUASHED"
+LABEL="Initial commit"
 TEXT="\`️️⚡️ $LABEL ⚡️\` \`$DATE\`"
 
 MSG=${1:-$TEXT}

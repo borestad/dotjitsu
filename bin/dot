@@ -6,6 +6,8 @@
 . ~/.dotjitsu/.env$
 mkdir -p $HOME/.local/share/zsh/site-functions
 
+test -f ~/.local/bin/mise || { https://mise.run | sh }
+
 brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core
 
 mise use --global node@lts

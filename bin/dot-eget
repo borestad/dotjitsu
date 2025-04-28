@@ -57,6 +57,7 @@ dl 1w https://github.com/shenwei356/rush
 # dl 1w https://github.com/sharkdp/hyperfine
 # dl 1w https://github.com/sibprogrammer/xq
 dl 1w https://github.com/zhanhb/cidr-merger
+dl 1w https://github.com/yt-dlp/yt-dlp -a '.zip'
 bkt --ttl=1w -- bash -c "rm $HOME/.local/bin/ente && eget ente-io/ente -t cli"
 # Syntax-highlighting pager for git and diff output
 # dl 1w https://github.com/dandavison/delta
