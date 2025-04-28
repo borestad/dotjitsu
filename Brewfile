@@ -134,7 +134,6 @@ brew 'iftop'                        # Display an interface's bandwidth usage
 # brew 'inlyne'
 brew 'plow'
 brew 'jc'
-brew 'mise'                         # Polyglot runtime manager (asdf rust clone)
 brew 'jid'                          # Json incremental digger
 brew 'jless'                        #
 brew 'jpeg'                         # Image manipulation library
@@ -247,7 +246,7 @@ brew 'xq'
 brew 'yank'                         #
 brew 'yj'                           #
 brew 'yq'                           #
-brew 'yt-dlp'
+# brew 'yt-dlp'
 brew 'zopfli'                       # New zlib (gzip, deflate) compatible compressor
 brew 'zoxide'                       # Shell extension to navigate your filesystem faster
 brew 'zq'                           #

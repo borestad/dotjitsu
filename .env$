@@ -166,7 +166,7 @@ export VISUAL='code'
 
 export HISTSIZE=100000
 export SAVEHIST=100000
-export HISTFILE=~/.cache/zsh_history  # ensure history file visibility
+export HISTFILE=~/.zsh_history  # ensure history file visibility
 export HH_CONFIG=hicolor        # get more colors
 
 export VAGRANT_DEFAULT_PROVIDER=vmware_fusion

@@ -152,7 +152,7 @@ eval "$(bkt --ttl=1d -- zoxide init zsh)"
 
 #echo 'eval "$(mise activate zsh)"'
 bkt --discard-failures --ttl=1s -- sh -c "mise completion zsh >| $HOME/.local/share/zsh/site-functions/_mise"
-eval "$(/opt/homebrew/bin/mise activate zsh)"
+eval "$(~/.local/bin/mise activate zsh)"
 
 #_evalcache direnv hook  zsh
 
