@@ -3,7 +3,7 @@
 # https://stackoverflow.com/questions/38171899/how-to-reduce-the-depth-of-an-existing-git-clone/46004595#46004595
 
 hr -
-echo 'BEFORE'
+echo 'BEFORE:'
 git count-objects -vH
 hr -
 
@@ -16,7 +16,7 @@ git rerere forget .
 echo '🚀 Clear the reflog:'
 git reflog expire --expire=now --expire-unreachable=now --all --verbose
 
-echo '🚀 Delete all dangling objects'
+echo '🚀 Delete all dangling objects'; echo
 git gc --prune=now --aggressive
 # git \
 #     -c gc.reflogExpire=0 \
@@ -27,6 +27,5 @@ git gc --prune=now --aggressive
 #     gc
 
 hr -
-echo 'AFTER'
+echo 'AFTER:'
 git count-objects -vH
-hr -

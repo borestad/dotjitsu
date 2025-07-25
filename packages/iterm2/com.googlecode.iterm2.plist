@@ -6,6 +6,8 @@
 	<real>60</real>
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
+	<key>AitermUseLegacyAPI</key>
+	<false/>
 	<key>AllowClipboardAccess</key>
 	<true/>
 	<key>AlternateMouseScroll</key>

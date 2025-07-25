@@ -20,7 +20,6 @@ $HOME/.private/bin/dotp-symlink
 
 hr;
 
-ln -sfv $DOTJITSU/.ackrc
 ln -sfv $DOTJITSU/.aliases
 ln -sfv $DOTJITSU/.bash_profile
 ln -sfv $DOTJITSU/.bashrc
@@ -35,6 +34,10 @@ ln -sfv $DOTJITSU/.gitattributes
 ln -sfv $DOTJITSU/.gitconfig
 ln -sfv $DOTJITSU/.gitignore
 ln -sfv $DOTJITSU/.goaccessrc
+
+
+mkdir -p $HOME/.config/mise
+ln -sfv $DOTJITSU/.mise.toml $HOME/.config/mise/config.toml
 
 #.htoprc
 ln -sfv $DOTJITSU/.hushlogin

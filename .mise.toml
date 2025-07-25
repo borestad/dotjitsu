@@ -1,0 +1,17 @@
+[tools]
+biome = "latest"
+bun = "latest"
+deno = "2"
+dotnet = "8"
+dotnet-core = "latest"
+node = "lts"
+"ubi:aaronriekenberg/rust-parallel" = "latest"
+"ubi:casey/just" = "latest"
+"ubi:moonrepo/moon" = "latest"
+"ubi:s0rg/crawley" = "latest"
+"ubi:theMackabu/pmc" = "latest"
+usage = "latest"
+
+[settings]
+experimental = true
+idiomatic_version_file_enable_tools = []

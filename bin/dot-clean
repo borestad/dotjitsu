@@ -14,11 +14,8 @@ echo ''
 echo
 
 # Disable local snapshot (APFS just hates to reclaim disk space)
-echo "✓ Disable localsnapshot"
-sudo tmutil disable localsnapshot
-
-echo "✓ Periodic maintainence scripts"
-sudo periodic daily weekly monthly
+echo "✓ Delete localsnapshots"
+tmutil deletelocalsnapshots /
 
 # Kill log files slowing down the shell
 echo "✓ Removing *.asl"
@@ -30,8 +27,10 @@ rm -rfv ~/.v8flags*
 echo "✓ Autofix +x flags"
 chmod -R +x ~/.dotjitsu/bin/*
 
-echo "✓ Brew cleanup"
+echo "✓ Brew: cleanup"
 brew cleanup -s &> /dev/null
+
+echo "✓ Brew: remove cache"
 rm -rf $(brew --cache) &> /dev/null
 
 DISKSPACE_AFTER=$(($(stat -f --format="%a*%S" .)))

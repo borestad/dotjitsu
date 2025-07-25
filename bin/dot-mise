@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+mkdir -p ~/.local/bin
+
+mise use -g node@lts
+mise use -g deno@2
+mise use -g bun@latest
+mise use -g biome@latest
+mise use -g usage@latest
+

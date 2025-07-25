@@ -8,8 +8,13 @@ elif [ "$#" -eq 2 ]; then
     DNSSERVER="$1"
     SEARCH="$2"
 else
-  echo "Usage: digit [@dnsserver] [domain/ip]"
+  echo "Usage: digit [@dnsserver] [domain/ip/url]"
   exit 1
+fi
+
+# Extract hostname if SEARCH looks like a URL
+if [[ "$SEARCH" =~ ^https?:// ]]; then
+  SEARCH=$(echo "$SEARCH" | sed -E 's|^[^/]*//([^/:]+).*|\1|')
 fi
 
 if [[ "$SEARCH" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
@@ -17,7 +22,6 @@ if [[ "$SEARCH" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   QUERY="-x $SEARCH"
 else
   # Domain lookup
-  QUERY=$(echo "$QUERY" | sed -e 's|^[^/]*//||' -e 's|/.*$||')
   QUERY="+short $SEARCH"
 fi
 

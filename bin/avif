@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+INPUT="$1"
+QUALITY="${2:-26}"
+OUTPUT="${INPUT%.*}.avif"
+
+if [[ -z "$INPUT" ]]; then
+  echo "Usage: $(basename "$0") <input.[jpg|jpeg|png|y4m]> [quality]"
+  exit 1
+fi
+
+echo $INPUT
+echo $OUTPUT
+
+# Use 4:2:0 chroma subsampling for the output
+# Set the speed of encoding to 3 (balanced speed/quality)
+# Use all available CPU threads for encoding
+# Set the quality level to 63 (maximum quality)
+# Set the encoder to use constant quality mode
+# Set the constant quality level to 32
+# Tune the encoder for image quality
+# Enable chroma delta quantization for better color quality
+# Enable quantization matrices for better compression
+# Set delta quantization mode to 3 for adaptive quantization
+
+avifenc \
+  --yuv 422 \
+  -s 3 \
+  -j all \
+  -q 63 \
+  -a end-usage=q \
+  -a cq-level="$QUALITY" \
+  -a tune=iq \
+  -a color:enable-chroma-deltaq=1 \
+  -a color:enable-qm=1 \
+  -a color:deltaq-mode=3 \
+  "$INPUT" \
+  $OUTPUT

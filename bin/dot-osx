@@ -868,6 +868,9 @@ echo "☑️ Performance: Speedup Animations"
 #sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
 
 
+echo "☑️ Performance: Disable localsnapshot"
+sudo tmutil disable localsnapshot
+
 
 ###############################################################################
 echo -e "\n\nKill affected applications" && hr

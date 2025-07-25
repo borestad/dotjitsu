@@ -119,6 +119,9 @@ prepend-path "$DOTJITSU/bin"
 prepend-path "$PRIVATE/bin"
 prepend-path "$HOME/bin"
 prepend-path "$HOMEBREW_PREFIX/opt/make/libexec/gnubin"
+prepend-path "$HOMEBREW_PREFIX/lib/ruby/gems/3.4/bin"
+prepend-path "$HOMEBREW_PREFIX/opt/ruby/bin"
+
 
 append-path "$HOME/.deno/bin"
 append-path "$HOME/.go/bin"
@@ -152,7 +155,7 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 # ⚡️ EDITORS
 # ===================================================
 export BAT_CONFIG_PATH="$HOME/.dotjitsu/bat.conf"
-export BROWSER=chromium
+export BROWSER='open'
 export EDITOR='code'
 export GIT_EDITOR="code --wait --new-window"
 export JAVA_HOME=$HOMEBREW_PREFIX/opt/openjdk@8

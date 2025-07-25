@@ -20,14 +20,21 @@ export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
 
-#eval $(fnm env)
+echo "☑️  mise use --global node@lts"
 mise use --global node@lts
+
+echo "☑️  npm install --global corepack@latest"
 npm install --global corepack@latest
+
+echo "☑️  corepack enable pnpm"
 corepack enable pnpm
+
+echo "☑️  corepack use pnpm@latest"
 corepack use pnpm@latest
+pnpm approve-builds
 
 hr
-echo "☑️  Upgrade node LTS..."
+# echo "☑️  Upgrade node LTS..."
 #fnm install --lts
 #fnm default lts-latest
 
@@ -45,7 +52,6 @@ npm config --global set init-version "0.0.1"
 # npm config --global set pnpm-prefix ~/.local/share/pnpm
 # npm config --global set store-dir ~/.local/share/.pnpm-store
 npm config --global set registry https://registry.npmjs.com
-
 pnpm config --global set auto-install-peers false
 
 
@@ -55,8 +61,8 @@ pnpm config --global set auto-install-peers false
 
 hr
 echo "☑️  Install/upgrade npm|yarn|pnpm"
-bkt --ttl=2h -- corepack enable
-bkt --ttl=2h -- corepack prepare pnpm@latest npm@latest yarn@stable --activate
+corepack enable
+corepack prepare pnpm@latest npm@latest yarn@stable --activate
 
 args=(
   # Globals
@@ -65,14 +71,14 @@ args=(
   # @babel/node@latest
   # @marp-team/marp-cli@latest
   # @microsoft/rush
-  @types/node@
+  @types/node@latest
   #assemblyscript@latest
   #contentful-cli@latest
   #contentful-schema-diff@latest
   # cpy-cli@latest
   # empty-trash-cli@latest
   # fs-extra@latest
-  # local-web-server@latest
+  local-web-server@latest
   # node-notifier-cli@latest
   # np@latest
   # serverless@latest
@@ -105,11 +111,11 @@ args=(
 )
 
 #NODE_ENV=production yarn global add --production --no-progress -s --link-duplicates "${args[@]}"
-echo "☑️  Installing global pnpm packages..."
+echo "☑️  Installing global bun packages..."
 # for pkg in "${args[@]}"; do
 #   pnpm rm -g "$pkg"
 # done
-pnpm add -g "${args[@]}"
+bun add -g "${args[@]}"
 
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
 # npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm
