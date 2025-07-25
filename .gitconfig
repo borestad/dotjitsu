@@ -12,6 +12,11 @@
 [hub]
 	protocol = https
 
+[log]
+  # Use abbrev SHAs whenever possible/relevant instead of full 40 chars
+  abbrevCommit = true
+#   date = iso
+
 [color]
 	ui = true
 
@@ -74,8 +79,6 @@
 	recurseSubmodules = check
 # See `git help config` (search for push.default)
 # for more information on different options of the below setting.
-#
-# Setting to git 2.0 default to suppress warning message
 	default = simple
 	autoSetupRemote = true
 
@@ -122,7 +125,7 @@
 	context = 1
 
 [merge]
-    conflictstyle = diff3
+	conflictStyle = zdiff3
 
 [difftool]
 	prompt = false
@@ -147,9 +150,10 @@
 	verbose = true
 
 [pull]
-	rebase = true
+	# rebase = true
+	ff = only
 	prune = true
-	twohead = ort
+	twohead = ort # https://git-scm.com/docs/merge-strategies#Documentation/merge-strategies.txt-ort
 
 [tig]
 	line-graphics = yes # Disable graphics characters
@@ -202,7 +206,8 @@
 
 [rebase]
 	stat = true
-	autoStash = true
+	autostash = true
+	autosquash = true
 
 [smartgit "submodule"]
 	fetchalways = false
@@ -212,6 +217,18 @@
 [taggrouping]
 	groups =
 	singles =
+
+[tag]
+  # Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
+  sort = version:refname
+
+[versionsort]
+  prereleaseSuffix = -pre
+  prereleaseSuffix = .pre
+  prereleaseSuffix = -beta
+  prereleaseSuffix = .beta
+  prereleaseSuffix = -rc
+  prereleaseSuffix = .rc
 
 [protocol]
 	version = 2
@@ -227,7 +244,13 @@
 	pushInsteadOf = https://github.com/
 [url "ssh://gitlab.com/"]
 	pushInsteadOf = https://gitlab.com/
-[remote "origin"]
-	tagopt = "--tags -f"
 [alias]
 	trash = !mkdir -p .trash && git ls-files --others --exclude-standard | xargs mv -f -t .trash
+[credential "https://gametechgit.gamesglobal.com"]
+	provider = generic
+[advice]
+	statusHints = off
+
+# Problematic with mise
+# [remote "origin"]
+# 	tagopt = "--tags -f"

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+frm () {
+    now=$(date "+%F-%T-%Z")
+    for file in "$@"
+    do
+        new_name="${file}_${now}-${RANDOM}"
+        mv -- "$file" "/tmp/$new_name"
+        nohup rm -rf -- "/tmp/$new_name" > "/tmp/$new_name.log" 2>&1 &
+        echo "removed directory $file"
+    done
+}
+
+frm "$@"
+
