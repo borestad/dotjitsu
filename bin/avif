@@ -1,38 +1,99 @@
 #!/usr/bin/env bash
 
-INPUT="$1"
-QUALITY="${2:-26}"
-OUTPUT="${INPUT%.*}.avif"
+# Inspired from:
+# https://www.reddit.com/r/AV1/comments/o7s8hk/high_quality_encoding_of_avif_images_using/
+# https://github.com/AOMediaCodec/libavif/issues/1667
+#
+
+# Default values
+YUV="420"
+SPEED="3"
+THREADS="all"
+Q="99"
+END_USAGE="q"
+CQ_LEVEL="26"
+TUNE="iq"
+CHROMA_DELTAQ="1"
+QM="1"
+DELTAQ_MODE="3"
+SHARPNESS="2"
+APPEND_OUTPUT_SUFFIX=0
+
+# Parse options
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -y) YUV="$2"; shift 2 ;;
+    -s) SPEED="$2"; shift 2 ;;
+    -j) THREADS="$2"; shift 2 ;;
+    -q) Q="$2"; shift 2 ;;
+    -a)
+      case "$2" in
+        end-usage=*) END_USAGE="${2#*=}";;
+        cq-level=*) CQ_LEVEL="${2#*=}";;
+        tune=*) TUNE="${2#*=}";;
+        color:enable-chroma-deltaq=*) CHROMA_DELTAQ="${2#*=}";;
+        color:enable-qm=*) QM="${2#*=}";;
+        color:deltaq-mode=*) DELTAQ_MODE="${2#*=}";;
+        color:sharpness=*) SHARPNESS="${2#*=}";;
+      esac
+      shift 2
+      ;;
+    -appendoutputsuffix)
+      APPEND_OUTPUT_SUFFIX=1
+      shift
+      ;;
+    -*)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+    *)
+      if [[ -z "$INPUT" ]]; then
+        INPUT="$1"
+      elif [[ -z "$QUALITY" ]]; then
+        CQ_LEVEL="$1"
+      fi
+      shift
+      ;;
+  esac
+done
 
 if [[ -z "$INPUT" ]]; then
-  echo "Usage: $(basename "$0") <input.[jpg|jpeg|png|y4m]> [quality]"
+  echo "Usage: $(basename "$0") <input.[jpg|jpeg|png|y4m]> [options]"
+  echo "Options:"
+  echo "  -y <val>                   (default: 422)"
+  echo "  -s <speed>                 (default: 3)"
+  echo "  -j <threads>               (default: all)"
+  echo "  -q <quality>               (default: 63)"
+  echo "  -a end-usage=<val>         (default: q)"
+  echo "  -a cq-level=<val>          (default: 26)"
+  echo "  -a tune=<val>              (default: iq)"
+  echo "  -a color:enable-chroma-deltaq=<val> (default: 1)"
+  echo "  -a color:enable-qm=<val>   (default: 1)"
+  echo "  -a color:deltaq-mode=<val> (default: 3)"
+  echo "  -a color:sharpness=<val>   (default: 2)"
+  echo "  -appendoutputsuffix        (append parameters to output filename)"
   exit 1
 fi
 
-echo $INPUT
-echo $OUTPUT
+OUTPUT="${INPUT%.*}.avif"
 
-# Use 4:2:0 chroma subsampling for the output
-# Set the speed of encoding to 3 (balanced speed/quality)
-# Use all available CPU threads for encoding
-# Set the quality level to 63 (maximum quality)
-# Set the encoder to use constant quality mode
-# Set the constant quality level to 32
-# Tune the encoder for image quality
-# Enable chroma delta quantization for better color quality
-# Enable quantization matrices for better compression
-# Set delta quantization mode to 3 for adaptive quantization
+if [[ "$APPEND_OUTPUT_SUFFIX" -eq 1 ]]; then
+  OUTPUT="${INPUT%.*}__y=${YUV}__s=${SPEED}__j=${THREADS}__q=${Q}__eu=${END_USAGE}__cq=${CQ_LEVEL}__tune=${TUNE}__cdq=${CHROMA_DELTAQ}__qm=${QM}__dq=${DELTAQ_MODE}__sharpness=${SHARPNESS}.avif"
+fi
 
 avifenc \
-  --yuv 422 \
-  -s 3 \
-  -j all \
-  -q 63 \
-  -a end-usage=q \
-  -a cq-level="$QUALITY" \
-  -a tune=iq \
-  -a color:enable-chroma-deltaq=1 \
-  -a color:enable-qm=1 \
-  -a color:deltaq-mode=3 \
+  -y "$YUV" \
+  -s "$SPEED" \
+  -j "$THREADS" \
+  -q "$Q" \
+  -a end-usage="$END_USAGE" \
+  -a cq-level="$CQ_LEVEL" \
+  -a tune="$TUNE" \
+  -a color:enable-chroma-deltaq="$CHROMA_DELTAQ" \
+  -a color:enable-qm="$QM" \
+  -a color:deltaq-mode="$DELTAQ_MODE" \
+  -a color:sharpness="$SHARPNESS" \
+  -a color:aq-mode=1 \
+  -a color:qm-min=0 \
   "$INPUT" \
-  $OUTPUT
+  "$OUTPUT"
