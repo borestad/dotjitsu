@@ -4,6 +4,90 @@
 # https://www.reddit.com/r/AV1/comments/o7s8hk/high_quality_encoding_of_avif_images_using/
 # https://github.com/AOMediaCodec/libavif/issues/1667
 #
+#
+# This script provides options for configuring AVIF encoding parameters.
+# Below are the available arguments and their detailed descriptions:
+#
+# -y <val>
+# Specifies the chroma subsampling format, which determines how color information is stored.
+# Chroma subsampling reduces the resolution of color data compared to luminance data to save space.
+# Common values:
+#   - 420: Reduces chroma resolution both horizontally and vertically. Most efficient but lower color fidelity.
+#   - 422: Reduces chroma resolution horizontally only. Balanced choice for quality and efficiency.
+#   - 444: No chroma subsampling. Preserves full color fidelity but increases file size.
+# Default: 422 (balanced quality and efficiency).
+#
+# -s <speed>
+# Sets the encoding speed, which affects the trade-off between encoding time and output quality.
+# Higher values result in faster encoding but may reduce image quality.
+# Speed levels typically range from 0 (slowest, highest quality) to 10 (fastest, lowest quality).
+# Default: 3 (moderate speed and quality).
+#
+# -j <threads>
+# Specifies the number of threads to use for encoding, allowing parallel processing for faster execution.
+# By default, the script uses all available threads on the system.
+# Example:
+#   -j 4: Use 4 threads for encoding.
+# Note: Using more threads can improve performance but may increase CPU usage.
+#
+# -q <quality>
+# Sets the quality level for encoding, which directly impacts the visual quality and file size.
+# Higher values result in better quality but larger file sizes.
+# Quality levels typically range from 0 (lowest quality) to 63 (highest quality).
+# Default: 63 (maximum quality).
+#
+# -a end-usage=<val>
+# Defines the rate control mode, which determines how the encoder manages bitrate and quality.
+# Common values:
+#   - 'vbr': Variable bitrate. Adjusts bitrate dynamically based on content complexity.
+#   - 'cbr': Constant bitrate. Maintains a fixed bitrate for consistent file size.
+#   - 'q': Quality-based encoding. Focuses on maintaining a specific quality level.
+# Default: 'q' (quality-based encoding).
+#
+# -a cq-level=<val>
+# Specifies the constant quality level for quality-based encoding.
+# Lower values result in higher quality but larger file sizes.
+# Typical range: 0 (highest quality) to 63 (lowest quality).
+# Default: 26 (balanced quality and file size).
+#
+# -a tune=<val>
+# Adjusts the encoder tuning for specific use cases, optimizing the output for different metrics.
+# Common values:
+#   - 'psnr': Optimizes for Peak Signal-to-Noise Ratio, focusing on numerical fidelity.
+#   - 'ssim': Optimizes for Structural Similarity Index, focusing on perceptual quality.
+#   - 'iq': Optimizes for general image quality.
+# Default: 'iq' (general image quality).
+#
+# -a color:enable-chroma-deltaq=<val>
+# Enables chroma delta quantization, which improves color quality by adjusting quantization for chroma channels.
+# Values:
+#   - 0: Disabled.
+#   - 1: Enabled.
+# Default: 1 (enabled).
+#
+# -a color:enable-qm=<val>
+# Enables quantization matrices, which improve compression efficiency by tailoring quantization to image content.
+# Values:
+#   - 0: Disabled.
+#   - 1: Enabled.
+# Default: 1 (enabled).
+#
+# -a color:deltaq-mode=<val>
+# Specifies the delta quantization mode for adaptive quantization, which adjusts compression based on image complexity.
+# Higher values allow more adaptive quantization for better quality in complex areas.
+# Default: 3 (moderate adaptiveness).
+#
+# -a color:sharpness=<val>
+# Adjusts the sharpness level of the encoded image, enhancing edge definition and detail.
+# Higher values result in sharper images but may introduce artifacts.
+# Typical range: 0 (least sharp) to 7 (most sharp).
+# Default: 2 (balanced sharpness).
+#
+# -appendoutputsuffix
+# Appends the parameter values to the output filename for easier identification.
+# Example:
+# If encoding with -q 63 and -s 3, the output filename might include "_q63_s3" for clarity.
+# This is useful for organizing and comparing different encoding configurations.
 
 # Default values
 YUV="420"
@@ -60,6 +144,7 @@ done
 if [[ -z "$INPUT" ]]; then
   echo "Usage: $(basename "$0") <input.[jpg|jpeg|png|y4m]> [options]"
   echo "Options:"
+
   echo "  -y <val>                   (default: 422)"
   echo "  -s <speed>                 (default: 3)"
   echo "  -j <threads>               (default: all)"
