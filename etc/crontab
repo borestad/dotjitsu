@@ -1,6 +1,8 @@
 MAILTO=""
 HOME=/Users/johan
 PATH=$HOME/bin:$HOME/.private/bin:$HOME/.dotjitsu/bin:$HOME/.local/bin:/opt/homebrew/opt/util-linux/sbin:/opt/homebrew/opt/util-linux/bin:/opt/homebrew/opt/gnu-time/libexec/gnubin:/opt/homebrew/opt/gnu-indent/libexec/gnubin:/opt/homebrew/opt/gnu-tar/libexec/gnubin:/opt/homebrew/opt/gnu-getopt/bin:/opt/homebrew/opt/gnu-which/libexec/gnubin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/binutils/bin:$HOME/.local/share/pnpm:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.deno/bin
+
+* * * * *  /opt/homebrew/bin/fd . -tf $HOME/.cache/run-one --change-older-than 1days -x rm -rfv
 * * * * *  . /etc/profile;  run-one timeout 1h /Users/johan/.private/bin/dot-cron  &> /dev/null
 #0 * * * *  . /etc/profile;  /Users/johan/.dotjitsu/bin/dot-brew &> /dev/null &
 #0 20 * * * . /etc/profile;  /Users/johan/.dotjitsu/bin/dot-cron-daily  &> /dev/null &
