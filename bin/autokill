@@ -301,128 +301,166 @@ fi
 total_checked=0
 total_killed=0
 
-# Handle name targets as before
-for proc in "${name_targets[@]}"; do
-  pids=$(get_pids "$proc")
+#### Helper: Get process info by PID ####
+get_process_info() {
+  local pid="$1"
+  local info=()
 
-  if [ -z "$pids" ]; then
-    warn "$proc is not running."
-    continue
-  fi
+  if ps -p "$pid" > /dev/null 2>&1; then
+    local start_time=$(ps -p "$pid" -o lstart=)
+    local start_epoch=$(gdate -d "$start_time" +%s)
+    local now_epoch=$(gdate +%s)
+    local runtime=$(( now_epoch - start_epoch ))
 
-  info "$proc is running:"
+    local cpu_time_str=$(ps -p "$pid" -o cputime= | awk '{$1=$1;print}')
+    local cpu_seconds=$(cpu_to_seconds "$cpu_time_str")
 
-  for pid in $pids; do
-    total_checked=$(( total_checked + 1 ))
-
-    start_time=$(ps -p "$pid" -o lstart=)
-    start_epoch=$(gdate -d "$start_time" +%s)
-    now_epoch=$(gdate +%s)
-    runtime=$(( now_epoch - start_epoch ))
-
-    cpu_time_str=$(ps -p "$pid" -o cputime= | awk '{$1=$1;print}')
-    cpu_seconds=$(cpu_to_seconds "$cpu_time_str")
-
-    cpu_percent=$(ps -p "$pid" -o %cpu= | awk '{$1=$1;print}')
-    # Better CPU % parsing: handle empty/non-numeric
+    local cpu_percent=$(ps -p "$pid" -o %cpu= | awk '{$1=$1;print}')
     if ! [[ "$cpu_percent" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
       cpu_percent=0
     fi
-
-    info "  PID $pid:"
-    info "    Runtime       : ${runtime}s"
-    info "    CPU time      : ${cpu_seconds}s"
-    info "    Current CPU % : ${cpu_percent}%"
-
-    kill_reason=""
-    if [[ -n "$max_cpu_time" && "$cpu_seconds" -gt "$max_cpu_time" ]]; then
-      kill_reason="CPU time exceeded (${cpu_seconds}s > ${max_cpu_time}s)"
-    elif [[ -n "$max_runtime" && "$runtime" -gt "$max_runtime" ]]; then
-      kill_reason="Runtime exceeded (${runtime}s > ${max_runtime}s)"
-    elif [[ -n "$max_cpu_percent" ]]; then
-      cpu_percent_int=$(printf "%.0f" "$cpu_percent")
-      if (( cpu_percent_int > max_cpu_percent )); then
-        kill_reason="CPU % exceeded (${cpu_percent}% > ${max_cpu_percent}%)"
-      fi
-    fi
-
-    if [ -n "$kill_reason" ]; then
-      error "    ✖ Killing PID $pid: $kill_reason"
-      graceful_kill "$pid"
-      total_killed=$(( total_killed + 1 ))
-    fi
-  done
-done
-
-# Handle port targets
-for port in "${port_targets[@]}"; do
-  # Fill array without mapfile (macOS bash3 compatible)
-  port_pids_cmds=()
-  while IFS= read -r line; do
-    port_pids_cmds+=("$line")
-  done < <(get_pids_on_port "$port")
-
-  if [ ${#port_pids_cmds[@]} -eq 0 ]; then
-    warn "No processes found listening on port $port. Skipping all checks."
-    continue
+  else
+    runtime=0
+    cpu_seconds=0
+    cpu_percent=0
   fi
 
-  info "Processes listening on port $port:"
+  info+=("$runtime" "$cpu_seconds" "$cpu_percent")
+  echo "${info[@]}"
+}
 
-  for entry in "${port_pids_cmds[@]}"; do
-    pid="${entry%% *}"
-    cmd="${entry#* }"
+#### Helper: Should kill process? ####
+should_kill_process() {
+  local runtime="$1"
+  local cpu_seconds="$2"
+  local cpu_percent="$3"
 
-    total_checked=$(( total_checked + 1 ))
+  local reason=""
 
-    # Gather runtime & CPU info if possible for PID
-    if ps -p "$pid" > /dev/null 2>&1; then
-      start_time=$(ps -p "$pid" -o lstart=)
-      start_epoch=$(gdate -d "$start_time" +%s)
-      now_epoch=$(gdate +%s)
-      runtime=$(( now_epoch - start_epoch ))
+  if [[ -n "$max_cpu_time" && "$cpu_seconds" -gt "$max_cpu_time" ]]; then
+    reason="CPU time exceeded (${cpu_seconds}s > ${max_cpu_time}s)"
+  fi
 
-      cpu_time_str=$(ps -p "$pid" -o cputime= | awk '{$1=$1;print}')
-      cpu_seconds=$(cpu_to_seconds "$cpu_time_str")
+  if [[ -z "$reason" && -n "$max_runtime" && "$runtime" -gt "$max_runtime" ]]; then
+    reason="Runtime exceeded (${runtime}s > ${max_runtime}s)"
+  fi
 
-      cpu_percent=$(ps -p "$pid" -o %cpu= | awk '{$1=$1;print}')
-      if ! [[ "$cpu_percent" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
-        cpu_percent=0
-      fi
-    else
-      runtime=0
-      cpu_seconds=0
-      cpu_percent=0
+  if [[ -z "$reason" && -n "$max_cpu_percent" ]]; then
+    local cpu_percent_int=$(printf "%.0f" "$cpu_percent")
+    if (( cpu_percent_int > max_cpu_percent )); then
+      reason="CPU % exceeded (${cpu_percent}% > ${max_cpu_percent}%)"
     fi
+  fi
 
+  echo "$reason"
+}
+
+#### Helper: Print process stats ####
+print_process_stats() {
+  local pid="$1"
+  local cmd="$2"
+  local runtime="$3"
+  local cpu_seconds="$4"
+  local cpu_percent="$5"
+
+  if [[ -n "$cmd" ]]; then
     info "  PID $pid ($cmd):"
-    info "    Runtime       : ${runtime}s"
-    info "    CPU time      : ${cpu_seconds}s"
-    info "    Current CPU % : ${cpu_percent}%"
+  else
+    info "  PID $pid:"
+  fi
 
-    kill_reason=""
-    if [[ -n "$max_cpu_time" && "$cpu_seconds" -gt "$max_cpu_time" ]]; then
-      kill_reason="CPU time exceeded (${cpu_seconds}s > ${max_cpu_time}s)"
-    elif [[ -n "$max_runtime" && "$runtime" -gt "$max_runtime" ]]; then
-      kill_reason="Runtime exceeded (${runtime}s > ${max_runtime}s)"
-    elif [[ -n "$max_cpu_percent" ]]; then
-      cpu_percent_int=$(printf "%.0f" "$cpu_percent")
-      if (( cpu_percent_int > max_cpu_percent )); then
-        kill_reason="CPU % exceeded (${cpu_percent}% > ${max_cpu_percent}%)"
-      fi
-    fi
+  info "    Runtime       : ${runtime}s"
+  info "    CPU time      : ${cpu_seconds}s"
+  info "    Current CPU % : ${cpu_percent}%"
+}
 
-    if [ -n "$kill_reason" ]; then
+#### Main: Handle process by PID ####
+handle_pid() {
+  local pid="$1"
+  local cmd="$2"
+
+  total_checked=$(( total_checked + 1 ))
+
+  read runtime cpu_seconds cpu_percent < <(get_process_info "$pid")
+
+  print_process_stats "$pid" "$cmd" "$runtime" "$cpu_seconds" "$cpu_percent"
+
+  local kill_reason
+  kill_reason=$(should_kill_process "$runtime" "$cpu_seconds" "$cpu_percent")
+
+  if [[ -n "$kill_reason" ]]; then
+
+    if [[ -n "$cmd" ]]; then
       error "    ✖ Killing PID $pid ($cmd): $kill_reason"
-      graceful_kill "$pid"
-      total_killed=$(( total_killed + 1 ))
+    else
+      error "    ✖ Killing PID $pid: $kill_reason"
     fi
-  done
-done
 
-echo
-success "Summary:"
-info "  Processes checked: $total_checked"
-info "  Processes killed : $total_killed"
+    graceful_kill "$pid"
+    total_killed=$(( total_killed + 1 ))
+  fi
+}
+
+#### Main: Handle all name targets ####
+handle_name_targets() {
+  for proc_name in "${name_targets[@]}"; do
+
+    local pids
+    pids=$(get_pids "$proc_name")
+
+    if [[ -z "$pids" ]]; then
+      warn "$proc_name is not running."
+      continue
+    fi
+
+    info "$proc_name is running:"
+
+    for pid in $pids; do
+      handle_pid "$pid" ""
+    done
+
+  done
+}
+
+#### Main: Handle all port targets ####
+handle_port_targets() {
+  for port in "${port_targets[@]}"; do
+
+    local port_pids_cmds=()
+    while IFS= read -r line; do
+      port_pids_cmds+=("$line")
+    done < <(get_pids_on_port "$port")
+
+    if [[ ${#port_pids_cmds[@]} -eq 0 ]]; then
+      warn "No processes found listening on port $port. Skipping all checks."
+      continue
+    fi
+
+    info "Processes listening on port $port:"
+
+    for entry in "${port_pids_cmds[@]}"; do
+      local pid="${entry%% *}"
+      local cmd="${entry#* }"
+      handle_pid "$pid" "$cmd"
+    done
+
+  done
+}
+
+#### Main: Print summary ####
+print_summary() {
+  echo
+  success "Summary:"
+  info "  Processes checked: $total_checked"
+  info "  Processes killed : $total_killed"
+}
+
+#### Main: Entry point ####
+
+handle_name_targets
+
+handle_port_targets
+
+print_summary
 
 exit $total_killed
