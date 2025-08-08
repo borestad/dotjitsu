@@ -1,74 +1,86 @@
-#!node
+#!/bin/bash
 
-const util = require('util')
-const exec = util.promisify(require('child_process').exec)
+# Check for gdate (from coreutils)
+if ! command -v gdate &>/dev/null; then
+  echo "Error: gdate (GNU date) is required but not found."
+  exit 1
+fi
 
-// # PROCESSNAME = '/bin/ncdu'
-// # CPU_TRESHOLD = 99
+# Initialize limits
+max_cpu_time=""
+max_uptime=""
+processes=()
 
-// # IFS = $'\n'
-// # L = $(ps aux | grep $PROCESSNAME)
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --max-cpu-time)
+      max_cpu_time="$2"
+      shift 2
+      ;;
+    --max-uptime)
+      max_uptime="$2"
+      shift 2
+      ;;
+    *)
+      processes+=("$1")
+      shift
+      ;;
+  esac
+done
 
-// # for fn in $L; do
-// #         PID = $(echo $fn | awk '{print $2'})
-// #         LOAD = $(echo $fn | awk '{print $3'})
+# Ensure at least one process is given
+if [ "${#processes[@]}" -eq 0 ]; then
+  echo "Usage: $0 [--max-cpu-time N] [--max-uptime N] process_name [process_name ...]"
+  exit 1
+fi
 
-// #         echo $LOAD
-// #         if [$(echo "$LOAD > $CPU_TRESHOLD" | bc - l) - eq 1]
-// #         then
-// #                 kill - 9 $PID
-// #                 echo "Killed $PID due to treshold"
-// #         fi
-// # done
-
-async function notify(title, text) {
-  await exec(`osascript -e 'display notification "${text}" with title "${title}"'`)
+# Function to parse CPU time into seconds
+cpu_to_seconds() {
+  local time_str="$1"
+  if [[ "$time_str" =~ ([0-9]+)-([0-9]+):([0-9]+):([0-9]+) ]]; then
+    echo $(( ${BASH_REMATCH[1]} * 86400 + ${BASH_REMATCH[2]} * 3600 + ${BASH_REMATCH[3]} * 60 + ${BASH_REMATCH[4]} ))
+  elif [[ "$time_str" =~ ([0-9]+):([0-9]+):([0-9]+) ]]; then
+    echo $(( ${BASH_REMATCH[1]} * 3600 + ${BASH_REMATCH[2]} * 60 + ${BASH_REMATCH[3]} ))
+  elif [[ "$time_str" =~ ([0-9]+):([0-9]+) ]]; then
+    echo $(( ${BASH_REMATCH[1]} * 60 + ${BASH_REMATCH[2]} ))
+  else
+    echo 0
+  fi
 }
 
-async function main() {
-  const { stdout, stderr } = await exec('ps -e | grep ncdu')
+for proc in "${processes[@]}"; do
+  pids=$(pgrep -x "$proc")
 
-  // 15009 ??         0:08.13 timeout -s SIGINT 3600s ncdu
-  // 15010 ??        22:59.65 ncdu
-  // 77570 ttys005    0:00.03 ncdu
+  if [ -z "$pids" ]; then
+    echo "$proc is not running."
+    continue
+  fi
 
-  if (stderr) {
-    console.error(`error: ${stderr}`)
-  }
+  echo "$proc is running:"
+  for pid in $pids; do
+    start_time=$(ps -p "$pid" -o lstart=)
+    start_epoch=$(gdate -d "$start_time" +%s)
+    now_epoch=$(gdate +%s)
+    uptime=$(( now_epoch - start_epoch ))
 
-  const processes = stdout
-    .trim()
-    .split('\n')
-    .map(r => r.split(/\s+/))
+    cpu_time_str=$(ps -p "$pid" -o cputime= | awk '{$1=$1;print}')
+    cpu_seconds=$(cpu_to_seconds "$cpu_time_str")
 
-  for (const p of processes) {
-    // console.log(p)
-    const [pid, tty, cputime, ...command] = p
+    echo "  PID $pid:"
+    echo "    Uptime     : ${uptime}s"
+    echo "    CPU time   : ${cpu_seconds}s"
 
-    // Hack: exclude useless processes for autokill (keep for debugging)
-    if (!/ncdu|timeout/.test(command[0])) {
-      continue
-    }
+    kill_reason=""
+    if [[ -n "$max_cpu_time" && "$cpu_seconds" -gt "$max_cpu_time" ]]; then
+      kill_reason="CPU time exceeded (${cpu_seconds}s > ${max_cpu_time}s)"
+    elif [[ -n "$max_uptime" && "$uptime" -gt "$max_uptime" ]]; then
+      kill_reason="Uptime exceeded (${uptime}s > ${max_uptime}s)"
+    fi
 
-    console.log({
-      pid,
-      tty,
-      cputime,
-      command
-    })
-
-    // Autokill process that lost it's TTY
-    if (tty === '??') {
-      const cmd = `/bin/kill -9 ${pid}`
-
-      try {
-        await exec(cmd)
-        await notify('Autokill success', 'killing ncdu')
-      } catch (error) {
-        await notify('Autokill error', `killing ncdu failed: ${cmd}`)
-      }
-    }
-  }
-}
-
-main()
+    if [ -n "$kill_reason" ]; then
+      echo "    ❌ Killing PID $pid: $kill_reason"
+      kill "$pid"
+    fi
+  done
+done
