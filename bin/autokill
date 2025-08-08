@@ -1,41 +1,153 @@
 #!/bin/bash
+#
+# autokill - Monitor and kill processes based on CPU time, runtime, CPU usage, or port usage.
+#
+# Features:
+#   - Monitor multiple processes by name.
+#   - Kill processes exceeding max CPU time, max runtime, or max CPU %.
+#   - Kill processes listening on specified TCP ports.
+#   - Supports exact name match (default), regex match (--regex-match), and substring partial match (--partial-match).
+#   - Filter processes by user (--user).
+#   - Graceful shutdown with SIGTERM before SIGKILL, configurable grace period.
+#   - Dry-run mode to preview actions without killing.
+#   - Skip checks unless all target processes have been running a minimum time.
+#   - Logging to file or stdout with stylish colored output.
+#
+# Requirements:
+#   - gdate (GNU date) must be installed and in PATH.
+#     On macOS, install coreutils (e.g., via brew) and ensure 'gdate' is available.
+#
+# Usage:
+#   ./autokill [OPTIONS] process_name_or_:port [process_name_or_:port ...]
+#
+# Options:
+#   --max-cpu-time N        Kill if CPU time (seconds) exceeds N.
+#   --max-runtime N         Kill if runtime (seconds) exceeds N.
+#   --max-cpu-percent N     Kill if current CPU % exceeds N.
+#   --skip-min-runtime N    Skip all checks unless all processes have run at least N seconds.
+#   --dry-run               Show what would be done, but do not kill.
+#   --log-file FILE         Log output to FILE instead of stdout.
+#   --grace-period N        Seconds to wait after SIGTERM before SIGKILL (default: 0).
+#   --regex-match           Use regex matching on full command line (pgrep -f).
+#   --partial-match         Use substring (case-insensitive) match on process name.
+#   --user USERNAME         Only target processes owned by USERNAME.
+#   --help                  Show this help and exit.
+#
+# Examples:
+#   # Kill 'gdu-go' and 'node' if they've been running over 1 hour (3600s)
+#   ./autokill --max-runtime 3600 gdu-go node
+#
+#   # Kill processes matching regex 'python.*script.py' if CPU time exceeds 600s
+#   ./autokill --regex-match --max-cpu-time 600 "python.*script.py"
+#
+#   # Kill all processes whose names contain 'chrome' substring if CPU % is above 80%
+#   ./autokill --partial-match --max-cpu-percent 80 chrome
+#
+#   # Kill all processes listening on port 8000
+#   ./autokill --dry-run :8000
+#
+#   # Dry run example showing what would be killed without actual termination
+#   ./autokill --dry-run --max-runtime 300 someprocess
+#
+#   # Only kill processes that have been running at least 5 minutes (300s)
+#   ./autokill --skip-min-runtime 300 --max-runtime 3600 targetproc
+#
+#   # Log output to a file and wait 10 seconds for graceful shutdown before SIGKILL
+#   ./autokill --log-file /var/log/autokill.log --grace-period 10 myproc
+#
 
-# Check for gdate (from coreutils)
+# Colors and symbols for stylish output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+log() {
+  local msg="$1"
+  if [[ -n "$log_file" ]]; then
+    echo -e "$msg" >> "$log_file"
+  else
+    echo -e "$msg"
+  fi
+}
+
+info() {
+  log "${CYAN}[i] $1${NC}"
+}
+
+success() {
+  log "${GREEN}✔ $1${NC}"
+}
+
+warn() {
+  log "${YELLOW}⚠️  $1${NC}"
+}
+
+error() {
+  log "${RED}✖ $1${NC}"
+}
+
+# Check for gdate (GNU date)
 if ! command -v gdate &>/dev/null; then
-  echo "Error: gdate (GNU date) is required but not found."
+  error "gdate (GNU date) is required but not found."
   exit 1
 fi
 
-# Initialize limits
+# Defaults and variables
 max_cpu_time=""
-max_uptime=""
+max_runtime=""
+max_cpu_percent=""
+skip_min_runtime=0
+dry_run=0
+log_file=""
+grace_period=0  # seconds to wait after SIGTERM before SIGKILL
+regex_match=0
+partial_match=0
 processes=()
+user=""
 
-# Parse arguments
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --max-cpu-time)
-      max_cpu_time="$2"
-      shift 2
-      ;;
-    --max-uptime)
-      max_uptime="$2"
-      shift 2
-      ;;
-    *)
-      processes+=("$1")
-      shift
-      ;;
-  esac
-done
+print_usage() {
+  cat <<EOF
+Usage: $(basename "$0") [OPTIONS] process_name_or_:port [process_name_or_:port ...]
 
-# Ensure at least one process is given
-if [ "${#processes[@]}" -eq 0 ]; then
-  echo "Usage: $0 [--max-cpu-time N] [--max-uptime N] process_name [process_name ...]"
-  exit 1
-fi
+Options:
+  --max-cpu-time N        Max CPU time in seconds
+  --max-runtime N         Max runtime in seconds
+  --max-cpu-percent N     Max CPU percentage
+  --skip-min-runtime N    Skip checks unless all processes run at least N seconds
+  --dry-run               Show what would be done, but don't kill
+  --log-file FILE         Log output to FILE
+  --grace-period N        Seconds to wait after SIGTERM before kill -9 (default: 0)
+  --regex-match           Match process names with regex (uses pgrep -f)
+  --partial-match         Match process names by substring (case-insensitive)
+  --user USERNAME         Only target processes owned by USERNAME
+  --help                  Show this help message and exit
 
-# Function to parse CPU time into seconds
+Examples:
+  # Kill 'gdu-go' and 'node' if they've been running over 1 hour (3600s)
+  ./$(basename "$0") --max-runtime 3600 gdu-go node
+
+  # Kill processes matching regex 'python.*script.py' if CPU time exceeds 600s
+  ./$(basename "$0") --regex-match --max-cpu-time 600 "python.*script.py"
+
+  # Kill all processes whose names contain 'chrome' substring if CPU % is above 80%
+  ./$(basename "$0") --partial-match --max-cpu-percent 80 chrome
+
+  # Kill all processes listening on port 8000
+  ./$(basename "$0") --dry-run :8000
+
+  # Dry run example showing what would be killed without actual termination
+  ./$(basename "$0") --dry-run --max-runtime 300 someprocess
+
+  # Only kill processes that have been running at least 5 minutes (300s)
+  ./$(basename "$0") --skip-min-runtime 300 --max-runtime 3600 targetproc
+
+  # Log output to a file and wait 10 seconds for graceful shutdown before SIGKILL
+  ./$(basename "$0") --log-file /var/log/autokill.log --grace-period 10 myproc
+EOF
+}
+
 cpu_to_seconds() {
   local time_str="$1"
   if [[ "$time_str" =~ ([0-9]+)-([0-9]+):([0-9]+):([0-9]+) ]]; then
@@ -49,38 +161,268 @@ cpu_to_seconds() {
   fi
 }
 
-for proc in "${processes[@]}"; do
-  pids=$(pgrep -x "$proc")
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --max-cpu-time)
+      max_cpu_time="$2"
+      shift 2
+      ;;
+    --max-runtime)
+      max_runtime="$2"
+      shift 2
+      ;;
+    --max-cpu-percent)
+      max_cpu_percent="$2"
+      shift 2
+      ;;
+    --skip-min-runtime)
+      skip_min_runtime="$2"
+      shift 2
+      ;;
+    --dry-run)
+      dry_run=1
+      shift
+      ;;
+    --log-file)
+      log_file="$2"
+      shift 2
+      ;;
+    --grace-period)
+      grace_period="$2"
+      shift 2
+      ;;
+    --regex-match)
+      regex_match=1
+      shift
+      ;;
+    --partial-match)
+      partial_match=1
+      shift
+      ;;
+    --user)
+      user="$2"
+      shift 2
+      ;;
+    --help)
+      print_usage
+      exit 0
+      ;;
+    *)
+      processes+=("$1")
+      shift
+      ;;
+  esac
+done
+
+if [ "${#processes[@]}" -eq 0 ]; then
+  print_usage
+  exit 1
+fi
+
+get_pids() {
+  local procname="$1"
+  local user_filter=""
+  if [[ -n "$user" ]]; then
+    user_filter="-u $user"
+  fi
+  if (( regex_match )); then
+    pgrep $user_filter -f "$procname"
+  elif (( partial_match )); then
+    ps $user_filter -eo pid=,comm= | awk -v pat="$procname" 'tolower($2) ~ tolower(pat) { print $1 }'
+  else
+    pgrep $user_filter -x "$procname"
+  fi
+}
+
+# New: get pids by port number
+get_pids_on_port() {
+  local port="$1"
+  # macOS uses lsof -i TCP:port to get PIDs listening on a port
+  # Filter by user if requested
+  if [[ -n "$user" ]]; then
+    lsof -nP -i TCP:"$port" -sTCP:LISTEN -a -u "$user" 2>/dev/null | awk 'NR>1 {print $2, $1}'
+  else
+    lsof -nP -i TCP:"$port" -sTCP:LISTEN 2>/dev/null | awk 'NR>1 {print $2, $1}'
+  fi
+}
+
+graceful_kill() {
+  local pid="$1"
+  if (( dry_run )); then
+    info "    Would send SIGTERM to PID $pid (dry-run)"
+    if (( grace_period > 0 )); then
+      info "    Would wait $grace_period seconds before SIGKILL (dry-run)"
+    fi
+    return
+  fi
+  kill "$pid" 2>/dev/null
+  if (( grace_period > 0 )); then
+    sleep "$grace_period"
+  fi
+  kill -9 "$pid" 2>/dev/null
+}
+
+# Separate port targets and name targets
+port_targets=()
+name_targets=()
+
+for target in "${processes[@]}"; do
+  if [[ "$target" =~ ^:([0-9]+)$ ]]; then
+    port_targets+=("${BASH_REMATCH[1]}")
+  else
+    name_targets+=("$target")
+  fi
+done
+
+# Check skip_min_runtime condition only for name targets (not ports)
+if (( skip_min_runtime > 0 )); then
+  for proc in "${name_targets[@]}"; do
+    pids=$(get_pids "$proc")
+    if [ -z "$pids" ]; then
+      warn "$proc is not running. Skipping all checks."
+      exit 0
+    fi
+
+    for pid in $pids; do
+      start_time=$(ps -p "$pid" -o lstart=)
+      start_epoch=$(gdate -d "$start_time" +%s)
+      now_epoch=$(gdate +%s)
+      runtime=$(( now_epoch - start_epoch ))
+
+      if (( runtime < skip_min_runtime )); then
+        warn "Process $proc PID $pid runtime $runtime sec < skip-min-runtime $skip_min_runtime sec. Skipping all checks."
+        exit 0
+      fi
+    done
+  done
+fi
+
+total_checked=0
+total_killed=0
+
+# Handle name targets as before
+for proc in "${name_targets[@]}"; do
+  pids=$(get_pids "$proc")
 
   if [ -z "$pids" ]; then
-    echo "$proc is not running."
+    warn "$proc is not running."
     continue
   fi
 
-  echo "$proc is running:"
+  info "$proc is running:"
+
   for pid in $pids; do
+    total_checked=$(( total_checked + 1 ))
+
     start_time=$(ps -p "$pid" -o lstart=)
     start_epoch=$(gdate -d "$start_time" +%s)
     now_epoch=$(gdate +%s)
-    uptime=$(( now_epoch - start_epoch ))
+    runtime=$(( now_epoch - start_epoch ))
 
     cpu_time_str=$(ps -p "$pid" -o cputime= | awk '{$1=$1;print}')
     cpu_seconds=$(cpu_to_seconds "$cpu_time_str")
 
-    echo "  PID $pid:"
-    echo "    Uptime     : ${uptime}s"
-    echo "    CPU time   : ${cpu_seconds}s"
+    cpu_percent=$(ps -p "$pid" -o %cpu= | awk '{$1=$1;print}')
+    # Better CPU % parsing: handle empty/non-numeric
+    if ! [[ "$cpu_percent" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+      cpu_percent=0
+    fi
+
+    info "  PID $pid:"
+    info "    Runtime       : ${runtime}s"
+    info "    CPU time      : ${cpu_seconds}s"
+    info "    Current CPU % : ${cpu_percent}%"
 
     kill_reason=""
     if [[ -n "$max_cpu_time" && "$cpu_seconds" -gt "$max_cpu_time" ]]; then
       kill_reason="CPU time exceeded (${cpu_seconds}s > ${max_cpu_time}s)"
-    elif [[ -n "$max_uptime" && "$uptime" -gt "$max_uptime" ]]; then
-      kill_reason="Uptime exceeded (${uptime}s > ${max_uptime}s)"
+    elif [[ -n "$max_runtime" && "$runtime" -gt "$max_runtime" ]]; then
+      kill_reason="Runtime exceeded (${runtime}s > ${max_runtime}s)"
+    elif [[ -n "$max_cpu_percent" ]]; then
+      cpu_percent_int=$(printf "%.0f" "$cpu_percent")
+      if (( cpu_percent_int > max_cpu_percent )); then
+        kill_reason="CPU % exceeded (${cpu_percent}% > ${max_cpu_percent}%)"
+      fi
     fi
 
     if [ -n "$kill_reason" ]; then
-      echo "    ❌ Killing PID $pid: $kill_reason"
-      kill "$pid"
+      error "    ✖ Killing PID $pid: $kill_reason"
+      graceful_kill "$pid"
+      total_killed=$(( total_killed + 1 ))
     fi
   done
 done
+
+# Handle port targets
+for port in "${port_targets[@]}"; do
+  # Fill array without mapfile (macOS bash3 compatible)
+  port_pids_cmds=()
+  while IFS= read -r line; do
+    port_pids_cmds+=("$line")
+  done < <(get_pids_on_port "$port")
+
+  if [ ${#port_pids_cmds[@]} -eq 0 ]; then
+    warn "No processes found listening on port $port. Skipping all checks."
+    continue
+  fi
+
+  info "Processes listening on port $port:"
+
+  for entry in "${port_pids_cmds[@]}"; do
+    pid="${entry%% *}"
+    cmd="${entry#* }"
+
+    total_checked=$(( total_checked + 1 ))
+
+    # Gather runtime & CPU info if possible for PID
+    if ps -p "$pid" > /dev/null 2>&1; then
+      start_time=$(ps -p "$pid" -o lstart=)
+      start_epoch=$(gdate -d "$start_time" +%s)
+      now_epoch=$(gdate +%s)
+      runtime=$(( now_epoch - start_epoch ))
+
+      cpu_time_str=$(ps -p "$pid" -o cputime= | awk '{$1=$1;print}')
+      cpu_seconds=$(cpu_to_seconds "$cpu_time_str")
+
+      cpu_percent=$(ps -p "$pid" -o %cpu= | awk '{$1=$1;print}')
+      if ! [[ "$cpu_percent" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+        cpu_percent=0
+      fi
+    else
+      runtime=0
+      cpu_seconds=0
+      cpu_percent=0
+    fi
+
+    info "  PID $pid ($cmd):"
+    info "    Runtime       : ${runtime}s"
+    info "    CPU time      : ${cpu_seconds}s"
+    info "    Current CPU % : ${cpu_percent}%"
+
+    kill_reason=""
+    if [[ -n "$max_cpu_time" && "$cpu_seconds" -gt "$max_cpu_time" ]]; then
+      kill_reason="CPU time exceeded (${cpu_seconds}s > ${max_cpu_time}s)"
+    elif [[ -n "$max_runtime" && "$runtime" -gt "$max_runtime" ]]; then
+      kill_reason="Runtime exceeded (${runtime}s > ${max_runtime}s)"
+    elif [[ -n "$max_cpu_percent" ]]; then
+      cpu_percent_int=$(printf "%.0f" "$cpu_percent")
+      if (( cpu_percent_int > max_cpu_percent )); then
+        kill_reason="CPU % exceeded (${cpu_percent}% > ${max_cpu_percent}%)"
+      fi
+    fi
+
+    if [ -n "$kill_reason" ]; then
+      error "    ✖ Killing PID $pid ($cmd): $kill_reason"
+      graceful_kill "$pid"
+      total_killed=$(( total_killed + 1 ))
+    fi
+  done
+done
+
+echo
+success "Summary:"
+info "  Processes checked: $total_checked"
+info "  Processes killed : $total_killed"
+
+exit $total_killed
