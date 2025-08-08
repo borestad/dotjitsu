@@ -111,7 +111,7 @@ error() {
 
 # Check for gdate (GNU date)
 if ! command -v gdate &>/dev/null; then
-  error "gdate (GNU date) is required but not found."
+  error "gdate (GNU date) is required but not found. Install with: brew install coreutils"
   exit 1
 fi
 
@@ -176,6 +176,8 @@ EOF
 # ------------------------------------------------------------------------------
 # cpu_to_seconds(time_str)
 #   Converts a CPU time string (e.g. "1:23:45") to seconds.
+#   Arguments:
+#     time_str - CPU time string
 # ------------------------------------------------------------------------------
 cpu_to_seconds() {
   local time_str="$1"
@@ -253,6 +255,8 @@ fi
 # get_pids(procname)
 #   Gets PIDs for a process name using exact, regex, or partial match.
 #   Optionally filters by user.
+#   Arguments:
+#     procname - Process name to match
 # ------------------------------------------------------------------------------
 get_pids() {
   local procname="$1"
@@ -275,6 +279,8 @@ get_pids() {
 # get_pids_on_port(port)
 #   Gets PIDs and commands for processes listening on a TCP port.
 #   Optionally filters by user.
+#   Arguments:
+#     port - TCP port number
 # ------------------------------------------------------------------------------
 get_pids_on_port() {
   local port="$1"
@@ -291,6 +297,8 @@ get_pids_on_port() {
 # graceful_kill(pid)
 #   Sends SIGTERM to a process, waits for grace period, then sends SIGKILL.
 #   Honors dry-run mode.
+#   Arguments:
+#     pid - Process ID to kill
 # ------------------------------------------------------------------------------
 graceful_kill() {
   local pid="$1"
@@ -322,7 +330,10 @@ for target in "${processes[@]}"; do
   fi
 done
 
-# Check skip_min_runtime condition only for name targets (not ports)
+# ------------------------------------------------------------------------------
+# skip_min_runtime check for name targets
+#   Skips all checks unless all processes have run at least skip_min_runtime seconds.
+# ------------------------------------------------------------------------------
 if (( skip_min_runtime > 0 )); then
   for proc in "${name_targets[@]}"; do
     pids=$(get_pids "$proc")
@@ -331,7 +342,8 @@ if (( skip_min_runtime > 0 )); then
       exit 0
     fi
 
-    for pid in $pids; do
+    # Use a while-read loop to handle spaces safely
+    while IFS= read -r pid; do
       start_time=$(ps -p "$pid" -o lstart=)
       start_epoch=$(gdate -d "$start_time" +%s)
       now_epoch=$(gdate +%s)
@@ -341,17 +353,20 @@ if (( skip_min_runtime > 0 )); then
         warn "Process $proc PID $pid runtime $runtime sec < skip-min-runtime $skip_min_runtime sec. Skipping all checks."
         exit 0
       fi
-    done
+    done <<< "$pids"
   done
 fi
 
 total_checked=0
 total_killed=0
 
-#### Helper: Get process info by PID ####
+# ------------------------------------------------------------------------------
 # get_process_info(pid)
+#   Gets process info by PID.
 #   Returns: runtime (seconds), cpu_seconds (CPU time in seconds), cpu_percent (current CPU usage %)
-#   Uses ps and gdate to extract process stats for a given PID.
+#   Arguments:
+#     pid - Process ID
+# ------------------------------------------------------------------------------
 get_process_info() {
   local pid="$1"
   local info=()
@@ -379,10 +394,15 @@ get_process_info() {
   echo "${info[@]}"
 }
 
-#### Helper: Should kill process? ####
+# ------------------------------------------------------------------------------
 # should_kill_process(runtime, cpu_seconds, cpu_percent)
+#   Checks if process should be killed based on thresholds.
 #   Returns: reason string if process should be killed, empty string otherwise.
-#   Checks against max_cpu_time, max_runtime, and max_cpu_percent thresholds.
+#   Arguments:
+#     runtime      - Process runtime in seconds
+#     cpu_seconds  - CPU time in seconds
+#     cpu_percent  - Current CPU usage %
+# ------------------------------------------------------------------------------
 should_kill_process() {
   local runtime="$1"
   local cpu_seconds="$2"
@@ -408,9 +428,16 @@ should_kill_process() {
   echo "$reason"
 }
 
-#### Helper: Print process stats ####
+# ------------------------------------------------------------------------------
 # print_process_stats(pid, cmd, runtime, cpu_seconds, cpu_percent)
 #   Pretty-prints process statistics for logging.
+#   Arguments:
+#     pid         - Process ID
+#     cmd         - Command name
+#     runtime     - Runtime in seconds
+#     cpu_seconds - CPU time in seconds
+#     cpu_percent - Current CPU usage %
+# ------------------------------------------------------------------------------
 print_process_stats() {
   local pid="$1"
   local cmd="$2"
@@ -429,9 +456,13 @@ print_process_stats() {
   info "    Current CPU % : ${cpu_percent}%"
 }
 
-#### Main: Handle process by PID ####
+# ------------------------------------------------------------------------------
 # handle_pid(pid, cmd)
 #   Checks process stats, prints them, and kills the process if thresholds are exceeded.
+#   Arguments:
+#     pid - Process ID
+#     cmd - Command name
+# ------------------------------------------------------------------------------
 handle_pid() {
   local pid="$1"
   local cmd="$2"
@@ -458,12 +489,12 @@ handle_pid() {
   fi
 }
 
-#### Main: Handle all name targets ####
+# ------------------------------------------------------------------------------
 # handle_name_targets()
 #   Handles all process name targets: finds PIDs, checks stats, kills if needed.
+# ------------------------------------------------------------------------------
 handle_name_targets() {
   for proc_name in "${name_targets[@]}"; do
-
     local pids
     pids=$(get_pids "$proc_name")
 
@@ -474,16 +505,16 @@ handle_name_targets() {
 
     info "$proc_name is running:"
 
-    for pid in $pids; do
+    while IFS= read -r pid; do
       handle_pid "$pid" ""
-    done
-
+    done <<< "$pids"
   done
 }
 
-#### Main: Handle all port targets ####
+# ------------------------------------------------------------------------------
 # handle_port_targets()
 #   Handles all port targets: finds PIDs listening on ports, checks stats, kills if needed.
+# ------------------------------------------------------------------------------
 handle_port_targets() {
   for port in "${port_targets[@]}"; do
 
@@ -508,9 +539,10 @@ handle_port_targets() {
   done
 }
 
-#### Main: Print summary ####
+# ------------------------------------------------------------------------------
 # print_summary()
 #   Prints a summary of checked and killed processes.
+# ------------------------------------------------------------------------------
 print_summary() {
   echo
   success "Summary:"
@@ -518,8 +550,9 @@ print_summary() {
   info "  Processes killed : $total_killed"
 }
 
-#### Main: Entry point ####
-
+# ------------------------------------------------------------------------------
+# Main: Entry point
+# ------------------------------------------------------------------------------
 handle_name_targets
 
 handle_port_targets
