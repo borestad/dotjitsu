@@ -247,64 +247,38 @@ cpu-to-seconds() {
   fi
 }
 
-# Parse arguments
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --max-cpu-time)
-      max_cpu_time="$2"
-      shift 2
-      ;;
-    --max-runtime)
-      max_runtime="$2"
-      shift 2
-      ;;
-    --max-cpu-percent)
-      max_cpu_percent="$2"
-      shift 2
-      ;;
-    --skip-min-runtime)
-      skip_min_runtime="$2"
-      shift 2
-      ;;
-    --dry-run)
-      dry_run=1
-      shift
-      ;;
-    --log-file)
-      log_file="$2"
-      shift 2
-      ;;
-    --grace-period)
-      grace_period="$2"
-      shift 2
-      ;;
-    --regex-match)
-      regex_match=1
-      shift
-      ;;
-    --partial-match)
-      partial_match=1
-      shift
-      ;;
-    --user)
-      user="$2"
-      shift 2
-      ;;
-    --help)
-      print-usage
-      exit 0
-      ;;
-    *)
-      processes+=("$1")
-      shift
-      ;;
-  esac
-done
+# ------------------------------------------------------------------------------
+# parse-arguments()
+#   Parses command-line arguments and sets global variables.
+#   Arguments:
+#     "$@" - All command-line arguments
+# ------------------------------------------------------------------------------
+parse-arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --max-cpu-time) max_cpu_time="$2"; shift 2 ;;
+      --max-runtime) max_runtime="$2"; shift 2 ;;
+      --max-cpu-percent) max_cpu_percent="$2"; shift 2 ;;
+      --skip-min-runtime) skip_min_runtime="$2"; shift 2 ;;
+      --dry-run) dry_run=1; shift ;;
+      --log-file) log_file="$2"; shift 2 ;;
+      --grace-period) grace_period="$2"; shift 2 ;;
+      --regex-match) regex_match=1; shift ;;
+      --partial-match) partial_match=1; shift ;;
+      --user) user="$2"; shift 2 ;;
+      --help) print-usage; exit 0 ;;
+      *) processes+=("$1"); shift ;;
+    esac
+  done
 
-if is-array-empty "processes"; then
-  print-usage
-  exit 1
-fi
+  if is-array-empty "processes"; then
+    print-usage
+    exit 1
+  fi
+}
+
+# Parse arguments
+parse-arguments "$@"
 
 # ------------------------------------------------------------------------------
 # get-pids(procname)
@@ -607,10 +581,17 @@ print-summary() {
 # ------------------------------------------------------------------------------
 # Main: Entry point
 # ------------------------------------------------------------------------------
+
+# Parse arguments
+parse-arguments "$@"
+
+# 1. Handle all process name targets: find PIDs, check stats, and kill if needed
 handle-name-targets
 
+# 2. Handle all port targets: find PIDs listening on ports, check stats, and kill if needed
 handle-port-targets
 
+# 3. Print a summary of the processes checked and killed
 print-summary
 
 exit $total_killed
