@@ -18,43 +18,49 @@
 #     On macOS, install coreutils (e.g., via brew) and ensure 'gdate' is available.
 #
 # Usage:
-#   ./autokill [OPTIONS] process_name_or_:port [process_name_or_:port ...]
+#   autokill [OPTIONS] process_name_or_:port [process_name_or_:port ...]
 #
-# Options:
-#   --max-cpu-time N        Kill if CPU time (seconds) exceeds N.
-#   --max-runtime N         Kill if runtime (seconds) exceeds N.
-#   --max-cpu-percent N     Kill if current CPU % exceeds N.
-#   --skip-min-runtime N    Skip all checks unless all processes have run at least N seconds.
-#   --dry-run               Show what would be done, but do not kill.
-#   --log-file FILE         Log output to FILE instead of stdout.
-#   --grace-period N        Seconds to wait after SIGTERM before SIGKILL (default: 0).
-#   --regex-match           Use regex matching on full command line (pgrep -f).
-#   --partial-match         Use substring (case-insensitive) match on process name.
-#   --user USERNAME         Only target processes owned by USERNAME.
-#   --help                  Show this help and exit.
-#
-# Examples:
-#   # Kill 'gdu-go' and 'node' if they've been running over 1 hour (3600s)
-#   ./autokill --max-runtime 3600 gdu-go node
-#
-#   # Kill processes matching regex 'python.*script.py' if CPU time exceeds 600s
-#   ./autokill --regex-match --max-cpu-time 600 "python.*script.py"
-#
-#   # Kill all processes whose names contain 'chrome' substring if CPU % is above 80%
-#   ./autokill --partial-match --max-cpu-percent 80 chrome
-#
-#   # Kill all processes listening on port 8000
-#   ./autokill --dry-run :8000
-#
-#   # Dry run example showing what would be killed without actual termination
-#   ./autokill --dry-run --max-runtime 300 someprocess
-#
-#   # Only kill processes that have been running at least 5 minutes (300s)
-#   ./autokill --skip-min-runtime 300 --max-runtime 3600 targetproc
-#
-#   # Log output to a file and wait 10 seconds for graceful shutdown before SIGKILL
-#   ./autokill --log-file /var/log/autokill.log --grace-period 10 myproc
-#
+# Run `autokill --help` for detailed usage and examples.
+
+USAGE_INFO=$(cat <<'EOF'
+Usage: autokill [OPTIONS] process_name_or_:port [process_name_or_:port ...]
+
+Options:
+  --max-cpu-time N        Max CPU time in seconds
+  --max-runtime N         Max runtime in seconds
+  --max-cpu-percent N     Max CPU percentage
+  --skip-min-runtime N    Skip checks unless all processes run at least N seconds
+  --dry-run               Show what would be done, but don't kill
+  --log-file FILE         Log output to FILE
+  --grace-period N        Seconds to wait after SIGTERM before kill -9 (default: 0)
+  --regex-match           Match process names with regex (uses pgrep -f)
+  --partial-match         Match process names by substring (case-insensitive)
+  --user USERNAME         Only target processes owned by USERNAME
+  --help                  Show this help message and exit
+
+Examples:
+  # Kill 'gdu-go' and 'node' if they've been running over 1 hour (3600s)
+  autokill --max-runtime 3600 gdu-go node
+
+  # Kill processes matching regex 'python.*script.py' if CPU time exceeds 600s
+  autokill --regex-match --max-cpu-time 600 "python.*script.py"
+
+  # Kill all processes whose names contain 'chrome' substring if CPU % is above 80%
+  autokill --partial-match --max-cpu-percent 80 chrome
+
+  # Kill all processes listening on port 8000
+  autokill --dry-run :8000
+
+  # Dry run example showing what would be killed without actual termination
+  autokill --dry-run --max-runtime 300 someprocess
+
+  # Only kill processes that have been running at least 5 minutes (300s)
+  autokill --skip-min-runtime 300 --max-runtime 3600 targetproc
+
+  # Log output to a file and wait 10 seconds for graceful shutdown before SIGKILL
+  autokill --log-file /var/log/autokill.log --grace-period 10 myproc
+EOF
+)
 
 # Colors and symbols for stylish output
 RED='\033[0;31m'
@@ -165,7 +171,7 @@ error() {
 
 # Check for gdate (GNU date)
 if ! command -v gdate &>/dev/null; then
-  error "gdate (GNU date) is required but not found. Install with: brew install coreutils"
+  echo -e "\033[0;31m✖ gdate (GNU date) is required but not found. Install with: brew install coreutils\033[0m"
   exit 1
 fi
 
@@ -188,44 +194,7 @@ user=""
 #   Prints usage information and examples for the script.
 # ------------------------------------------------------------------------------
 print-usage() {
-  cat <<EOF
-Usage: $(basename "$0") [OPTIONS] process_name_or_:port [process_name_or_:port ...]
-
-Options:
-  --max-cpu-time N        Max CPU time in seconds
-  --max-runtime N         Max runtime in seconds
-  --max-cpu-percent N     Max CPU percentage
-  --skip-min-runtime N    Skip checks unless all processes run at least N seconds
-  --dry-run               Show what would be done, but don't kill
-  --log-file FILE         Log output to FILE
-  --grace-period N        Seconds to wait after SIGTERM before kill -9 (default: 0)
-  --regex-match           Match process names with regex (uses pgrep -f)
-  --partial-match         Match process names by substring (case-insensitive)
-  --user USERNAME         Only target processes owned by USERNAME
-  --help                  Show this help message and exit
-
-Examples:
-  # Kill 'gdu-go' and 'node' if they've been running over 1 hour (3600s)
-  ./$(basename "$0") --max-runtime 3600 gdu-go node
-
-  # Kill processes matching regex 'python.*script.py' if CPU time exceeds 600s
-  ./$(basename "$0") --regex-match --max-cpu-time 600 "python.*script.py"
-
-  # Kill all processes whose names contain 'chrome' substring if CPU % is above 80%
-  ./$(basename "$0") --partial-match --max-cpu-percent 80 chrome
-
-  # Kill all processes listening on port 8000
-  ./$(basename "$0") --dry-run :8000
-
-  # Dry run example showing what would be killed without actual termination
-  ./$(basename "$0") --dry-run --max-runtime 300 someprocess
-
-  # Only kill processes that have been running at least 5 minutes (300s)
-  ./$(basename "$0") --skip-min-runtime 300 --max-runtime 3600 targetproc
-
-  # Log output to a file and wait 10 seconds for graceful shutdown before SIGKILL
-  ./$(basename "$0") --log-file /var/log/autokill.log --grace-period 10 myproc
-EOF
+  echo "$USAGE_INFO"
 }
 
 # ------------------------------------------------------------------------------
