@@ -203,17 +203,33 @@ print-usage() {
 #   Arguments:
 #     time_str - CPU time string
 # ------------------------------------------------------------------------------
-cpu-to-seconds() {
-  local time_str="$1"
-  if [[ "$time_str" =~ ([0-9]+)-([0-9]+):([0-9]+):([0-9]+) ]]; then
-    echo $(( ${BASH_REMATCH[1]} * 86400 + ${BASH_REMATCH[2]} * 3600 + ${BASH_REMATCH[3]} * 60 + ${BASH_REMATCH[4]} ))
-  elif [[ "$time_str" =~ ([0-9]+):([0-9]+):([0-9]+) ]]; then
-    echo $(( ${BASH_REMATCH[1]} * 3600 + ${BASH_REMATCH[2]} * 60 + ${BASH_REMATCH[3]} ))
-  elif [[ "$time_str" =~ ([0-9]+):([0-9]+) ]]; then
-    echo $(( ${BASH_REMATCH[1]} * 60 + ${BASH_REMATCH[2]} ))
+cpu_to_seconds() {
+  local input="$1"
+
+  # Initialize all time components to zero
+  local days=0 hours=0 minutes=0 seconds=0
+
+  # Try to parse format: [days-]hours:minutes:seconds (e.g. 1-02:03:04 or 02:03:04)
+  if [[ $input =~ ^(([0-9]+)-)?([0-9]+):([0-9]+):([0-9]+)$ ]]; then
+    days=${BASH_REMATCH[2]:-0}
+    hours=${BASH_REMATCH[3]}
+    minutes=${BASH_REMATCH[4]}
+    seconds=${BASH_REMATCH[5]}
+
+  # Try to parse format: minutes:seconds (e.g. 03:04)
+  elif [[ $input =~ ^([0-9]+):([0-9]+)$ ]]; then
+    minutes=${BASH_REMATCH[1]}
+    seconds=${BASH_REMATCH[2]}
+
   else
+    # Input format didn't match any known pattern, return 0 seconds
     echo 0
+    return
   fi
+
+  # Calculate total seconds and output
+  # Example: Input "1-02:03:04" (1 day, 2 hours, 3 minutes, 4 seconds) will output 93784 seconds
+  echo $((days * 86400 + hours * 3600 + minutes * 60 + seconds))
 }
 
 # ------------------------------------------------------------------------------
