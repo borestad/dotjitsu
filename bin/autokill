@@ -204,7 +204,7 @@ print-usage() {
 #     time_str - CPU time string
 # ------------------------------------------------------------------------------
 cpu_to_seconds() {
-  local input="$1"
+  local input="${1// /}"  # remove spaces from input
 
   # Initialize all time components to zero
   local days=0 hours=0 minutes=0 seconds=0
