@@ -68,51 +68,51 @@ NC='\033[0m' # No Color
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
-# is_array_empty(arrayname)
+# is-array-empty(arrayname)
 #   Returns 0 if the array with the given name is empty, 1 otherwise.
 #   Arguments:
 #     arrayname - Name of the array to check
 # ------------------------------------------------------------------------------
-is_array_empty() {
+is-array-empty() {
   local arr_name="$1"
   eval "[[ \${#$arr_name[@]} -eq 0 ]]"
 }
 
 # ------------------------------------------------------------------------------
-# is_set(varname)
+# is-set(varname)
 #   Returns 0 if the variable with the given name is set (not empty), 1 otherwise.
 #   Arguments:
 #     varname - Name of the variable to check
 # ------------------------------------------------------------------------------
-is_set() {
+is-set() {
   [[ -n "${!1}" ]]
 }
 
 # ------------------------------------------------------------------------------
-# is_empty(varname)
+# is-empty(varname)
 #   Returns 0 if the variable with the given name is empty, 1 otherwise.
 #   Arguments:
 #     varname - Name of the variable to check
 # ------------------------------------------------------------------------------
-is_empty() {
+is-empty() {
   [[ -z "${!1}" ]]
 }
 
 # ------------------------------------------------------------------------------
-# to_int(value)
+# to-int(value)
 #   Converts a value to an integer by removing any decimals.
 #   Arguments:
 #     value - The value to convert
 # ------------------------------------------------------------------------------
-to_int() {
+to-int() {
   printf "%d" "${1%%.*}"
 }
 
 # ------------------------------------------------------------------------------
-# process_exists(pid)
+# process-exists(pid)
 #   Returns 0 if a process with given PID exists, 1 otherwise.
 # ------------------------------------------------------------------------------
-process_exists() {
+process-exists() {
   local pid="$1"
   ps -p "$pid" &>/dev/null
 }
@@ -124,7 +124,7 @@ process_exists() {
 # ------------------------------------------------------------------------------
 log() {
   local msg="$1"
-  if [[ -n "$log_file" ]]; then
+  if is-set "log_file"; then
     echo -e "$msg" >> "$log_file"
   else
     echo -e "$msg"
@@ -169,6 +169,7 @@ if ! command -v gdate &>/dev/null; then
   exit 1
 fi
 
+
 # Defaults and variables
 max_cpu_time=""
 max_runtime=""
@@ -183,10 +184,10 @@ processes=()
 user=""
 
 # ------------------------------------------------------------------------------
-# print_usage()
+# print-usage()
 #   Prints usage information and examples for the script.
 # ------------------------------------------------------------------------------
-print_usage() {
+print-usage() {
   cat <<EOF
 Usage: $(basename "$0") [OPTIONS] process_name_or_:port [process_name_or_:port ...]
 
@@ -228,12 +229,12 @@ EOF
 }
 
 # ------------------------------------------------------------------------------
-# cpu_to_seconds(time_str)
+# cpu-to-seconds(time_str)
 #   Converts a CPU time string (e.g. "1:23:45") to seconds.
 #   Arguments:
 #     time_str - CPU time string
 # ------------------------------------------------------------------------------
-cpu_to_seconds() {
+cpu-to-seconds() {
   local time_str="$1"
   if [[ "$time_str" =~ ([0-9]+)-([0-9]+):([0-9]+):([0-9]+) ]]; then
     echo $(( ${BASH_REMATCH[1]} * 86400 + ${BASH_REMATCH[2]} * 3600 + ${BASH_REMATCH[3]} * 60 + ${BASH_REMATCH[4]} ))
@@ -290,7 +291,7 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --help)
-      print_usage
+      print-usage
       exit 0
       ;;
     *)
@@ -300,23 +301,23 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [ "${#processes[@]}" -eq 0 ]; then
-  print_usage
+if is-array-empty "processes"; then
+  print-usage
   exit 1
 fi
 
 # ------------------------------------------------------------------------------
-# get_pids(procname)
+# get-pids(procname)
 #   Gets PIDs for a process name using exact, regex, or partial match.
 #   Optionally filters by user.
 #   Arguments:
 #     procname - Process name to match
 # ------------------------------------------------------------------------------
-get_pids() {
+get-pids() {
   local procname="$1"
   local user_filter=""
 
-  if [[ -n "$user" ]]; then
+  if is-set "user"; then
     user_filter="-u $user"
   fi
 
@@ -330,17 +331,17 @@ get_pids() {
 }
 
 # ------------------------------------------------------------------------------
-# get_pids_on_port(port)
+# get-pids-on-port(port)
 #   Gets PIDs and commands for processes listening on a TCP port.
 #   Optionally filters by user.
 #   Arguments:
 #     port - TCP port number
 # ------------------------------------------------------------------------------
-get_pids_on_port() {
+get-pids-on-port() {
   local port="$1"
   # macOS uses lsof -i TCP:port to get PIDs listening on a port
   # Filter by user if requested
-  if [[ -n "$user" ]]; then
+  if is-set "user"; then
     lsof -nP -i TCP:"$port" -sTCP:LISTEN -a -u "$user" 2>/dev/null | awk 'NR>1 {print $2, $1}'
   else
     lsof -nP -i TCP:"$port" -sTCP:LISTEN 2>/dev/null | awk 'NR>1 {print $2, $1}'
@@ -348,13 +349,13 @@ get_pids_on_port() {
 }
 
 # ------------------------------------------------------------------------------
-# graceful_kill(pid)
+# graceful-kill(pid)
 #   Sends SIGTERM to a process, waits for grace period, then sends SIGKILL.
 #   Honors dry-run mode.
 #   Arguments:
 #     pid - Process ID to kill
 # ------------------------------------------------------------------------------
-graceful_kill() {
+graceful-kill() {
   local pid="$1"
 
   if (( dry_run )); then
@@ -390,8 +391,8 @@ done
 # ------------------------------------------------------------------------------
 if (( skip_min_runtime > 0 )); then
   for proc in "${name_targets[@]}"; do
-    pids=$(get_pids "$proc")
-    if [ -z "$pids" ]; then
+    pids=$(get-pids "$proc")
+    if is-empty "pids"; then
       warn "$proc is not running. Skipping all checks."
       exit 0
     fi
@@ -415,24 +416,24 @@ total_checked=0
 total_killed=0
 
 # ------------------------------------------------------------------------------
-# get_process_info(pid)
+# get-process-info(pid)
 #   Gets process info by PID.
 #   Returns: runtime (seconds), cpu_seconds (CPU time in seconds), cpu_percent (current CPU usage %)
 #   Arguments:
 #     pid - Process ID
 # ------------------------------------------------------------------------------
-get_process_info() {
+get-process-info() {
   local pid="$1"
   local info=()
 
-  if ps -p "$pid" > /dev/null 2>&1; then
+  if process-exists "$pid"; then
     local start_time=$(ps -p "$pid" -o lstart=)
     local start_epoch=$(gdate -d "$start_time" +%s)
     local now_epoch=$(gdate +%s)
     local runtime=$(( now_epoch - start_epoch ))
 
     local cpu_time_str=$(ps -p "$pid" -o cputime= | awk '{$1=$1;print}')
-    local cpu_seconds=$(cpu_to_seconds "$cpu_time_str")
+    local cpu_seconds=$(cpu-to-seconds "$cpu_time_str")
 
     local cpu_percent=$(ps -p "$pid" -o %cpu= | awk '{$1=$1;print}')
     if ! [[ "$cpu_percent" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
@@ -449,7 +450,7 @@ get_process_info() {
 }
 
 # ------------------------------------------------------------------------------
-# should_kill_process(runtime, cpu_seconds, cpu_percent)
+# should-kill-process(runtime, cpu_seconds, cpu_percent)
 #   Checks if process should be killed based on thresholds.
 #   Returns: reason string if process should be killed, empty string otherwise.
 #   Arguments:
@@ -457,23 +458,23 @@ get_process_info() {
 #     cpu_seconds  - CPU time in seconds
 #     cpu_percent  - Current CPU usage %
 # ------------------------------------------------------------------------------
-should_kill_process() {
+should-kill-process() {
   local runtime="$1"
   local cpu_seconds="$2"
   local cpu_percent="$3"
 
   local reason=""
 
-  if [[ -n "$max_cpu_time" && "$cpu_seconds" -gt "$max_cpu_time" ]]; then
+  if is-set "max_cpu_time" && (( cpu_seconds > max_cpu_time )); then
     reason="CPU time exceeded (${cpu_seconds}s > ${max_cpu_time}s)"
   fi
 
-  if [[ -z "$reason" && -n "$max_runtime" && "$runtime" -gt "$max_runtime" ]]; then
+  if is-empty "reason" && is-set "max_runtime" && (( runtime > max_runtime )); then
     reason="Runtime exceeded (${runtime}s > ${max_runtime}s)"
   fi
 
-  if [[ -z "$reason" && -n "$max_cpu_percent" ]]; then
-    local cpu_percent_int=$(printf "%.0f" "$cpu_percent")
+  if is-empty "reason" && is-set "max_cpu_percent"; then
+    local cpu_percent_int=$(to-int "$cpu_percent")
     if (( cpu_percent_int > max_cpu_percent )); then
       reason="CPU % exceeded (${cpu_percent}% > ${max_cpu_percent}%)"
     fi
@@ -483,7 +484,7 @@ should_kill_process() {
 }
 
 # ------------------------------------------------------------------------------
-# print_process_stats(pid, cmd, runtime, cpu_seconds, cpu_percent)
+# print-process-stats(pid, cmd, runtime, cpu_seconds, cpu_percent)
 #   Pretty-prints process statistics for logging.
 #   Arguments:
 #     pid         - Process ID
@@ -492,14 +493,14 @@ should_kill_process() {
 #     cpu_seconds - CPU time in seconds
 #     cpu_percent - Current CPU usage %
 # ------------------------------------------------------------------------------
-print_process_stats() {
+print-process-stats() {
   local pid="$1"
   local cmd="$2"
   local runtime="$3"
   local cpu_seconds="$4"
   local cpu_percent="$5"
 
-  if [[ -n "$cmd" ]]; then
+  if is-set "cmd"; then
     info "  PID $pid ($cmd):"
   else
     info "  PID $pid:"
@@ -511,48 +512,47 @@ print_process_stats() {
 }
 
 # ------------------------------------------------------------------------------
-# handle_pid(pid, cmd)
+# handle-pid(pid, cmd)
 #   Checks process stats, prints them, and kills the process if thresholds are exceeded.
 #   Arguments:
 #     pid - Process ID
 #     cmd - Command name
 # ------------------------------------------------------------------------------
-handle_pid() {
+handle-pid() {
   local pid="$1"
   local cmd="$2"
 
   total_checked=$(( total_checked + 1 ))
 
-  read runtime cpu_seconds cpu_percent < <(get_process_info "$pid")
+  read runtime cpu_seconds cpu_percent < <(get-process-info "$pid")
 
-  print_process_stats "$pid" "$cmd" "$runtime" "$cpu_seconds" "$cpu_percent"
+  print-process-stats "$pid" "$cmd" "$runtime" "$cpu_seconds" "$cpu_percent"
 
   local kill_reason
-  kill_reason=$(should_kill_process "$runtime" "$cpu_seconds" "$cpu_percent")
+  kill_reason=$(should-kill-process "$runtime" "$cpu_seconds" "$cpu_percent")
 
-  if [[ -n "$kill_reason" ]]; then
-
-    if [[ -n "$cmd" ]]; then
+  if is-set "kill_reason"; then
+    if is-set "cmd"; then
       error "    ✖ Killing PID $pid ($cmd): $kill_reason"
     else
       error "    ✖ Killing PID $pid: $kill_reason"
     fi
 
-    graceful_kill "$pid"
+    graceful-kill "$pid"
     total_killed=$(( total_killed + 1 ))
   fi
 }
 
 # ------------------------------------------------------------------------------
-# handle_name_targets()
+# handle-name-targets()
 #   Handles all process name targets: finds PIDs, checks stats, kills if needed.
 # ------------------------------------------------------------------------------
-handle_name_targets() {
+handle-name-targets() {
   for proc_name in "${name_targets[@]}"; do
     local pids
-    pids=$(get_pids "$proc_name")
+    pids=$(get-pids "$proc_name")
 
-    if [[ -z "$pids" ]]; then
+    if is-empty "pids"; then
       warn "$proc_name is not running."
       continue
     fi
@@ -560,24 +560,24 @@ handle_name_targets() {
     info "$proc_name is running:"
 
     while IFS= read -r pid; do
-      handle_pid "$pid" ""
+      handle-pid "$pid" ""
     done <<< "$pids"
   done
 }
 
 # ------------------------------------------------------------------------------
-# handle_port_targets()
+# handle-port-targets()
 #   Handles all port targets: finds PIDs listening on ports, checks stats, kills if needed.
 # ------------------------------------------------------------------------------
-handle_port_targets() {
+handle-port-targets() {
   for port in "${port_targets[@]}"; do
 
     local port_pids_cmds=()
     while IFS= read -r line; do
       port_pids_cmds+=("$line")
-    done < <(get_pids_on_port "$port")
+    done < <(get-pids-on-port "$port")
 
-    if [[ ${#port_pids_cmds[@]} -eq 0 ]]; then
+    if is-array-empty "port_pids_cmds"; then
       warn "No processes found listening on port $port. Skipping all checks."
       continue
     fi
@@ -587,17 +587,17 @@ handle_port_targets() {
     for entry in "${port_pids_cmds[@]}"; do
       local pid="${entry%% *}"
       local cmd="${entry#* }"
-      handle_pid "$pid" "$cmd"
+      handle-pid "$pid" "$cmd"
     done
 
   done
 }
 
 # ------------------------------------------------------------------------------
-# print_summary()
+# print-summary()
 #   Prints a summary of checked and killed processes.
 # ------------------------------------------------------------------------------
-print_summary() {
+print-summary() {
   echo
   success "Summary:"
   info "  Processes checked: $total_checked"
@@ -607,10 +607,10 @@ print_summary() {
 # ------------------------------------------------------------------------------
 # Main: Entry point
 # ------------------------------------------------------------------------------
-handle_name_targets
+handle-name-targets
 
-handle_port_targets
+handle-port-targets
 
-print_summary
+print-summary
 
 exit $total_killed
