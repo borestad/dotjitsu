@@ -62,16 +62,36 @@ Examples:
 EOF
 )
 
+
+# ------------------------------------------------------------------------------
+# Defaults and variables
+# ------------------------------------------------------------------------------
+max_cpu_time=""        # Maximum CPU time in seconds before killing a process
+max_runtime=""         # Maximum runtime in seconds before killing a process
+max_cpu_percent=""     # Maximum CPU usage percentage before killing a process
+skip_min_runtime=0     # Minimum runtime in seconds before checks are applied
+dry_run=0              # If set to 1, simulate actions without killing processes
+log_file=""            # File path to log output, if specified
+grace_period=0         # Seconds to wait after SIGTERM before sending SIGKILL
+regex_match=0          # If set to 1, use regex matching for process names
+partial_match=0        # If set to 1, use substring matching for process names
+processes=()           # Array to store target processes or ports
+user=""                # Filter processes by the specified username
+
+# Globals
+total_checked=0
+total_killed=0
+
+# ------------------------------------------------------------------------------
+# Helpers
+# ------------------------------------------------------------------------------
+
 # Colors and symbols for stylish output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
-
-# ------------------------------------------------------------------------------
-# Helpers
-# ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 # is-array-empty(arrayname)
@@ -175,20 +195,6 @@ if ! command -v gdate &>/dev/null; then
   exit 1
 fi
 
-
-# Defaults and variables
-max_cpu_time=""
-max_runtime=""
-max_cpu_percent=""
-skip_min_runtime=0
-dry_run=0
-log_file=""
-grace_period=0  # seconds to wait after SIGTERM before SIGKILL
-regex_match=0
-partial_match=0
-processes=()
-user=""
-
 # ------------------------------------------------------------------------------
 # print-usage()
 #   Prints usage information and examples for the script.
@@ -203,7 +209,7 @@ print-usage() {
 #   Arguments:
 #     time_str - CPU time string
 # ------------------------------------------------------------------------------
-cpu_to_seconds() {
+cpu-to-seconds() {
   local input="${1// /}"  # remove spaces from input
 
   # Initialize all time components to zero
@@ -262,8 +268,6 @@ parse-arguments() {
   fi
 }
 
-# Parse arguments
-parse-arguments "$@"
 
 # ------------------------------------------------------------------------------
 # get-pids(procname)
@@ -332,17 +336,6 @@ graceful-kill() {
   kill -9 "$pid" 2>/dev/null
 }
 
-# Separate port targets and name targets
-port_targets=()
-name_targets=()
-
-for target in "${processes[@]}"; do
-  if [[ "$target" =~ ^:([0-9]+)$ ]]; then
-    port_targets+=("${BASH_REMATCH[1]}")
-  else
-    name_targets+=("$target")
-  fi
-done
 
 # ------------------------------------------------------------------------------
 # skip_min_runtime check for name targets
@@ -370,9 +363,6 @@ if (( skip_min_runtime > 0 )); then
     done <<< "$pids"
   done
 fi
-
-total_checked=0
-total_killed=0
 
 # ------------------------------------------------------------------------------
 # get-process-info(pid)
@@ -566,9 +556,21 @@ print-summary() {
 # ------------------------------------------------------------------------------
 # Main: Entry point
 # ------------------------------------------------------------------------------
-
 # Parse arguments
 parse-arguments "$@"
+
+# Separate port targets and name targets
+port_targets=()
+name_targets=()
+
+for target in "${processes[@]}"; do
+  if [[ "$target" =~ ^:([0-9]+)$ ]]; then
+    port_targets+=("${BASH_REMATCH[1]}")
+  else
+    name_targets+=("$target")
+  fi
+done
+
 
 # 1. Handle all process name targets: find PIDs, check stats, and kill if needed
 handle-name-targets
