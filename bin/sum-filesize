@@ -1,30 +1,33 @@
 #!/usr/bin/env bash
 #
-# sum-filesize - Calculate the total size (in bytes) of regular files read from stdin.
+# sum-filesize - Calculate the cumulative size (in bytes) of regular files from stdin.
 #
-# Reads a list of file paths (one per line) from stdin and prints:
-#   Total size  (human readable if numfmt is available)
-#   Total files (number of regular files counted)
+# Reads newline-delimited file paths from stdin and reports:
+#   Total size   (human-readable if numfmt is available)
+#   Total files  (count of regular files processed)
 #
-# Supports optional parallelisation (default: yes) to speed up large file lists by
-# batching stat(1) calls via xargs -P. Falls back to sequential mode if parallel
-# execution is disabled or xargs lacks -P.
+# Optimisations:
+#   * Streaming: avoids retaining the entire file list in RAM (useful for huge inputs)
+#   * Parallel path uses a temporary NUL-delimited list + xargs -P for batch stat calls
+#   * Robust detection of xargs -P support (exec test instead of parsing help text)
+#   * Minimal forks in sequential mode (single while loop)
 #
 # Usage examples:
-#   fd -e png | ./sum-filesize              # auto parallel
-#   rg -0 -l '\\.png$' | tr '\0' '\n' | ./sum-filesize --jobs 16
+#   fd -e png | ./sum-filesize                 # auto parallel
+#   rg -0 -l '\\.(png|jpg)$' | tr '\0' '\n' | ./sum-filesize --jobs 12
 #   git ls-files | ./sum-filesize --no-parallel
 #
 # Options:
-#   --jobs N        Number of parallel batches (default: number of CPUs, capped at 16)
-#   -j N            Same as --jobs
-#   --no-parallel   Force sequential (original) mode
-#   --help          Show help
+#   --jobs N        Number of parallel workers (default: CPU count, max 16)
+#   -j N            Alias for --jobs
+#   --no-parallel   Force sequential mode (disables xargs -P)
+#   --help, -h      Show this help
 #
-# Notes:
-# * Filenames containing newlines are not supported (stdin expected one path per line)
-# * Symlinks, directories, etc. are ignored (only regular files with -f)
-# * Uses stat -c %s (GNU) or stat -f %z (BSD/macOS) as available.
+# Notes / Limitations:
+#   * Filenames containing newlines are not supported (stdin expects one path per line)
+#   * Only regular files (-f) counted; others are skipped silently
+#   * Uses stat -c %s (GNU) or stat -f %z (BSD/macOS) depending on availability
+#   * Parallel mode stages a temporary NUL list (disk I/O is cheaper than large shell arrays)
 #
 set -euo pipefail
 
@@ -65,25 +68,6 @@ fi
 if [[ "$JOBS" -gt 16 ]]; then JOBS=16; fi
 if [[ "$JOBS" -lt 1 ]]; then JOBS=1; fi
 
-# Read all files from stdin into an array (one path per line)
-mapfile -t all_input
-
-if [[ ${#all_input[@]} -eq 0 ]]; then
-  echo "No files found."
-  exit 0
-fi
-
-# Filter to regular files only to avoid stat errors; preserve array
-files=()
-for f in "${all_input[@]}"; do
-  [[ -f "$f" ]] && files+=("$f") || true
-done
-
-file_count=${#files[@]}
-if [[ $file_count -eq 0 ]]; then
-  echo "No regular files found."; exit 0
-fi
-
 # Decide stat variant
 if stat -c %s "$0" >/dev/null 2>&1; then
   STAT_CMD=(stat -c %s)
@@ -95,21 +79,41 @@ else
 fi
 
 total=0
+file_count=0
 
-if [[ $PARALLEL -eq 1 ]] && xargs 2>&1 | grep -q -- '-P'; then
-  # Parallel batched stat using NUL to be safe for spaces (we don't support newlines anyway)
-  # Chunk size -n1000 to avoid excessive argv length.
-  sizes=$(printf '%s\0' "${files[@]}" | xargs -0 -n1000 -P "$JOBS" "${STAT_CMD[@]}" 2>/dev/null || true)
+# Detect xargs -P support (portable: try executing a no-op). If it fails, we won't use parallel.
+HAVE_XARGS_P=0
+if xargs -P 1 </dev/null 2>/dev/null; then
+  HAVE_XARGS_P=1
+fi
+
+if [[ $PARALLEL -eq 1 && $HAVE_XARGS_P -eq 1 ]]; then
+  tmp_list=$(mktemp -t sum-filesize.XXXXXX)
+  trap 'rm -f "$tmp_list"' EXIT
+  # Build NUL-delimited list while counting regular files.
+  while IFS= read -r path; do
+    [[ -f "$path" ]] || continue
+    printf '%s\0' "$path" >> "$tmp_list"
+    ((file_count++)) || true
+  done
+  if [[ $file_count -eq 0 ]]; then
+    echo "No regular files found."; exit 0
+  fi
+  sizes=$(xargs -0 -n1000 -P "$JOBS" "${STAT_CMD[@]}" <"$tmp_list" 2>/dev/null || true)
   if [[ -n "$sizes" ]]; then
-    # Sum with awk (fast, avoids shell arithmetic loop)
     total=$(printf '%s\n' "$sizes" | awk 'NF {s+=$1} END{print s+0}')
   fi
 else
-  # Sequential fallback (original logic)
-  for f in "${files[@]}"; do
-    size=$("${STAT_CMD[@]}" "$f" 2>/dev/null || echo 0)
+  # Sequential streaming fallback (no temp file, no array growth)
+  while IFS= read -r path; do
+    [[ -f "$path" ]] || continue
+    size=$("${STAT_CMD[@]}" "$path" 2>/dev/null || echo 0)
     total=$((total + size))
+    ((file_count++)) || true
   done
+  if [[ $file_count -eq 0 ]]; then
+    echo "No regular files found."; exit 0
+  fi
 fi
 
 # Print result in human readable format
