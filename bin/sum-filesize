@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-
-#!/usr/bin/env bash
 #
 # sum-filesize - Calculate the total size (in bytes) of regular files read from stdin.
 #
@@ -123,7 +121,3 @@ else
 fi
 
 echo "Total files: $file_count"
-
-if [[ $PARALLEL -eq 1 ]]; then
-  echo "Jobs used:   $JOBS" >&2
-fi

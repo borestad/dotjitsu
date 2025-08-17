@@ -90,12 +90,12 @@
 # This is useful for organizing and comparing different encoding configurations.
 
 # Default values
-YUV="420"
+YUV="422"
 SPEED="3"
 THREADS="all"
 Q="99"
 END_USAGE="q"
-CQ_LEVEL="26"
+CQ_LEVEL="22"
 TUNE="iq"
 CHROMA_DELTAQ="1"
 QM="1"
