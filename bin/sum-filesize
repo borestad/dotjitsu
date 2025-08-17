@@ -1,26 +1,21 @@
 #!/usr/bin/env bash
-#
+# ------------------------------------------------------------------------------
 # sum-filesize - Calculate the total size (in bytes) of regular files read from stdin.
-#
+# ------------------------------------------------------------------------------
 # Reads newline-delimited file paths from stdin and reports:
-#   Total size   (human-readable if numfmt is available)
-#   Total files  (count of regular files processed)
+#   - Total size   (human-readable if numfmt is available)
+#   - Total files  (count of regular files processed)
 #
-# Optimisations:
-#   * Streaming: avoids retaining the entire file list in RAM (useful for huge inputs)
-#   * Parallel path uses a temporary NUL-delimited list + xargs -P for batch stat calls
-#   * Robust detection of xargs -P support (exec test instead of parsing help text)
-#   * Minimal forks in sequential mode (single while loop)
+# Always runs in parallel
 #
 # Usage examples:
 #   fd -e png | ./sum-filesize                 # auto parallel
-#   rg -0 -l '\\.(png|jpg)$' | tr '\0' '\n' | ./sum-filesize --jobs 12
-#   git ls-files | ./sum-filesize --no-parallel
+#   rg -0 -l '\.(png|jpg)$' | tr '\0' '\n' | ./sum-filesize --jobs 12
+#   git ls-files | ./sum-filesize
 #
 # Options:
 #   --jobs N        Number of parallel workers (default: CPU count, max 16)
 #   -j N            Alias for --jobs
-#   --no-parallel   Force sequential mode (disables xargs -P)
 #   --help, -h      Show this help
 #
 # Notes / Limitations:
@@ -35,92 +30,64 @@ print_help() {
   sed -n '2,/^set -euo/p' "$0" | sed '$d'
 }
 
-jobs_auto() {
-  if command -v nproc >/dev/null 2>&1; then nproc;
-  elif command -v sysctl >/dev/null 2>&1; then sysctl -n hw.ncpu 2>/dev/null || echo 4;
-  else echo 4; fi
-}
 
-JOBS=""
-PARALLEL=1
+# Default settings
+JOBS=$(nproc)
 INPUT_PATH=""
 
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --jobs|-j)
-      JOBS=${2:-}
-      [[ -n "$JOBS" ]] || { echo "Missing value for $1" >&2; exit 1; }
-      shift 2
-      ;;
-    --no-parallel)
-      PARALLEL=0; shift ;;
-    --help|-h)
-      print_help; exit 0 ;;
-    *)
-      # Treat the first non-option argument as an input path (file or directory).
-      # Reject multiple positional arguments to avoid ambiguity with options.
-      if [[ -z "$INPUT_PATH" ]]; then
-        INPUT_PATH=$1
-        shift
-      else
-        echo "Multiple input paths provided: $INPUT_PATH and $1" >&2
-        exit 1
-      fi
-      ;;
-  esac
-done
-
-if [[ -z "${JOBS}" ]]; then
-  JOBS=$(jobs_auto)
-fi
-
-# Cap jobs to something reasonable
-if [[ "$JOBS" -gt 16 ]]; then JOBS=16; fi
-if [[ "$JOBS" -lt 1 ]]; then JOBS=1; fi
-
-# Decide stat variant
-if stat -c %s "$0" >/dev/null 2>&1; then
-  STAT_CMD=(stat -c %s)
-elif stat -f %z "$0" >/dev/null 2>&1; then
-  STAT_CMD=(stat -f %z)
-else
-  echo "Unsupported stat implementation" >&2
-  exit 1
-fi
-
+# Globals updated by processing functions
 total=0
 file_count=0
 
-# Detect xargs -P support (portable: try executing a no-op). If it fails, we won't use parallel.
-# Explanation:
-# - Some platforms' xargs implementations (notably BSD/macOS) don't support -P or behave differently.
-# - Instead of parsing `xargs --help` (which is brittle/localized), we attempt to run a benign command
-#   using `xargs -P 1` with no input. If the command succeeds (exit status 0), we assume -P is supported.
-# - Using a no-op invocation avoids spawning long-lived processes or altering state; it's only a capability test.
-HAVE_XARGS_P=0
-if xargs -P 1 </dev/null 2>/dev/null; then
-  HAVE_XARGS_P=1
-fi
+parse_args() {
+  # Parses CLI args and sets JOBS, INPUT_PATH
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --jobs|-j)
+        JOBS=${2:-}
+        [[ -n "$JOBS" ]] || { echo "Missing value for $1" >&2; exit 1; }
+        shift 2
+        ;;
+      --help|-h)
+        print_help; exit 0 ;;
+      *)
+        if [[ -z "$INPUT_PATH" ]]; then
+          INPUT_PATH=$1
+          shift
+        else
+          echo "Multiple input paths provided: $INPUT_PATH and $1" >&2
+          exit 1
+        fi
+        ;;
+    esac
+  done
+}
 
-if [[ $PARALLEL -eq 1 && $HAVE_XARGS_P -eq 1 ]]; then
-  # Parallel path: stage paths to a temporary NUL-delimited file and run xargs -P to stat batches.
-  # Reasons for this approach:
-  #  - Streaming huge lists directly into xargs with -P can still cause excessive memory usage in some shells.
-  #  - Creating a temporary NUL list on disk avoids storing all paths in shell arrays while remaining fast
-  #    because disk+sequential IO is cheaper than large memory growth for very large inputs.
-  #  - NUL-delimiting avoids issues with spaces in filenames.
+# Decide stat variant and populate STAT_CMD as an array
+detect_stat_cmd() {
+  if stat -c %s "$0" >/dev/null 2>&1; then
+    STAT_CMD=(stat -c %s)
+  elif stat -f %z "$0" >/dev/null 2>&1; then
+    STAT_CMD=(stat -f %z)
+  else
+    echo "Unsupported stat implementation" >&2
+    exit 1
+  fi
+}
+
+
+process_files() {
+  # Process files in parallel using a temp file and xargs
   tmp_list=$(mktemp -t sum-filesize.XXXXXX)
   trap 'rm -f "$tmp_list"' EXIT
 
-  # If an INPUT_PATH was provided, produce the NUL list from that path efficiently.
   if [[ -n "$INPUT_PATH" ]]; then
     if [[ -d "$INPUT_PATH" ]]; then
-      # Use find to walk the directory and emit NUL-delimited regular files directly into tmp_list.
+      # Input is a directory, find all files
       find "$INPUT_PATH" -type f -print0 >"$tmp_list"
-      # Count NUL entries to get number of files.
       file_count=$(tr -cd '\0' <"$tmp_list" | wc -c)
     elif [[ -f "$INPUT_PATH" ]]; then
-      # Single file provided — write a single NUL entry
+      # Input is a single file
       printf '%s\0' "$INPUT_PATH" >"$tmp_list"
       file_count=1
     else
@@ -128,7 +95,7 @@ if [[ $PARALLEL -eq 1 && $HAVE_XARGS_P -eq 1 ]]; then
       exit 1
     fi
   else
-    # No INPUT_PATH: read newline-delimited paths from stdin (legacy behaviour)
+    # Read file paths from stdin
     while IFS= read -r path; do
       [[ -f "$path" ]] || continue
       printf '%s\0' "$path" >> "$tmp_list"
@@ -137,67 +104,28 @@ if [[ $PARALLEL -eq 1 && $HAVE_XARGS_P -eq 1 ]]; then
   fi
 
   if [[ $file_count -eq 0 ]]; then
-    echo "No regular files found."; exit 0
+    echo "No files found."; exit 0
   fi
 
-  # Invoke xargs to run stat on batches of files in parallel.
-  # - -0 : expect NUL-delimited input
-  # - -n1000 : pass up to 1000 paths per stat invocation to amortize the cost of spawning stat
-  # - -P "$JOBS" : run up to $JOBS processes in parallel
-  # We redirect stderr to /dev/null because stat might print errors for transient files; we tolerate them.
-  # The final `|| true` prevents the pipeline from failing the script if xargs/stat exit non-zero for some items.
   sizes=$(xargs -0 -n1000 -P "$JOBS" "${STAT_CMD[@]}" <"$tmp_list" 2>/dev/null || true)
 
-  # sizes will be a newline-delimited list of byte counts (one per stat invocation output).
-  # Use awk to sum them robustly; NF guard skips any blank lines, and `s+0` ensures a numeric zero is printed
-  # when there are no numbers (avoids printing an empty string).
   if [[ -n "$sizes" ]]; then
-    total=$(printf '%s\n' "$sizes" | awk 'NF {s+=$1} END{print s+0}')
+    total=$(printf '%s\n' "$sizes" | awk '{s+=$1} END{print s}')
   fi
-else
-  # Sequential streaming fallback (no temp file, no array growth)
-  # This path is deliberately simple and uses minimal subshells/forks:
-  # - We read each path line-by-line and immediately stat it, keeping only two counters in memory.
-  # - This reduces peak memory usage and avoids the need for temporary files or parallel orchestration.
-  if [[ -n "$INPUT_PATH" ]]; then
-    # If an input path was provided, stream files from find using NUL delimiters to be robust.
-    if [[ -d "$INPUT_PATH" ]]; then
-      # Use a NUL-delimited read loop to handle arbitrary filenames safely.
-      while IFS= read -r -d '' path; do
-        [[ -f "$path" ]] || continue
-        # Call stat for each file; if stat fails for a specific file (e.g. it was removed), we treat its size as 0.
-        size=$("${STAT_CMD[@]}" "$path" 2>/dev/null || echo 0)
-        total=$((total + size))
-        ((file_count++)) || true
-      done < <(find "$INPUT_PATH" -type f -print0)
-    elif [[ -f "$INPUT_PATH" ]]; then
-      size=$("${STAT_CMD[@]}" "$INPUT_PATH" 2>/dev/null || echo 0)
-      total=$((total + size))
-      file_count=1
-    else
-      echo "Path not found: $INPUT_PATH" >&2
-      exit 1
-    fi
+}
+
+print_result() {
+  if command -v numfmt >/dev/null 2>&1; then
+    human=$(numfmt --to=iec --suffix=B "$total")
+    echo "Total size:  $human"
   else
-    # No INPUT_PATH: preserve original newline-delimited stdin behaviour
-    while IFS= read -r path; do
-      [[ -f "$path" ]] || continue
-      size=$("${STAT_CMD[@]}" "$path" 2>/dev/null || echo 0)
-      total=$((total + size))
-      ((file_count++)) || true
-    done
+    echo "Total size:  $total bytes"
   fi
-  if [[ $file_count -eq 0 ]]; then
-    echo "No regular files found."; exit 0
-  fi
-fi
+  echo "Total files: $file_count"
+}
 
-# Print result in human readable format
-if command -v numfmt >/dev/null 2>&1; then
-  human=$(numfmt --to=iec --suffix=B "$total")
-  echo "Total size:  $human"
-else
-  echo "Total size:  $total bytes"
-fi
-
-echo "Total files: $file_count"
+# Entry point
+parse_args "$@"
+detect_stat_cmd
+process_files
+print_result
