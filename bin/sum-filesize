@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+
+#!/usr/bin/env bash
+#
+# sum-filesize - Calculate the total size (in bytes) of regular files read from stdin.
+#
+# Reads a list of file paths (one per line) from stdin and prints:
+#   Total size  (human readable if numfmt is available)
+#   Total files (number of regular files counted)
+#
+# Supports optional parallelisation (default: yes) to speed up large file lists by
+# batching stat(1) calls via xargs -P. Falls back to sequential mode if parallel
+# execution is disabled or xargs lacks -P.
+#
+# Usage examples:
+#   fd -e png | ./sum-filesize              # auto parallel
+#   rg -0 -l '\\.png$' | tr '\0' '\n' | ./sum-filesize --jobs 16
+#   git ls-files | ./sum-filesize --no-parallel
+#
+# Options:
+#   --jobs N        Number of parallel batches (default: number of CPUs, capped at 16)
+#   -j N            Same as --jobs
+#   --no-parallel   Force sequential (original) mode
+#   --help          Show help
+#
+# Notes:
+# * Filenames containing newlines are not supported (stdin expected one path per line)
+# * Symlinks, directories, etc. are ignored (only regular files with -f)
+# * Uses stat -c %s (GNU) or stat -f %z (BSD/macOS) as available.
+#
+set -euo pipefail
+
+print_help() {
+  sed -n '2,/^set -euo/p' "$0" | sed '$d'
+}
+
+jobs_auto() {
+  if command -v nproc >/dev/null 2>&1; then nproc;
+  elif command -v sysctl >/dev/null 2>&1; then sysctl -n hw.ncpu 2>/dev/null || echo 4;
+  else echo 4; fi
+}
+
+JOBS=""
+PARALLEL=1
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --jobs|-j)
+      JOBS=${2:-}
+      [[ -n "$JOBS" ]] || { echo "Missing value for $1" >&2; exit 1; }
+      shift 2
+      ;;
+    --no-parallel)
+      PARALLEL=0; shift ;;
+    --help|-h)
+      print_help; exit 0 ;;
+    *)
+      echo "Unknown option: $1" >&2; exit 1 ;;
+  esac
+done
+
+if [[ -z "${JOBS}" ]]; then
+  JOBS=$(jobs_auto)
+fi
+
+# Cap jobs to something reasonable
+if [[ "$JOBS" -gt 16 ]]; then JOBS=16; fi
+if [[ "$JOBS" -lt 1 ]]; then JOBS=1; fi
+
+# Read all files from stdin into an array (one path per line)
+mapfile -t all_input
+
+if [[ ${#all_input[@]} -eq 0 ]]; then
+  echo "No files found."
+  exit 0
+fi
+
+# Filter to regular files only to avoid stat errors; preserve array
+files=()
+for f in "${all_input[@]}"; do
+  [[ -f "$f" ]] && files+=("$f") || true
+done
+
+file_count=${#files[@]}
+if [[ $file_count -eq 0 ]]; then
+  echo "No regular files found."; exit 0
+fi
+
+# Decide stat variant
+if stat -c %s "$0" >/dev/null 2>&1; then
+  STAT_CMD=(stat -c %s)
+elif stat -f %z "$0" >/dev/null 2>&1; then
+  STAT_CMD=(stat -f %z)
+else
+  echo "Unsupported stat implementation" >&2
+  exit 1
+fi
+
+total=0
+
+if [[ $PARALLEL -eq 1 ]] && xargs 2>&1 | grep -q -- '-P'; then
+  # Parallel batched stat using NUL to be safe for spaces (we don't support newlines anyway)
+  # Chunk size -n1000 to avoid excessive argv length.
+  sizes=$(printf '%s\0' "${files[@]}" | xargs -0 -n1000 -P "$JOBS" "${STAT_CMD[@]}" 2>/dev/null || true)
+  if [[ -n "$sizes" ]]; then
+    # Sum with awk (fast, avoids shell arithmetic loop)
+    total=$(printf '%s\n' "$sizes" | awk 'NF {s+=$1} END{print s+0}')
+  fi
+else
+  # Sequential fallback (original logic)
+  for f in "${files[@]}"; do
+    size=$("${STAT_CMD[@]}" "$f" 2>/dev/null || echo 0)
+    total=$((total + size))
+  done
+fi
+
+# Print result in human readable format
+if command -v numfmt >/dev/null 2>&1; then
+  human=$(numfmt --to=iec --suffix=B "$total")
+  echo "Total size:  $human"
+else
+  echo "Total size:  $total bytes"
+fi
+
+echo "Total files: $file_count"
+
+if [[ $PARALLEL -eq 1 ]]; then
+  echo "Jobs used:   $JOBS" >&2
+fi
