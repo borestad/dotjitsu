@@ -43,6 +43,7 @@ jobs_auto() {
 
 JOBS=""
 PARALLEL=1
+INPUT_PATH=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -56,7 +57,16 @@ while [[ $# -gt 0 ]]; do
     --help|-h)
       print_help; exit 0 ;;
     *)
-      echo "Unknown option: $1" >&2; exit 1 ;;
+      # Treat the first non-option argument as an input path (file or directory).
+      # Reject multiple positional arguments to avoid ambiguity with options.
+      if [[ -z "$INPUT_PATH" ]]; then
+        INPUT_PATH=$1
+        shift
+      else
+        echo "Multiple input paths provided: $INPUT_PATH and $1" >&2
+        exit 1
+      fi
+      ;;
   esac
 done
 
@@ -102,14 +112,29 @@ if [[ $PARALLEL -eq 1 && $HAVE_XARGS_P -eq 1 ]]; then
   tmp_list=$(mktemp -t sum-filesize.XXXXXX)
   trap 'rm -f "$tmp_list"' EXIT
 
-  # Build NUL-delimited list while counting regular files.
-  # Note: We check -f here to only count regular files; symlinks, directories etc. are silently skipped.
-  # We append with printf '%s\0' to preserve filenames verbatim (including spaces).
-  while IFS= read -r path; do
-    [[ -f "$path" ]] || continue
-    printf '%s\0' "$path" >> "$tmp_list"
-    ((file_count++)) || true
-  done
+  # If an INPUT_PATH was provided, produce the NUL list from that path efficiently.
+  if [[ -n "$INPUT_PATH" ]]; then
+    if [[ -d "$INPUT_PATH" ]]; then
+      # Use find to walk the directory and emit NUL-delimited regular files directly into tmp_list.
+      find "$INPUT_PATH" -type f -print0 >"$tmp_list"
+      # Count NUL entries to get number of files.
+      file_count=$(tr -cd '\0' <"$tmp_list" | wc -c)
+    elif [[ -f "$INPUT_PATH" ]]; then
+      # Single file provided — write a single NUL entry
+      printf '%s\0' "$INPUT_PATH" >"$tmp_list"
+      file_count=1
+    else
+      echo "Path not found: $INPUT_PATH" >&2
+      exit 1
+    fi
+  else
+    # No INPUT_PATH: read newline-delimited paths from stdin (legacy behaviour)
+    while IFS= read -r path; do
+      [[ -f "$path" ]] || continue
+      printf '%s\0' "$path" >> "$tmp_list"
+      ((file_count++)) || true
+    done
+  fi
 
   if [[ $file_count -eq 0 ]]; then
     echo "No regular files found."; exit 0
@@ -134,13 +159,34 @@ else
   # This path is deliberately simple and uses minimal subshells/forks:
   # - We read each path line-by-line and immediately stat it, keeping only two counters in memory.
   # - This reduces peak memory usage and avoids the need for temporary files or parallel orchestration.
-  while IFS= read -r path; do
-    [[ -f "$path" ]] || continue
-    # Call stat for each file; if stat fails for a specific file (e.g. it was removed), we treat its size as 0.
-    size=$("${STAT_CMD[@]}" "$path" 2>/dev/null || echo 0)
-    total=$((total + size))
-    ((file_count++)) || true
-  done
+  if [[ -n "$INPUT_PATH" ]]; then
+    # If an input path was provided, stream files from find using NUL delimiters to be robust.
+    if [[ -d "$INPUT_PATH" ]]; then
+      # Use a NUL-delimited read loop to handle arbitrary filenames safely.
+      while IFS= read -r -d '' path; do
+        [[ -f "$path" ]] || continue
+        # Call stat for each file; if stat fails for a specific file (e.g. it was removed), we treat its size as 0.
+        size=$("${STAT_CMD[@]}" "$path" 2>/dev/null || echo 0)
+        total=$((total + size))
+        ((file_count++)) || true
+      done < <(find "$INPUT_PATH" -type f -print0)
+    elif [[ -f "$INPUT_PATH" ]]; then
+      size=$("${STAT_CMD[@]}" "$INPUT_PATH" 2>/dev/null || echo 0)
+      total=$((total + size))
+      file_count=1
+    else
+      echo "Path not found: $INPUT_PATH" >&2
+      exit 1
+    fi
+  else
+    # No INPUT_PATH: preserve original newline-delimited stdin behaviour
+    while IFS= read -r path; do
+      [[ -f "$path" ]] || continue
+      size=$("${STAT_CMD[@]}" "$path" 2>/dev/null || echo 0)
+      total=$((total + size))
+      ((file_count++)) || true
+    done
+  fi
   if [[ $file_count -eq 0 ]]; then
     echo "No regular files found."; exit 0
   fi
