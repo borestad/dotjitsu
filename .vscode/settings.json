@@ -3,7 +3,7 @@
   "deno.codeLens.implementations": true,
   "deno.codeLens.references": true,
   "deno.config": "./deno.jsonc",
-  "deno.enable": true,
+  "deno.enable": false,
   "deno.importMap": "./deno.jsonc",
   "deno.internalDebug": false,
   "deno.lint": false,

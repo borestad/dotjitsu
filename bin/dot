@@ -7,6 +7,7 @@
 mkdir -p $HOME/.local/share/zsh/site-functions
 
 test -f ~/.local/bin/mise || { https://mise.run | sh }
+~/.dotjitsu/bin/dot-mise
 
 brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core
 
