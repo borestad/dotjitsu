@@ -103,6 +103,10 @@ prepend-path "./node_modules/.bin"
 # export NODE_PATH=$XDG_DATA_HOME/yarn/global/node_modules
 export NODE_PATH=$XDG_DATA_HOME/pnpm/global/5/node_modules
 
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
 prepend-path "$HOMEBREW_PREFIX/opt/binutils/bin"
 prepend-path "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"

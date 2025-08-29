@@ -119,3 +119,6 @@ bun add -g "${args[@]}"
 
 # yarn global remove $(yarn global list | grep info | sed 's/^info "\(.*\)@.*".*$/\1/')
 # npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm
+
+rm -f $HOME/package.json
+rm -f $HOME/bun.lock
