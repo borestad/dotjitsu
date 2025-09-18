@@ -93,7 +93,6 @@ brew 'dolt'                         # Git for Data
 brew 'dprint'
 brew 'duf'
 brew 'dust'                         # More intuitive version of du in rust
-brew 'duti'
 brew 'duti'                         # A command-line tool to select default applications for document types and URL schemes on Mac OS X
 brew 'entr'                         # Run arbitrary commands when files change
 brew 'erdtree'
@@ -146,6 +145,7 @@ brew 'kubernetes-cli'               # Tool to report network interface bandwidth
 brew 'lazydocker'                   # The lazier way to manage everything docker
 brew 'lazygit'                      #
 brew 'lf'                           #
+brew 'libavif'                      #
 brew 'libeatmydata'
 brew 'lnav'                         # Curses-based tool for viewing and analyzing log files
 brew 'lxc'                          #
@@ -249,11 +249,7 @@ brew 'yq'                           #
 # brew 'yt-dlp'
 brew 'zopfli'                       # New zlib (gzip, deflate) compatible compressor
 brew 'zoxide'                       # Shell extension to navigate your filesystem faster
-brew 'zq'                           #
-brew 'zsh-autosuggestions'
-brew 'zsh-completions'
-brew 'zsh-syntax-highlighting'
-brew 'zsh'
+
 
 
 brew 'liujianping/tap/job'
@@ -261,30 +257,29 @@ brew 'liujianping/tap/job'
 # ================================
 # AWS
 # ================================
-tap 'aws/tap'
-brew 'awscli'
-brew 'aws-sam-cli'
-brew 'aws-keychain'
+# tap 'aws/tap'
+# brew 'awscli'
+# brew 'aws-sam-cli'
+# brew 'aws-keychain'
 
 # ================================
 # Custom taps
 # ================================
 # tap 'teamookla/speedtest'
-brew 'teamookla/speedtest/speedtest' # Ookla Speedtest
-tap 'cantino/mcfly'
-brew 'mcfly'
+# brew 'teamookla/speedtest/speedtest' # Ookla Speedtest
+# tap 'cantino/mcfly'
+# brew 'mcfly'
 
 # ================================
 # Databases & tools
 # ================================
-brew 'redis'
+# brew 'redis'
 
 # ================================
 # Git utils
 # ================================
 tap 'isacikgoz/taps'
 brew 'bfg'                          # Remove large files or passwords from Git history like git-filter-branch
-brew 'gh'                           # GitHub command-line tool
 brew 'ghq'                          # Remote repository management made easy
 brew 'git-extras'                   # Small git utilities
 brew 'git-filter-repo'              # Quickly rewrite git repository history
@@ -301,38 +296,6 @@ brew 'pygitup'                      # Nicer 'git pull'
 #brew 'gitea'
 
 # ================================
-# GNU TOOLS
-# ================================
-brew 'moreutils', link: false
-brew 'binutils'
-brew 'binwalk'
-brew 'cmake'
-brew 'coreutils'
-brew 'findutils'
-brew 'gawk'
-brew 'gnu-indent'
-brew 'gnu-getopt'
-brew 'gnu-sed'
-brew 'gnu-tar'
-brew 'gnu-time'
-brew 'gnu-which'
-brew 'gnutls'
-brew 'grep'
-brew 'less'
-brew 'parallel'
-brew 'util-linux'
-brew 'wdiff'
-
-
-# ================================
-# DUPES
-# ================================
-brew 'diffutils'
-brew 'gpatch'
-brew 'make'
-brew 'nano'
-
-# ================================
 # EXTRAS
 # ================================
 
@@ -340,24 +303,6 @@ brew 'nano'
 # ================================
 # SCIENCE
 # ================================
-
-
-# ================================
-# FONTS
-# ================================
-cask 'font-fira-code-nerd-font'
-cask 'font-fira-code'
-cask 'font-fira-mono-nerd-font'
-cask 'font-fira-mono'
-cask 'font-fira-sans'
-cask 'font-firago'
-cask 'font-hack-nerd-font'
-cask 'font-inconsolata'
-cask 'font-jetbrains-mono-nerd-font'
-cask 'font-lato'
-cask 'font-meslo-lg-nerd-font'
-cask 'font-ubuntu-mono-nerd-font'
-cask 'font-victor-mono-nerd-font'
 
 
 # NERD FONTS

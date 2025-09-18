@@ -4,6 +4,7 @@
 
 *.7z            binary -delta
 *.acf           binary -delta
+*.aep           binary -delta
 *.avif          binary -delta
 *.blend         binary -delta
 *.dds           binary -delta

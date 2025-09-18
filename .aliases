@@ -62,12 +62,14 @@ alias code="code -n"
 alias cp='gcp -v'
 alias cpr='rsync -aAHXv --info=progress2 --human-readable --stats --exclude="._*"'
 alias dfc="dfc -Wdluh -q mount -t apfs"
-alias fd="fd --ignore-case --hidden --exclude '.git' --ignore-file=$HOME/.dotjitsu/.rgignore"
+alias fd="fd --ignore-case --hidden --exclude '.git' --ignore-file=$HOME/.dotjitsu/.ignore"
 alias cat='\bat --paging=never --style="plain" --decorations=auto'
 #alias gdu="timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu -a || (stty sane &> /dev/null; tput reset &> /dev/null; clear;)";
 
 function gdu() {
-  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -x -a -C -I "$HOME/Library/Containers,$HOME/.local/share/pnpm,$HOME/.local/share/fnm,$HOME/Library/Mobile\ Documents" "$@" || (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
+  timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -x -a -C \
+    -I "$HOME/Library/Containers,$HOME/.local/share/pnpm,$HOME/.local/share/fnm,$HOME/Library/Mobile\ Documents,.svn" "$@" || \
+    (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
 }
 
 alias fork='fork status'
@@ -81,7 +83,7 @@ alias grep="$HOMEBREW_PREFIX/bin/ggrep -i"
 alias pgrep='pgrep -fli'
 alias pigz='pigz -v'
 alias qmv='qmv -e "subl -w -n" -f destination-only'
-alias rg='rg --hidden --smart-case'
+alias rg="rg --hidden --smart-case --ignore-file=$HOME/.dotjitsu/.rgignore"
 alias rm='grm -v'
 alias date='gdate'
 alias sort="LC_ALL=C sort -S 50% --parallel=$NUM_CORES"

@@ -17,7 +17,9 @@ wget --no-check-certificate --compression=auto https://formulae.brew.sh/api/cask
 wait
 
 cat brew-formula.json | jq '.[] | "\(.name) | \(.desc) | \(.homepage)"' \
-| sd '"' '' | sd 'null' '' | column -t -s'|' >| brew-formula.txt
+| sd '"' '' | sd 'null' '' | column -t -s'|' >| brew-formula.txt &
 
 cat brew-cask.json | jq '.[] | "\(.token) | \(.desc) | \(.homepage)"' \
-| sd '"' '' | sd 'null' '' | column -t -s'|' >| brew-cask.txt
+| sd '"' '' | sd 'null' '' | column -t -s'|' >| brew-cask.txt &
+
+wait

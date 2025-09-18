@@ -42,6 +42,7 @@ ets -s -f "%s.%Ls ┃ " 2> /dev/null memo --ttl=60min -- brew -v update
 $HOME/.dotjitsu/bin/hr -
 echo "✨ brew bundle (Brewfile)"
 echo
+ets -s -f "%s.%Ls ┃ " 2> /dev/null zsh -c "brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core | rg 'upgrading|Skipping' --color=always --passthrough"
 ets -s -f "%s.%Ls ┃ " 2> /dev/null zsh -c "brew -v bundle --file=$HOME/.dotjitsu/Brewfile | rg 'upgrading|Skipping' --color=always --passthrough"
 
 # Update installed bundles (even those not in Brew/Caskfile

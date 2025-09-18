@@ -67,7 +67,7 @@ node_modules/
 **/vendor/**
 
 .yarn/*
-
+.svn/
 *.photoslibrary
 .cargo
 .rustup
@@ -97,3 +97,4 @@ retroarch/**/*.cfg
 emu/
 .vscode/extensions/
 Library/Mobile\ Documents
+

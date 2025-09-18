@@ -7,4 +7,5 @@ mise use -g deno@2
 mise use -g bun@latest
 mise use -g biome@latest
 mise use -g usage@latest
+mise use -g ubi:zmwangx/ets
 
