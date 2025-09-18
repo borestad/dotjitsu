@@ -138,6 +138,7 @@ append-path "$HOMEBREW_PREFIX/opt/mozjpeg/bin"
 append-path "$HOMEBREW_PREFIX/opt/openjdk@8/bin"
 append-path "$HOME/.cargo/bin"
 append-path "/opt/homebrew/opt/dotnet@8/bin"
+append-path "/opt/homebrew/opt/rustup/bin"
 # Use core-utils directly
 
 

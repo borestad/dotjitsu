@@ -2,11 +2,6 @@
 
 echo -e "\n⚡️ Install/Update cargo packages"; echo
 
-if command -v gnomon > /dev/null 2>&1; then
-  formatter="$(command -v gnomon) -t elapsed-total |"
-  exec > >($formatter) 2>&1
-fi
-
 # cargo install --git https://github.com/darakian/ddh ddh
 hr; cargo install organize-rt   # Organize files based on regex
 hr; cargo install ytop          # A TUI system monitor written in Rust
