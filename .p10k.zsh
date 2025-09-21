@@ -1563,8 +1563,8 @@
   # }
 
   function prompt_dirfiles() {
-    local text=`timeout 2s bkt --ttl=5sec -- ~/.dotjitsu/bin/dir-info $PWD`
-    p10k segment -f 248 -t "$text"
+    #local text=`timeout 2s bkt --ttl=5sec -- ~/.dotjitsu/bin/dir-info $PWD`
+    #p10k segment -f 248 -t "$text"
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
