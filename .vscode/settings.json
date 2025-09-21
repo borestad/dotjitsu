@@ -33,5 +33,6 @@
     "yaml"
   ],
   "prettier.enable": false,
-  "files.exclude": {}
+  "files.exclude": {},
+  "svn.ignoreMissingSvnWarning": true
 }
