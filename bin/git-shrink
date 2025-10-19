@@ -25,14 +25,14 @@ if [[ -t 1 ]]; then
   readonly GREEN='\033[0;32m'
   readonly YELLOW='\033[1;33m'
   readonly RED='\033[0;31m'
-  readonly UNDERLINE='\033[4m'
+  readonly BLUE='\033[0;34m'
   readonly NC='\033[0m'
 else
   readonly CYAN=''
   readonly GREEN=''
   readonly YELLOW=''
   readonly RED=''
-  readonly UNDERLINE=''
+  readonly BLUE=''
   readonly NC=''
 fi
 
@@ -67,7 +67,12 @@ REPO_NAME=$(git rev-parse --show-toplevel | xargs basename)
 # Start timing
 START_TIME=$(date +%s%N)
 
-# Helper function to get git stats
+# Helper function to extract field from pipe-separated stats
+get_stat_field() {
+  local stats=$1
+  local field=$2
+  echo "$stats" | cut -d'|' -f"$field"
+}
 get_git_stats() {
   local output=$(git count-objects -vH 2>/dev/null)
   local loose=$(echo "$output" | grep '^count' | awk '{print $2}')
@@ -87,16 +92,16 @@ get_git_stats() {
 
 # Get size before
 STATS_BEFORE=$(get_git_stats)
-LOOSE_BEFORE=$(echo "$STATS_BEFORE" | cut -d'|' -f1)
-LOOSE_SIZE_BEFORE=$(echo "$STATS_BEFORE" | cut -d'|' -f2)
-IN_PACK_BEFORE=$(echo "$STATS_BEFORE" | cut -d'|' -f3)
-PACKS_BEFORE=$(echo "$STATS_BEFORE" | cut -d'|' -f4)
-SIZE_PACK_BEFORE=$(echo "$STATS_BEFORE" | cut -d'|' -f5)
-GARBAGE_BEFORE=$(echo "$STATS_BEFORE" | cut -d'|' -f6)
+LOOSE_BEFORE=$(get_stat_field "$STATS_BEFORE" 1)
+LOOSE_SIZE_BEFORE=$(get_stat_field "$STATS_BEFORE" 2)
+IN_PACK_BEFORE=$(get_stat_field "$STATS_BEFORE" 3)
+PACKS_BEFORE=$(get_stat_field "$STATS_BEFORE" 4)
+SIZE_PACK_BEFORE=$(get_stat_field "$STATS_BEFORE" 5)
+GARBAGE_BEFORE=$(get_stat_field "$STATS_BEFORE" 6)
 
 # Display initial state
 echo ""
-echo -e "${CYAN}┌─${NC} git-shrink: before"
+echo -e "${CYAN}┌─${NC} git-shrink: ${BLUE}BEFORE${NC}"
 echo -e "${CYAN}│${NC}"
 echo -e "${CYAN}│${NC}  - Loose:    $LOOSE_BEFORE objects ($LOOSE_SIZE_BEFORE)"
 echo -e "${CYAN}│${NC}  - Packed:   $IN_PACK_BEFORE objects ($SIZE_PACK_BEFORE) in $PACKS_BEFORE pack"
@@ -117,80 +122,57 @@ echo ""
 
 # Get size after
 STATS_AFTER=$(get_git_stats)
-LOOSE_AFTER=$(echo "$STATS_AFTER" | cut -d'|' -f1)
-LOOSE_SIZE_AFTER=$(echo "$STATS_AFTER" | cut -d'|' -f2)
-IN_PACK_AFTER=$(echo "$STATS_AFTER" | cut -d'|' -f3)
-PACKS_AFTER=$(echo "$STATS_AFTER" | cut -d'|' -f4)
-SIZE_PACK_AFTER=$(echo "$STATS_AFTER" | cut -d'|' -f5)
-GARBAGE_AFTER=$(echo "$STATS_AFTER" | cut -d'|' -f6)
+LOOSE_AFTER=$(get_stat_field "$STATS_AFTER" 1)
+LOOSE_SIZE_AFTER=$(get_stat_field "$STATS_AFTER" 2)
+IN_PACK_AFTER=$(get_stat_field "$STATS_AFTER" 3)
+PACKS_AFTER=$(get_stat_field "$STATS_AFTER" 4)
+SIZE_PACK_AFTER=$(get_stat_field "$STATS_AFTER" 5)
+GARBAGE_AFTER=$(get_stat_field "$STATS_AFTER" 6)
 
-# Calculate total sizes and savings
+# Calculate savings
 calculate_savings() {
-  local loose_size_before=$1
-  local size_pack_before=$2
-  local loose_size_after=$3
-  local size_pack_after=$4
-
-  # Extract numeric values
-  local loose_before_num=$(echo "$loose_size_before" | awk '{print $1}')
-  local pack_before_num=$(echo "$size_pack_before" | awk '{print $1}')
-  local loose_after_num=$(echo "$loose_size_after" | awk '{print $1}')
-  local pack_after_num=$(echo "$size_pack_after" | awk '{print $1}')
-
-  # Calculate totals (convert everything to MB, assuming loose_size is in bytes/KiB)
-  # If loose_size is in bytes, convert to MB: bytes / 1048576
-  if [[ "$loose_size_before" == *"bytes"* ]]; then
-    loose_before_num=$(echo "scale=2; $loose_before_num / 1048576" | bc 2>/dev/null || echo "0")
-  elif [[ "$loose_size_before" == *"KiB"* ]]; then
-    loose_before_num=$(echo "scale=2; $loose_before_num / 1024" | bc 2>/dev/null || echo "0")
-  fi
-  
-  if [[ "$loose_size_after" == *"bytes"* ]]; then
-    loose_after_num=$(echo "scale=2; $loose_after_num / 1048576" | bc 2>/dev/null || echo "0")
-  elif [[ "$loose_size_after" == *"KiB"* ]]; then
-    loose_after_num=$(echo "scale=2; $loose_after_num / 1024" | bc 2>/dev/null || echo "0")
-  fi
-
-  # Total: loose + packed
-  local total_before=$(echo "$loose_before_num + $pack_before_num" | bc 2>/dev/null || echo "0")
-  local total_after=$(echo "$loose_after_num + $pack_after_num" | bc 2>/dev/null || echo "0")
-  
-  # Savings = what we had before - what we have now
-  local saved=$(echo "$total_before - $total_after" | bc 2>/dev/null || echo "0")
-  saved=$(printf "%.2f" "$saved")
-  
-  # Only calc percent if total_before > 0
-  local percent="0"
-  if (( $(echo "$total_before > 0" | bc -l) )); then
-    percent=$(echo "scale=0; ($saved / $total_before) * 100" | bc 2>/dev/null || echo "0")
-  fi
-  
-  echo "$saved MB ($percent%)"
-}
-
-SAVINGS=$(calculate_savings "$LOOSE_SIZE_BEFORE" "$SIZE_PACK_BEFORE" "$LOOSE_SIZE_AFTER" "$SIZE_PACK_AFTER")
-
-# Extract just the numeric part of savings for color logic
-SAVINGS_NUM=$(echo "$SAVINGS" | awk '{print $1}')
-
-# Calculate elapsed time
-END_TIME=$(date +%s%N)
-ELAPSED_MS=$(( (END_TIME - START_TIME) / 1000000 ))
-ELAPSED_S=$(echo "scale=1; $ELAPSED_MS / 1000" | bc)
-
-# Helper function to determine indicator based on change
-get_indicator() {
   local before=$1
   local after=$2
-  local metric_type=$3  # "loose", "garbage", "size", "packs", "packed"
 
   # Extract numeric values
   local before_num=$(echo "$before" | awk '{print $1}')
   local after_num=$(echo "$after" | awk '{print $1}')
 
+  # Only calculate if both are numbers
+  if [[ $before_num =~ ^[0-9.]+$ ]] && [[ $after_num =~ ^[0-9.]+$ ]]; then
+    local saved=$(echo "$before_num - $after_num" | bc 2>/dev/null || echo "0")
+    local percent=$(echo "scale=0; ($saved / $before_num) * 100" | bc 2>/dev/null || echo "0")
+    echo "$saved MB ($percent%)"
+  fi
+}
+
+SAVINGS=$(calculate_savings "$SIZE_PACK_BEFORE" "$SIZE_PACK_AFTER")
+
+# Calculate elapsed time
+END_TIME=$(date +%s%N)
+ELAPSED_MS=$(( (END_TIME - START_TIME) / 1000000 ))
+ELAPSED_S=$(echo "scale=1; $ELAPSED_MS / 1000" | bc)
+# Ensure leading zero for times like .8s
+[[ $ELAPSED_S =~ ^\. ]] && ELAPSED_S="0${ELAPSED_S}"
+
+# Helper function to extract numeric value from string
+get_numeric() {
+  echo "$1" | awk '{print $1}'
+}
+
+# Helper function to determine indicator and color based on change
+# Returns: "indicator|color" where indicator is ✓ or - and color is GREEN, YELLOW, or empty
+get_indicator_and_color() {
+  local before=$1
+  local after=$2
+  local metric_type=$3  # "loose", "garbage", "size", "packs", "packed"
+
+  local before_num=$(get_numeric "$before")
+  local after_num=$(get_numeric "$after")
+
   # Check if values are equal (no change)
   if [[ "$before_num" == "$after_num" ]]; then
-    echo "-"  # Dash = no change
+    echo "-|"
     return
   fi
 
@@ -199,73 +181,55 @@ get_indicator() {
     loose|garbage|size|packs)
       # For these: less is better
       if (( $(echo "$after_num < $before_num" | bc -l) )); then
-        echo "✓"  # Checkmark = improvement
+        echo "✓|${GREEN}"
       else
-        echo "-"  # Dash = no improvement
+        echo "-|"
       fi
       ;;
     packed)
       # For packed objects: more is better (loose objects got packed)
       if (( $(echo "$after_num > $before_num" | bc -l) )); then
-        echo "✓"  # Checkmark = improvement
+        echo "✓|${GREEN}"
       else
-        echo "-"  # Dash = no improvement
+        echo "-|"
       fi
       ;;
     *)
-      echo "-"  # Default to no change
+      echo "-|"
       ;;
   esac
 }
 
 # Display final state - Simplified layout
-echo -e "${CYAN}┌─${NC} git-shrink: AFTER (⏱ ${ELAPSED_S}s)"
+echo -e "${CYAN}┌─${NC} git-shrink: ${BLUE}AFTER${NC} (⏱ ${ELAPSED_S}s)"
 echo -e "${CYAN}│${NC}"
 
 # Loose indicator
-LOOSE_INDICATOR=$(get_indicator "$LOOSE_BEFORE" "$LOOSE_AFTER" "loose")
-echo -e "${CYAN}│${NC}  $LOOSE_INDICATOR Loose:    $LOOSE_AFTER objects ($LOOSE_SIZE_BEFORE → $LOOSE_SIZE_AFTER)"
+LOOSE_IND=$(echo "$(get_indicator_and_color "$LOOSE_BEFORE" "$LOOSE_AFTER" "loose")" | cut -d'|' -f1)
+echo -e "${CYAN}│${NC}  $LOOSE_IND Loose:    $LOOSE_AFTER objects ($LOOSE_SIZE_BEFORE → $LOOSE_SIZE_AFTER)"
 
 # Packed: show before→after for both count and size, plus packs change
-PACKED_INDICATOR=$(get_indicator "$IN_PACK_BEFORE" "$IN_PACK_AFTER" "packed")
-
-# Combined packed line with all transitions - show size before and after
-echo -e "${CYAN}│${NC}  $PACKED_INDICATOR Packed:   $IN_PACK_AFTER objects ($SIZE_PACK_BEFORE → $SIZE_PACK_AFTER) in $PACKS_BEFORE → $PACKS_AFTER pack"
+PACKED_IND=$(echo "$(get_indicator_and_color "$IN_PACK_BEFORE" "$IN_PACK_AFTER" "packed")" | cut -d'|' -f1)
+echo -e "${CYAN}│${NC}  $PACKED_IND Packed:   $IN_PACK_AFTER objects ($SIZE_PACK_BEFORE → $SIZE_PACK_AFTER) in $PACKS_BEFORE → $PACKS_AFTER pack"
 
 # Garbage indicator
-GARBAGE_INDICATOR=$(get_indicator "$GARBAGE_BEFORE" "$GARBAGE_AFTER" "garbage")
-echo -e "${CYAN}│${NC}  $GARBAGE_INDICATOR Garbage:  $GARBAGE_AFTER objects"
+GARBAGE_IND=$(echo "$(get_indicator_and_color "$GARBAGE_BEFORE" "$GARBAGE_AFTER" "garbage")" | cut -d'|' -f1)
+echo -e "${CYAN}│${NC}  $GARBAGE_IND Garbage:  $GARBAGE_AFTER objects"
 
-# Total size with color indicator
-TOTAL_SIZE_BEFORE_NUM=$(echo "$SIZE_PACK_BEFORE" | awk '{print $1}')
-TOTAL_SIZE_AFTER_NUM=$(echo "$SIZE_PACK_AFTER" | awk '{print $1}')
-if (( $(echo "$TOTAL_SIZE_AFTER_NUM < $TOTAL_SIZE_BEFORE_NUM" | bc -l) )); then
-  TOTAL_COLOR="${GREEN}"
-  TOTAL_INDICATOR="✓"
-else
-  TOTAL_COLOR="${YELLOW}"
-  TOTAL_INDICATOR="-"
-fi
-echo -e "${CYAN}│${NC}  $TOTAL_INDICATOR Total:    ${TOTAL_COLOR}$SIZE_PACK_BEFORE${NC} → $SIZE_PACK_AFTER"
+# Total size - use size comparison (less is better)
+TOTAL_RESULT=$(get_indicator_and_color "$SIZE_PACK_BEFORE" "$SIZE_PACK_AFTER" "size")
+TOTAL_IND=$(echo "$TOTAL_RESULT" | cut -d'|' -f1)
+TOTAL_COLOR=$(echo "$TOTAL_RESULT" | cut -d'|' -f2)
+[[ -z "$TOTAL_COLOR" ]] && TOTAL_COLOR="${YELLOW}"
+echo -e "${CYAN}│${NC}  $TOTAL_IND Total:    $SIZE_PACK_BEFORE → ${TOTAL_COLOR}$SIZE_PACK_AFTER${NC}"
 echo -e "${CYAN}│${NC}"
 
 # Saved with color
-if [[ -n "$SAVINGS" && "$SAVINGS" != "0.00 MB (0%)" ]]; then
-  # Check if SAVINGS_NUM is positive (means space was saved)
-  if (( $(echo "$SAVINGS_NUM > 0" | bc -l) )); then
-    SAVED_COLOR="${GREEN}"
-    SAVED_INDICATOR="✓"
-  else
-    SAVED_COLOR="${YELLOW}"
-    SAVED_INDICATOR="-"
-  fi
-else
-  # No savings - no color
-  SAVED_COLOR="${NC}"
-  SAVED_INDICATOR="-"
-fi
-
-echo -e "${CYAN}│${NC}  $SAVED_INDICATOR Saved:    ${SAVED_COLOR}$SAVINGS${NC}"
+SAVED_RESULT=$(get_indicator_and_color "$SIZE_PACK_BEFORE" "$SIZE_PACK_AFTER" "size")
+SAVED_IND=$(echo "$SAVED_RESULT" | cut -d'|' -f1)
+SAVED_COLOR=$(echo "$SAVED_RESULT" | cut -d'|' -f2)
+[[ -z "$SAVED_COLOR" ]] && SAVED_COLOR="${YELLOW}"
+echo -e "${CYAN}│${NC}  $SAVED_IND Saved:    ${SAVED_COLOR}$SAVINGS${NC}"
 echo -e "${CYAN}│${NC}"
 echo -e "${CYAN}└─────────────────────────────────────────${NC}"
 echo ""
