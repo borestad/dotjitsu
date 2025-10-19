@@ -188,3 +188,5 @@ CACHEDIR.tag
 .trash
 .zcompcache
 .zcompdump
+
+.specstory

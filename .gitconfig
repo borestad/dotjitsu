@@ -54,13 +54,16 @@
 	packedGitWindowSize = 1512m
 	quotepath = false
 
+[transfer]
+	compression = 1
+
 [pack]
-	deltaCacheSize = 1024m
-	packSizeLimit = 1024m
-	windowMemory = 1024m
-	allowPackReuse = true
+	compression = 6
 	threads = 16
-	useSparse = true
+	useZstd = true
+	deltaCacheSize = 256m
+	windowMemory = 256m
+	allowPackReuse = true
 	writeReverseIndex = true
 
 [branch]
@@ -255,8 +258,8 @@
 # [remote "origin"]
 # 	tagopt = "--tags -f"
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential

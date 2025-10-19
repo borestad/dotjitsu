@@ -68,7 +68,7 @@ alias cat='\bat --paging=never --style="plain" --decorations=auto'
 
 function gdu() {
   timeout --foreground -s SIGTERM 10m $HOMEBREW_PREFIX/Cellar/gdu/*/bin/gdu-go -x -a -C \
-    -I "$HOME/Library/Containers,$HOME/.local/share/pnpm,$HOME/.local/share/fnm,$HOME/Library/Mobile\ Documents,.svn" "$@" || \
+    -I "$HOME/Library/Containers,$HOME/.local/share/pnpm,$HOME/.local/share/fnm,$HOME/Library/Mobile\ Documents" "$@" || \
     (stty sane &> /dev/null; tput reset &> /dev/null; clear; echo "[timeout]: 10m gdu")
 }
 
@@ -185,7 +185,7 @@ alias nx='PATH=$(npm bin):$PATH'
 alias path='echo -e ${PATH//:/\\n}'
 alias retroarch="~/Applications/RetroArch.app/Contents/MacOS/RetroArch -vf"
 alias rmf='grm -rfv'
-alias serve='bunx local-web-server -f stats -d '
+alias serve='bunx -g local-web-server -f stats -d '
 alias serve2='static-web-server -d . -p 8000 -g info -z '
 alias smartgit='/Applications/SmartGit.app/Contents/MacOS/SmartGit'
 alias todo="rg -p --pcre2 '(?:<!-- *)?(?:#|//|/\*+|<!--|--) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\([^(]+\))?:?(?!\w)(?: *-->| *\*/|(?= *(?:[^:]//|/\*+|<!--|@|--))|((?: +[^\n@]*?)(?= *(?:[^:]//|/\*+|<!--|@|--))|(?: +[^@\n]+)?))' | sed 's/[[:space:]]\+/ /g' | bat"

@@ -1,6 +1,41 @@
 #!/usr/bin/env bash
 
-# https://stackoverflow.com/questions/38171899/how-to-reduce-the-depth-of-an-existing-git-clone/46004595#46004595
+#
+# Shrink a Git repository by removing unnecessary objects and cleaning up the repository.
+#
+# This script removes all tags, clears the reflog, and runs garbage collection to reduce
+# the repository size. It displays object counts before and after the operation.
+#
+# Usage:
+#   git-shrink [OPTIONS]
+#
+# Options:
+#   --aggressive    Use aggressive garbage collection (slower but more effective)
+#   --help          Show this help message
+#
+# References:
+#   https://stackoverflow.com/questions/38171899/how-to-reduce-the-depth-of-an-existing-git-clone/46004595#46004595
+#
+
+# Parse arguments
+GC_ARGS="--prune=now"
+
+for arg in "$@"; do
+  case "$arg" in
+    --aggressive)
+      GC_ARGS="$GC_ARGS --aggressive"
+      ;;
+    --help)
+      sed -n '/^#/p' "$0" | sed 's/^#[[:space:]]\?//'
+      exit 0
+      ;;
+    *)
+      echo "❌ Unknown option: $arg" >&2
+      sed -n '/^#/p' "$0" | sed 's/^#[[:space:]]\?//' | head -20
+      exit 1
+      ;;
+  esac
+done
 
 hr -
 echo 'BEFORE:'
@@ -17,14 +52,7 @@ echo '🚀 Clear the reflog:'
 git reflog expire --expire=now --expire-unreachable=now --all --verbose
 
 echo '🚀 Delete all dangling objects'; echo
-git gc --prune=now --aggressive
-# git \
-#     -c gc.reflogExpire=0 \
-#     -c gc.reflogExpireUnreachable=0 \
-#     -c gc.rerereresolved=0 \
-#     -c gc.rerereunresolved=0 \
-#     -c gc.pruneExpire=now \
-#     gc
+git gc $GC_ARGS
 
 hr -
 echo 'AFTER:'

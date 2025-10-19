@@ -15,3 +15,5 @@ alias ll='eza -lah'      # Lists in one column, hidden files.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
 . "$HOME/.cargo/env"
+
+[ ! -f "$HOME/.x-cmd.root/X" ] || . "$HOME/.x-cmd.root/X" # boot up x-cmd.
