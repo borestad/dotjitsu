@@ -56,23 +56,13 @@ for arg in "$@"; do
   esac
 done
 
-# Check if we're in a git repository
-if ! git rev-parse --git-dir > /dev/null 2>&1; then
-  echo -e "${RED}✗${NC} Not a git repository" >&2
-  exit 1
-fi
-
-REPO_NAME=$(git rev-parse --show-toplevel | xargs basename)
-
-# Start timing
-START_TIME=$(date +%s%N)
-
 # Helper function to extract field from pipe-separated stats
 get_stat_field() {
   local stats=$1
   local field=$2
   echo "$stats" | cut -d'|' -f"$field"
 }
+
 get_git_stats() {
   local output=$(git count-objects -vH 2>/dev/null)
   local loose=$(echo "$output" | grep '^count' | awk '{print $2}')
@@ -89,71 +79,6 @@ get_git_stats() {
   # Return pipe-separated: loose|loose_size|in_pack|packs|size_pack|garbage
   echo "$loose|$loose_size|$in_pack|$packs|$size_pack|$garbage"
 }
-
-# Get size before
-STATS_BEFORE=$(get_git_stats)
-LOOSE_BEFORE=$(get_stat_field "$STATS_BEFORE" 1)
-LOOSE_SIZE_BEFORE=$(get_stat_field "$STATS_BEFORE" 2)
-IN_PACK_BEFORE=$(get_stat_field "$STATS_BEFORE" 3)
-PACKS_BEFORE=$(get_stat_field "$STATS_BEFORE" 4)
-SIZE_PACK_BEFORE=$(get_stat_field "$STATS_BEFORE" 5)
-GARBAGE_BEFORE=$(get_stat_field "$STATS_BEFORE" 6)
-
-# Display initial state
-echo ""
-echo -e "${CYAN}┌─${NC} git-shrink: ${BLUE}BEFORE${NC}"
-echo -e "${CYAN}│${NC}"
-echo -e "${CYAN}│${NC}  - Loose:    $LOOSE_BEFORE objects ($LOOSE_SIZE_BEFORE)"
-echo -e "${CYAN}│${NC}  - Packed:   $IN_PACK_BEFORE objects ($SIZE_PACK_BEFORE) in $PACKS_BEFORE pack"
-echo -e "${CYAN}│${NC}  - Garbage:  $GARBAGE_BEFORE objects"
-echo -e "${CYAN}│${NC}  - Total:    ${YELLOW}$SIZE_PACK_BEFORE${NC}"
-echo -e "${CYAN}│${NC}"
-echo -e "${CYAN}└─────────────────────────────────────────${NC}"
-echo ""
-
-# Execute cleanup steps silently (no visual output during operations)
-git tag -l | xargs git tag -d > /dev/null 2>&1 || true
-git rerere forget . > /dev/null 2>&1 || true
-git reflog expire --expire=now --expire-unreachable=now --all > /dev/null 2>&1 || true
-
-# Run gc with progress output
-git gc $GC_ARGS
-echo ""
-
-# Get size after
-STATS_AFTER=$(get_git_stats)
-LOOSE_AFTER=$(get_stat_field "$STATS_AFTER" 1)
-LOOSE_SIZE_AFTER=$(get_stat_field "$STATS_AFTER" 2)
-IN_PACK_AFTER=$(get_stat_field "$STATS_AFTER" 3)
-PACKS_AFTER=$(get_stat_field "$STATS_AFTER" 4)
-SIZE_PACK_AFTER=$(get_stat_field "$STATS_AFTER" 5)
-GARBAGE_AFTER=$(get_stat_field "$STATS_AFTER" 6)
-
-# Calculate savings
-calculate_savings() {
-  local before=$1
-  local after=$2
-
-  # Extract numeric values
-  local before_num=$(echo "$before" | awk '{print $1}')
-  local after_num=$(echo "$after" | awk '{print $1}')
-
-  # Only calculate if both are numbers
-  if [[ $before_num =~ ^[0-9.]+$ ]] && [[ $after_num =~ ^[0-9.]+$ ]]; then
-    local saved=$(echo "$before_num - $after_num" | bc 2>/dev/null || echo "0")
-    local percent=$(echo "scale=0; ($saved / $before_num) * 100" | bc 2>/dev/null || echo "0")
-    echo "$saved MB ($percent%)"
-  fi
-}
-
-SAVINGS=$(calculate_savings "$SIZE_PACK_BEFORE" "$SIZE_PACK_AFTER")
-
-# Calculate elapsed time
-END_TIME=$(date +%s%N)
-ELAPSED_MS=$(( (END_TIME - START_TIME) / 1000000 ))
-ELAPSED_S=$(echo "scale=1; $ELAPSED_MS / 1000" | bc)
-# Ensure leading zero for times like .8s
-[[ $ELAPSED_S =~ ^\. ]] && ELAPSED_S="0${ELAPSED_S}"
 
 # Helper function to extract numeric value from string
 get_numeric() {
@@ -200,36 +125,119 @@ get_indicator_and_color() {
   esac
 }
 
-# Display final state - Simplified layout
-echo -e "${CYAN}┌─${NC} git-shrink: ${BLUE}AFTER${NC} (⏱ ${ELAPSED_S}s)"
-echo -e "${CYAN}│${NC}"
+# Calculate savings
+calculate_savings() {
+  local before=$1
+  local after=$2
 
-# Loose indicator
-LOOSE_IND=$(echo "$(get_indicator_and_color "$LOOSE_BEFORE" "$LOOSE_AFTER" "loose")" | cut -d'|' -f1)
-echo -e "${CYAN}│${NC}  $LOOSE_IND Loose:    $LOOSE_AFTER objects ($LOOSE_SIZE_BEFORE → $LOOSE_SIZE_AFTER)"
+  # Extract numeric values
+  local before_num=$(echo "$before" | awk '{print $1}')
+  local after_num=$(echo "$after" | awk '{print $1}')
 
-# Packed: show before→after for both count and size, plus packs change
-PACKED_IND=$(echo "$(get_indicator_and_color "$IN_PACK_BEFORE" "$IN_PACK_AFTER" "packed")" | cut -d'|' -f1)
-echo -e "${CYAN}│${NC}  $PACKED_IND Packed:   $IN_PACK_AFTER objects ($SIZE_PACK_BEFORE → $SIZE_PACK_AFTER) in $PACKS_BEFORE → $PACKS_AFTER pack"
+  # Only calculate if both are numbers
+  if [[ $before_num =~ ^[0-9.]+$ ]] && [[ $after_num =~ ^[0-9.]+$ ]]; then
+    local saved=$(echo "scale=2; $before_num - $after_num" | bc 2>/dev/null || echo "0")
+    local percent=$(echo "scale=1; ($saved / $before_num) * 100" | bc 2>/dev/null || echo "0")
+    echo "$saved MB ($percent%)"
+  fi
+}
 
-# Garbage indicator
-GARBAGE_IND=$(echo "$(get_indicator_and_color "$GARBAGE_BEFORE" "$GARBAGE_AFTER" "garbage")" | cut -d'|' -f1)
-echo -e "${CYAN}│${NC}  $GARBAGE_IND Garbage:  $GARBAGE_AFTER objects"
+# Core shrink logic
+shrink-git-repo() {
+  # Start timing
+  local START_TIME=$(date +%s%N)
 
-# Total size - use size comparison (less is better)
-TOTAL_RESULT=$(get_indicator_and_color "$SIZE_PACK_BEFORE" "$SIZE_PACK_AFTER" "size")
-TOTAL_IND=$(echo "$TOTAL_RESULT" | cut -d'|' -f1)
-TOTAL_COLOR=$(echo "$TOTAL_RESULT" | cut -d'|' -f2)
-[[ -z "$TOTAL_COLOR" ]] && TOTAL_COLOR="${YELLOW}"
-echo -e "${CYAN}│${NC}  $TOTAL_IND Total:    $SIZE_PACK_BEFORE → ${TOTAL_COLOR}$SIZE_PACK_AFTER${NC}"
-echo -e "${CYAN}│${NC}"
+  # Get size before
+  local STATS_BEFORE=$(get_git_stats)
+  local LOOSE_BEFORE=$(get_stat_field "$STATS_BEFORE" 1)
+  local LOOSE_SIZE_BEFORE=$(get_stat_field "$STATS_BEFORE" 2)
+  local IN_PACK_BEFORE=$(get_stat_field "$STATS_BEFORE" 3)
+  local PACKS_BEFORE=$(get_stat_field "$STATS_BEFORE" 4)
+  local SIZE_PACK_BEFORE=$(get_stat_field "$STATS_BEFORE" 5)
+  local GARBAGE_BEFORE=$(get_stat_field "$STATS_BEFORE" 6)
 
-# Saved with color
-SAVED_RESULT=$(get_indicator_and_color "$SIZE_PACK_BEFORE" "$SIZE_PACK_AFTER" "size")
-SAVED_IND=$(echo "$SAVED_RESULT" | cut -d'|' -f1)
-SAVED_COLOR=$(echo "$SAVED_RESULT" | cut -d'|' -f2)
-[[ -z "$SAVED_COLOR" ]] && SAVED_COLOR="${YELLOW}"
-echo -e "${CYAN}│${NC}  $SAVED_IND Saved:    ${SAVED_COLOR}$SAVINGS${NC}"
-echo -e "${CYAN}│${NC}"
-echo -e "${CYAN}└─────────────────────────────────────────${NC}"
-echo ""
+  # Display initial state
+  echo ""
+  echo -e "${CYAN}┌─${NC} git-shrink: ${BLUE}BEFORE${NC}"
+  echo -e "${CYAN}│${NC}"
+  echo -e "${CYAN}│${NC}  - Loose:    $LOOSE_BEFORE objects ($LOOSE_SIZE_BEFORE)"
+  echo -e "${CYAN}│${NC}  - Packed:   $IN_PACK_BEFORE objects ($SIZE_PACK_BEFORE) in $PACKS_BEFORE pack"
+  echo -e "${CYAN}│${NC}  - Garbage:  $GARBAGE_BEFORE objects"
+  echo -e "${CYAN}│${NC}  - Total:    ${YELLOW}$SIZE_PACK_BEFORE${NC}"
+  echo -e "${CYAN}│${NC}"
+  echo -e "${CYAN}└─────────────────────────────────────────${NC}"
+  echo ""
+
+  # Execute cleanup steps silently (no visual output during operations)
+  git tag -l | xargs git tag -d > /dev/null 2>&1 || true
+  git rerere forget . > /dev/null 2>&1 || true
+  git reflog expire --expire=now --expire-unreachable=now --all > /dev/null 2>&1 || true
+
+  # Run gc with progress output
+  git gc $GC_ARGS
+  echo ""
+
+  # Get size after
+  local STATS_AFTER=$(get_git_stats)
+  local LOOSE_AFTER=$(get_stat_field "$STATS_AFTER" 1)
+  local LOOSE_SIZE_AFTER=$(get_stat_field "$STATS_AFTER" 2)
+  local IN_PACK_AFTER=$(get_stat_field "$STATS_AFTER" 3)
+  local PACKS_AFTER=$(get_stat_field "$STATS_AFTER" 4)
+  local SIZE_PACK_AFTER=$(get_stat_field "$STATS_AFTER" 5)
+  local GARBAGE_AFTER=$(get_stat_field "$STATS_AFTER" 6)
+
+  # Calculate savings
+  local SAVINGS=$(calculate_savings "$SIZE_PACK_BEFORE" "$SIZE_PACK_AFTER")
+
+  # Calculate elapsed time
+  local END_TIME=$(date +%s%N)
+  local ELAPSED_MS=$(( (END_TIME - START_TIME) / 1000000 ))
+  local ELAPSED_S=$(echo "scale=1; $ELAPSED_MS / 1000" | bc)
+  # Ensure leading zero for times like .8s
+  [[ $ELAPSED_S =~ ^\. ]] && ELAPSED_S="0${ELAPSED_S}"
+
+  # Display final state - Simplified layout
+  echo -e "${CYAN}┌─${NC} git-shrink: ${BLUE}AFTER${NC} (⏱ ${ELAPSED_S}s)"
+  echo -e "${CYAN}│${NC}"
+
+  # Loose indicator
+  local LOOSE_IND=$(echo "$(get_indicator_and_color "$LOOSE_BEFORE" "$LOOSE_AFTER" "loose")" | cut -d'|' -f1)
+  echo -e "${CYAN}│${NC}  $LOOSE_IND Loose:    $LOOSE_AFTER objects ($LOOSE_SIZE_BEFORE → $LOOSE_SIZE_AFTER)"
+
+  # Packed: show before→after for both count and size, plus packs change
+  local PACKED_IND=$(echo "$(get_indicator_and_color "$IN_PACK_BEFORE" "$IN_PACK_AFTER" "packed")" | cut -d'|' -f1)
+  echo -e "${CYAN}│${NC}  $PACKED_IND Packed:   $IN_PACK_AFTER objects ($SIZE_PACK_BEFORE → $SIZE_PACK_AFTER) in $PACKS_BEFORE → $PACKS_AFTER pack"
+
+  # Garbage indicator
+  local GARBAGE_IND=$(echo "$(get_indicator_and_color "$GARBAGE_BEFORE" "$GARBAGE_AFTER" "garbage")" | cut -d'|' -f1)
+  echo -e "${CYAN}│${NC}  $GARBAGE_IND Garbage:  $GARBAGE_AFTER objects"
+
+  # Total size - use size comparison (less is better)
+  local TOTAL_RESULT=$(get_indicator_and_color "$SIZE_PACK_BEFORE" "$SIZE_PACK_AFTER" "size")
+  local TOTAL_IND=$(echo "$TOTAL_RESULT" | cut -d'|' -f1)
+  local TOTAL_COLOR=$(echo "$TOTAL_RESULT" | cut -d'|' -f2)
+  [[ -z "$TOTAL_COLOR" ]] && TOTAL_COLOR="${YELLOW}"
+  echo -e "${CYAN}│${NC}  $TOTAL_IND Total:    $SIZE_PACK_BEFORE → ${TOTAL_COLOR}$SIZE_PACK_AFTER${NC}"
+  echo -e "${CYAN}│${NC}"
+
+  # Saved with color
+  local SAVED_RESULT=$(get_indicator_and_color "$SIZE_PACK_BEFORE" "$SIZE_PACK_AFTER" "size")
+  local SAVED_IND=$(echo "$SAVED_RESULT" | cut -d'|' -f1)
+  local SAVED_COLOR=$(echo "$SAVED_RESULT" | cut -d'|' -f2)
+  [[ -z "$SAVED_COLOR" ]] && SAVED_COLOR="${YELLOW}"
+  echo -e "${CYAN}│${NC}  $SAVED_IND Saved:    ${SAVED_COLOR}$SAVINGS${NC}"
+  echo -e "${CYAN}│${NC}"
+  echo -e "${CYAN}└─────────────────────────────────────────${NC}"
+  echo ""
+}
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+  echo -e "${RED}✗${NC} Not a git repository" >&2
+  exit 1
+fi
+
+REPO_NAME=$(git rev-parse --show-toplevel | xargs basename)
+
+# Run the core shrink logic
+shrink-git-repo
