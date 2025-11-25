@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo 'test'
+
+# SVN_CMD=$1
+# shift
+
+# # If $1 is empty then display some help
+# # ... not provided here ...
+
+# case "$SVN_CMD" in
+#   "checkout" )
+#     git svn clone "$@"
+#   ;;
+
+#   "update" )
+#     git svn fetch "$@"
+#   ;;
+
+#   "add" )
+#     git add "$@"
+#   ;;
+
+#   "commit" )
+#     git svn dcommit "$@"
+#   ;;
+# esac

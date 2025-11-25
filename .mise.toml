@@ -10,6 +10,7 @@ node = "lts"
 "ubi:theMackabu/pmc" = "latest"
 "ubi:zmwangx/ets" = "latest"
 usage = "latest"
+watchexec = "latest"
 
 [settings]
 experimental = true

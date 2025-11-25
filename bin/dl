@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-# set -o errexit
-# set -e
+set -euo pipefail
 
 #
 # Argument parsing
 #
 CI=false
+URL=""
+OUTPUT=""
+TTL=""
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -24,12 +26,36 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
-function exists() {
-    builtin command -V "$1" >/dev/null 2>&1
-}
+# Validate that URL is provided
+if [[ -z "$URL" ]]; then
+  echo "Error: URL is required" >&2
+  echo "Usage: $(basename "$0") [options] <URL>" >&2
+  echo "Options:" >&2
+  echo "  -o, --output=FILE    Output filename" >&2
+  echo "  -ttl SECONDS         Time to live (reserved for future use)" >&2
+  echo "  -ci, --ci            CI mode (no colors)" >&2
+  exit 1
+fi
 
-if ! exists xh; then
-  CI=true
+# Setup trap to cleanup temp directory on exit or error
+cleanup() {
+  local exit_code=$?
+  if [[ -n "${TEMPDIR:-}" ]] && [[ -d "$TEMPDIR" ]]; then
+    rm -rf "$TEMPDIR"
+  fi
+  exit $exit_code
+}
+trap cleanup EXIT
+
+# Color codes - only use colors if we have a TTY and not in CI mode
+if [[ -t 1 ]] && [[ "$CI" != "true" ]]; then
+  readonly COLOR_BLUE='\033[0;34m'
+  readonly COLOR_GREEN='\033[0;32m'
+  readonly COLOR_RESET='\033[0m'
+else
+  readonly COLOR_BLUE=''
+  readonly COLOR_GREEN=''
+  readonly COLOR_RESET=''
 fi
 
 #
@@ -43,11 +69,12 @@ time-now() {
 benchmark() {
   local start=$1
   local end=${2:-$(time-now)}
-  printf %.2f $(echo "$end - $start" | bc -l)
+  # Use native bash arithmetic instead of bc
+  printf '%.2f\n' "$(echo "$end - $start" | bc -l)"
 }
 
 touch2() {
-  mkdir -p "$(dirname "$1")" && touch "$1" ;
+  mkdir -p "$(dirname "$1")" && touch "$1"
 }
 
 #
@@ -55,14 +82,15 @@ touch2() {
 #
 
 DIR=$(pwd)
-BASENAME=$(basename $URL | sed 's/?.*//g')
+# Extract filename from URL, removing query parameters
+BASENAME="${URL##*/}"
+BASENAME="${BASENAME%\?*}"
 OUTPUT=${OUTPUT:-$BASENAME}
 TEMPDIR=$(mktemp -d)
 
 # Precreate some fancy path (i.e a/b/c/100.zip)
 touch2 "$TEMPDIR/$OUTPUT"
-cd $TEMPDIR
-
+cd "$TEMPDIR"
 
 if [[ "$CI" == "true" ]]; then
   args='--no-progress-meter --silent'
@@ -72,9 +100,9 @@ fi
 
 start=$(time-now)
 
-echo "Downloading ${OUTPUT} from ${URL}"
+echo -e "· Downloading ${COLOR_GREEN}${OUTPUT}${COLOR_RESET} from ${COLOR_BLUE}${URL}${COLOR_RESET}"
 
-curl \
+COLUMNS=80 curl \
   $args \
   --disable \
   --show-error \
@@ -82,27 +110,21 @@ curl \
   --keepalive \
   --connect-timeout 10 \
   --retry 2 \
-  --http2 \
   --fail-with-body \
   --compressed \
   -o "${OUTPUT}" \
-  ${URL} 2>&1
+  "${URL}" 2>&1
 
 code=$?
-
-# cat $TEMPLOG
 
 if [ $code -ne 0 ]; then
   echo "❌ $URL"
   exit $code
 fi
 
-cd $DIR
-touch2 $OUTPUT
-mv $TEMPDIR/$OUTPUT $OUTPUT
-
-# Cleanup
-rm -rf $TEMPDIR &> /dev/null
+cd "$DIR"
+touch2 "$OUTPUT"
+mv "$TEMPDIR/$OUTPUT" "$OUTPUT"
 
 # stop=$(benchmark $start)
 

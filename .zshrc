@@ -139,6 +139,10 @@ zinit light unixorn/git-extra-commands
 . ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
 . ~/.dotjitsu/.docker-aliases
 
+. "/opt/homebrew/share/zsh/site-functions/_bun" 2>/dev/null || \
+  . "$HOME/.bun/_bun" 2>/dev/null
+
+
 # zinit snippet ~/.dotjitsu/packages/iterm2/_iterm2.zsh
 zinit snippet "/opt/homebrew/etc/grc.zsh"
 zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-completion.zsh"
@@ -199,7 +203,7 @@ typeset -U path                 # ignore doules in path
 
 
 zinit snippet ~/.p10k.zsh
-. ~/.p10k.zsh
+# . ~/.p10k.zsh
 
 fpath=(
   $HOMEBREW_PREFIX/share/zsh/site-functions
@@ -235,7 +239,3 @@ tere() {
     local result=$(command tere "$@")
     [ -n "$result" ] && cd -- "$result"
 }
-
-# bun completions
-[ -s "/opt/homebrew/share/zsh/site-functions/_bun" ] && source "/opt/homebrew/share/zsh/site-functions/_bun"
-
