@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+#=== Config ====================================================
+DEST_DIR="${CODE_DIR:-$HOME/code}"
+mkdir -p "$DEST_DIR"
+#===============================================================
+
+#--- Parse arguments ------------------------------------------
+PULL_MODE=false
+if [[ "${1:-}" =~ ^(-p|--pull)$ ]]; then
+  PULL_MODE=true
+fi
+
+#--- Check dependencies ---------------------------------------
+for cmd in gh jq fzf gum git; do
+  command -v "$cmd" >/dev/null 2>&1 || {
+    echo "❌ Missing dependency: $cmd"
+    exit 1
+  }
+done
+
+#--- Fetch repos from GitHub ----------------------------------
+gum spin --title "Fetching repositories from GitHub..." -- \
+  bash -c 'gh repo list --json name,sshUrl --limit 1000 > /tmp/repos.json'
+
+repos_json=$(cat /tmp/repos.json)
+if [[ -z "$repos_json" || "$repos_json" == "[]" ]]; then
+  echo "No repositories found."
+  exit 0
+fi
+
+#--- Build clean list for fzf ---------------------------------
+fzf_input=$(echo "$repos_json" | jq -r '.[] | [.name, .sshUrl] | @tsv')
+mapfile -t preselected < <(
+  echo "$fzf_input" |
+  while IFS=$'\t' read -r name ssh_url; do
+    [[ -d "$DEST_DIR/$name/.git" ]] && echo "$name"
+  done
+)
+
+#--- Let user select repos ------------------------------------
+echo "📦 Select repositories to clone${PULL_MODE:+ / update}:"
+selected=$(echo "$fzf_input" | fzf --multi --with-nth=1 \
+  --bind "ctrl-a:toggle-all" \
+  --marker="✔ " \
+  --header="Tab to mark, Ctrl-A to mark all, Enter to confirm" \
+  --preview 'echo {}' \
+  --ansi \
+  | cut -f2)
+
+if [[ -z "$selected" ]]; then
+  echo "No repositories selected."
+  exit 0
+fi
+
+#--- Clone or pull selected repos -----------------------------
+echo
+echo "🚀 Processing selected repositories in $DEST_DIR..."
+while read -r url; do
+  [[ -z "$url" ]] && continue
+  name=$(basename "$url" .git)
+  target="$DEST_DIR/$name"
+
+  if [[ -d "$target/.git" ]]; then
+    if $PULL_MODE; then
+      gum spin --title "Updating $name..." -- \
+        bash -c "cd '$target' && git pull --quiet"
+    else
+      echo "✅ $name already exists — skipping."
+    fi
+  else
+    gum spin --title "Cloning $name..." -- \
+      git clone --quiet "$url" "$target"
+  fi
+done <<< "$selected"
+
+echo
+echo "🎉 Done! Repositories are available in $DEST_DIR"

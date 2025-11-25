@@ -213,6 +213,7 @@ brew 'sshuttle'                     # Proxy server that works as a poor man's VP
 # brew 'starship'                     # Cross-shell prompt for astronauts
 brew 'streamlink'
 brew 'stress'                       # Tool to impose load on and stress test a computer system
+brew 'sleepwatcher'                 # Tool to impose load on and stress test a computer system
 brew 'svn'                          #
 brew 'svtplay-dl'                   # Download videos from https://www.svtplay.se/
 brew 'sysbench'                     # System performance benchmark tool

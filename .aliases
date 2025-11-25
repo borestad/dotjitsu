@@ -171,7 +171,7 @@ alias bif='brew info'
 alias cask='brew install --cask'
 alias cgrep="grep --color=always"
 alias crontab='VISUAL=micro EDITOR=micro crontab'
-alias ctp="bat package.json | jq"
+alias ctp="cat package.json | jq ."
 alias ffind='noglob fd -g --no-ignore'
 alias h="history | fzf --reverse"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
