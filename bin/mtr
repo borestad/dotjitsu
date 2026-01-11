@@ -1,5 +1,0 @@
-#!/bin/sh
-
-echo "$@"
-#PATH=”${PATH}:/usr/local/sbin/”
-exec /usr/local/sbin/mtr “$@”

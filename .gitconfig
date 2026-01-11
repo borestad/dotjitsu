@@ -2,6 +2,10 @@
 #
 # https://github.com/skwp/dotfiles/blob/master/git/gitconfig
 
+############################################################
+# Includes
+############################################################
+
 [include]
 	path = ~/.private/.gitconfig-user
 	path = ~/.dotjitsu/.gitconfig-alias
@@ -9,22 +13,48 @@
 [includeIf "gitdir:~/work/"]
     path = ~/.private/.gitconfig-work
 
-[hub]
-	protocol = https
+############################################################
+# Core / init
+############################################################
 
-[log]
-  # Use abbrev SHAs whenever possible/relevant instead of full 40 chars
-  abbrevCommit = true
-#   date = iso
+[core]
+	attributesfile = ~/.gitattributes
+	autocrlf = input
+	commitGraph = true
+	compression = 1
+	pager = delta
+	editor = micro
+	excludesfile = ~/.gitignore
+	fsmonitor = true
+	ignorecase = false
+	preloadindex = true
+	packedGitLimit = 1512m
+	packedGitWindowSize = 1512m
+	quotepath = false
+	fscache = true
 
-[color]
-	ui = true
+[transfer]
+	compression = 1
+
+[pack]
+	compression = 6
+	threads = 16
+	useZstd = true
+	deltaCacheSize = 256m
+	windowMemory = 256m
+	allowPackReuse = true
+	writeReverseIndex = true
 
 [init]
 	templatedir = ~/.dotjitsu/packages/git/templates
 	defaultBranch = main
 
-[pager]
+############################################################
+# Color / format / log
+############################################################
+
+[color]
+	ui = true
 
 [color "branch"]
 	current = yellow reverse
@@ -39,62 +69,33 @@
 	commit = yellow bold
 	whitespace = red reverse
 
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+
 [format]
 	pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 
-[core]
-	attributesfile = ~/.gitattributes
-	autocrlf = input
-	commitGraph = true
-	compression = 1
-	editor = micro
-	excludesfile = ~/.gitignore
-	ignorecase = false
-	packedGitLimit = 1512m
-	packedGitWindowSize = 1512m
-	quotepath = false
+[log]
+  # Use abbrev SHAs whenever possible/relevant instead of full 40 chars
+  abbrevCommit = true
+#   date = iso
 
-[transfer]
-	compression = 1
-
-[pack]
-	compression = 6
-	threads = 16
-	useZstd = true
-	deltaCacheSize = 256m
-	windowMemory = 256m
-	allowPackReuse = true
-	writeReverseIndex = true
+[grep]
+	extendRegexp = true
+	lineNumber = true
 
 [branch]
-	autosetuprebase = always
-
-[apply]
-	whitespace = nowarn
-
-[mergetool]
-	keepBackup = false
+	autosetuprebase = always  # track remote and rebase by default
 
 [help]
-	autocorrect = 1
+	autocorrect = 1           # aggressively auto-correct mistyped git commands
 
-[push]
-	recurseSubmodules = check
-# See `git help config` (search for push.default)
-# for more information on different options of the below setting.
-	default = simple
-	autoSetupRemote = true
-
-[rerere]
-	# Remember my merges
-	# http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
-	enabled = true
-
-[core]
-    pager = delta
-	fsmonitor = true
-	preloadindex = true
-	fscache = true
+############################################################
+# Delta / diff / difftool / merge
+############################################################
 
 [interactive]
     diffFilter = delta --color-only
@@ -127,9 +128,6 @@
     tool = smartsynchronize
 	context = 1
 
-[merge]
-	conflictStyle = zdiff3
-
 [difftool]
 	prompt = false
 	colorMoved = default
@@ -137,20 +135,16 @@
 [difftool "smartsynchronize"]
     cmd = /Applications/SmartSynchronize.app/Contents/MacOS/SmartSynchronize $LOCAL $REMOTE
 
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+[merge]
+	conflictStyle = zdiff3
 
-[gc]
-	autoDetach = false
-	writeCommitGraph = true
-	auto = 0
+############################################################
+# Fetch / pull / protocol / HTTP
+############################################################
 
-[commit]
-	gpgSign = false
-	verbose = true
+[fetch]
+	prune = true
+	pruneTags = true
 
 [pull]
 	# rebase = true
@@ -158,21 +152,112 @@
 	prune = true
 	twohead = ort # https://git-scm.com/docs/merge-strategies#Documentation/merge-strategies.txt-ort
 
+[http]
+	# Increase HTTP buffer to avoid issues with very large pushes
+	postBuffer = 524288000
+
+[push]
+	recurseSubmodules = check  # refuse push if submodule commits aren't pushed
+	# See `git help config` (search for push.default) for other modes
+	default = simple
+	autoSetupRemote = true
+
+[protocol]
+	version = 2
+
+############################################################
+# Commit / rebase / stash / index
+############################################################
+
+[commit]
+	gpgSign = false
+	verbose = true
+
+[rebase]
+	stat = true
+	autostash = true
+	autosquash = true
+
+[stash]
+	showPatch = true        # show diff when stashing changes
+
+[index]
+	threads = true          # speed up index operations on multi-core
+
+[advice]
+	statusHints = off
+	skippedCherryPicks = false
+
+[apply]
+	whitespace = nowarn     # don't warn on whitespace in patches
+
+[rerere]
+	# Remember previous conflict resolutions and reuse them
+	enabled = true
+
+############################################################
+# Submodules / GC / LFS
+############################################################
+
+[submodule]
+	recurse = true
+	fetchJobs = 10
+
+[gc]
+	autoDetach = false
+	writeCommitGraph = true
+	auto = 0
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+############################################################
+# Credentials / URLs / Hub
+############################################################
+
+[credential "https://gametechgit.gamesglobal.com"]
+	provider = generic
+
+# Problematic with mise
+# [remote "origin"]
+# 	tagopt = "--tags -f"
+
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+[url "ssh://github.com/"]
+	pushInsteadOf = https://github.com/
+
+[url "ssh://gitlab.com/"]
+	pushInsteadOf = https://gitlab.com/
+
+[hub]
+	protocol = https
+
+############################################################
+# Tools / UI / Git-flow / Tags / Misc
+############################################################
+
 [tig]
 	line-graphics = yes # Disable graphics characters
-	tab-size = 4 # Number of spaces per tab
+	tab-size = 4        # Number of spaces per tab
 	mouse = no
-
-[fetch]
-	prune = true
-	pruneTags = true
 
 [gui]
 	pruneDuringFetch = true
 
+# Git-flow style branching, with main as master-equivalent
 [gitflow "branch"]
-	develop = master
-	master =
+	develop = develop
+	master = main
 
 [gitflow "prefix"]
 	feature = feature/
@@ -181,41 +266,16 @@
 	support = support/
 	versiontag = v
 
-[http]
-	postBuffer = 524288000
-
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-
-[diff-so-fancy]
-	first-run = true
-
-[grep]
-	extendRegexp = true
-	lineNumber = true
-
-[gpg]
-	#program = gpg2
-
-[submodule]
-	recurse = true
-	fetchJobs = 10
-
-[ghq]
-	root = ~/code
-
-[rebase]
-	stat = true
-	autostash = true
-	autosquash = true
-
 [smartgit "submodule"]
 	fetchalways = false
 	update = true
 	initializenew = true
+
+[diff-so-fancy]
+	first-run = true
+
+[ghq]
+	root = ~/code
 
 [taggrouping]
 	groups =
@@ -232,34 +292,3 @@
   prereleaseSuffix = .beta
   prereleaseSuffix = -rc
   prereleaseSuffix = .rc
-
-[protocol]
-	version = 2
-
-[credential]
-	helper = $HOMEBREW_PREFIX/share/gcm-core/git-credential-manager-core
-	helper =
-	helper = /usr/local/share/gcm-core/git-credential-manager
-
-# [url "ssh://git@github.com"]
-# 	insteadOf = https://github.com
-[url "ssh://github.com/"]
-	pushInsteadOf = https://github.com/
-[url "ssh://gitlab.com/"]
-	pushInsteadOf = https://gitlab.com/
-[alias]
-	trash = !mkdir -p .trash && git ls-files --others --exclude-standard | xargs mv -f -t .trash
-[credential "https://gametechgit.gamesglobal.com"]
-	provider = generic
-[advice]
-	statusHints = off
-
-# Problematic with mise
-# [remote "origin"]
-# 	tagopt = "--tags -f"
-[credential "https://github.com"]
-	helper =
-	helper = !/opt/homebrew/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper =
-	helper = !/opt/homebrew/bin/gh auth git-credential
