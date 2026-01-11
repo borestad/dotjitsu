@@ -3,11 +3,15 @@
 # Automatically list directory contents on `cd`.
 auto-cd () {
 
+  # If not running interactively, don't do anything
+  [[ -o interactive ]] || return
+
   # Volumes are slow
   if [[ "$PWD" =~ .*"Volumes".* ]] && return
 
-  # If not running interactively, don't do anything
-  [[ -o interactive ]] || return
+  # Hack. Dont run within first second of shell startup to avoid spamming AppleScript
+  (( SECONDS < 1 )) && return
+
 
   emulate -L zsh;
 

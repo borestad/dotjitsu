@@ -138,6 +138,7 @@ $RECYCLE.BIN/
 
 .cache
 .tmp
+.tmp*
 *.lock.json
 paused.conf
 
