@@ -33,4 +33,4 @@ auto-cd () {
 
 }
 
-chpwd_functions=( auto-cd $chpwd_functions )
+# chpwd_functions=( auto-cd $chpwd_functions )

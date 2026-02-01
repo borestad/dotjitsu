@@ -139,10 +139,6 @@ zinit light unixorn/git-extra-commands
 . ~/.dotjitsu/packages/iterm2/.iterm2_shell_integration.zsh
 . ~/.dotjitsu/.docker-aliases
 
-. "/opt/homebrew/share/zsh/site-functions/_bun" 2>/dev/null || \
-  . "$HOME/.bun/_bun" 2>/dev/null
-
-
 # zinit snippet ~/.dotjitsu/packages/iterm2/_iterm2.zsh
 zinit snippet "/opt/homebrew/etc/grc.zsh"
 zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-completion.zsh"
@@ -206,6 +202,7 @@ zinit snippet ~/.p10k.zsh
 # . ~/.p10k.zsh
 
 fpath=(
+  $HOME/.bun
   $HOMEBREW_PREFIX/share/zsh/site-functions
   $HOME/.local/share/zsh/site-functions
   $fpath
@@ -218,17 +215,6 @@ fpath=(
 zicompinit
 zinit cdreplay
 
-#. <(fzf --zsh)
-
-# eval "$(bkt -- atuin init zsh --disable-up-arrow)"
-# eval "$(atuin init zsh)"
-
-# disable-fzf-tab
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-
-
-# Run dotenv on login
-#dotenv
 
 # Wasmer
 export WASMER_DIR="$HOME/.config/wasmer"
