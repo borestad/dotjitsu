@@ -9,7 +9,7 @@ echo "Location: $LOCATION"
 echo "Tempfile: $TMPFILE"
 echo
 # Optimize by writing to file in one huge chunk
-fd --ignore-file=$HOME/.dotjitsu/.rgignore . --type f --no-ignore --hidden --one-file-system -E '.git' -E 'node_modules' -E '**cache**' -E '**Cache**' \
+fd --ignore-file=$HOME/.dotjitsu/.ignore . --type f --no-ignore --hidden --one-file-system -E '.git' -E 'node_modules' -E '**cache**' -E '**Cache**' \
   | sponge $TMPFILE &> /dev/null
 
 files=`wc -l < $TMPFILE`
