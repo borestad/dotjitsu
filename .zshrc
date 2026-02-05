@@ -55,6 +55,14 @@ fi
 # ⚡️ Plugins
 # ===================================================
 
+# Extra completion functions (must be set before compinit runs).
+fpath=(
+  $HOME/.bun
+  $HOMEBREW_PREFIX/share/zsh/site-functions
+  $HOME/.local/share/zsh/site-functions
+  $fpath
+)
+
 # ■■■ Zinit initialization
 declare -A ZINIT
 ZINIT[ZCOMPDUMP_PATH]=~/.cache/zcompdump-zinit
@@ -123,6 +131,16 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'dir-info ${realpath//\\ / }; echo; eza --colour=always --group-directories-first --icons -la --no-permissions --no-user -L1 --no-time --icons --git-ignore -I "*.git" "${realpath//\\ / }"'
 zstyle ':fzf-tab:*' switch-group ',' '.'
 
+# Avoid fzf-tab duplicates in command-position: prefer `commands` for bare words,
+# prefer `executables` for paths (detected via `$IPREFIX`).
+zstyle -e ':completion:*:*:-command-:*' tag-order '
+  if [[ -n ${IPREFIX-} && ${IPREFIX-} == */ ]]; then
+    reply=( executables "commands aliases functions builtins reserved-words" )
+  else
+    reply=( "commands aliases functions builtins reserved-words" executables )
+  fi
+'
+
 # zinit ice wait lucid
 # zinit load marlonrichert/zsh-autocomplete
 
@@ -145,7 +163,7 @@ zinit snippet "$HOMEBREW_PREFIX/opt/git-extras/share/git-extras/git-extras-compl
 
 
 # ■■■ Evals
-eval $(bkt --ttl=1d -- gdircolors -b $DOTJITSU/packages/dircolors/ansi-light.dircolors)
+eval "$(bkt --ttl=1d -- gdircolors -b "$DOTJITSU/packages/dircolors/ansi-light.dircolors")"
 unalias zi
 eval "$(bkt --ttl=1d -- zoxide init zsh)"
 # eval "$(fnm env --use-on-cd --version-file-strategy recursive)"
@@ -201,19 +219,10 @@ typeset -U path                 # ignore doules in path
 zinit snippet ~/.p10k.zsh
 # . ~/.p10k.zsh
 
-fpath=(
-  $HOME/.bun
-  $HOMEBREW_PREFIX/share/zsh/site-functions
-  $HOME/.local/share/zsh/site-functions
-  $fpath
-)
-
 # ===================================================
 # ⚡️ LOAD
 # ===================================================
-
-zicompinit
-zinit cdreplay
+# compinit/cdreplay are handled via zinit `atinit`/`zicdreplay` above.
 
 
 # Wasmer

@@ -3,7 +3,7 @@
 #find . -type f | tr '[:upper:]' '[:lower:]' | grep -E ".*\.[a-zA-Z0-9]*$" | sed -e 's/.*\(\.[a-zA-Z0-9]*\)$/\1/' | sort | uniq -c | sort -n
 
 #find . -type f | sed -r 's/.*\/([^\/]+)/\1/' | sed 's/^[^\.]*$/<EMPTY>/' | sed -r 's/.*(\.[^\.]+)$/\1/' | sort | uniq -c | sort -nr
-fd --ignore-file=$HOME/.dotjitsu/.rgignore -i --type f --no-ignore --hidden  --one-file-system -E '.git' -E 'node_modules' -E '**cache**' -E '**Cache**' \
+fd --ignore-file=$HOME/.dotjitsu/.ignore -i --type f --no-ignore --hidden  --one-file-system -E '.git' -E 'node_modules' -E '**cache**' -E '**Cache**' \
 | sed -r 's/.*\/([^\/]+)/\1/' \
 | sed 's/^[^\.]*$/<NO_EXTENSION>/' \
 | sed -r 's/.*(\.[^\.]+)$/\1/' \
