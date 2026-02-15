@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# set -Eeuo pipefail
+set -Eeuo pipefail
 
 date "+%F %T"
 
@@ -7,66 +7,52 @@ cd "$(dirname "$0")"
 ROOT=$(git rev-parse --show-toplevel)
 HOMEBREW_PREFIX=$(/opt/homebrew/bin/brew --prefix)
 
-source $ROOT/.env$
+# .env$ expects some vars to maybe be unset in non-interactive shells.
+# Keep strict mode for the script, but source env with nounset temporarily off.
+set +u
+# shellcheck disable=SC1090
+source "$ROOT/.env$"
+set -u
 
 # Setup
 LOG_LOCATION="$HOME/logs/brew"
 export TERM="xterm-256color"
 export COLS=100
 export ROWS=30
-mkdir -p $LOG_LOCATION
-export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"w
-
-formatter=""
-if command -v gnomon > /dev/null 2>&1; then
-  formatter="$(command -v gnomon) -t elapsed-total |"
-fi
-
-#exec > >($formatter tee -i $LOG_LOCATION/dot-brew-`date +%F--%H%M%S`.log)
-#exec 2>&1
-
-# cd "$(dirname "$0")"/..
+mkdir -p "$LOG_LOCATION"
+export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
 
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 
-# Update brew itself
-$HOME/.dotjitsu/bin/hr -
-echo "✨ brew update"
+"$HOME/.dotjitsu/bin/hr" -
+echo "brew update"
 echo
+ets -s -f "%s.%Ls ┃ " 2>/dev/null memo --ttl=60min -- brew -v update
 
-#ets -s -f "%s.%Ls ┃ " memo --ttl=60min -- brew -v update --auto-update
-ets -s -f "%s.%Ls ┃ " 2> /dev/null memo --ttl=60min -- brew -v update
-
-# Install Brewfile formulas
-$HOME/.dotjitsu/bin/hr -
-echo "✨ brew bundle (Brewfile)"
+"$HOME/.dotjitsu/bin/hr" -
+echo "brew bundle (Brewfile.core)"
 echo
-ets -s -f "%s.%Ls ┃ " 2> /dev/null zsh -c "brew -v bundle --file=$HOME/.dotjitsu/Brewfile.core | rg 'upgrading|Skipping' --color=always --passthrough"
-ets -s -f "%s.%Ls ┃ " 2> /dev/null zsh -c "brew -v bundle --file=$HOME/.dotjitsu/Brewfile | rg 'upgrading|Skipping' --color=always --passthrough"
+ets -s -f "%s.%Ls ┃ " 2>/dev/null brew -v bundle --file="$HOME/.dotjitsu/Brewfile.core"
 
-# Update installed bundles (even those not in Brew/Caskfile
-$HOME/.dotjitsu/bin/hr -
-echo "✨ brew upgrade"
+"$HOME/.dotjitsu/bin/hr" -
+echo "brew bundle (Brewfile)"
 echo
-ets -s -f "%s.%Ls ┃ " 2> /dev/null zsh -c "brew -v upgrade | rg 'skipping|upgrading' --color=always --passthrough"
+ets -s -f "%s.%Ls ┃ " 2>/dev/null brew -v bundle --file="$HOME/.dotjitsu/Brewfile"
 
-rm -f $HOMEBREW_PREFIX/share/zsh/site-functions/_git
+"$HOME/.dotjitsu/bin/hr" -
+echo "brew upgrade"
+echo
+ets -s -f "%s.%Ls ┃ " 2>/dev/null brew -v upgrade
 
-# echo "✨ Sync /opt/homebrew/bin/ to /usr/local/bin/"
+rm -f "$HOMEBREW_PREFIX/share/zsh/site-functions/_git"
 
-# if [ -z "$PS1" ]; then
-#    exit 0
-# fi
-# time cd /opt/homebrew/bin/ && find . -maxdepth 1 -type l -print0 | xargs -P 16 -0 -I {} bash -c 'sudo ln -sf /opt/homebrew/bin/"$(basename {})" /usr/local/bin'
+if command -v deno >/dev/null 2>&1; then
+  chmod 711 "$(command -v deno)"
+fi
 
-# Fixes for self updating binaries
-chmod 711 $(command -v deno)
-
-echo ""
-echo "All done! Enjoy a cold one! 🍺 "
-echo ""
+echo
+echo "All done!"
+echo
 
 date "+%F %T"
-
-exit 0

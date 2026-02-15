@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Probe one repository and print one TSV row:
+# repo_path<TAB>status<TAB>remote_state<TAB>last_commit_ts<TAB>origin_url
+
+repo="$(pwd)"
+origin="$(git remote get-url origin 2>/dev/null || true)"
+upstream="$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || true)"
+head="$(git rev-parse HEAD 2>/dev/null || true)"
+uphash=""
+if [[ -n "$upstream" ]]; then
+  uphash="$(git rev-parse "$upstream" 2>/dev/null || true)"
+fi
+
+if git rev-parse --verify HEAD >/dev/null 2>&1; then
+  conflicts="$(git diff --name-only --diff-filter=U 2>/dev/null | sed '/^$/d' | wc -l | tr -d ' ')"
+  tracked="$(git status --porcelain=v2 -uno 2>/dev/null | awk '/^[12] /{c++} END{print c+0}')"
+  untracked="$(git status --porcelain=v2 2>/dev/null | awk '/^\? /{c++} END{print c+0}')"
+
+  st=""
+  if [[ "${conflicts:-0}" -gt 0 ]]; then
+    st="conflict(${conflicts})"
+  fi
+  if [[ "${tracked:-0}" -gt 0 ]]; then
+    [[ -n "$st" ]] && st="$st+"
+    st="${st}dirty(${tracked})"
+  fi
+  if [[ "${untracked:-0}" -gt 0 ]]; then
+    [[ -n "$st" ]] && st="$st+"
+    st="${st}untracked(${untracked})"
+  fi
+  [[ -z "$st" ]] && st="clean(0)"
+else
+  st="no-commit"
+fi
+
+remote="unknown"
+if [[ -z "$origin" ]]; then
+  remote="no-origin"
+elif [[ -z "$upstream" ]]; then
+  remote="no-upstream"
+elif [[ -z "$head" ]]; then
+  remote="unknown"
+else
+  remote_name="${upstream%%/*}"
+  branch="${upstream#*/}"
+  rhash="$(GIT_TERMINAL_PROMPT=0 git -c core.hooksPath=/dev/null ls-remote --heads "$remote_name" "$branch" 2>/dev/null | awk 'NR==1{print $1}' || true)"
+  if [[ -z "$rhash" ]]; then
+    remote="unknown"
+  elif [[ "$uphash" == "$rhash" ]]; then
+    if [[ "$head" == "$uphash" ]]; then
+      remote="up-to-date"
+    else
+      counts="$(git rev-list --left-right --count "$upstream...HEAD" 2>/dev/null || true)"
+      b="$(printf '%s' "$counts" | awk '{print $1+0}')"
+      a="$(printf '%s' "$counts" | awk '{print $2+0}')"
+      if [[ "$a" -gt 0 && "$b" -gt 0 ]]; then
+        remote="diverged?"
+      elif [[ "$a" -gt 0 ]]; then
+        remote="ahead?"
+      elif [[ "$b" -gt 0 ]]; then
+        remote="behind?"
+      else
+        remote="up-to-date"
+      fi
+    fi
+  elif [[ "$head" == "$rhash" ]]; then
+    remote="ahead?"
+  elif [[ "$head" == "$uphash" ]]; then
+    remote="behind?"
+  else
+    remote="unknown"
+  fi
+fi
+
+last_ts="$(git log -1 --format=%ct 2>/dev/null || true)"
+printf '%s\t%s\t%s\t%s\t%s\n' "$repo" "$st" "$remote" "$last_ts" "$origin"

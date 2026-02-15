@@ -2,76 +2,60 @@
 
 set -euo pipefail
 
-DEST="$HOME/glacier"
-APPLY=0
-YES=0
-QUERY=""
-ROOTS=()
+# Quick repo dashboard for ~/code.
+# Builds/reuses a cached mr repo list, probes each repo for local/remote git state,
+# and prints a mine-first overview (compact icons by default, full text with --verbose).
+
+HOME_DIR="${HOME:?}"
+BIN_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PROBE="$BIN_DIR/glacier-probe"
+
+CODE_ROOT="$HOME_DIR/code"
 OWN_RE='borestad|codeitse|gist\.github\.com'
-HAS_GUM=0
-LABEL_WIDTH=6
-LABEL_MINE=''
-LABEL_3P=''
 
-printf -v LABEL_MINE "%-${LABEL_WIDTH}s" "mine"
-printf -v LABEL_3P "%-${LABEL_WIDTH}s" "3p"
+CACHE_DIR="$HOME_DIR/.cache/glacier"
+CACHE_CONFIG="$CACHE_DIR/mrconfig"
+CACHE_HOME="$CACHE_DIR/mr-home"
 
-if ! command -v fd >/dev/null 2>&1; then
-  echo "Missing dependency: fd is required." >&2
-  exit 1
-fi
+MR_JOBS="${MR_JOBS:-6}"
 
-if command -v gum >/dev/null 2>&1; then
-  HAS_GUM=1
-  LABEL_MINE="$(gum style --foreground 255 --background 29 --width "$LABEL_WIDTH" --align center 'mine')"
-  LABEL_3P="$(gum style --foreground 255 --background 240 --width "$LABEL_WIDTH" --align center '3p')"
-fi
+LABEL_W=6
+STATUS_W=20
+REMOTE_W=14
+LAST_W=6
+ICON_W=2
+
+REBUILD=0
+VERBOSE=0
+USE_COLOR=0
+
+LABEL_MINE=""
+LABEL_3P=""
 
 usage() {
-  cat <<'EOF'
-Usage:
-  glacier [options] <fd-pattern>
-
-Search files with fd and move matches into ~/glacier while preserving
-the path relative to your home directory.
+  cat <<'USAGE'
+Usage: glacier [--rebuild] [--verbose]
 
 Options:
-  --root <path>   Add a search root (can be repeated)
-  --apply         Perform the move (default is preview only)
-  --yes           Skip confirmation prompt (only with --apply)
-  -h, --help      Show this help
-
-Examples:
-  glacier '\.zip$'
-  glacier --root ~/code --root ~/Downloads 'backup'
-  glacier --apply '.*\.log$'
-EOF
+  --rebuild  Rebuild repo list cache from ~/code
+  --verbose  Show text status columns instead of compact icon view
+USAGE
 }
 
-resolve_dst() {
-  local base="$1"
-  local candidate="$base"
-  local n=1
-
-  while [[ -e "$candidate" || -n "${RESERVED[$candidate]:-}" ]]; do
-    candidate="${base}__${n}"
-    ((n+=1))
-  done
-
-  printf '%s' "$candidate"
+die() {
+  echo "$*" >&2
+  exit 1
 }
 
 display_path() {
   local path="$1"
-  if [[ "$path" == "$HOME" ]]; then
+  if [[ "$path" == "$HOME_DIR" ]]; then
     printf '~'
-    return
+  elif [[ "$path" == "$HOME_DIR/"* ]]; then
+    printf '~/%s' "${path#"$HOME_DIR"/}"
+  else
+    printf '%s' "$path"
   fi
-  if [[ "$path" == "$HOME/"* ]]; then
-    printf '~/%s' "${path#"$HOME"/}"
-    return
-  fi
-  printf '%s' "$path"
 }
 
 age_from_epoch() {
@@ -79,210 +63,193 @@ age_from_epoch() {
   local now delta
   now="$(date +%s)"
   delta=$((now - ts))
-  if ((delta < 0)); then
-    delta=0
+  ((delta < 0)) && delta=0
+
+  if ((delta < 60)); then printf '%ss' "$delta"
+  elif ((delta < 3600)); then printf '%sm' "$((delta / 60))"
+  elif ((delta < 86400)); then printf '%sh' "$((delta / 3600))"
+  elif ((delta < 2592000)); then printf '%sd' "$((delta / 86400))"
+  elif ((delta < 31536000)); then printf '%smo' "$((delta / 2592000))"
+  else printf '%sy' "$((delta / 31536000))"
   fi
-  if ((delta < 60)); then
-    printf '%ss' "$delta"
-    return
-  fi
-  if ((delta < 3600)); then
-    printf '%sm' "$((delta / 60))"
-    return
-  fi
-  if ((delta < 86400)); then
-    printf '%sh' "$((delta / 3600))"
-    return
-  fi
-  if ((delta < 2592000)); then
-    printf '%sd' "$((delta / 86400))"
-    return
-  fi
-  if ((delta < 31536000)); then
-    printf '%smo' "$((delta / 2592000))"
-    return
-  fi
-  printf '%sy' "$((delta / 31536000))"
 }
 
-dir_size() {
-  local dir="$1"
-  du -sh "$dir" 2>/dev/null | awk '{print $1}'
+paint() {
+  local text="$1"
+  local color="$2"
+  if [[ $USE_COLOR -eq 1 ]]; then
+    printf '\033[%sm%s\033[0m' "$color" "$text"
+  else
+    printf '%s' "$text"
+  fi
 }
 
-dir_file_count() {
-  local dir="$1"
-  fd --type f --exclude .git --exclude node_modules . "$dir" 2>/dev/null | wc -l | tr -d ' '
+status_color() {
+  case "$1" in
+    clean\(*) echo '38;5;42' ;;
+    conflict\(*) echo '1;38;5;160' ;;
+    *dirty\(*) echo '38;5;196' ;;
+    untracked\(*) echo '38;5;214' ;;
+    no-commit) echo '38;5;245' ;;
+    *) echo '38;5;245' ;;
+  esac
+}
+
+remote_color() {
+  case "$1" in
+    up-to-date) echo '38;5;42' ;;
+    ahead\?) echo '38;5;45' ;;
+    behind\?) echo '38;5;214' ;;
+    diverged\?) echo '1;38;5;196' ;;
+    no-upstream|no-origin) echo '1;38;5;214' ;;
+    *) echo '38;5;245' ;;
+  esac
+}
+
+status_icon() {
+  case "$1" in
+    conflict\(*) echo '󰞇' ;;
+    *dirty\(*) echo '󰅖' ;;
+    untracked\(*) echo '󰞋' ;;
+    clean\(*) echo '󰄬' ;;
+    no-commit) echo '󰟢' ;;
+    *) echo '󰋗' ;;
+  esac
+}
+
+remote_icon() {
+  case "$1" in
+    up-to-date) echo '󰄬' ;;
+    behind\?) echo '󰁞' ;;
+    ahead\?) echo '󰁆' ;;
+    diverged\?) echo '󰹹' ;;
+    no-upstream|no-origin) echo '󰞏' ;;
+    *) echo '󰋗' ;;
+  esac
+}
+
+format_status_text() {
+  local s="$1" pad c
+  printf -v pad "%-${STATUS_W}s" "$s"
+  c="$(status_color "$s")"
+  paint "$pad" "$c"
+}
+
+format_remote_text() {
+  local r="$1" pad c
+  printf -v pad "%-${REMOTE_W}s" "$r"
+  c="$(remote_color "$r")"
+  paint "$pad" "$c"
+}
+
+build_mr_config() {
+  local -a dirs repos
+  mapfile -t dirs < <(fd --type d --min-depth 1 --max-depth 1 . "$CODE_ROOT" 2>/dev/null || true)
+
+  repos=()
+  for d in "${dirs[@]}"; do
+    [[ -d "$d/.git" ]] && repos+=("$d")
+  done
+
+  [[ ${#repos[@]} -eq 0 ]] && die "No git repositories found under $(display_path "$CODE_ROOT")."
+
+  : > "$CACHE_CONFIG"
+  for d in "${repos[@]}"; do
+    printf '[%s]\n' "$d" >> "$CACHE_CONFIG"
+  done
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --root)
-      [[ $# -lt 2 ]] && { echo "Missing value for --root" >&2; exit 1; }
-      ROOTS+=("$2")
-      shift 2
-      ;;
-    --apply)
-      APPLY=1
-      shift
-      ;;
-    --yes)
-      YES=1
-      shift
-      ;;
-    -h|--help)
-      usage
-      exit 0
-      ;;
-    -*)
-      echo "Unknown option: $1" >&2
-      usage
-      exit 1
-      ;;
-    *)
-      if [[ -z "$QUERY" ]]; then
-        QUERY="$1"
-      else
-        echo "Unexpected argument: $1" >&2
-        usage
-        exit 1
-      fi
-      shift
-      ;;
+    --rebuild) REBUILD=1 ;;
+    --verbose) VERBOSE=1 ;;
+    -h|--help) usage; exit 0 ;;
+    *) die "Unknown option: $1" ;;
   esac
+  shift
 done
 
-if [[ -z "$QUERY" && ${#ROOTS[@]} -eq 0 ]]; then
-  echo "Auto mode: folders in ~/code with labels:"
-  if [[ -d "$HOME/code" ]]; then
-    mapfile -t CODE_DIRS < <(fd --type d --min-depth 1 --max-depth 1 . "$HOME/code" 2>/dev/null || true)
-    if [[ ${#CODE_DIRS[@]} -gt 0 ]]; then
-      for dir in "${CODE_DIRS[@]}"; do
-        label="$LABEL_3P"
-        size="$(dir_size "$dir")"
-        files="$(dir_file_count "$dir")"
-        git_state="no-git"
-        last_age="-"
-        if [[ -d "$dir/.git" ]]; then
-          git_state="clean"
-          status_out="$(git -C "$dir" status --porcelain=v2 -uno 2>/dev/null || true)"
-          if [[ -z "$status_out" ]]; then
-            status_out="$(git -C "$dir" status --porcelain -uno 2>/dev/null || true)"
-          fi
-          [[ -n "$status_out" ]] && git_state="dirty"
-          last_ts="$(git -C "$dir" log -1 --format=%ct 2>/dev/null || true)"
-          if [[ -n "$last_ts" ]]; then
-            last_age="$(age_from_epoch "$last_ts")"
-          else
-            last_age="no-commits"
-          fi
-          origin="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
-          if [[ "$origin" =~ $OWN_RE ]]; then
-            label="$LABEL_MINE"
-          fi
-        fi
-        echo "  $label $(display_path "$dir")  size:$size  files:$files  git:$git_state  last:$last_age"
-      done
-    else
-      echo "  (no folders found)"
+[[ -t 1 ]] && USE_COLOR=1
+
+command -v fd >/dev/null 2>&1 || die "Missing dependency: fd"
+command -v mr >/dev/null 2>&1 || die "Missing dependency: mr"
+[[ -x "$PROBE" ]] || die "Missing executable probe script: $PROBE"
+
+if command -v gum >/dev/null 2>&1; then
+  LABEL_MINE="$(gum style --foreground 255 --background 29 --width "$LABEL_W" --align center 'mine')"
+  LABEL_3P="$(gum style --foreground 255 --background 240 --width "$LABEL_W" --align center '3p')"
+else
+  printf -v LABEL_MINE "%-${LABEL_W}s" "mine"
+  printf -v LABEL_3P "%-${LABEL_W}s" "3p"
+fi
+
+[[ -d "$CODE_ROOT" ]] || die "No code directory found at $(display_path "$CODE_ROOT")."
+
+mkdir -p "$CACHE_DIR" "$CACHE_HOME"
+if [[ $REBUILD -eq 1 || ! -s "$CACHE_CONFIG" ]]; then
+  build_mr_config
+fi
+
+echo "git status for repos in ~/code"
+
+RAW="$(mktemp)"
+trap 'rm -f "$RAW"' EXIT
+
+total="$(grep -c '^\[' "$CACHE_CONFIG" || true)"
+[[ -z "$total" || "$total" -eq 0 ]] && total=1
+
+count=0
+SECONDS=0
+while IFS= read -r line; do
+  if [[ "$line" == "mr run: "* ]]; then
+    repo_path="${line#mr run: }"
+    if [[ "$repo_path" == /* ]]; then
+      ((count+=1))
+      if [[ -t 1 ]]; then
+        printf '\r\033[2K[%d/%d] %ss checking %s' "$count" "$total" "$SECONDS" "$(display_path "$repo_path")"
+      fi
     fi
-  else
-    echo "  (~/code does not exist)"
-  fi
-  exit 0
-fi
-
-if [[ -z "$QUERY" ]]; then
-  usage
-  exit 1
-fi
-
-if [[ ${#ROOTS[@]} -eq 0 ]]; then
-  ROOTS=("$HOME/code" "$HOME/Downloads" "$HOME/Desktop" "$HOME/Documents")
-fi
-
-FD_CMD=(
-  fd
-  --type f
-  --absolute-path
-  --print0
-  --exclude .git
-  --exclude node_modules
-  --exclude "$(basename "$DEST")"
-  "$QUERY"
-)
-FD_CMD+=("${ROOTS[@]}")
-
-mapfile -d '' RAW_FILES < <("${FD_CMD[@]}" 2>/dev/null || true)
-
-FILES=()
-for src in "${RAW_FILES[@]}"; do
-  if [[ "$src" == "$DEST" || "$src" == "$DEST/"* ]]; then
     continue
   fi
-  FILES+=("$src")
-done
 
-if [[ ${#FILES[@]} -eq 0 ]]; then
-  echo "No files matched '$QUERY'."
-  exit 0
+  [[ -z "$line" ]] && continue
+  printf '%s\n' "$line" >> "$RAW"
+done < <(HOME="$CACHE_HOME" mr -j "$MR_JOBS" --trust-all -c "$CACHE_CONFIG" -d / -m run "$PROBE")
+
+if [[ -t 1 ]]; then
+  printf '\r\033[2K[%d/%d] %ss done\n' "$count" "$total" "$SECONDS"
 fi
 
-declare -A RESERVED=()
-MOVE_SRC=()
-MOVE_DST=()
+while IFS=$'\t' read -r repo status remote last_ts origin; do
+  [[ -z "${repo:-}" ]] && continue
 
-for src in "${FILES[@]}"; do
-  if [[ "$src" == "$HOME/"* ]]; then
-    rel="${src#"$HOME"/}"
+  label="$LABEL_3P"
+  rank=2
+  if [[ -z "${origin:-}" || "$origin" =~ $OWN_RE ]]; then
+    label="$LABEL_MINE"
+    rank=1
+  fi
+
+  age='-'
+  [[ -n "${last_ts:-}" ]] && age="$(age_from_epoch "$last_ts")"
+
+  repo_disp="$(display_path "$repo")"
+
+  if [[ $VERBOSE -eq 1 ]]; then
+    s_col="$(format_status_text "$status")"
+    r_col="$(format_remote_text "$remote")"
+    printf -v age_col "%-${LAST_W}s" "$age"
+    line="  $label  $s_col  $r_col  $age_col  $repo_disp"
   else
-    rel="$(basename "$src")"
+    s_icon="$(status_icon "$status")"
+    r_icon="$(remote_icon "$remote")"
+    s_col="$(paint "$s_icon" "$(status_color "$status")")"
+    r_col="$(paint "$r_icon" "$(remote_color "$remote")")"
+    printf -v s_col "%-${ICON_W}s" "$s_col"
+    printf -v r_col "%-${ICON_W}s" "$r_col"
+    printf -v age_col "%-${LAST_W}s" "$age"
+    line="  $label  $s_col  $r_col  $age_col  $repo_disp"
   fi
-  dst_base="$DEST/$rel"
-  dst_final="$(resolve_dst "$dst_base")"
-  RESERVED["$dst_final"]=1
-  MOVE_SRC+=("$src")
-  MOVE_DST+=("$dst_final")
-done
 
-echo "Matched ${#MOVE_SRC[@]} file(s):"
-echo "Preflight move plan (src -> dst):"
-for i in "${!MOVE_SRC[@]}"; do
-  src_display="$(display_path "${MOVE_SRC[$i]}")"
-  dst_display="$(display_path "${MOVE_DST[$i]}")"
-  echo "  $src_display -> $dst_display"
-done
-
-if [[ $APPLY -eq 0 ]]; then
-  echo
-  echo "Preview only. Re-run with --apply to move files."
-  exit 0
-fi
-
-if [[ $YES -eq 0 ]]; then
-  echo
-  read -r -p "Move these files to $DEST? [y/N] " reply
-  if [[ ! "$reply" =~ ^[Yy]$ ]]; then
-    echo "Cancelled."
-    exit 0
-  fi
-fi
-
-mkdir -p "$DEST"
-LOG_FILE="$DEST/move.log"
-touch "$LOG_FILE"
-MOVED=0
-
-for i in "${!MOVE_SRC[@]}"; do
-  src="${MOVE_SRC[$i]}"
-  dst="${MOVE_DST[$i]}"
-  mkdir -p "$(dirname "$dst")"
-  mv "$src" "$dst"
-  ts="$(date '+%Y-%m-%dT%H:%M:%S%z')"
-  printf '%s\t%s\t%s\n' "$ts" "$src" "$dst" >> "$LOG_FILE"
-  ((MOVED+=1))
-done
-
-echo
-echo "Moved: $MOVED"
-echo "Manifest: $(display_path "$LOG_FILE")"
+  printf '%s\t%s\t%s\n' "$rank" "$repo_disp" "$line"
+done < <(awk '!/^mr run:/ && NF' "$RAW") | sort -t $'\t' -k1,1n -k2,2 | cut -f3-
