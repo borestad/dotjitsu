@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# snap: create a deterministic zip bundle of the latest forensics run (generic, no repo name).
+# - Finds the nearest parent directory containing ".forensics/LATEST.txt"
+# - Bundles ".forensics/<RUN_ID>/" + ".forensics/LATEST.txt"
+# - Writes a manifest with SHA256 checksums + lightweight VCS metadata
+# - Zips to one output directory and opens Finder there (macOS)
+
+SNAP_VERSION="1.1.0"
+
+die() { printf "snap: %s\n" "$*" >&2; exit 1; }
+
+# ----- Tool resolution (avoid aliases/functions) -----
+resolve_bin() {
+  local name="$1"
+  local bin=""
+  bin="$(command -v "$name" 2>/dev/null || true)"
+  if [ -z "$bin" ]; then
+    return 1
+  fi
+  printf "%s" "$bin"
+}
+
+FD_BIN="$(resolve_bin fd || true)"
+RG_BIN="$(resolve_bin rg || true)"
+ZIP_BIN="$(resolve_bin zip || true)"
+SHASUM_BIN="$(resolve_bin shasum || true)"
+OPEN_BIN="$(resolve_bin open || true)"
+RSYNC_BIN="$(resolve_bin rsync || true)"
+FIND_BIN="$(resolve_bin find || true)"
+SORT_BIN="$(resolve_bin sort || true)"
+XARGS_BIN="$(resolve_bin xargs || true)"
+DATE_BIN="$(resolve_bin date || true)"
+PWD_BIN="$(resolve_bin pwd || true)"
+HOSTNAME_BIN="$(resolve_bin hostname || true)"
+MKTEMP_BIN="$(resolve_bin mktemp || true)"
+GIT_BIN="$(resolve_bin git || true)"
+WC_BIN="$(resolve_bin wc || true)"
+SED_BIN="$(resolve_bin sed || true)"
+HEAD_BIN="$(resolve_bin head || true)"
+TR_BIN="$(resolve_bin tr || true)"
+CAT_BIN="$(resolve_bin cat || true)"
+
+[ -n "$ZIP_BIN" ] || die "missing dependency: zip"
+[ -n "$SHASUM_BIN" ] || die "missing dependency: shasum"
+[ -n "$OPEN_BIN" ] || die "missing dependency: open (macOS)"
+[ -n "$RSYNC_BIN" ] || die "missing dependency: rsync"
+[ -n "$FIND_BIN" ] || die "missing dependency: find"
+[ -n "$SORT_BIN" ] || die "missing dependency: sort"
+[ -n "$XARGS_BIN" ] || die "missing dependency: xargs"
+[ -n "$DATE_BIN" ] || die "missing dependency: date"
+[ -n "$PWD_BIN" ] || die "missing dependency: pwd"
+[ -n "$MKTEMP_BIN" ] || die "missing dependency: mktemp"
+[ -n "$WC_BIN" ] || die "missing dependency: wc"
+[ -n "$SED_BIN" ] || die "missing dependency: sed"
+[ -n "$HEAD_BIN" ] || die "missing dependency: head"
+[ -n "$TR_BIN" ] || die "missing dependency: tr"
+[ -n "$CAT_BIN" ] || die "missing dependency: cat"
+
+# ----- Locate root (nearest parent with .forensics/LATEST.txt) -----
+start_dir="$("$PWD_BIN" -P)"
+dir="$start_dir"
+
+is_root_marker() {
+  [ -f "$1/.forensics/LATEST.txt" ]
+}
+
+while true; do
+  if is_root_marker "$dir"; then
+    root="$dir"
+    break
+  fi
+  if [ "$dir" = "/" ]; then
+    die "could not find .forensics/LATEST.txt in current or any parent directory (start: $start_dir)"
+  fi
+  dir="$(dirname "$dir")"
+done
+
+latest_file="$root/.forensics/LATEST.txt"
+run_id="$("$CAT_BIN" "$latest_file" | "$TR_BIN" -d '\r' | "$HEAD_BIN" -n 1 | "$SED_BIN" -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+[ -n "$run_id" ] || die "LATEST.txt is empty: $latest_file"
+
+run_dir="$root/.forensics/$run_id"
+[ -d "$run_dir" ] || die "latest run directory does not exist: $run_dir"
+
+# ----- Build bundle -----
+ts="$("$DATE_BIN" -u +%Y-%m-%dT%H%M%SZ)"
+safe_run_id="$(printf "%s" "$run_id" | "$TR_BIN" ' /' '__' | "$TR_BIN" -cd 'A-Za-z0-9._-')"
+bundle_id="${ts}-${safe_run_id}"
+out_dir="${SNAP_OUT_DIR:-$HOME/Desktop/forensics}"
+zip_out="$out_dir/forensics.${bundle_id}.zip"
+
+[ -d "$out_dir" ] || mkdir -p "$out_dir"
+rm -f "$zip_out"
+
+tmp="$("$MKTEMP_BIN" -d "/tmp/forensics.stage.${bundle_id}.XXXXXX")"
+[ -d "$tmp" ] || die "failed to create temp dir"
+cleanup() { rm -rf "$tmp"; }
+trap cleanup EXIT
+
+mkdir -p "$tmp/payload" || die "failed to create staging dir: $tmp"
+
+# Copy payload preserving relative paths
+(
+  cd "$root" || exit 1
+  "$RSYNC_BIN" -aR ".forensics/LATEST.txt" ".forensics/$run_id" "$tmp/payload/" >/dev/null
+) || die "rsync failed while staging payload"
+
+# ----- Collect lightweight VCS metadata (if available) -----
+git_block() {
+  # Produce raw, pager-free, color-free VCS metadata. If not a git repo, print GIT=none.
+  if [ -z "${GIT_BIN:-}" ]; then
+    echo "GIT=missing"
+    return 0
+  fi
+
+  # Force no pager + no color regardless of user config
+  local git_env=("GIT_PAGER=cat")
+  local git_args=(--no-pager -c color.ui=false)
+
+  if ! (cd "$root" && "${git_env[@]}" "$GIT_BIN" "${git_args[@]}" rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    echo "GIT=none"
+    return 0
+  fi
+
+  local git_root git_branch git_head_full git_head_short git_dirty_count git_last_subject
+  git_root="$(cd "$root" && "${git_env[@]}" "$GIT_BIN" "${git_args[@]}" rev-parse --show-toplevel 2>/dev/null || true)"
+  git_branch="$(cd "$root" && "${git_env[@]}" "$GIT_BIN" "${git_args[@]}" branch --show-current 2>/dev/null || true)"
+  git_head_full="$(cd "$root" && "${git_env[@]}" "$GIT_BIN" "${git_args[@]}" rev-parse HEAD 2>/dev/null || true)"
+  git_head_short="$(cd "$root" && "${git_env[@]}" "$GIT_BIN" "${git_args[@]}" rev-parse --short HEAD 2>/dev/null || true)"
+  git_dirty_count="$(cd "$root" && "${git_env[@]}" "$GIT_BIN" "${git_args[@]}" status --porcelain=v1 2>/dev/null | "$WC_BIN" -l | "$TR_BIN" -d ' ')"
+  git_last_subject="$(cd "$root" && "${git_env[@]}" "$GIT_BIN" "${git_args[@]}" log -1 --pretty=%s 2>/dev/null || true)"
+
+  echo "GIT_ROOT=${git_root:-unknown}"
+  echo "GIT_BRANCH=${git_branch:-detached}"
+  echo "GIT_HEAD_SHORT=${git_head_short:-unknown}"
+  echo "GIT_HEAD_FULL=${git_head_full:-unknown}"
+  echo "GIT_DIRTY_COUNT=${git_dirty_count:-0}"
+  echo "GIT_LAST_SUBJECT=${git_last_subject:-unknown}"
+}
+
+# ----- Manifest with SHA256 -----
+host="$("$HOSTNAME_BIN" 2>/dev/null || true)"
+pwdp="$("$PWD_BIN" -P)"
+
+{
+  echo "FORENSICS_BUNDLE v1"
+  echo "SNAP_VERSION=$SNAP_VERSION"
+  echo "BUNDLE_ID=$bundle_id"
+  echo "TS_UTC=$("$DATE_BIN" -u +%Y-%m-%dT%H:%M:%SZ)"
+  echo "ROOT=$root"
+  echo "PWD=$pwdp"
+  echo "HOST=${host:-unknown}"
+  echo "LATEST_RUN_ID=$run_id"
+
+  echo
+  echo "TOOLS:"
+  echo "zip=$ZIP_BIN"
+  echo "shasum=$SHASUM_BIN"
+  [ -n "$FD_BIN" ] && echo "fd=$FD_BIN" || echo "fd=(missing)"
+  [ -n "$RG_BIN" ] && echo "rg=$RG_BIN" || echo "rg=(missing)"
+  [ -n "$GIT_BIN" ] && echo "git=$GIT_BIN" || echo "git=(missing)"
+
+  echo
+  echo "VCS:"
+  git_block
+
+  echo
+  echo "TREE:"
+  # Keep this shallow to avoid huge manifests; enough to understand structure.
+  (
+    cd "$tmp/payload" || exit 1
+    "$FIND_BIN" . -maxdepth 4 -print | "$SORT_BIN"
+  ) 2>/dev/null || true
+
+  echo
+  echo "SHA256:"
+  (
+    cd "$tmp/payload" || exit 1
+    "$FIND_BIN" . -type f -print0 \
+      | "$SORT_BIN" -z \
+      | "$XARGS_BIN" -0 "$SHASUM_BIN" -a 256
+  ) 2>/dev/null || true
+} > "$tmp/manifest.txt"
+
+# ----- Zip -----
+(
+  cd "$tmp" || exit 1
+  "$ZIP_BIN" -qry "$zip_out" "payload" "manifest.txt"
+) || die "zip failed"
+
+# ----- Open and print paths -----
+"$OPEN_BIN" -R "$zip_out" >/dev/null 2>&1 || true
+echo "OK"
+echo "ROOT=$root"
+echo "RUN_ID=$run_id"
+echo "OUT_DIR=$out_dir"
+echo "ZIP=$zip_out"

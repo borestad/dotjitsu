@@ -23,6 +23,11 @@ SEPARATOR=""
 DATE_FORMAT="%Y-%m-%d"
 #
 
+join-with-separator() {
+  local sep="$1"
+  awk -v sep="$sep" 'NR==1{printf "%s",$0; next}{printf "%s%s", sep, $0} END{print ""}'
+}
+
 function parse-args() {
   if [ -z "$1" ]; then
     echo "Usage: $(basename $0) <days> [--from <date>] [--separator <string>] [--format <format>]"
@@ -31,6 +36,11 @@ function parse-args() {
 
   DAYS=$1
   shift
+
+  if ! [[ "$DAYS" =~ ^[0-9]+$ ]]; then
+    echo "Error: <days> must be an integer" >&2
+    exit 1
+  fi
 
   while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -46,13 +56,38 @@ function parse-args() {
 function date-range() {
   parse-args "$@"
 
+  local date_bin="date"
+  local supports_d="false"
+  local key_format
+  key_format="%Y-%m-%d"$'\t'"${DATE_FORMAT}"
+
+  if date -d "1970-01-01" "+%Y-%m-%d" >/dev/null 2>&1; then
+    supports_d="true"
+  elif command -v gdate >/dev/null 2>&1; then
+    date_bin="gdate"
+    supports_d="true"
+  fi
+
+  # Auto-join with a regex-friendly separator when stdout is a pipe (e.g. in
+  # command substitution: rg "$(daterange 2)").
+  # Keep newline output when writing to a file (redirection) or a TTY.
+  if [ -z "$SEPARATOR" ] && [ -p /dev/fd/1 ]; then
+    SEPARATOR="|"
+  fi
+
   # Generate dates for the past N days and format them.
   # Add some parallelism with xargs due to days/gdate being slow.
-  for (( i=0; i<$DAYS; i++ )); do
-    echo "$START_DATE - $i days"
-  done | xargs -P $NUM_CORES -I {} date -d "{}" "+${DATE_FORMAT}" | sort -nr | {
+  if [ "$supports_d" = "true" ]; then
+    for (( i=0; i<$DAYS; i++ )); do
+      echo "$START_DATE - $i days"
+    done | xargs -P "$NUM_CORES" -I {} "$date_bin" -d "{}" "+${key_format}"
+  else
+    for (( i=0; i<$DAYS; i++ )); do
+      "$date_bin" -j -f "%Y-%m-%d" "$START_DATE" -v-"${i}"d "+${key_format}"
+    done
+  fi | sort -r | cut -f2- | {
     if [ -n "$SEPARATOR" ]; then
-      xargs | sed "s/ /${SEPARATOR}/g"
+      join-with-separator "$SEPARATOR"
     else
       cat
     fi

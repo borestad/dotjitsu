@@ -1,0 +1,335 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+REAL_HOME="${HOME:?}"
+CODE_ROOT="$REAL_HOME/code"
+OWN_RE='borestad|codeitse|gist\.github\.com'
+CACHE_DIR="$REAL_HOME/.cache/glacier"
+CACHE_CONFIG="$CACHE_DIR/mrconfig"
+CACHE_HOME="$CACHE_DIR/mr-home"
+
+LABEL_WIDTH=6
+STATUS_WIDTH=20
+REMOTE_WIDTH=14
+LAST_WIDTH=6
+MR_JOBS="${MR_JOBS:-6}"
+ICON_WIDTH=2
+
+HAS_GUM=0
+USE_COLOR=0
+REBUILD=0
+VERBOSE=0
+
+LABEL_MINE=""
+LABEL_3P=""
+
+if [[ -t 1 ]]; then
+  USE_COLOR=1
+fi
+
+if ! command -v fd >/dev/null 2>&1; then
+  echo "Missing dependency: fd is required." >&2
+  exit 1
+fi
+
+if ! command -v mr >/dev/null 2>&1; then
+  echo "Missing dependency: mr is required." >&2
+  exit 1
+fi
+
+if command -v gum >/dev/null 2>&1; then
+  HAS_GUM=1
+fi
+
+if [[ $HAS_GUM -eq 1 ]]; then
+  LABEL_MINE="$(gum style --foreground 255 --background 29 --width "$LABEL_WIDTH" --align center 'mine')"
+  LABEL_3P="$(gum style --foreground 255 --background 240 --width "$LABEL_WIDTH" --align center '3p')"
+else
+  printf -v LABEL_MINE "%-${LABEL_WIDTH}s" "mine"
+  printf -v LABEL_3P "%-${LABEL_WIDTH}s" "3p"
+fi
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --rebuild)
+      REBUILD=1
+      shift
+      ;;
+    --verbose)
+      VERBOSE=1
+      shift
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      echo "Usage: glacier2 [--rebuild] [--verbose]" >&2
+      exit 1
+      ;;
+  esac
+done
+
+display_path() {
+  local path="$1"
+  if [[ "$path" == "$REAL_HOME" ]]; then
+    printf '~'
+    return
+  fi
+  if [[ "$path" == "$REAL_HOME/"* ]]; then
+    printf '~/%s' "${path#"$REAL_HOME"/}"
+    return
+  fi
+  printf '%s' "$path"
+}
+
+age_from_epoch() {
+  local ts="$1"
+  local now delta
+  now="$(date +%s)"
+  delta=$((now - ts))
+  if ((delta < 0)); then delta=0; fi
+  if ((delta < 60)); then printf '%ss' "$delta"; return; fi
+  if ((delta < 3600)); then printf '%sm' "$((delta / 60))"; return; fi
+  if ((delta < 86400)); then printf '%sh' "$((delta / 3600))"; return; fi
+  if ((delta < 2592000)); then printf '%sd' "$((delta / 86400))"; return; fi
+  if ((delta < 31536000)); then printf '%smo' "$((delta / 2592000))"; return; fi
+  printf '%sy' "$((delta / 31536000))"
+}
+
+paint_cell() {
+  local text="$1"
+  local color="$2"
+  if [[ $USE_COLOR -eq 1 ]]; then
+    printf '\033[%sm%s\033[0m' "$color" "$text"
+  else
+    printf '%s' "$text"
+  fi
+}
+
+format_status() {
+  local status="$1"
+  local padded color
+  printf -v padded "%-${STATUS_WIDTH}s" "$status"
+  case "$status" in
+    clean\(*) color='38;5;42' ;;
+    conflict\(*) color='1;38;5;160' ;;
+    *dirty\(*) color='38;5;196' ;;
+    untracked\(*) color='38;5;214' ;;
+    no-commit) color='38;5;245' ;;
+    *) color='38;5;245' ;;
+  esac
+  paint_cell "$padded" "$color"
+}
+
+format_remote() {
+  local remote="$1"
+  local padded color
+  printf -v padded "%-${REMOTE_WIDTH}s" "$remote"
+  case "$remote" in
+    up-to-date) color='38;5;42' ;;
+    ahead\?) color='38;5;45' ;;
+    behind\?) color='38;5;214' ;;
+    diverged\?) color='1;38;5;196' ;;
+    no-upstream|no-origin) color='1;38;5;214' ;;
+    *) color='38;5;245' ;;
+  esac
+  paint_cell "$padded" "$color"
+}
+
+status_icon() {
+  local status="$1"
+  local icon color
+  case "$status" in
+    conflict\(*) icon="󰞇"; color='1;38;5;160' ;;
+    *dirty\(*) icon="󰅖"; color='38;5;196' ;;
+    untracked\(*) icon="󰞋"; color='38;5;214' ;;
+    clean\(*) icon="󰄬"; color='38;5;42' ;;
+    no-commit) icon="󰟢"; color='38;5;245' ;;
+    *) icon="󰋗"; color='38;5;245' ;;
+  esac
+  if [[ $USE_COLOR -eq 1 ]]; then
+    paint_cell "$icon" "$color"
+  else
+    printf '%s' "$icon"
+  fi
+}
+
+remote_icon() {
+  local remote="$1"
+  local icon color
+  case "$remote" in
+    up-to-date) icon="󰄬"; color='38;5;42' ;;
+    behind\?) icon="󰁞"; color='38;5;214' ;;
+    ahead\?) icon="󰁆"; color='38;5;45' ;;
+    diverged\?) icon="󰹹"; color='1;38;5;196' ;;
+    no-upstream|no-origin) icon="󰞏"; color='1;38;5;214' ;;
+    *) icon="󰋗"; color='38;5;245' ;;
+  esac
+  if [[ $USE_COLOR -eq 1 ]]; then
+    paint_cell "$icon" "$color"
+  else
+    printf '%s' "$icon"
+  fi
+}
+
+if [[ ! -d "$CODE_ROOT" ]]; then
+  echo "No code directory found at $(display_path "$CODE_ROOT")."
+  exit 0
+fi
+
+build_mr_config() {
+  local -a code_dirs git_dirs
+  mapfile -t code_dirs < <(fd --type d --min-depth 1 --max-depth 1 . "$CODE_ROOT" 2>/dev/null || true)
+
+  git_dirs=()
+  for dir in "${code_dirs[@]}"; do
+    [[ -d "$dir/.git" ]] && git_dirs+=("$dir")
+  done
+
+  if [[ ${#git_dirs[@]} -eq 0 ]]; then
+    echo "No git repositories found under $(display_path "$CODE_ROOT")."
+    exit 0
+  fi
+
+  : > "$CACHE_CONFIG"
+  for dir in "${git_dirs[@]}"; do
+    printf '[%s]\n' "$dir" >> "$CACHE_CONFIG"
+  done
+}
+
+mkdir -p "$CACHE_DIR" "$CACHE_HOME"
+if [[ $REBUILD -eq 1 || ! -s "$CACHE_CONFIG" ]]; then
+  build_mr_config
+fi
+
+echo "git status for repos in ~/code"
+
+MR_RAW_OUTPUT="$(mktemp)"
+trap 'rm -f "$MR_RAW_OUTPUT"' EXIT
+TOTAL_REPOS="$(grep -c '^\[' "$CACHE_CONFIG" || true)"
+if [[ -z "$TOTAL_REPOS" || "$TOTAL_REPOS" -eq 0 ]]; then
+  TOTAL_REPOS=1
+fi
+
+MR_SNIPPET='repo=$(pwd)
+origin=$(git remote get-url origin 2>/dev/null || true)
+upstream=$(git rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>/dev/null || true)
+head=$(git rev-parse HEAD 2>/dev/null || true)
+uphash=""
+if [ -n "$upstream" ]; then
+  uphash=$(git rev-parse "$upstream" 2>/dev/null || true)
+fi
+
+if git rev-parse --verify HEAD >/dev/null 2>&1; then
+  conflicts=$(git diff --name-only --diff-filter=U 2>/dev/null | sed "/^$/d" | wc -l | tr -d " ")
+  tracked=$(git status --porcelain=v2 -uno 2>/dev/null | awk " /^[12] /{c++} END{print c+0}")
+  untracked=$(git status --porcelain=v2 2>/dev/null | awk " /^\\? /{c++} END{print c+0}")
+  st=""
+  if [ "${conflicts:-0}" -gt 0 ]; then st="conflict(${conflicts})"; fi
+  if [ "${tracked:-0}" -gt 0 ]; then
+    if [ -n "$st" ]; then st="$st+"; fi
+    st="${st}dirty(${tracked})"
+  fi
+  if [ "${untracked:-0}" -gt 0 ]; then
+    if [ -n "$st" ]; then st="$st+"; fi
+    st="${st}untracked(${untracked})"
+  fi
+  if [ -z "$st" ]; then st="clean(0)"; fi
+else
+  st="no-commit"
+fi
+
+remote="unknown"
+if [ -z "$origin" ]; then
+  remote="no-origin"
+elif [ -z "$upstream" ]; then
+  remote="no-upstream"
+elif [ -z "$head" ]; then
+  remote="unknown"
+else
+  remote_name=${upstream%%/*}
+  branch=${upstream#*/}
+  rhash=$(GIT_TERMINAL_PROMPT=0 git -c core.hooksPath=/dev/null ls-remote --heads "$remote_name" "$branch" 2>/dev/null | awk "NR==1{print \$1}")
+  if [ -z "$rhash" ]; then
+    remote="unknown"
+  elif [ "$uphash" = "$rhash" ]; then
+    if [ "$head" = "$uphash" ]; then
+      remote="up-to-date"
+    else
+      counts=$(git rev-list --left-right --count "$upstream...HEAD" 2>/dev/null || true)
+      b=$(printf "%s" "$counts" | awk "{print \$1+0}")
+      a=$(printf "%s" "$counts" | awk "{print \$2+0}")
+      if [ "$a" -gt 0 ] && [ "$b" -gt 0 ]; then
+        remote="diverged?"
+      elif [ "$a" -gt 0 ]; then
+        remote="ahead?"
+      elif [ "$b" -gt 0 ]; then
+        remote="behind?"
+      else
+        remote="up-to-date"
+      fi
+    fi
+  elif [ "$head" = "$rhash" ]; then
+    remote="ahead?"
+  elif [ "$head" = "$uphash" ]; then
+    remote="behind?"
+  else
+    remote="unknown"
+  fi
+fi
+
+last_ts=$(git log -1 --format=%ct 2>/dev/null || true)
+printf "%s\t%s\t%s\t%s\t%s\n" "$repo" "$st" "$remote" "$last_ts" "$origin"'
+
+DONE_REPOS=0
+SECONDS=0
+while IFS= read -r line; do
+  if [[ "$line" == "mr run: "* ]]; then
+    repo_path="${line#mr run: }"
+    if [[ "$repo_path" == /* ]]; then
+      ((DONE_REPOS+=1))
+      if [[ -t 1 ]]; then
+        printf '\r\033[2K[%d/%d] %ss checking %s' "$DONE_REPOS" "$TOTAL_REPOS" "$SECONDS" "$(display_path "$repo_path")"
+      fi
+    fi
+    continue
+  fi
+
+  [[ -z "$line" ]] && continue
+  printf '%s\n' "$line" >> "$MR_RAW_OUTPUT"
+done < <(HOME="$CACHE_HOME" mr -j "$MR_JOBS" --trust-all -c "$CACHE_CONFIG" -d / -m run sh -c "$MR_SNIPPET")
+
+if [[ -t 1 ]]; then
+  printf '\r\033[2K[%d/%d] %ss done\n' "$DONE_REPOS" "$TOTAL_REPOS" "$SECONDS"
+fi
+
+while IFS=$'\t' read -r repo status remote last_ts origin; do
+  [[ -z "${repo:-}" ]] && continue
+
+  label="$LABEL_3P"
+  group_rank=2
+  if [[ -z "${origin:-}" || "$origin" =~ $OWN_RE ]]; then
+    label="$LABEL_MINE"
+    group_rank=1
+  fi
+
+  last_age="-"
+  if [[ -n "${last_ts:-}" ]]; then
+    last_age="$(age_from_epoch "$last_ts")"
+  fi
+
+  status_col="$(format_status "$status")"
+  remote_col="$(format_remote "$remote")"
+  status_ic="$(status_icon "$status")"
+  remote_ic="$(remote_icon "$remote")"
+  printf -v last_col "%-${LAST_WIDTH}s" "$last_age"
+
+  repo_display="$(display_path "$repo")"
+  if [[ $VERBOSE -eq 1 ]]; then
+    line="  $label  $status_col  $remote_col  $last_col  $repo_display"
+  else
+    printf -v status_icon_col "%-${ICON_WIDTH}s" "$status_ic"
+    printf -v remote_icon_col "%-${ICON_WIDTH}s" "$remote_ic"
+    line="  $label  $status_icon_col  $remote_icon_col  $last_col  $repo_display"
+  fi
+  printf '%s\t%s\t%s\n' "$group_rank" "$repo_display" "$line"
+done < <(awk '!/^mr run:/ && NF' "$MR_RAW_OUTPUT") | sort -t $'\t' -k1,1n -k2,2 | cut -f3-
