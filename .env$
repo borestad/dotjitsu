@@ -198,3 +198,9 @@ export DOCKER_HOST="unix://${COLIMA_HOME}/default/docker.sock"
 
 # Remove duplicates in PATH & preserve order (should not be needed, but hey !?)
 # export PATH=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')
+
+# Kinit
+# export KRB5CCNAME=FILE:${HOME}/.krb5-codex-cache
+
+# kinit -c "$KRB5CCNAME" <principal>
+# klist -c "$KRB5CCNAME"

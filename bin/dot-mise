@@ -2,10 +2,11 @@
 
 mkdir -p ~/.local/bin
 
+mise use -g golang@latest
+mise use -g cargo-binstall
 mise use -g node@lts
 mise use -g deno@2
 mise use -g bun@latest
 mise use -g biome@latest
 mise use -g usage@latest
-mise use -g ubi:zmwangx/ets
-
+mise use -g github:gdubicki/ets

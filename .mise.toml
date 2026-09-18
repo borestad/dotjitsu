@@ -3,14 +3,22 @@ biome = "latest"
 bun = "latest"
 deno = "2"
 node = "lts"
-"ubi:aaronriekenberg/rust-parallel" = "latest"
-"ubi:casey/just" = "latest"
-"ubi:moonrepo/moon" = "latest"
-"ubi:s0rg/crawley" = "latest"
-"ubi:theMackabu/pmc" = "latest"
-"ubi:zmwangx/ets" = "latest"
+"github:aaronriekenberg/rust-parallel" = "latest"
+"github:casey/just" = "latest"
+"github:moonrepo/moon" = "latest"
+"github:s0rg/crawley" = "latest"
+"github:zmwangx/ets" = "latest"
 usage = "latest"
 watchexec = "latest"
+"github:gdubicki/ets" = "latest"
+cargo-binstall = "latest"
+go = "latest"
+
+[tools."github:theMackabu/pmc"]
+version = "latest"
+
+[tools."github:theMackabu/pmc".platforms]
+macos-arm64 = { asset_pattern = "pmc_*_darwin_arm.zip" }
 
 [settings]
 experimental = true

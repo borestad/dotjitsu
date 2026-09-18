@@ -22,7 +22,7 @@ cask_args appdir: '~/Applications'
 # DEPS / PROGRAMMING LANGUAGES
 # ================================
 brew 'git'
-brew 'golang'
+# brew 'golang'
 brew 'python'                       # Interpreted, interactive, object-oriented programming language
 brew 'python3'                      # Interpreted, interactive, object-oriented programming language
 brew 'python-setuptools'
@@ -88,7 +88,7 @@ brew 'dfc'                          # Display graphs and colors of file system s
 brew 'dialog'                       # Display user-friendly message boxes from shell scripts
 brew 'direnv'                       # Load/unload environment variables based on $PWD
 brew 'docker-compose'               # Isolated development environments using Docker
-brew 'docker-machine'               # Create Docker hosts locally and on cloud providers
+# brew 'docker-machine'               # Create Docker hosts locally and on cloud providers
 brew 'dolt'                         # Git for Data
 brew 'dprint'
 brew 'duf'
@@ -229,8 +229,8 @@ brew 'unison'                       # File synchronization tool for OSX
 brew 'upx'
 brew 'vbindiff'                     # Visual Binary Diff
 brew 'vcsh'                         # Config manager based on git
-brew 'vegeta'
-brew 'viddy'
+brew 'vegeta'                       # HTTP load testing tool and library written in Go
+brew 'viddy'                        # Terminal video player
 brew 'vips'                         # Image processing library
 brew 'vnstat'                       # Console-based network traffic monitor
 brew 'watch'                        # Executes a program periodically, showing output fullscreen
@@ -240,7 +240,7 @@ brew 'webkit2png'                   # Create screenshots of webpages from the te
 brew 'wget'                         # Internet file retriever
 brew 'wget2'                        # Successor of GNU Wget, a file and recursive website downloader
 brew 'whatmask'                     # Network settings helper
-brew 'wrk'
+brew 'wrk'                          # HTTP benchmarking tool
 brew 'xh'
 brew 'xidel'
 brew 'xq'
@@ -255,6 +255,7 @@ brew 'zoxide'                       # Shell extension to navigate your filesyste
 
 brew 'liujianping/tap/job'
 
+brew 'universal-ctags'
 # ================================
 # AWS
 # ================================
@@ -359,3 +360,5 @@ brew 'pygitup'                      # Nicer 'git pull'
 # cask 'font-ubuntu-mono-nerd-font'
 # cask 'font-ubuntu-nerd-font'
 # cask 'font-victor-mono-nerd-font'
+
+

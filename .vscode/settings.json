@@ -33,6 +33,19 @@
     "yaml"
   ],
   "prettier.enable": false,
-  "files.exclude": {},
+  "files.exclude": {
+    ".gitignore": true,
+    ".vscode": true,
+    "**/.*cache*": true,
+    "**/.code/**": true,
+    "**/.nyc_output": true,
+    "**/.pnp*": true,
+    "**/.tmp": true,
+    "**/*.log": true,
+    "**/node_modules/**": true,
+    "**/reports": true,
+    "**/build-temp/**": true,
+    "**/build-*/**": true
+  },
   "svn.ignoreMissingSvnWarning": true
 }

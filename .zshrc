@@ -234,3 +234,9 @@ tere() {
     local result=$(command tere "$@")
     [ -n "$result" ] && cd -- "$result"
 }
+
+# >>> MANAGED BLOCK: studiox >>>
+if [[ -r "$HOME/.studiox/shell/studiox.zsh" ]]; then
+  source "$HOME/.studiox/shell/studiox.zsh"
+fi
+# <<< MANAGED BLOCK: studiox <<<

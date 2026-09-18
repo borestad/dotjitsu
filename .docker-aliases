@@ -20,7 +20,6 @@ alias docker.get-latest-container-id="docker ps -l -q"
 
 # Get container process
 alias dk.ps="docker ps"
-alias dps='dk.ps'
 
 # Get process included stop container
 alias dk.pa="docker ps -a"

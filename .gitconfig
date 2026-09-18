@@ -32,6 +32,7 @@
 	packedGitWindowSize = 1512m
 	quotepath = false
 	fscache = true
+	untrackedCache = true
 
 [transfer]
 	compression = 1
